@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "sensitive_values": [
+    {
+      "rule_id": "example-person-name",
+      "subject_id": "example-person",
+      "type": "name",
+      "value": "Example Person",
+      "match": "literal",
+      "case_sensitive": true
+    },
+    {
+      "rule_id": "example-person-email",
+      "subject_id": "example-person",
+      "type": "email",
+      "value": "person@example.invalid",
+      "match": "literal",
+      "case_sensitive": false
+    },
+    {
+      "rule_id": "example-token",
+      "type": "secret",
+      "value": "example-synthetic-token"
+    }
+  ],
+  "protected_values": [
+    {
+      "value": "Example Public Organization",
+      "reason": "synthetic value that must remain unchanged"
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/anonymization-trial/policy.schema.json",
+  "title": "Cloud data anonymization input policy",
+  "description": "Version 1 policy consumed as /trial/input/policy.json. The starter supports literal matching only.",
+  "type": "object",
+  "required": ["version", "sensitive_values", "protected_values"],
+  "additionalProperties": false,
+  "properties": {
+    "version": {"const": 1},
+    "sensitive_values": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["rule_id", "type", "value"],
+        "additionalProperties": false,
+        "properties": {
+          "rule_id": {"type": "string", "minLength": 1},
+          "subject_id": {"type": "string", "minLength": 1},
+          "type": {"type": "string", "minLength": 1},
+          "value": {"type": "string", "minLength": 1},
+          "match": {"const": "literal"},
+          "case_sensitive": {"type": "boolean"}
+        }
+      }
+    },
+    "protected_values": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["value"],
+        "additionalProperties": false,
+        "properties": {
+          "value": {"type": "string", "minLength": 1},
+          "reason": {"type": "string", "minLength": 1}
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cloud-data-anonymization-trial"
+version = "0.1.0"
+description = "Starter implementation for a cloud data anonymization work trial"
+requires-python = ">=3.12"
+dependencies = []
+
+[project.scripts]
+anonymization-trial = "anonymization_trial.__main__:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
