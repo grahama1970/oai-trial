@@ -18,6 +18,63 @@ identity coherence — then verifies the whole corpus before it releases anythin
 | See the production design + cost | [`docs/production-architecture.md`](docs/production-architecture.md) |
 | Read the code | `src/anonymization_trial/` |
 
+## Requirement traceability
+
+Brief ask → status → evidence. `done` = implemented and tested here; `extra` =
+beyond the brief; `designed` = specified but not run/built (an explicit non-claim).
+
+### Required by the brief
+
+| Brief ask | Status | Evidence |
+|---|---|---|
+| Valid output in each input's logical format | done | `formats.py`, `tests/test_formats.py` |
+| Replace every policy-identified value | done | `matcher.py`, `policy.py` |
+| Stable replacements; distinct identities never share a type replacement; aliases converge | done | `pseudonyms.py` (`subject_id`), `tests/test_pipeline.py` |
+| Preserve protected values + non-sensitive meaning | done | `policy.py` precedence, `docs/PRIVACY_CONTRACT.md` |
+| Preserve CSV headers/rows, JSON structure, SQLite tables/relationships/row-counts/integrity | done | `formats.py`, `tests/test_json.py`, `tests/test_sqlite.py` |
+| Verify the whole corpus before release | done | `verification.py`, `pipeline.py` |
+| Keep raw inputs, mappings, quarantined content out of release + logs | done | `pipeline.py` staging, `errors.py` |
+| Exit non-zero on failure; no partial releasable corpus | done | atomic publish, `security/tests/test_pipeline_failclosed.py` |
+| `policy.json` v1 boundary (literal, `subject_id`/`match`/`case_sensitive`) | done | `policy.py` |
+| Overlap precedence (nested/prefix/suffix/replacement-to-source), no cascades | done | `docs/ANONYMIZATION_SEMANTICS.md`, `matcher.py` |
+| protected vs sensitive exact/contained/partial overlap | done | `policy.py` rejection, `docs/PRIVACY_CONTRACT.md` |
+| CSV header with a sensitive literal transformed or rejected (never silently kept) | done | `formats.py` |
+| Encoding/normalization policy; safe reject of malformed/unsupported; BOM/multibyte/locale case | done | `formats.py`, `errors.py` |
+| Identity coherence across files/formats/retries | done | `pseudonyms.py` canonical `(data_type, subject_id)` |
+| Dockerfile self-contained, no host services/secrets | done | `Dockerfile` |
+| Bare-run demo: 4 formats, >=2 sizes (largest >=10x), reports time/rps/bps/peak-mem, exit 0 only if verify passes | done | `__main__.py demo` |
+| Mounted run writes only `report.json` + `corpus/` | done | `pipeline.py` |
+| Production design: provider + services, distribution/concurrency/skew, retries/replay/verify/publish, security boundaries, SLA | designed | `SUBMISSION.md`, `docs/production-architecture.md` |
+| State/flow diagram, labels agree with prose, trust boundaries | done | `docs/production-architecture.svg` |
+| Capacity + cost for 1 TB & 1 PB, reproducible arithmetic, cited prices, sensitivity | designed | `scripts/estimate_aws_cost.py`, `costs/` (list prices, unconfirmed) |
+| Which local parts carry to prod vs replace, with triggering limit/tradeoff | done | `SUBMISSION.md`, `infra/mappings/PROVIDER_MAPPING.md` |
+| Return whole repo incl `.git`; preserve baseline history; completed `SUBMISSION.md`; dependency declarations | done | baseline `eed780c` intact; stdlib-only |
+
+### Extra credit (beyond the brief)
+
+| Extra | Evidence |
+|---|---|
+| Independent verifier rereads output from disk (transformer cannot self-certify) | `verification.py`, `docs/ARCHITECTURE.md` |
+| TOCTOU / `SOURCE_CHANGED` source-snapshot gate | `security/tests/test_source_snapshot.py` |
+| White/gray/black-box adversarial lanes + bounded red/blue battle | `security/` (README, `tests/`, `battle/`) |
+| Containerized SAST (Semgrep + Bandit) + dependency SCA via `$hack`: 0 crit / 0 high | `security/hack-audit.receipt.json` |
+| Residual-risk probe | `security/residual_risk_probe.py` |
+| Machine-readable privacy non-claims + `algorithm_version`/`scope_id` binding | `docs/PRIVACY_CONTRACT.md`, `pseudonyms.py` |
+| Terraform AWS reference module (fmt+validate, plan-only) + provider capability map | `infra/terraform/`, `infra/mappings/` |
+| Operability CLI: `explain` / `preflight` / `verify` / `inspect` | `__main__.py` |
+| 40 cited arXiv papers archived (research lineage) | `docs/research/arxiv/` |
+| Technical-briefing deck (`$pitchdeck`) + `$create-svg` architecture | `docs/pitch/oai-trial/`, `.../assets/architecture.svg` |
+
+### Future optimizations (designed, not built)
+
+| Optimization | Trigger to build it |
+|---|---|
+| Entity discovery beyond literal policy (classifier / RapidFuzz) | inputs with un-catalogued identities |
+| Concurrent `ripgrep` cross-check of the verifier | large-corpus verify latency |
+| Run at real TB/PB scale | scale acceptance beyond the cost model |
+| Confirm cloud prices against a dated source | promoting the cost claim past a list-price estimate |
+| `verify-publish` provenance pass for deck claims | external deck delivery |
+
 ## What lives where
 
 ```
@@ -29,7 +86,8 @@ src/anonymization_trial/
   pipeline.py      preflight -> stage -> verify -> atomic publish
   verification.py  independent whole-corpus verifier
   errors.py        closed, privacy-safe error vocabulary
-tests/             pytest suite (unit + fail-closed + per-format)
+tests/             pytest suite (unit + per-format + CLI)
+security/          white/gray/black-box + adversarial lineage (tests, battle, SAST)
 docs/              semantics, acceptance matrix, production design, research
 costs/             price inputs + reproducible estimate output
 ```
@@ -78,8 +136,8 @@ docker run --rm \
 
 ## Proof and non-claims
 
-- **Checked (deterministic, local):** `uv run pytest -q` → 39 passed;
-  `ruff check src tests` → clean; `docker build` + both `docker run` commands
+- **Checked (deterministic, local):** `uv run pytest -q` → 62 passed;
+  `ruff check src tests scripts security` → clean; `docker build` + both `docker run` commands
   verified with read-back of `report.json` and all four output formats; demo
   reports per-run peak memory. Containerized SAST (Semgrep + Bandit) + dependency
   SCA via `$hack`: 0 critical / 0 high — see [`security/`](security).
