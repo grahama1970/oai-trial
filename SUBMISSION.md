@@ -110,5 +110,5 @@ minimal — adding those dependencies would violate the trial's container contra
 ## AI tool disclosure
 
 Built with an AI coding assistant. Output was checked by a deterministic gate on
-every change: `uv run pytest -q` (66 tests) and `ruff check`, plus live
+every change: `uv run pytest -q` (78 tests) and `ruff check`, plus live
 `docker build` and both `docker run` commands read back from produced artifacts.

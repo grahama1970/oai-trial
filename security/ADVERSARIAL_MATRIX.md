@@ -12,6 +12,8 @@ rationale gaps). Full review: `../docs/research/webgpt/ADVERSARIAL_REVIEW_2026-0
 - `DOC-FIXED` — corrected in this pass.
 - `DESIGNED / NON-CLAIM` — an explicit, already-disclosed scope boundary.
 
+## Round 2 (2026-09-04): reviewer CONFIRMED_FIXED #1(CSV)/#2/#3/#9/#16/report-atomicity; new fixes landed for round-2 #3 (verifier duplicate-key JSON), round-2 #6 (lossy float rejected), and #8 (boundary overlap). Still open: SQLite location-binding (#14), verify->seal race (#4 residual), TOCTOU depth (#7), cost/SLA rigor (#10), full verifier independence, and non-claim sharpening (#11/#12/#17/#18). See docs/research/webgpt/ADVERSARIAL_REVIEW_ROUND2_2026-09-04.md.
+
 ## Correctness & fail-closed (the load-bearing findings)
 
 | # | Sev | Attack / defect | Target | Status | Test | Ticket |
@@ -23,7 +25,7 @@ rationale gaps). Full review: `../docs/research/webgpt/ADVERSARIAL_REVIEW_2026-0
 | 5 | high | Publish not atomic/crash-durable (delete-old then rename then `write_text`, no fsync/rollback) | `pipeline.py::_publish` | CREDIBLE | crash-injection test pending | pending |
 | 6 | high | `.staging-*` inside the output mount; host-readable; survives SIGKILL, no startup recovery | `pipeline.py::run_pipeline` | CREDIBLE | test pending | pending |
 | 7 | high | TOCTOU: policy/source reread and re-hashed at different times; swap-and-restore window | `pipeline.py::_preflight,_source_digests`, `formats.py::_snapshot_sqlite` | CREDIBLE | extends `test_source_snapshot.py` | pending |
-| 8 | high | Protected/sensitive partial (prefix/suffix) overlap accepted; only equality/containment checked | `policy.py::_check_overlap` | OPEN (compile accepts; next slice) | pipeline violation test pending | pending |
+| 8 | high | Protected/sensitive partial (prefix/suffix) overlap accepted; only equality/containment checked | `policy.py::_check_overlap` | FIXED (boundary-overlap check) | `test_round2_fixes.py::test_partial_boundary_overlap_rejected` (green) | done |
 | 9 | high | Two case-insensitive rules (`Alice`/`ALICE`) for distinct subjects accepted; one wins by `rule_id` | `policy.py::compile_policy`, `matcher.py::_select` | FIXED (match-domain conflict detection) | `test_case_insensitive_conflicting_identities_rejected` (green) | done |
 | 14 | high | SQLite bare `rowid` can shadow a declared column; triggers mutate unrelated values | `formats.py::_transform_sqlite,_verify_sqlite` | CREDIBLE | test pending | pending |
 | 15 | high | `report.json` binds no source/plan/verification digest chain | `pipeline.py::RunReport,run_pipeline` | CREDIBLE | schema test pending | pending |

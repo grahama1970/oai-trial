@@ -97,12 +97,29 @@ def _rule_from(item: object, index: int) -> Rule:
     )
 
 
+def _boundary_overlap(a: str, b: str) -> bool:
+    # True if a non-empty suffix of `a` equals a prefix of `b`. In source text a
+    # sensitive match ending where a protected value begins (or vice versa) lets
+    # the replacement consume part of the protected span, changing protected
+    # bytes while its occurrence count is preserved (review #8).
+    for i in range(1, min(len(a), len(b)) + 1):
+        if a[-i:] == b[:i]:
+            return True
+    return False
+
+
 def _check_overlap(rules: tuple[Rule, ...], protected: tuple[str, ...]) -> None:
     for rule in rules:
         sv = rule.value
         for pv in protected:
             a, b = (ascii_lower(sv), ascii_lower(pv)) if not rule.case_sensitive else (sv, pv)
-            if a == b or a in b or b in a:
+            if (
+                a == b
+                or a in b
+                or b in a
+                or _boundary_overlap(a, b)
+                or _boundary_overlap(b, a)
+            ):
                 raise AnonError(
                     AnonErrorCode.PROTECTED_SENSITIVE_OVERLAP,
                     f"sensitive rule {rule.rule_id!r} overlaps a protected value",

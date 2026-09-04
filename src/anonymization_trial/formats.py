@@ -13,6 +13,7 @@ import csv
 import json
 import math
 import sqlite3
+from decimal import Decimal, InvalidOperation
 from pathlib import Path
 from typing import Any
 
@@ -124,6 +125,17 @@ def _finite_float(token: str) -> float:
     value = float(token)
     if not math.isfinite(value):
         raise AnonError(AnonErrorCode.MALFORMED_JSON, "non-finite JSON number is not allowed")
+    # A float literal that does not round-trip through IEEE-754 would be
+    # re-emitted as a DIFFERENT number (9007199254740993.0 -> ...992.0, or a
+    # tiny exponent underflowing to 0.0), silently changing non-sensitive data.
+    # Fail closed rather than preserve the wrong value (review round 2 #6).
+    try:
+        if Decimal(token) != Decimal(repr(value)):
+            raise AnonError(
+                AnonErrorCode.MALFORMED_JSON, "JSON number cannot be preserved exactly"
+            )
+    except InvalidOperation as error:
+        raise AnonError(AnonErrorCode.MALFORMED_JSON, "invalid JSON number") from error
     return value
 
 
@@ -319,7 +331,13 @@ def _json_strings(value: Any):
 
 def iter_searchable_text(path: Path):
     if path.suffix == ".json":
-        yield from _json_strings(json.loads(path.read_text(encoding="utf-8")))
+        # Duplicate keys must be rejected on the OUTPUT path too: a tampered
+        # {"who":"Alice","who":"<pseudonym>"} would otherwise be read last-wins,
+        # hiding the raw sensitive first value (review round 2 #3).
+        parsed = json.loads(
+            path.read_text(encoding="utf-8"), object_pairs_hook=_no_duplicate_keys
+        )
+        yield from _json_strings(parsed)
         return
     if path.suffix in {".csv", ".txt"}:
         yield path.read_text(encoding="utf-8")

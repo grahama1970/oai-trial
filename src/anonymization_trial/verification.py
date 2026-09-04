@@ -43,6 +43,21 @@ def _expected_json(value: Any, policy: Policy) -> Any:
     return value
 
 
+def _no_duplicate_keys(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
+    seen: set[str] = set()
+    for key, _ in pairs:
+        if key in seen:
+            raise AnonError(AnonErrorCode.VERIFICATION_FAILED, "duplicate JSON object key")
+        seen.add(key)
+    return dict(pairs)
+
+
+def _load_json(path: Path) -> Any:
+    # A duplicate-rejecting parse so a tampered output cannot hide a raw value
+    # behind a second same-named key that last-wins would keep (round 2 #3).
+    return json.loads(path.read_text(encoding="utf-8"), object_pairs_hook=_no_duplicate_keys)
+
+
 def _csv_rows(path: Path) -> list[list[str]]:
     with path.open(newline="", encoding="utf-8-sig") as handle:
         return list(csv.reader(handle))
@@ -53,8 +68,8 @@ def _verify_locations(source_corpus: Path, staged_corpus: Path, output_files: se
     """Per-location structural verification for JSON and CSV (review #1)."""
     for rel in sorted(output_files):
         if rel.suffix == ".json":
-            src = json.loads((source_corpus / rel).read_text(encoding="utf-8"))
-            out = json.loads((staged_corpus / rel).read_text(encoding="utf-8"))
+            src = _load_json(source_corpus / rel)
+            out = _load_json(staged_corpus / rel)
             if out != _expected_json(src, policy):
                 raise AnonError(
                     AnonErrorCode.VERIFICATION_FAILED, f"json location mismatch in {rel.name}"

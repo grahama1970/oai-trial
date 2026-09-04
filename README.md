@@ -136,7 +136,7 @@ docker run --rm \
 
 ## Proof and non-claims
 
-- **Checked (deterministic, local):** `uv run pytest -q` → 62 passed;
+- **Checked (deterministic, local):** `uv run pytest -q` → 78 passed;
   `ruff check src tests scripts security` → clean; `docker build` + both `docker run` commands
   verified with read-back of `report.json` and all four output formats; demo
   reports per-run peak memory. Containerized SAST (Semgrep + Bandit) + dependency
