@@ -63,11 +63,26 @@ def _transform_text(source: Path, destination: Path, policy: Policy) -> tuple[in
     return _count_lines(text), count
 
 
+def _reject_unsupported_csv_dialect(first_line: str) -> None:
+    # The accepted dialect is comma-delimited (Python's default). If the first
+    # row parses to a single comma field yet clearly contains another common
+    # delimiter, it is almost certainly a different dialect; reject rather than
+    # silently reinterpret the whole file under the wrong structure (#4).
+    fields = next(csv.reader([first_line]), [])
+    if len(fields) <= 1 and any(delim in first_line for delim in (";", "\t", "|")):
+        raise AnonError(AnonErrorCode.UNSUPPORTED_FORMAT, "unsupported CSV dialect")
+
+
 def _transform_csv(source: Path, destination: Path, policy: Policy) -> tuple[int, int]:
     raw = source.read_bytes()
     had_bom = raw.startswith(_BOM)
     newline_style = _detect_newline(raw)
     encoding = "utf-8-sig" if had_bom else "utf-8"
+    body = raw[len(_BOM):] if had_bom else raw
+    try:
+        _reject_unsupported_csv_dialect(body.split(b"\n", 1)[0].decode("utf-8"))
+    except UnicodeDecodeError as error:
+        raise AnonError(AnonErrorCode.MALFORMED_ENCODING, "CSV file is not valid UTF-8") from error
     count = 0
     data_rows = 0
     try:
