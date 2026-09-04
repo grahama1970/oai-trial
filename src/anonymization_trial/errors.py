@@ -24,6 +24,8 @@ class AnonErrorCode(StrEnum):
     UNSUPPORTED_FORMAT = "unsupported_format"
     MALFORMED_ENCODING = "malformed_encoding"
     SENSITIVE_IN_SCHEMA = "sensitive_in_schema_identifier"
+    MALFORMED_JSON = "malformed_json"
+    STRUCTURE_TOO_COMPLEX = "structure_too_complex"
     VERIFICATION_FAILED = "verification_failed"
     PUBLICATION_FAILED = "publication_failed"
     UNSAFE_INPUT = "unsafe_input"

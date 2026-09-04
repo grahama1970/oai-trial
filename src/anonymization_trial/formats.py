@@ -100,14 +100,37 @@ def _transform_csv(source: Path, destination: Path, policy: Policy) -> tuple[int
     return data_rows, count
 
 
-def _replace_json(value: Any, policy: Policy) -> tuple[Any, int]:
+_MAX_DEPTH = 200
+_MAX_STRING = 1_000_000
+
+
+def _no_duplicate_keys(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
+    seen: set[str] = set()
+    for key, _ in pairs:
+        if key in seen:
+            raise AnonError(AnonErrorCode.MALFORMED_JSON, "duplicate JSON object key")
+        seen.add(key)
+    return dict(pairs)
+
+
+def _reject_constant(_: str) -> Any:
+    raise AnonError(AnonErrorCode.MALFORMED_JSON, "non-finite JSON number is not allowed")
+
+
+def _replace_json(value: Any, policy: Policy, depth: int) -> tuple[Any, int]:
+    if depth > _MAX_DEPTH:
+        raise AnonError(
+            AnonErrorCode.STRUCTURE_TOO_COMPLEX, "JSON nesting exceeds the depth bound"
+        )
     if isinstance(value, str):
+        if len(value) > _MAX_STRING:
+            raise AnonError(AnonErrorCode.STRUCTURE_TOO_COMPLEX, "JSON string exceeds the size bound")
         return replace_text(value, policy)
     if isinstance(value, list):
         output = []
         count = 0
         for item in value:
-            updated, replaced = _replace_json(item, policy)
+            updated, replaced = _replace_json(item, policy, depth + 1)
             output.append(updated)
             count += replaced
         return output, count
@@ -115,17 +138,40 @@ def _replace_json(value: Any, policy: Policy) -> tuple[Any, int]:
         output = {}
         count = 0
         for key, item in value.items():
-            updated, replaced = _replace_json(item, policy)
-            output[key] = updated
+            if len(key) > _MAX_STRING:
+                raise AnonError(
+                    AnonErrorCode.STRUCTURE_TOO_COMPLEX, "JSON key exceeds the size bound"
+                )
+            if policy.matcher.find(key):
+                raise AnonError(
+                    AnonErrorCode.SENSITIVE_IN_SCHEMA,
+                    "a sensitive literal occurs in a JSON key",
+                )
+            updated, replaced = _replace_json(item, policy, depth + 1)
+            output[key] = updated  # key preserved, never anonymized
             count += replaced
         return output, count
-    return value, 0
+    return value, 0  # bool/int/float/null unchanged
 
 
 def _transform_json(source: Path, destination: Path, policy: Policy) -> tuple[int, int]:
-    value = json.loads(source.read_text(encoding="utf-8"))
-    transformed, count = _replace_json(value, policy)
-    destination.write_text(json.dumps(transformed, indent=2) + "\n", encoding="utf-8")
+    raw = source.read_bytes()
+    had_bom = raw.startswith(_BOM)
+    body = raw[len(_BOM):] if had_bom else raw
+    try:
+        text = body.decode("utf-8")
+    except UnicodeDecodeError as error:
+        raise AnonError(AnonErrorCode.MALFORMED_ENCODING, "JSON file is not valid UTF-8") from error
+    try:
+        value = json.loads(
+            text, object_pairs_hook=_no_duplicate_keys, parse_constant=_reject_constant
+        )
+    except json.JSONDecodeError as error:
+        raise AnonError(AnonErrorCode.MALFORMED_JSON, "input is not valid JSON") from error
+    transformed, count = _replace_json(value, policy, 0)
+    body_out = json.dumps(transformed, indent=2, ensure_ascii=False) + "\n"
+    out = ("\ufeff" if had_bom else "") + body_out
+    destination.write_bytes(out.encode("utf-8"))
     records = len(value) if isinstance(value, list) else 1
     return records, count
 
