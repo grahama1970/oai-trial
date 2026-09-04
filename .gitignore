@@ -7,3 +7,7 @@ build/
 dist/
 *.egg-info/
 demo-artifacts/
+
+# local env & agent-skills symlink
+.env
+agent-skills
