@@ -207,7 +207,12 @@ def _publish(staging: Path, output_root: Path, report: RunReport, sealed_digest:
 
 def run_pipeline(input_root: Path, output_root: Path) -> RunReport:
     started = time.perf_counter()
-    policy = load_policy(input_root / "policy.json")
+    # Reject an unsafe policy path BEFORE reading/following it, so an untrusted
+    # policy.json symlink is never opened (review #policy-preflight-before-read).
+    policy_file = input_root / "policy.json"
+    if policy_file.is_symlink() or not policy_file.is_file():
+        _reject(AnonErrorCode.UNSAFE_INPUT, "input bundle must contain a regular policy.json")
+    policy = load_policy(policy_file)
     files = _preflight(input_root, output_root, policy)
 
     inventory = _source_digests(files)

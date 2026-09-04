@@ -204,6 +204,12 @@ def compile_policy(payload: object) -> Policy:
             AnonErrorCode.INVALID_POLICY,
             f"protected_values[{index}].value invalid",
         )
+        if "reason" in item:
+            _require(
+                isinstance(item["reason"], str) and item["reason"] != "",
+                AnonErrorCode.INVALID_POLICY,
+                f"protected_values[{index}].reason must be a non-empty string",
+            )
         protected.append(value)
 
     # One source text must not map to conflicting identities. Conflict is judged
