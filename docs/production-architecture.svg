@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 360" font-family="ui-sans-serif, system-ui, sans-serif" role="img" aria-label="Fail-closed anonymization pipeline flow">
+  <rect width="920" height="360" fill="#0f172a"/>
+  <text x="40" y="48" fill="#e2e8f0" font-size="24" font-weight="700">Fail-closed anonymization pipeline</text>
+  <text x="40" y="74" fill="#94a3b8" font-size="14">Nothing reaches Release until the whole corpus verifies</text>
+
+  <g font-size="15" font-weight="600" text-anchor="middle">
+    <rect x="40"  y="120" width="140" height="64" rx="10" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
+    <text x="110" y="150" fill="#e2e8f0">Intake</text>
+    <text x="110" y="170" fill="#94a3b8" font-size="12" font-weight="400">S3 read-only</text>
+
+    <rect x="215" y="120" width="140" height="64" rx="10" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
+    <text x="285" y="150" fill="#e2e8f0">Distribute</text>
+    <text x="285" y="170" fill="#94a3b8" font-size="12" font-weight="400">SQS per file</text>
+
+    <rect x="390" y="120" width="140" height="64" rx="10" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
+    <text x="460" y="150" fill="#e2e8f0">Transform</text>
+    <text x="460" y="170" fill="#94a3b8" font-size="12" font-weight="400">workers, staged</text>
+
+    <rect x="565" y="120" width="140" height="64" rx="10" fill="#1e293b" stroke="#f59e0b" stroke-width="2"/>
+    <text x="635" y="150" fill="#e2e8f0">Verify</text>
+    <text x="635" y="170" fill="#94a3b8" font-size="12" font-weight="400">independent</text>
+
+    <rect x="740" y="120" width="140" height="64" rx="10" fill="#064e3b" stroke="#34d399" stroke-width="2"/>
+    <text x="810" y="150" fill="#ecfdf5">Release</text>
+    <text x="810" y="170" fill="#a7f3d0" font-size="12" font-weight="400">verified only</text>
+  </g>
+
+  <g stroke="#38bdf8" stroke-width="2.5" marker-end="url(#a)">
+    <line x1="180" y1="152" x2="212" y2="152"/>
+    <line x1="355" y1="152" x2="387" y2="152"/>
+    <line x1="530" y1="152" x2="562" y2="152"/>
+    <line x1="705" y1="152" x2="737" y2="152"/>
+  </g>
+
+  <rect x="565" y="250" width="140" height="60" rx="10" fill="#3f1d1d" stroke="#f87171" stroke-width="2"/>
+  <text x="635" y="278" fill="#fecaca" font-size="15" font-weight="600" text-anchor="middle">Quarantine</text>
+  <text x="635" y="297" fill="#fca5a5" font-size="12" text-anchor="middle">never released</text>
+  <g stroke="#f87171" stroke-width="2.5" marker-end="url(#r)">
+    <line x1="635" y1="186" x2="635" y2="248"/>
+  </g>
+  <text x="648" y="222" fill="#fca5a5" font-size="12">fail</text>
+
+  <text x="40" y="300" fill="#64748b" font-size="12">KMS-encrypted buckets; keys and mappings never enter Release or logs</text>
+
+  <defs>
+    <marker id="a" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#38bdf8"/></marker>
+    <marker id="r" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#f87171"/></marker>
+  </defs>
+</svg>

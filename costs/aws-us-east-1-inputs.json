@@ -1,0 +1,17 @@
+{
+  "region": "us-east-1",
+  "price_date": "2026-09-04",
+  "source": "AWS S3 pricing https://aws.amazon.com/s3/pricing/ and AWS Fargate pricing https://aws.amazon.com/fargate/pricing/ (list prices; confirm before use)",
+  "note": "List on-demand prices as of price_date. UNVERIFIED against a dated screenshot; treat as illustrative until confirmed.",
+  "s3_standard_gb_month_usd": 0.023,
+  "s3_put_per_1k_usd": 0.005,
+  "s3_get_per_1k_usd": 0.0004,
+  "fargate_vcpu_hour_usd": 0.04048,
+  "fargate_gb_hour_usd": 0.004445,
+  "avg_file_bytes": 1048576,
+  "worker_vcpu": 1,
+  "worker_gb": 2,
+  "throughput_bytes_per_s_per_worker": 20000000,
+  "storage_months": 1,
+  "workers": 200
+}

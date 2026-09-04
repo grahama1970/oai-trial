@@ -1,21 +1,36 @@
-# oai-trial — Cloud Data Anonymization
+# oai-trial — Cross-Format Data Anonymization
 
-Work trial: harden a starter into a scale-ready anonymization pipeline that
-replaces policy-identified values across CSV, JSON, UTF-8 text, and SQLite while
-preserving structure, protected values, and identity coherence.
+A fail-closed pipeline that replaces policy-identified values across CSV, JSON,
+UTF-8 text, and SQLite while preserving structure, protected values, and
+identity coherence — then verifies the whole corpus before it releases anything.
 
-- **Task brief (authoritative):** [`TRIAL_BRIEF.md`](TRIAL_BRIEF.md)
-- **Immutable goal:** [`GOAL.md`](GOAL.md)
-- **Submission write-up:** [`SUBMISSION.md`](SUBMISSION.md)
+![Pipeline](docs/production-architecture.svg)
 
-## Layout
+## Start here
+
+| You want to… | Go to |
+|---|---|
+| Read the task as given | [`TRIAL_BRIEF.md`](TRIAL_BRIEF.md) |
+| See the frozen correctness rules | [`docs/ANONYMIZATION_SEMANTICS.md`](docs/ANONYMIZATION_SEMANTICS.md) |
+| Trace requirements → tests | [`docs/ACCEPTANCE_MATRIX.md`](docs/ACCEPTANCE_MATRIX.md) |
+| Read the submission write-up | [`SUBMISSION.md`](SUBMISSION.md) |
+| See the production design + cost | [`docs/production-architecture.md`](docs/production-architecture.md) |
+| Read the code | `src/anonymization_trial/` |
+
+## What lives where
 
 ```
-src/anonymization_trial/   pipeline, formats, policy, fixture, CLI
-tests/                     unittest suite
-examples/                  policy.json + policy.schema.json
-fixtures/                  synthetic corpus generator
-agent-skills -> ../agent-skills   symlink so agent skills resolve
+src/anonymization_trial/
+  policy.py        strict policy compile + typed records
+  matcher.py       Aho-Corasick exact matcher (leftmost-longest, no cascade)
+  pseudonyms.py    deterministic, collision-safe replacements
+  formats.py       CSV / JSON / TXT / SQLite adapters
+  pipeline.py      preflight -> stage -> verify -> atomic publish
+  verification.py  independent whole-corpus verifier
+  errors.py        closed, privacy-safe error vocabulary
+tests/             pytest suite (unit + fail-closed + per-format)
+docs/              semantics, acceptance matrix, production design, research
+costs/             price inputs + reproducible estimate output
 ```
 
 ## Quickstart
@@ -23,14 +38,12 @@ agent-skills -> ../agent-skills   symlink so agent skills resolve
 ```bash
 python3.12 -m venv .venv
 .venv/bin/pip install -e .
-.venv/bin/python -m unittest discover -s tests -v
+uv run pytest -q                        # or: .venv/bin/python -m unittest discover -s tests
 .venv/bin/anonymization-trial demo
-
-# generate a synthetic input bundle
 .venv/bin/python fixtures/generate_fixture.py /tmp/trial-input --records 1000
 ```
 
-## Required container contract
+## Container contract
 
 ```bash
 docker build -t anonymization-trial .
@@ -38,12 +51,29 @@ docker run --rm anonymization-trial                       # self-contained demo
 docker run --rm \
   -v "$INPUT":/trial/input:ro \
   -v "$OUTPUT":/trial/output \
-  anonymization-trial run                                 # anonymize mounted bundle
+  anonymization-trial run                                 # anonymize a mounted bundle
 ```
 
-## Rules
+## Design rules
 
-- No real personal data or credentials in the repo. `.env` is gitignored.
-- Preserve baseline git history and the two required `docker run` commands.
-- Verify the whole corpus before marking it releasable; fail closed (non-zero,
-  no partial release) on any error.
+- Deterministic literal matching only; regex removed from the value path.
+- Match original input, never rescan replacements (no cascade).
+- Protected/sensitive overlap and sensitive schema identifiers are **rejected**,
+  not silently resolved.
+- Verify the whole corpus before release; fail closed (non-zero exit, no partial
+  corpus, `report.json` written last as the only readiness marker).
+- No replacement mapping or key material in the release dir or logs.
+
+## Proof and non-claims
+
+- **Checked (deterministic, local):** `uv run pytest -q` → 35 passed;
+  `ruff check src tests` → clean; `docker build` + both `docker run` commands
+  verified with read-back of `report.json` and all four output formats; demo
+  reports per-run peak memory.
+- **Not claimed here:** TB/PB scale is designed and cost-modelled, not run at
+  scale; cloud prices are list prices not yet confirmed against a dated source;
+  optional classifier/RapidFuzz discovery and the concurrent `ripgrep`
+  cross-check are designed, not built.
+
+Preserve the baseline git history and the two required `docker run` commands.
+`.env` is gitignored; no real personal data or credentials belong in the repo.

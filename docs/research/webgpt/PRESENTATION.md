@@ -199,3 +199,191 @@ That gives you a controlled narrative without forcing OpenAI to watch you naviga
 
 My recommendation: **yes to a compact technical deck, no to a conventional pitch deck.** The deck should contain almost no information that cannot be drilled into immediately in the repository.
 
+---
+Yes. I would use **`grahama1970/agent-skills/skills/pitchdeck`**—the actual skill name is `$pitchdeck`—together with `$best-practices-pitchdeck`.
+
+That could be impressive because it gives us something much stronger than manually assembling PowerPoint slides: a **source-controlled technical briefing whose claims, sources, assets, and slide structure are explicit artifacts**. `$pitchdeck` supports a source manifest, claim ledger, editable PPTX, PDF/contact-sheet rendering, and verification steps.
+
+There is one important caveat: the current skill documentation explicitly says its publication gate has known bypasses and that it should be treated as a **supervised internal authoring system**, not as a proving compiler. So we should manually review every visible slide and never use “the deck verified” as evidence that the technical claims are true.
+
+### Why it fits this presentation particularly well
+
+The deck can be generated from the same evidence architecture we're building:
+
+```text
+TRIAL_BRIEF.md
+GOAL.md
+ARCHITECTURE.md
+PRIVACY_CONTRACT.md
+ACCEPTANCE_MATRIX.md
+benchmark results
+production design
+verified SVG diagrams
+        │
+        ▼
+source_manifest.yaml
+claim_ledger.yaml
+        │
+        ▼
+$best-practices-pitchdeck
+derive narrative from actual source
+        │
+        ▼
+$pitchdeck
+        │
+        ├── editable PPTX
+        ├── PDF
+        ├── slide PNGs / contact sheet
+        └── review artifacts
+```
+
+That's attractive because the deck is then a **projection of the repository**, rather than a second story written from memory.
+
+Your `best-practices-pitchdeck` skill reinforces exactly that principle: sections should be derived from the source material, not hardcoded into a generic “problem / solution / market” template.
+
+## I would make it a 7-slide technical briefing
+
+Not a conventional sales pitch:
+
+| Slide                         | Purpose                                                                  |
+| ----------------------------- | ------------------------------------------------------------------------ |
+| **1. The assignment**         | What OpenAI asked for, eight-hour constraint, acceptance bar             |
+| **2. The architecture**       | Main `$create-svg` local-pipeline diagram                                |
+| **3. The hard semantics**     | Subjects, aliases, overlap, collisions, protected/schema values          |
+| **4. Reliability model**      | Private staging → independent verification → report-last publication     |
+| **5. Evidence**               | Property tests, fault injection, debugger walkthrough, benchmark results |
+| **6. Production scale**       | 1 TB / 1 PB AWS diagram, scoped HMAC keys, distributed verification      |
+| **7. Tradeoffs & non-claims** | What we deliberately excluded and what we would build next               |
+
+That's enough to control the narrative without forcing you to stare at slides for 40 minutes.
+
+## The presentation should move between surfaces
+
+The impressive part would be the transitions:
+
+```text
+SLIDE
+"This is the release architecture."
+
+        ↓
+
+SVG / ARCHITECTURE.md
+"Here are the trust boundaries."
+
+        ↓
+
+DEBUGGER
+"Here is the actual runtime state at this transition."
+
+        ↓
+
+ADVERSARIAL TEST
+"Now I'll corrupt it and show that publication is refused."
+
+        ↓
+
+RECEIPT / REPORT
+"Here is the independent evidence."
+```
+
+For example:
+
+**Slide 3: Identity semantics**
+
+Then jump into `$debugger`:
+
+```text
+subject_id = person-001
+rules      = [name, email aliases]
+canonical  = person-001
+pseudonym  = deterministic value
+```
+
+Then show the policy-permutation property test.
+
+That is far more memorable than a static slide explaining pseudonyms.
+
+## Use our SVGs as first-class slide assets
+
+I would avoid having `$pitchdeck` redraw the technical diagrams.
+
+Instead:
+
+```text
+$ops-excalidraw
+      ↓
+editable board
+
+$create-svg
+      ↓
+verified final SVG
+
+$pitchdeck
+      ↓
+place that SVG into the technical briefing
+```
+
+That way the diagram in:
+
+* `ARCHITECTURE.md`,
+* `README.md`,
+* `SUBMISSION.md`,
+* and the presentation
+
+is literally the **same architectural artifact**, not four slightly different versions.
+
+## The claim ledger is especially valuable here
+
+For example:
+
+```yaml
+- id: release-gate
+  text: >
+    A corpus is not ready until every accepted output artifact has
+    been independently reread and the bound report is published last.
+  sources:
+    - ARCHITECTURE.md
+    - tests/test_publication_faults.py
+    - schemas/report.schema.json
+  qualifier: >
+    This proves the declared release contract, not universal
+    non-reidentifiability.
+```
+
+That makes rehearsing easier too. Every major statement you make can be traced immediately to its evidence.
+
+## What would make the deck look sophisticated rather than overproduced
+
+Keep it restrained:
+
+* almost no paragraphs;
+* one dominant technical visual per slide;
+* real benchmark numbers rather than decorative statistics;
+* explicit `PROVES` / `DOES NOT PROVE` language;
+* no fake product screenshots;
+* no generic AI artwork;
+* native editable shapes for supporting callouts;
+* Lucide icons only where they clarify component roles;
+* consistent visual vocabulary with the SVGs;
+* architecture labels identical to `ARCHITECTURE.md`.
+
+I would also put a small footer on each technical slide:
+
+```text
+Evidence → ARCHITECTURE.md §8 · test_publication_faults.py · report.schema.json
+```
+
+That signals an unusually evidence-oriented presentation without cluttering the slide.
+
+## So yes: I think it would help
+
+The impressive thing isn't merely “Graham has a pitch-deck generator.”
+
+It's that your workflow becomes:
+
+> **the code produces proof, the repository explains the proof, the diagrams visualize the proof, and the deck organizes the proof for humans.**
+
+And because `$pitchdeck` produces editable PPTX output rather than locking everything into screenshots, we can still make final human tweaks before the OpenAI session.
+
+I would rank this **well above building FastAPI or a React UI** once the core system is complete.
+
