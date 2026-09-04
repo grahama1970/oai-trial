@@ -302,8 +302,26 @@ def _verify_sqlite(connection: sqlite3.Connection, pre_counts: dict[str, int]) -
         raise AnonError(AnonErrorCode.VERIFICATION_FAILED, "SQLite foreign_key_check failed")
 
 
+def _json_strings(value: Any):
+    # Yield DECODED keys + string values so a verifier scans real values, not the
+    # serialized text (review #2): an escaped "\u0041lice" in output decodes to
+    # "Alice" and must not slip past a literal scan of the raw bytes.
+    if isinstance(value, dict):
+        for key, item in value.items():
+            yield key
+            yield from _json_strings(item)
+    elif isinstance(value, list):
+        for item in value:
+            yield from _json_strings(item)
+    elif isinstance(value, str):
+        yield value
+
+
 def iter_searchable_text(path: Path):
-    if path.suffix in {".csv", ".json", ".txt"}:
+    if path.suffix == ".json":
+        yield from _json_strings(json.loads(path.read_text(encoding="utf-8")))
+        return
+    if path.suffix in {".csv", ".txt"}:
         yield path.read_text(encoding="utf-8")
         return
     if path.suffix == ".sqlite":

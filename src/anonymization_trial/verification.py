@@ -19,11 +19,64 @@ identities to hold distinct replacements.
 """
 from __future__ import annotations
 
+import csv
+import json
 from pathlib import Path
+from typing import Any
 
 from .errors import AnonError, AnonErrorCode
 from .policy import Policy, replace_text
 from .pseudonyms import build_replacements
+
+
+def _expected_json(value: Any, policy: Policy) -> Any:
+    """Independent recompute of the transform's JSON contract: keys unchanged,
+    string values replaced, scalars untouched. Comparing output == this catches
+    swapped pseudonyms, dropped/added keys or items, and relocated protected
+    values that aggregate counts miss (review #1)."""
+    if isinstance(value, str):
+        return replace_text(value, policy)[0]
+    if isinstance(value, list):
+        return [_expected_json(item, policy) for item in value]
+    if isinstance(value, dict):
+        return {key: _expected_json(item, policy) for key, item in value.items()}
+    return value
+
+
+def _csv_rows(path: Path) -> list[list[str]]:
+    with path.open(newline="", encoding="utf-8-sig") as handle:
+        return list(csv.reader(handle))
+
+
+def _verify_locations(source_corpus: Path, staged_corpus: Path, output_files: set[Path],
+                      policy: Policy) -> None:
+    """Per-location structural verification for JSON and CSV (review #1)."""
+    for rel in sorted(output_files):
+        if rel.suffix == ".json":
+            src = json.loads((source_corpus / rel).read_text(encoding="utf-8"))
+            out = json.loads((staged_corpus / rel).read_text(encoding="utf-8"))
+            if out != _expected_json(src, policy):
+                raise AnonError(
+                    AnonErrorCode.VERIFICATION_FAILED, f"json location mismatch in {rel.name}"
+                )
+        elif rel.suffix == ".csv":
+            src_rows = _csv_rows(source_corpus / rel)
+            out_rows = _csv_rows(staged_corpus / rel)
+            if len(src_rows) != len(out_rows):
+                raise AnonError(
+                    AnonErrorCode.VERIFICATION_FAILED, f"csv row count changed in {rel.name}"
+                )
+            for src_row, out_row in zip(src_rows, out_rows, strict=True):
+                if len(src_row) != len(out_row):
+                    raise AnonError(
+                        AnonErrorCode.VERIFICATION_FAILED, f"csv column count changed in {rel.name}"
+                    )
+                for src_cell, out_cell in zip(src_row, out_row, strict=True):
+                    if replace_text(src_cell, policy)[0] != out_cell:
+                        raise AnonError(
+                            AnonErrorCode.VERIFICATION_FAILED,
+                            f"csv cell location mismatch in {rel.name}",
+                        )
 
 
 def _relative_files(root: Path) -> set[Path]:
@@ -76,6 +129,8 @@ def verify_corpus(source_corpus: Path, staged_corpus: Path, policy: Policy) -> N
                 raise AnonError(
                     AnonErrorCode.VERIFICATION_FAILED, f"text value skeleton mismatch in {rel.name}"
                 )
+
+    _verify_locations(source_corpus, staged_corpus, output_files, policy)
 
     source_texts = _searchable(source_corpus, source_files)
     output_texts = _searchable(staged_corpus, output_files)
