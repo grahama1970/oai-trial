@@ -66,10 +66,12 @@ docker run --rm \
 
 ## Proof and non-claims
 
-- **Checked (deterministic, local):** `uv run pytest -q` → 35 passed;
+- **Checked (deterministic, local):** `uv run pytest -q` → 39 passed;
   `ruff check src tests` → clean; `docker build` + both `docker run` commands
   verified with read-back of `report.json` and all four output formats; demo
-  reports per-run peak memory.
+  reports per-run peak memory. Containerized SAST (Semgrep + Bandit) + dependency
+  SCA via `$hack`: 0 critical / 0 high — see [`docs/security/`](docs/security).
+  Privacy scope + non-claims: [`docs/PRIVACY_CONTRACT.md`](docs/PRIVACY_CONTRACT.md).
 - **Not claimed here:** TB/PB scale is designed and cost-modelled, not run at
   scale; cloud prices are list prices not yet confirmed against a dated source;
   optional classifier/RapidFuzz discovery and the concurrent `ripgrep`

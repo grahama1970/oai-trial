@@ -1,0 +1,140 @@
+{
+  "created_at": "2026-09-04T16:55:02.547836+00:00",
+  "findings": [
+    {
+      "confidence": "MEDIUM",
+      "cwe": "CWE-89",
+      "location": "/scan/anonymization_trial/formats.py:247:16",
+      "message": "Possible SQL injection vector through string-based query construction.",
+      "rule_id": "B608",
+      "rule_name": "hardcoded_sql_expressions",
+      "severity": "MEDIUM",
+      "tool": "bandit"
+    },
+    {
+      "confidence": "LOW",
+      "cwe": "CWE-89",
+      "location": "/scan/anonymization_trial/formats.py:253:20",
+      "message": "Possible SQL injection vector through string-based query construction.",
+      "rule_id": "B608",
+      "rule_name": "hardcoded_sql_expressions",
+      "severity": "MEDIUM",
+      "tool": "bandit"
+    },
+    {
+      "confidence": "MEDIUM",
+      "cwe": "CWE-89",
+      "location": "/scan/anonymization_trial/formats.py:268:24",
+      "message": "Possible SQL injection vector through string-based query construction.",
+      "rule_id": "B608",
+      "rule_name": "hardcoded_sql_expressions",
+      "severity": "MEDIUM",
+      "tool": "bandit"
+    },
+    {
+      "confidence": "MEDIUM",
+      "cwe": "CWE-89",
+      "location": "/scan/anonymization_trial/formats.py:280:12",
+      "message": "Possible SQL injection vector through string-based query construction.",
+      "rule_id": "B608",
+      "rule_name": "hardcoded_sql_expressions",
+      "severity": "MEDIUM",
+      "tool": "bandit"
+    },
+    {
+      "confidence": "MEDIUM",
+      "cwe": "CWE-89",
+      "location": "/scan/anonymization_trial/formats.py:304:46",
+      "message": "Possible SQL injection vector through string-based query construction.",
+      "rule_id": "B608",
+      "rule_name": "hardcoded_sql_expressions",
+      "severity": "MEDIUM",
+      "tool": "bandit"
+    }
+  ],
+  "isolation": {
+    "executor": "docker",
+    "mount_path": "/home/graham/workspace/experiments/oai-trial/src",
+    "network": "none",
+    "scan_target": "/scan",
+    "target_mount": "read_only"
+  },
+  "memory": {
+    "recall_attempted": true,
+    "recall_found": false,
+    "store_error": null,
+    "store_ref": null
+  },
+  "non_claims": [
+    "does_not_confirm_exploitability",
+    "does_not_run_proof_exploits",
+    "does_not_patch_target"
+  ],
+  "profile": "hobbyist",
+  "receipt_sha256": "sha256:1d830ae17c34d83c4d2b6fa23b42a14aa55f91f4186810e8e5aa2e5a8c59c822",
+  "schema": "hack.audit_receipt.v1",
+  "severity": "medium",
+  "status": "PASS",
+  "summary": {
+    "cwes": [
+      "CWE-89"
+    ],
+    "finding_count": 5,
+    "high_count": 0,
+    "severity_counts": {
+      "MEDIUM": 5
+    }
+  },
+  "target": "/home/graham/workspace/experiments/oai-trial/src",
+  "tool": "all",
+  "tool_results": [
+    {
+      "argv": [
+        "docker",
+        "run",
+        "--rm",
+        "--network=none",
+        "-v",
+        "/home/graham/workspace/experiments/oai-trial/src:/scan:ro",
+        "hack-skill-security:latest",
+        "semgrep",
+        "scan",
+        "--json",
+        "--config",
+        "/opt/hack-rules/offline-security.yml",
+        "--severity",
+        "ERROR",
+        "--severity",
+        "WARNING",
+        "/scan"
+      ],
+      "network": "none",
+      "returncode": 0,
+      "stderr_tail": "               \n               \n\u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510\n\u2502 Scan Status \u2502\n\u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518\n  Scanning 26 files tracked by git with 10 Code rules:\n  Nothing to scan.\n                \n                \n\u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510\n\u2502 Scan Summary \u2502\n\u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518\n\u2705 Scan completed successfully.\n \u2022 Findings: 0 (0 blocking)\n \u2022 Rules run: 10\n \u2022 Targets scanned: 0\n \u2022 Parsed lines: an unknown percentage\n \u2022 No ignore information available\nRan 10 rules on 0 files: 0 findings.\n",
+      "stdout_tail": "{\"version\":\"1.176.0\",\"results\":[],\"errors\":[],\"paths\":{\"scanned\":[]},\"time\":{\"rules\":[],\"rules_parse_time\":0.0017468929290771484,\"profiling_times\":{\"config_time\":0.14237594604492188,\"core_time\":0.22724437713623047,\"ignores_time\":0.00010919570922851562,\"total_time\":0.38600778579711914},\"fixpoint_timeouts\":[],\"targets\":[],\"total_bytes\":0,\"max_memory_bytes\":76269952},\"engine_requested\":\"OSS\",\"skipped_rules\":[],\"profiling_results\":[]}\n",
+      "tool": "semgrep"
+    },
+    {
+      "argv": [
+        "docker",
+        "run",
+        "--rm",
+        "--network=none",
+        "-v",
+        "/home/graham/workspace/experiments/oai-trial/src:/scan:ro",
+        "hack-skill-security:latest",
+        "bandit",
+        "-r",
+        "/scan",
+        "-ll",
+        "-f",
+        "txt"
+      ],
+      "network": "none",
+      "returncode": 1,
+      "stderr_tail": "[main]\tINFO\tprofile include tests: None\n[main]\tINFO\tprofile exclude tests: None\n[main]\tINFO\tcli include tests: None\n[main]\tINFO\tcli exclude tests: None\n[main]\tINFO\trunning on Python 3.11.16\n",
+      "stdout_tail": "Run started:2026-09-04 16:55:02.465340+00:00\n\nTest results:\n>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.\n   Severity: Medium   Confidence: Medium\n   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)\n   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html\n   Location: /scan/anonymization_trial/formats.py:247:16\n246\t            pre_counts[table] = connection.execute(\n247\t                f\"SELECT COUNT(*) FROM {_quote(table)}\"  # noqa: S608 (identifier quoted)\n248\t            ).fetchone()[0]\n\n--------------------------------------------------\n>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.\n   Severity: Medium   Confidence: Low\n   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)\n   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html\n   Location: /scan/anonymization_trial/formats.py:253:20\n252\t            select_cols = \", \".join(_quote(c) for c in writable)\n253\t            query = f\"SELECT rowid, {select_cols} FROM {_quote(table)}\"  # noqa: S608 (quoted)\n254\t            rows = connection.execute(query).fetchall()\n\n--------------------------------------------------\n>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.\n   Severity: Medium   Confidence: Medium\n   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)\n   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html\n   Location: /scan/anonymization_trial/formats.py:268:24\n267\t                    connection.execute(\n268\t                        f\"UPDATE {_quote(table)} SET {assignments} WHERE rowid = ?\",  # noqa: S608\n269\t                        [*updates.values(), rowid],\n\n--------------------------------------------------\n>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.\n   Severity: Medium   Confidence: Medium\n   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)\n   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html\n   Location: /scan/anonymization_trial/formats.py:280:12\n279\t        actual = connection.execute(\n280\t            f\"SELECT COUNT(*) FROM {_quote(table)}\"  # noqa: S608 (identifier quoted)\n281\t        ).fetchone()[0]\n\n--------------------------------------------------\n>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.\n   Severity: Medium   Confidence: Medium\n   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)\n   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html\n   Location: /scan/anonymization_trial/formats.py:304:46\n303\t            for table in tables:\n304\t                for row in connection.execute(f\"SELECT * FROM {_quote(table)}\"):  # noqa: S608 (identifier quoted via _quote)\n305\t                    for value in row:\n\n--------------------------------------------------\n\nCode scanned:\n\tTotal lines of code: 1120\n\tTotal lines skipped (#nosec): 0\n\tTotal potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0\n\nRun metrics:\n\tTotal issues (by severity):\n\t\tUndefined: 0\n\t\tLow: 2\n\t\tMedium: 5\n\t\tHigh: 0\n\tTotal issues (by confidence):\n\t\tUndefined: 0\n\t\tLow: 1\n\t\tMedium: 4\n\t\tHigh: 2\nFiles skipped (0):\n",
+      "tool": "bandit"
+    }
+  ]
+}
