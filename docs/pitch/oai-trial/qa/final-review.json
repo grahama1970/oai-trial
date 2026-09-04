@@ -2,15 +2,15 @@
   "schema": "oai_trial.pitch_final_review.v1",
   "source_commit": "6b69e188832a97392925cdf423bc4c45573323c4",
   "status": "NEEDS_HUMAN",
-  "bundle_sha256": "dadff64de476de8402a3e3470566fbbade8dc350de098439e592a5277e8c9208",
+  "bundle_sha256": "8759896661d9a21d8e796f946ddb194d1ba9944bfb6b288b8f50787cda3dab12",
   "artifacts": {
     "pptx": {
       "path": "/mnt/storage12tb/oai-trial/pitch-final/oai-trial-6b69e18.pptx",
-      "sha256": "a9b7875f31d23da65c0555aaee80a94cc2b411c837e0a5811f3bc1b75aac0d04"
+      "sha256": "c022c7052503f11051456804970fad81227fc8bbd13d16f0dc8c01d87b5418c6"
     },
     "pdf": {
       "path": "/mnt/storage12tb/oai-trial/pitch-final/frozen-render/oai-trial-6b69e18.pdf",
-      "sha256": "9052865f95ecd91bebaa0c35ad7ed22ff2c86f1adfe408659be889b432e9ba36"
+      "sha256": "eee04ba33dac7a03e7a374dff877fe49e962f9838021d0c47dd51b9b5b5aca91"
     },
     "contact_sheet": {
       "path": "/mnt/storage12tb/oai-trial/pitch-final/frozen-render/contact-sheet.png",
@@ -18,7 +18,7 @@
     },
     "render_receipt": {
       "path": "/mnt/storage12tb/oai-trial/pitch-final/frozen-render/render_receipt.json",
-      "sha256": "b79f15267b34aab5a157bf57708d5c3e6e65c0b1ef82351967873d8f929b5da0"
+      "sha256": "922cccffc1d5f209f7d3469469b88bf351dc30653a023cd0b58152fce3b2255c"
     },
     "surf_capture": {
       "path": "/mnt/storage12tb/oai-trial/pitch-final/final-contact-sheet-surf.png",
@@ -50,12 +50,12 @@
   "contact_sheet_review": {
     "status": "PENDING",
     "reviewer_kind": "human",
-    "bundle_sha256": "dadff64de476de8402a3e3470566fbbade8dc350de098439e592a5277e8c9208"
+    "bundle_sha256": "8759896661d9a21d8e796f946ddb194d1ba9944bfb6b288b8f50787cda3dab12"
   },
   "google_slides_review": {
     "status": "NOT_ESTABLISHED",
     "reviewer_kind": "human",
-    "bundle_sha256": "dadff64de476de8402a3e3470566fbbade8dc350de098439e592a5277e8c9208",
+    "bundle_sha256": "8759896661d9a21d8e796f946ddb194d1ba9944bfb6b288b8f50787cda3dab12",
     "reason": "Google Drive menu reachable; final PPTX upload/import not proven."
   },
   "debugger": {

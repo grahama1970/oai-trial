@@ -11,12 +11,28 @@ claims:
   source_refs:
   - source_id: brief
     section: Required behavior
-    locator: TRIAL_BRIEF.md:5 (Required behavior)
+    locator: TRIAL_BRIEF.md:13-22 (Required behavior)
   evidence_spans:
   - source_id: brief
-    text: A fictional analytics company receives customer exports. Its privacy team must anonymize each export before
-      another internal team can use it. Exports can eventually reach terabyte or petabyte scale and contain CSV,
-      JSON, UTF-8 text, and SQLite database files. The same synthetic identity can appear in every format.
+    text: 'Every successful run must meet these requirements:
+
+
+      - Produce useful, valid output in the same logical format as each input.
+
+      - Replace every value identified by the input policy.
+
+      - Keep replacements stable across files and repeated runs. Distinct identities must not share a type-specific
+      replacement; aliases of one identity may intentionally converge.
+
+      - Preserve protected values and the meaning of other non-sensitive data.
+
+      - Preserve CSV headers and rows, JSON structure, and SQLite tables, relationships, row counts, and integrity.
+
+      - Verify the complete corpus before marking it ready for release.
+
+      - Keep raw inputs, replacement mappings, and quarantined content out of the release directory and logs.
+
+      - Exit non-zero after a failure. Do not leave a partial corpus that looks ready for release.'
     section: Required behavior
   notes: 'Project-agent source review, not human presentation approval. Runtime/source candidate 0795dc66deaa5991cd34959c6d8b81f80a8042a0.
     Evidence command: docker run --rm anonymization-trial'

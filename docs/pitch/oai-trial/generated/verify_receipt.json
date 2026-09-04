@@ -1,29 +1,31 @@
 {
   "schema": "pitchdeck.verify_receipt.v1",
   "operation": "verify",
-  "readiness": "READY",
+  "readiness": "USABLE_WITH_GAPS",
   "mocked": false,
   "live": false,
   "inputs": {
     "bundle_dir": "${PROJECT_ROOT}/docs/pitch/oai-trial/generated",
     "deck": "${PROJECT_ROOT}/docs/pitch/oai-trial/generated/deck.public.yaml",
     "pptx": "/mnt/storage12tb/oai-trial/pitch-final/oai-trial-6b69e18.pptx",
-    "canonical_deck_sha256": "dadff64de476de8402a3e3470566fbbade8dc350de098439e592a5277e8c9208",
-    "source_snapshot_sha256": "150b2f94578b7265218c5fd57f33c7c51e0430a7b3bf739f0fb20783a2f42890"
+    "canonical_deck_sha256": "8759896661d9a21d8e796f946ddb194d1ba9944bfb6b288b8f50787cda3dab12",
+    "source_snapshot_sha256": "b1fec4fe65061f6fdf6b83cc697dfc9c846e99201e5259dd3e8a614166fba196"
   },
   "outputs": {
     "validation_report": "${PROJECT_ROOT}/docs/pitch/oai-trial/generated/validation_report.json",
     "linked_pptx": "/mnt/storage12tb/oai-trial/pitch-final/oai-trial-6b69e18.pptx",
-    "linked_pptx_sha256": "a9b7875f31d23da65c0555aaee80a94cc2b411c837e0a5811f3bc1b75aac0d04"
+    "linked_pptx_sha256": "c022c7052503f11051456804970fad81227fc8bbd13d16f0dc8c01d87b5418c6"
   },
   "counts": {
     "slides": 7,
     "claims": 7,
     "assets": 3,
     "errors": 0,
-    "warnings": 0
+    "warnings": 1
   },
-  "gaps": [],
+  "gaps": [
+    "NUMERIC_UNBOUND: Binding 'element:formats' renders number '8' that appears in no evidence span or recorded formula of claim 'brief'."
+  ],
   "claims": {
     "proves": [
       "Typed bundle manifests passed or failed according to the emitted validation issues.",

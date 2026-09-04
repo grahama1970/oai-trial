@@ -16,8 +16,8 @@
   },
   "missing": [],
   "canonical_hashes": {
-    "deck.curated.yaml": "dadff64de476de8402a3e3470566fbbade8dc350de098439e592a5277e8c9208",
-    "claim_ledger.curated.yaml": "48fa4a670f76484a4fe66e09693bd0a715d4408e33844ab5f39f519bd9c7393e",
+    "deck.curated.yaml": "8759896661d9a21d8e796f946ddb194d1ba9944bfb6b288b8f50787cda3dab12",
+    "claim_ledger.curated.yaml": "e3fe88d1bfca2beaaca5b0b1f1786a4aef267aa10b7dd6fb0f5d53d8c413990e",
     "speaker_notes.curated.md": "818b681405e349cb5bd5111d48b4ccc7310d4379426f7b168bb740ae0ddffc22"
   },
   "asset_hashes": {

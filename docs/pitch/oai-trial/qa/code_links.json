@@ -2,9 +2,9 @@
   "source_commit": "43639b7463b919956fe79f62f6faa9519c05cacc",
   "slides": {
     "01-brief": {
-      "url": "https://github.com/grahama1970/oai-trial/blob/43639b7463b919956fe79f62f6faa9519c05cacc/TRIAL_BRIEF.md#L5",
+      "url": "https://github.com/grahama1970/oai-trial/blob/43639b7463b919956fe79f62f6faa9519c05cacc/TRIAL_BRIEF.md#L13",
       "path": "TRIAL_BRIEF.md",
-      "line": 5,
+      "line": 13,
       "command": "docker run --rm anonymization-trial"
     },
     "02-architecture": {

@@ -23,7 +23,7 @@ slides:
   source_refs:
   - source_id: brief
     section: Required behavior
-    locator: TRIAL_BRIEF.md:5
+    locator: TRIAL_BRIEF.md:13-22
   claim_ids:
   - brief
   visual:
