@@ -29,6 +29,7 @@ class AnonErrorCode(StrEnum):
     VERIFICATION_FAILED = "verification_failed"
     PUBLICATION_FAILED = "publication_failed"
     UNSAFE_INPUT = "unsafe_input"
+    SOURCE_CHANGED = "source_changed"
 
 
 class AnonError(RuntimeError):

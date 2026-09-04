@@ -108,6 +108,14 @@ def _preflight(input_root: Path, output_root: Path, policy: Policy) -> list[tupl
     return files
 
 
+def _source_digests(files: list[tuple[Path, Path]]) -> dict[str, str]:
+    """SHA256 of each source file, keyed by relative path (TOCTOU baseline)."""
+    return {
+        relative.as_posix(): hashlib.sha256(source.read_bytes()).hexdigest()
+        for source, relative in files
+    }
+
+
 def _manifest_digest(corpus: Path) -> str:
     digest = hashlib.sha256()
     for path in sorted(p for p in corpus.rglob("*") if p.is_file()):
@@ -139,6 +147,7 @@ def run_pipeline(input_root: Path, output_root: Path) -> RunReport:
     policy = load_policy(input_root / "policy.json")
     files = _preflight(input_root, output_root, policy)
 
+    inventory = _source_digests(files)
     output_root.mkdir(parents=True, exist_ok=True)
     staging = Path(tempfile.mkdtemp(dir=output_root, prefix=".staging-"))
     try:
@@ -154,6 +163,11 @@ def run_pipeline(input_root: Path, output_root: Path) -> RunReport:
             bytes_read += source.stat().st_size
 
         verify_corpus(input_root / "corpus", staged_corpus, policy)
+        # Source-snapshot / TOCTOU gate: reject if any source file changed between
+        # inventory and this point (detects content mutation even if mtime is
+        # preserved). Publishing a corpus derived from a mutated source is unsafe.
+        if _source_digests(files) != inventory:
+            _reject(AnonErrorCode.SOURCE_CHANGED, "a source file changed during processing")
         bytes_written = sum(p.stat().st_size for p in staged_corpus.rglob("*") if p.is_file())
         report = RunReport(
             status="ready",
