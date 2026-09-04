@@ -23,6 +23,8 @@ from pathlib import Path
 
 
 def probe_csv(path: Path, quasi_identifiers: list[str]) -> dict:
+    """Count k=1 singleton rows over the given quasi-identifier columns in one
+    CSV file; return a per-file signal dict (rows, singletons, columns)."""
     with path.open(newline="", encoding="utf-8-sig") as handle:
         rows = list(csv.DictReader(handle))
     if not rows:
@@ -42,6 +44,8 @@ def probe_csv(path: Path, quasi_identifiers: list[str]) -> dict:
 
 
 def probe_corpus(corpus: Path, quasi_identifiers: list[str]) -> dict:
+    """Aggregate probe_csv over every CSV under corpus/ into a residual_risk.v1
+    signal (per-file results plus total singleton count); no publication authority."""
     files = [probe_csv(p, quasi_identifiers) for p in sorted(corpus.rglob("*.csv"))]
     total_singletons = sum(f["singletons"] for f in files)
     return {
@@ -56,6 +60,8 @@ def probe_corpus(corpus: Path, quasi_identifiers: list[str]) -> dict:
 
 
 def main(argv: list[str] | None = None) -> int:
+    """CLI entrypoint: probe --corpus for k=1 quasi-identifier singletons and
+    print the residual_risk.v1 receipt as JSON; returns 0 (diagnostic only)."""
     parser = argparse.ArgumentParser(description="Bounded residual-risk probe (control-plane)")
     parser.add_argument("--corpus", type=Path, required=True)
     parser.add_argument("--quasi-identifiers", default="", help="comma-separated column names")

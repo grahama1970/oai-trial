@@ -58,6 +58,8 @@ def _sensitivity(total_bytes: float, cfg: dict) -> dict:
 
 
 def main(argv: list[str] | None = None) -> int:
+    """CLI entrypoint: read --inputs JSON, print the 1 TB/1 PB cost breakdown as
+    JSON to stdout; return 0 on success, 1 on a missing/invalid inputs file."""
     parser = argparse.ArgumentParser(description="AWS cost estimate for the anonymization pipeline")
     parser.add_argument("--inputs", type=Path, required=True)
     args = parser.parse_args(argv)
