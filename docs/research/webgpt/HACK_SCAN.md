@@ -483,3 +483,351 @@ And the wording matters. I would say:
 rather than “we ran black-hat attacks.” The latter sounds like attacker affiliation; **black-box / gray-box / white-box testing** precisely describes the engineering methodology.
 
 So yes: **SAST + SCA should only be the first security layer. Gray-box mutation/fault campaigns and evaluator-style black-box attacks should be part of the final hardening suite**, once the deterministic implementation is green. The `$hack` skill is a good orchestration/evidence mechanism for those campaigns, but the retained attacks themselves should live in `oai-trial` so OpenAI can reproduce them without your agent-skills environment.
+
+---
+Yes — **but only after the deterministic P0 implementation and the simpler `$hack` campaigns are green**.
+
+`$battle` adds something genuinely different from SAST and `$hack evolve-campaign`: **adaptive lineage with independent Judge-backed promotion**. Its contract is explicitly about spawning attack/defense children, evaluating them, selecting what survives, and continuing the lineage from real receipts rather than letting Red or Blue self-certify success.  The adaptive-lineage artifacts also retain parent/child continuity and promoted/recalled receipt references.
+
+For `oai-trial`, that could be a very strong **P1 hardening lane**.
+
+## Why it adds value beyond `$hack`
+
+I would think about the layers like this:
+
+| Layer                          | Question                                                                                                                    |
+| ------------------------------ | --------------------------------------------------------------------------------------------------------------------------- |
+| SAST/SCA                       | “Are there recognizable implementation/dependency weaknesses?”                                                              |
+| Black-box tests                | “Can an outsider break the published container contract?”                                                                   |
+| Gray-box `$hack`               | “Can mutation and feedback discover boundary failures?”                                                                     |
+| **`$battle` adaptive lineage** | **“Can successful attacks and defenses evolve over generations, with independent replay deciding what actually improved?”** |
+
+That final part is useful because many bugs only become apparent after an earlier mutation exposes a new seam.
+
+For example:
+
+```text
+Generation 0
+  Red: source mutation during processing
+     ↓
+  Judge: detected race, no unsafe release
+
+Generation 1 child
+  Red: mutate source after digest but before adapter open
+     ↓
+  Judge: finds TOCTOU bypass
+
+  Blue: revalidate fd identity/digest
+     ↓
+  Judge: replay attack + regression suite
+
+Generation 2 child
+  Red: hardlink alias + same inode + later mutation
+     ↓
+  Judge: tries to bypass new defense
+```
+
+That's qualitatively different from running a fixed adversarial fixture list.
+
+## The most useful Battle objective
+
+I would **not** ask Battle generically to “hack the anonymizer.”
+
+Give it one immutable security goal:
+
+> **Find any sequence of permitted input, filesystem, process, policy, format, or release-state manipulations that causes an invalid or privacy-unsafe corpus to obtain a valid READY state, leaks source/mapping data, or violates a declared preservation invariant.**
+
+That makes the fitness function very clear.
+
+### Red-team success signals
+
+Red gets credit only for reproducible cases where it can cause one of:
+
+```text
+unsafe_release_ready
+sensitive_literal_released
+protected_value_mutated
+identity_coherence_broken
+structure_invariant_broken
+verifier_false_accept
+report_corpus_binding_bypass
+source_snapshot_bypass
+raw_or_mapping_leak
+resource_bound_escape
+host_boundary_escape
+```
+
+### Blue-team success signals
+
+Blue gets credit only if:
+
+```text
+the original exploit now fails
++
+all existing correctness tests still pass
++
+independent Judge replays both
+```
+
+That maps beautifully onto Battle's existing TDSR/FDSR distinction: a “defense” that stops an attack by breaking legitimate behavior is not a true defense. `$battle` explicitly derives its scoreboard from independent Judge results rather than trusting Blue's own `verified` field.
+
+## The independent Judge is the key feature
+
+This is what makes Battle particularly appropriate for our project.
+
+Our anonymization architecture already says:
+
+```text
+TRANSFORMER
+cannot certify itself
+```
+
+Battle follows the same idea:
+
+```text
+RED
+cannot certify exploit success
+
+BLUE
+cannot certify patch correctness
+
+JUDGE
+replays both independently
+
+SCOREKEEPER
+uses Judge receipts only
+```
+
+That philosophical consistency is excellent.
+
+The skill's reactive-Judge flow already enforces a sequence where Judge #1 confirms the Red finding, Blue receives only the confirmed finding, Judge #2 replays the candidate patch, and scorekeeping derives from those Judge receipts.
+
+That is almost exactly how I would want autonomous security hardening governed.
+
+---
+
+# Attack families I would seed into adaptive lineage
+
+For this specific target, don't focus Battle on generic web vulnerabilities. Seed domain-specific families.
+
+### 1. Publication lineage
+
+```text
+kill at transition N
+corrupt staged file
+swap verified stage directory
+reuse stale report
+reuse report from another corpus
+alter corpus after verify
+rename race
+disk-full during commit
+permission change during commit
+```
+
+The descendants should combine these in increasingly subtle sequences.
+
+### 2. Source-snapshot lineage
+
+```text
+file changes after inventory
+inode replacement
+hardlink alias
+symlink swap
+SQLite WAL mutation
+truncate/append race
+mtime preserved while contents change
+```
+
+### 3. Matcher lineage
+
+```text
+nested literals
+prefix/suffix chains
+replacement→source collision
+multiple aliases
+case variants
+chunk-boundary placement
+very long shared prefixes
+policy permutation
+```
+
+### 4. Format parser lineage
+
+```text
+CSV quote/newline mutations
+UTF-8 boundary mutations
+BOM mutations
+JSON depth/duplicate-key/numeric combinations
+SQLite schema/PK/FK/trigger/generated-column combinations
+```
+
+### 5. Verifier lineage
+
+This may be the most valuable:
+
+```text
+one raw value restored
+wrong pseudonym but syntactically valid
+two subjects swapped
+duplicate row
+missing row
+non-sensitive scalar changed
+protected count preserved but positions changed
+manifest copied
+safe-looking extra file
+digest/report substitution
+```
+
+Then evolve attacks based on what the verifier currently catches.
+
+### 6. Resource/adversarial complexity lineage
+
+```text
+policy count
+literal length
+common-prefix density
+CSV field size
+JSON nesting
+SQLite rows
+file count
+path depth
+output expansion
+```
+
+The fitness metric should detect both outright failure and pathological CPU/RSS/disk behavior.
+
+---
+
+# One thing I would change from generic Battle
+
+I would **not allow Blue to patch `main` automatically**.
+
+Use Battle's digital-twin/worktree model:
+
+```text
+immutable candidate commit
+        │
+        ├── Red worktree/container
+        │
+        ├── Blue candidate-patch worktree
+        │
+        └── independent Judge environment
+```
+
+Only after:
+
+```text
+Red proof reproduced
++
+Blue patch blocks exact proof
++
+full deterministic suite passes
++
+independent verifier passes
++
+no new release bypass discovered
+```
+
+should a human/project agent consider landing the patch.
+
+Battle already supports isolated git worktrees and Docker target modes, which maps well to this arrangement.
+
+---
+
+# Retain promoted attacks in `oai-trial`
+
+This is crucial.
+
+Battle itself should remain a development tool. Every useful discovered attack should be distilled into a normal deterministic test:
+
+```text
+Battle discovers anomaly
+        ↓
+Judge reproduces
+        ↓
+focused GitHub ticket
+        ↓
+minimal fail-before-fix fixture
+        ↓
+patch
+        ↓
+retained regression in oai-trial
+        ↓
+Battle reruns lineage against patched candidate
+```
+
+So OpenAI does **not** need your Battle environment to reproduce the important evidence.
+
+That aligns with the principle we've already established for `$hack`: development tooling may discover problems, but the final repository contains the deterministic regression.
+
+---
+
+# Would I mention it in the presentation?
+
+Absolutely, but briefly.
+
+A single security-evidence slide could show:
+
+```text
+                 ADVERSARIAL ASSURANCE
+
+Static
+Semgrep / Bandit / SCA
+          │
+          ▼
+Fixed attacks
+property + fault + black-box corpus tests
+          │
+          ▼
+Adaptive gray-box
+$hack feedback-guided mutation
+          │
+          ▼
+Adaptive Red / Blue lineage
+Red children → Judge → Blue children → Judge
+          │
+          ▼
+Promoted exploit becomes retained regression
+```
+
+Then the important sentence:
+
+> “The adaptive agents never decide that their own attacks or fixes worked. An independent replay Judge is the authority, and every promoted finding becomes a deterministic repository regression.”
+
+That is a strong OpenAI-relevant story.
+
+---
+
+# But don't put this inside the eight-hour core
+
+I would prioritize:
+
+```text
+P0
+correct implementation
+independent verifier
+transactional release
+Docker
+known-truth fixtures
+property/fault tests
+SUBMISSION.md
+AWS architecture/cost
+
+then
+
+P1
+$hack SAST/SCA
+black-box corpus attack suite
+gray-box mutation campaign
+
+then
+
+P1+
+$battle adaptive lineage
+```
+
+If Battle finds nothing, that's supporting evidence, not proof.
+
+If Battle finds something, **that's extremely valuable** because it gives us a concrete adversarial regression before the interview.
+
+So yes: I would add `$battle` adaptive lineage as the **highest-end hardening layer**, but keep it external to the shipped runtime and subordinate to the independent deterministic evidence system.

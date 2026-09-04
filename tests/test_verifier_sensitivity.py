@@ -72,6 +72,25 @@ def test_incomplete_subject_coverage_is_caught(tmp_path: Path):
     assert exc.value.code == AnonErrorCode.VERIFICATION_FAILED
 
 
+def test_swapped_subject_pseudonyms_is_caught(tmp_path: Path):
+    from anonymization_trial.policy import replace_text
+    from anonymization_trial.pseudonyms import build_replacements
+
+    pol = _pol()
+    src = _dir(tmp_path / "src", {"a.txt": "Ada met Bob\n"})
+    out = tmp_path / "out"
+    out.mkdir()
+    reps = build_replacements([r.identity for r in pol.rules], pol.version)
+    rep_p1 = reps[("name", "p1")]
+    rep_p2 = reps[("name", "p2")]
+    body = replace_text("Ada met Bob\n", pol)[0]
+    swapped = body.replace(rep_p1, "__TMP__").replace(rep_p2, rep_p1).replace("__TMP__", rep_p2)
+    (out / "a.txt").write_text(swapped, encoding="utf-8")
+    with pytest.raises(AnonError) as exc:
+        verify_corpus(src, out, pol)
+    assert exc.value.code == AnonErrorCode.VERIFICATION_FAILED
+
+
 def test_report_carries_non_claims(tmp_path: Path):
     from anonymization_trial.fixture import generate_fixture
     from anonymization_trial.pipeline import run_pipeline

@@ -22,7 +22,7 @@ from __future__ import annotations
 from pathlib import Path
 
 from .errors import AnonError, AnonErrorCode
-from .policy import Policy
+from .policy import Policy, replace_text
 from .pseudonyms import build_replacements
 
 
@@ -63,6 +63,19 @@ def verify_corpus(source_corpus: Path, staged_corpus: Path, policy: Policy) -> N
                         AnonErrorCode.VERIFICATION_FAILED,
                         f"a sensitive literal survived in {rel.name}",
                     )
+
+    # Value-level skeleton for text files: independently recompute the expected
+    # output from source+policy and compare. Catches swapped/wrong pseudonyms
+    # and partial replacement that presence/count checks miss. (Text only;
+    # other formats keep structural + count checks.)
+    for rel in sorted(output_files):
+        if rel.suffix == ".txt":
+            src_text = (source_corpus / rel).read_text(encoding="utf-8")
+            out_text = (staged_corpus / rel).read_text(encoding="utf-8")
+            if replace_text(src_text, policy)[0] != out_text:
+                raise AnonError(
+                    AnonErrorCode.VERIFICATION_FAILED, f"text value skeleton mismatch in {rel.name}"
+                )
 
     source_texts = _searchable(source_corpus, source_files)
     output_texts = _searchable(staged_corpus, output_files)

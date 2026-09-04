@@ -1,10 +1,18 @@
 # Security review
 
-I treated both the data and the code transforming it as adversarial surfaces.
-The domain verifier (`verification.py`) checks anonymization correctness;
-separately, the code was run through containerized static and dependency
-analysis via `$hack` (Semgrep + Bandit inside Docker, target mounted read-only,
-`--network=none`).
+I treated both the data and the code transforming it as adversarial surfaces,
+across three perspectives (methodology names, not attacker affiliation):
+
+| Lane | Knowledge | Evidence |
+|---|---|---|
+| **White-box** | full source | containerized Semgrep + Bandit SAST, dependency SCA (`$hack`) |
+| **Gray-box** | data contracts | `tests/test_graybox_adversarial.py` (pathological policy/overlap, large fields, deep JSON, SQLite UNIQUE) + verifier mutation tests |
+| **Black-box** | only the CLI/mount contract | `tests/test_blackbox_contract.py` (hostile mounted corpus via `python -m anonymization_trial run`, deterministic replay, fail-closed, no stdio leak) |
+
+The retained gray/black-box attacks live in this repo, so the evaluator can
+reproduce them with `uv run pytest -q` without any external environment. The
+domain verifier (`verification.py`) checks anonymization correctness; the SAST
+lane below is a separate software-weakness gate.
 
 ## Static analysis (SAST)
 Receipt: [`hack-audit.receipt.json`](hack-audit.receipt.json)
