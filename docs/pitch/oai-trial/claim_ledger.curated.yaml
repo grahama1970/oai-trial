@@ -1,0 +1,126 @@
+schema: pitchdeck.claim_ledger.v1
+project_name: oai-trial cross-format anonymization
+claims:
+- id: brief-outcome
+  text: Replace every policy-identified value across CSV, JSON, UTF-8 text and SQLite; preserve structure, protected values and identity coherence; verify the whole corpus; fail closed.
+  kind: proof
+  visibility: public
+  source_refs: [{source_id: architecture, section: "1. Problem in one paragraph", locator: "line 1"}]
+  risk: medium
+  status: approved
+  evidence_spans: []
+- id: brief-bar
+  text: Eight-hour trial graded on correctness, scale evidence, reliability, security, operability and clarity — not lines of code.
+  kind: proof
+  visibility: public
+  source_refs: [{source_id: submission, section: "Implemented scope", locator: "line 1"}]
+  risk: medium
+  status: approved
+  evidence_spans: []
+- id: arch-flow
+  text: Policy compile then format adapters then private staging then independent verify then atomic report-last publish; quarantine is the fail-closed exit.
+  kind: proof
+  visibility: public
+  source_refs: [{source_id: architecture, section: "9. Publication & crash recovery", locator: "line 1"}]
+  risk: medium
+  status: approved
+  evidence_spans: []
+- id: arch-selfcert
+  text: The transformer cannot certify itself; an independent verifier rereads the output from disk and never trusts transform booleans.
+  kind: proof
+  visibility: public
+  source_refs: [{source_id: architecture, section: "8. Independent verification", locator: "line 1"}]
+  risk: medium
+  status: approved
+  evidence_spans: []
+- id: sem-matcher
+  text: Aho-Corasick over original input only; leftmost-longest with stable tie-break; emitted replacements are never rescanned so cascades are impossible.
+  kind: proof
+  visibility: public
+  source_refs: [{source_id: architecture, section: "6. Matching semantics", locator: "line 1"}]
+  risk: medium
+  status: approved
+  evidence_spans: []
+- id: sem-identity
+  text: (data_type, subject_id) is the canonical identity; aliases converge; distinct same-type identities are injective; collisions extend deterministically.
+  kind: proof
+  visibility: public
+  source_refs: [{source_id: architecture, section: "5. Policy & identity model", locator: "line 1"}]
+  risk: medium
+  status: approved
+  evidence_spans: []
+- id: sem-protected
+  text: Protected/sensitive overlap and sensitive schema identifiers are rejected, not silently resolved.
+  kind: proof
+  visibility: public
+  source_refs: [{source_id: privacy-contract, section: "Proven (deterministic, locally verified)", locator: "line 1"}]
+  risk: medium
+  status: approved
+  evidence_spans: []
+- id: rel-formats
+  text: CSV/TXT stream with BOM and header safety; JSON rejects duplicate keys, NaN and over-depth; SQLite uses an online-backup snapshot with integrity, foreign-key and row-count checks.
+  kind: proof
+  visibility: public
+  source_refs: [{source_id: architecture, section: "7. Format adapters", locator: "line 1"}]
+  risk: medium
+  status: approved
+  evidence_spans: []
+- id: ev-tests
+  text: 62 deterministic tests cover unit, property, fail-closed publication, verifier-mutation, gray-box and black-box CLI attacks, reproducible with uv run pytest -q.
+  kind: proof
+  visibility: public
+  source_refs: [{source_id: security, section: "Security review", locator: "line 1"}]
+  risk: medium
+  status: approved
+  evidence_spans: []
+- id: ev-hack
+  text: Containerized SAST (Semgrep + Bandit) via $hack returned 0 critical and 0 high, plus dependency SCA, under a three-lane white/gray/black-box methodology.
+  kind: proof
+  visibility: public
+  source_refs: [{source_id: security, section: "Static analysis (SAST)", locator: "line 1"}]
+  risk: medium
+  status: approved
+  evidence_spans: []
+- id: prod-aws
+  text: AWS reference — S3 intake/quarantine/release, SQS, Fargate workers, KMS-scoped HMAC, distributed verify; the portable OCI container is the cloud-neutral boundary.
+  kind: proof
+  visibility: public
+  source_refs: [{source_id: submission, section: "Portability (portable compute artifact, provider-specific orchestration)", locator: "line 1"}]
+  risk: medium
+  status: approved
+  evidence_spans: []
+- id: prod-cost
+  text: Reproducible cost model — about $52 at 1 TB and $51,836 at 1 PB (us-east-1 list prices, price date 2026-09-04, storage-dominant; list prices not yet confirmed against a dated source).
+  kind: proof
+  visibility: public
+  source_refs: [{source_id: submission, section: "SLA, capacity, and cost", locator: "line 1"}]
+  risk: medium
+  status: approved
+  evidence_spans: []
+- id: nonclaim-reid
+  text: Proves declared-literal replacement and structural preservation, not resistance to re-identification.
+  kind: non_claim
+  visibility: public
+  source_refs: [{source_id: privacy-contract, section: "Not established (out of scope for a literal-policy pipeline)", locator: "line 1"}]
+  risk: low
+  status: approved
+  evidence_spans: []
+- id: nonclaim-scans
+  text: Static and security scans are supporting evidence, not proof of vulnerability-free software.
+  kind: non_claim
+  visibility: public
+  source_refs: [{source_id: security, section: "Non-claims", locator: "line 1"}]
+  risk: low
+  status: approved
+  evidence_spans: []
+- id: nonclaim-scale
+  text: Not run at TB/PB scale; cloud prices are list prices unverified against a dated source; optional discovery and red-team lanes are designed, not built.
+  kind: non_claim
+  visibility: public
+  source_refs: [{source_id: submission, section: "Known gaps and next steps", locator: "line 1"}]
+  risk: low
+  status: approved
+  evidence_spans: []
+seam_validation:
+  kind: claim_ledger
+  status: PASS

@@ -1,0 +1,44 @@
+{
+  "schema": "pitchdeck.plan_receipt.v1",
+  "operation": "plan",
+  "readiness": "USABLE_WITH_GAPS",
+  "mocked": false,
+  "live": false,
+  "inputs": {
+    "source_manifest": "/home/graham/workspace/experiments/oai-trial/docs/pitch/oai-trial/source_manifest.yaml"
+  },
+  "outputs": {
+    "source_manifest": "/home/graham/workspace/experiments/oai-trial/docs/pitch/oai-trial/generated/source_manifest.resolved.yaml",
+    "claim_ledger": "/home/graham/workspace/experiments/oai-trial/docs/pitch/oai-trial/generated/claim_ledger.yaml",
+    "asset_manifest": "/home/graham/workspace/experiments/oai-trial/docs/pitch/oai-trial/generated/asset_manifest.yaml",
+    "deck_manifest": "/home/graham/workspace/experiments/oai-trial/docs/pitch/oai-trial/generated/deck.public.yaml",
+    "speaker_notes": "/home/graham/workspace/experiments/oai-trial/docs/pitch/oai-trial/generated/speaker_notes.md"
+  },
+  "counts": {
+    "sources": 7,
+    "read_sources": 7,
+    "claims": 97,
+    "candidate_claims": 94,
+    "assets": 2,
+    "slides": 6
+  },
+  "gaps": [
+    "94 claims remain candidate and require human review"
+  ],
+  "claims": {
+    "proves": [
+      "A typed candidate deck manifest was generated from the listed local README sources.",
+      "Public/private visibility and mandatory non-claims were preserved in machine-readable artifacts."
+    ],
+    "does_not_prove": [
+      "The README claims match the current codebase or runtime.",
+      "Candidate claims are approved for external use.",
+      "Screenshots are current or visually approved.",
+      "The product is production-ready, certified, accredited, or deployed."
+    ]
+  },
+  "seam_validation": {
+    "kind": "plan_receipt",
+    "status": "PASS"
+  }
+}

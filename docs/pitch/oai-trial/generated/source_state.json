@@ -1,0 +1,13 @@
+{
+ "schema": "pitchdeck.source_state.v1",
+ "hashes": {
+  "readme": "e425c3cd410e7ff7006f1c673ff34cccd6629d6e2253132bd0c8c33e6add1d9d",
+  "architecture": "4ea2aad487614611639451cc6c06fed7d525636f854f8e97a5e5e7d240b65220",
+  "submission": "eeefdbea4735ec1326640ab7257a20865f9d6fc64580b8a386fb48fd9a474271",
+  "privacy-contract": "86dab63694267151df7d63b14a4d24bf783fc285b0c8826dfe9c333ec90e13ad",
+  "acceptance-matrix": "568baef7055f92ff1e701e2e853dee1936b1c0df1a245eaec102a3636effee20",
+  "security": "ef70fde5bd8669da2abcf164cf3ec2a6358fa91e4f74570cd656253f07e72867",
+  "arch-svg": "9cd0cdf99e1131734a303cf82c63c4ef39c8ad1582ab601338f66de2a98d074d"
+ },
+ "missing": []
+}

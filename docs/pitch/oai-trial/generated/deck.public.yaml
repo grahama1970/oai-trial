@@ -1,0 +1,297 @@
+schema: pitchdeck.deck_manifest.v1
+deck:
+  id: oai-trial-cross-format-anonymization-public
+  title: Verified Cross-Format Anonymization — Technical Briefing
+  subtitle: 'Checked (deterministic, local):'
+  audience: OpenAI privacy-engineering trial reviewers (40-minute technical walkthrough)
+  visibility: public
+  target_editor: google_slides
+  theme: dark_cyan_evidence
+  theme_tokens:
+    accent: '#22d3ee'
+    heading_font: Arial
+    body_font: Arial
+  source_policy: public_only
+slides:
+- id: 01-cover
+  order: 1
+  role: cover
+  layout: cover
+  visibility: public
+  title: oai-trial — Cross-Format Data Anonymization
+  message: 'Checked (deterministic, local):'
+  body: []
+  source_refs:
+  - source_id: readme
+    section: Introduction
+  claim_ids:
+  - readme-introduction-01
+  visual:
+    type: none
+    position: right
+    items: []
+    callouts: []
+  claim_guard:
+    allowed_claim_ids:
+    - readme-introduction-01
+    requires_non_claim_ids: []
+    forbidden_unqualified: []
+  elements: []
+  bindings: []
+  transition: slide
+  transition_duration_ms: 400
+  reveal: stagger_up
+  hidden: false
+  notes: 'Draft slide generated from README source material.
+
+    Required qualifiers:
+
+    - Verify this status against the pinned source commit and current evidence before external use.
+
+    Sources:
+
+    - readme — Introduction
+
+    Human review required before external use.'
+- id: 02-proof-today
+  order: 2
+  role: proof-today
+  layout: proof_cards
+  visibility: public
+  title: What is established today
+  message: 'ruff check src tests → clean; docker build + both docker run commands verified with read-back
+    of report.json and all four output formats; demo reports per-run peak memory. Containerized SAST (Semgrep
+    + Bandit) + dependency SCA via $hack: 0 critical / 0 high — see docs/security/. Privacy scope + non-claims:
+    docs/PRIVACY_CONTRACT.md.'
+  body:
+  - 'Checked (deterministic, local): uv run pytest -q → 39 passed;'
+  - 'Not claimed here: TB/PB scale is designed and cost-modelled, not run at'
+  - scale; cloud prices are list prices not yet confirmed against a dated source; optional classifier/RapidFuzz
+    discovery and the concurrent ripgrep cross-check are…
+  - Preserve the baseline git history and the two required docker run commands. .env is gitignored; no
+    real personal data or credentials belong in the repo.
+  source_refs:
+  - source_id: readme
+    section: Proof and non-claims
+    locator: line 79
+  claim_ids:
+  - readme-proof-and-non-claims-01
+  - readme-proof-and-non-claims-02
+  - readme-proof-and-non-claims-03
+  - readme-proof-and-non-claims-04
+  visual:
+    type: none
+    position: right
+    items: []
+    callouts: []
+  claim_guard:
+    allowed_claim_ids:
+    - readme-proof-and-non-claims-01
+    - readme-proof-and-non-claims-02
+    - readme-proof-and-non-claims-03
+    - readme-proof-and-non-claims-04
+    requires_non_claim_ids: []
+    forbidden_unqualified: []
+  elements: []
+  bindings: []
+  transition: slide
+  transition_duration_ms: 400
+  reveal: stagger_up
+  hidden: false
+  notes: 'Draft slide generated from README source material.
+
+    Required qualifiers:
+
+    - Verify this status against the pinned source commit and current evidence before external use.
+
+    Sources:
+
+    - readme — Proof and non-claims (line 79)
+
+    Human review required before external use.'
+- id: 03-section-start-here
+  order: 3
+  role: section-start-here
+  layout: statement
+  visibility: public
+  title: Start here
+  message: You want to… — Go to
+  body:
+  - You want to… — Go to
+  - Understand the whole design in 10 min — docs/ARCHITECTURE.md
+  - Read the task as given — TRIAL_BRIEF.md
+  - See the frozen correctness rules — docs/ANONYMIZATION_SEMANTICS.md
+  source_refs:
+  - source_id: readme
+    section: Start here
+    locator: line 9
+  claim_ids:
+  - readme-start-here-01
+  - readme-start-here-02
+  - readme-start-here-03
+  visual:
+    type: none
+    position: right
+    items: []
+    callouts: []
+  claim_guard:
+    allowed_claim_ids:
+    - readme-start-here-01
+    - readme-start-here-02
+    - readme-start-here-03
+    requires_non_claim_ids: []
+    forbidden_unqualified: []
+  elements: []
+  bindings: []
+  transition: slide
+  transition_duration_ms: 400
+  reveal: stagger_up
+  hidden: false
+  notes: 'Draft slide generated from README source material.
+
+    Required qualifiers:
+
+    - Verify this status against the pinned source commit and current evidence before external use.
+
+    Sources:
+
+    - readme — Start here (line 9)
+
+    Human review required before external use.'
+- id: 04-section-inspect-a-release-no-server
+  order: 4
+  role: section-inspect-a-release-no-server
+  layout: statement
+  visibility: public
+  title: Inspect a release (no server)
+  message: report.json conforms to schemas/report.schema.json.
+  body: []
+  source_refs:
+  - source_id: readme
+    section: Inspect a release (no server)
+    locator: line 37
+  claim_ids:
+  - readme-inspect-a-release-no-server-01
+  visual:
+    type: none
+    position: right
+    items: []
+    callouts: []
+  claim_guard:
+    allowed_claim_ids:
+    - readme-inspect-a-release-no-server-01
+    requires_non_claim_ids: []
+    forbidden_unqualified: []
+  elements: []
+  bindings: []
+  transition: slide
+  transition_duration_ms: 400
+  reveal: stagger_up
+  hidden: false
+  notes: 'Draft slide generated from README source material.
+
+    Sources:
+
+    - readme — Inspect a release (no server) (line 37)
+
+    Human review required before external use.'
+- id: 05-section-design-rules
+  order: 5
+  role: section-design-rules
+  layout: statement
+  visibility: public
+  title: Design rules
+  message: not silently resolved.
+  body:
+  - Deterministic literal matching only; regex removed from the value path.
+  - Match original input, never rescan replacements (no cascade).
+  - Protected/sensitive overlap and sensitive schema identifiers are rejected,
+  - Verify the whole corpus before release; fail closed (non-zero exit, no partial
+  source_refs:
+  - source_id: readme
+    section: Design rules
+    locator: line 69
+  claim_ids:
+  - readme-design-rules-01
+  - readme-design-rules-02
+  - readme-design-rules-03
+  visual:
+    type: none
+    position: right
+    items: []
+    callouts: []
+  claim_guard:
+    allowed_claim_ids:
+    - readme-design-rules-01
+    - readme-design-rules-02
+    - readme-design-rules-03
+    requires_non_claim_ids: []
+    forbidden_unqualified: []
+  elements: []
+  bindings: []
+  transition: slide
+  transition_duration_ms: 400
+  reveal: stagger_up
+  hidden: false
+  notes: 'Draft slide generated from README source material.
+
+    Sources:
+
+    - readme — Design rules (line 69)
+
+    Human review required before external use.'
+- id: 06-collaboration-ask
+  order: 6
+  role: collaboration-ask
+  layout: collaboration
+  visibility: public
+  title: A useful next conversation
+  message: Use one representative claim to test workflow fit, evidence boundaries, and the next collaboration
+    step.
+  body:
+  - Workflow co-design
+  - Integration design
+  - Deployment and governance planning
+  source_refs:
+  - source_id: readme
+    section: Collaboration / next step
+  claim_ids:
+  - non-claim-01-proves-declared-literal-replacement-
+  - non-claim-02-static-security-scans-are-supporting
+  - non-claim-03-candidate-slides-require-human-revie
+  visual:
+    type: none
+    position: right
+    items: []
+    callouts: []
+  claim_guard:
+    allowed_claim_ids: []
+    requires_non_claim_ids:
+    - non-claim-01-proves-declared-literal-replacement-
+    - non-claim-02-static-security-scans-are-supporting
+    - non-claim-03-candidate-slides-require-human-revie
+    forbidden_unqualified: []
+  elements: []
+  bindings: []
+  transition: slide
+  transition_duration_ms: 400
+  reveal: stagger_up
+  hidden: false
+  notes: 'Draft slide generated from README source material.
+
+    Sources:
+
+    - readme — Collaboration / next step
+
+    Human review required before external use.
+
+    Mandatory non-claims:
+
+    - Proves declared-literal replacement + structural preservation, not re-identification resistance.
+
+    - Static/security scans are supporting evidence, not proof of vulnerability-free software.
+
+    - Candidate slides require human review before external use.'
+seam_validation:
+  kind: deck_manifest
+  status: PASS

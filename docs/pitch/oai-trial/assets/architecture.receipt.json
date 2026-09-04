@@ -1,0 +1,25 @@
+{
+  "browser": {
+    "animation_observed": false,
+    "changed_pixel_ratio": 0.0,
+    "details": "browser verification not requested",
+    "loaded": false,
+    "natural_height": 0,
+    "natural_width": 0,
+    "status": "NOT_RUN"
+  },
+  "deterministic_rebuild": true,
+  "does_not_prove": "pixel-perfect rendering on every browser, remote font availability, or future GitHub proxy behavior",
+  "findings": [],
+  "kind": "readme-svg-validation.v1",
+  "proof_scope": "XML safety, active-content rejection, references, accessibility, reduced motion, optional strict theme and Chromium img-mode motion",
+  "seam_validation": {
+    "kind": "scene-to-svg",
+    "status": "PASS"
+  },
+  "source_path": "/home/graham/workspace/experiments/oai-trial/docs/pitch/oai-trial/assets/architecture.svg",
+  "source_sha256": "d4993c42a51e4a811fd6410c245f45b8a3ce17533c35a32d63c697259ebf7d22",
+  "status": "PASS",
+  "theme": "fixing-opus-neon-v1",
+  "tool_version": "0.1.0"
+}

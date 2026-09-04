@@ -1,0 +1,30 @@
+schema: pitchdeck.asset_manifest.v1
+project_name: oai-trial cross-format anonymization
+assets:
+- id: readme-introduction-01
+  kind: diagram
+  visibility: public
+  local_path: /home/graham/workspace/experiments/oai-trial/docs/pitch/oai-trial/assets/architecture.svg
+  required: false
+  alt_text: Pipeline
+  target_aspect: '16:9'
+  status: present
+  source_ref:
+    source_id: readme
+    section: Introduction
+    locator: line 7
+- id: architecture-3-system-at-a-glance-01
+  kind: diagram
+  visibility: public
+  local_path: /home/graham/workspace/experiments/oai-trial/docs/pitch/oai-trial/assets/architecture.svg
+  required: false
+  alt_text: Cross-format anonymization engine fanning to four format adapters
+  target_aspect: '16:9'
+  status: present
+  source_ref:
+    source_id: architecture
+    section: 3. System at a glance
+    locator: line 17
+seam_validation:
+  kind: asset_manifest
+  status: PASS

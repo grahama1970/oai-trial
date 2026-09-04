@@ -1,0 +1,164 @@
+schema: pitchdeck.deck_manifest.v1
+deck:
+  id: oai-trial-technical-briefing-public
+  title: Verified Cross-Format Anonymization
+  subtitle: An eight-hour privacy-engineering trial — technical briefing
+  audience: OpenAI privacy-engineering trial reviewers (40-minute technical walkthrough)
+  visibility: public
+  target_editor: google_slides
+  theme: dark_cyan_evidence
+  theme_tokens: {accent: '#22d3ee', heading_font: Arial, body_font: Arial}
+  source_policy: public_only
+slides:
+- id: 01-brief
+  order: 1
+  role: cover
+  layout: statement
+  visibility: public
+  title: The assignment
+  message: Anonymize customer exports across four formats — and prove it.
+  body:
+  - Replace every policy-identified value across CSV, JSON, UTF-8 text and SQLite.
+  - Preserve structure, protected values and identity coherence; verify the whole corpus; fail closed.
+  - Eight hours, graded on judgement and evidence — not lines of code.
+  source_refs: [{source_id: architecture, section: "1. Problem in one paragraph"}]
+  claim_ids: [brief-outcome, brief-bar]
+  visual: {type: none, position: right, items: [], callouts: []}
+  claim_guard: {allowed_claim_ids: [brief-outcome, brief-bar], requires_non_claim_ids: [], forbidden_unqualified: []}
+  elements: []
+  bindings: []
+  transition: slide
+  reveal: stagger_up
+  hidden: false
+  notes: Open with the brief and the acceptance bar.
+- id: 02-architecture
+  order: 2
+  role: architecture
+  layout: split
+  visibility: public
+  title: Architecture — one fail-closed path
+  message: The transformer cannot certify itself.
+  body:
+  - Policy compile → format adapters → private staging → independent verify → atomic publish.
+  - report.json is written last as the sole readiness marker; quarantine is the fail-closed exit.
+  - An independent verifier rereads the output from disk, never trusting transform booleans.
+  source_refs: [{source_id: architecture, section: "9. Publication & crash recovery"}]
+  claim_ids: [arch-flow, arch-selfcert]
+  visual:
+    type: image
+    position: right
+    asset_id: architecture-3-system-at-a-glance-01
+    items: []
+    callouts: []
+  claim_guard: {allowed_claim_ids: [arch-flow, arch-selfcert], requires_non_claim_ids: [], forbidden_unqualified: []}
+  elements: []
+  bindings: []
+  transition: slide
+  reveal: stagger_up
+  hidden: false
+  notes: Show the SVG; emphasise trust boundaries and report-last publication.
+- id: 03-semantics
+  order: 3
+  role: semantics
+  layout: proof_cards
+  visibility: public
+  title: The hard semantics
+  message: Deterministic matching and identity coherence.
+  body:
+  - Matcher — Aho-Corasick over original input only; leftmost-longest; emitted replacements never rescanned, so cascades are impossible.
+  - Identity — (data_type, subject_id) is canonical; aliases converge; same-type identities injective; collisions extend deterministically.
+  - Rejection — protected/sensitive overlap and sensitive schema identifiers are refused, not silently resolved.
+  source_refs: [{source_id: architecture, section: "6. Matching semantics"}]
+  claim_ids: [sem-matcher, sem-identity, sem-protected]
+  visual: {type: none, position: right, items: [], callouts: []}
+  claim_guard: {allowed_claim_ids: [sem-matcher, sem-identity, sem-protected], requires_non_claim_ids: [], forbidden_unqualified: []}
+  elements: []
+  bindings: []
+  transition: slide
+  reveal: stagger_up
+  hidden: false
+  notes: The four hardest correctness choices.
+- id: 04-reliability
+  order: 4
+  role: reliability
+  layout: proof_cards
+  visibility: public
+  title: Reliability and format hardening
+  message: Verified, atomic, report-last — or nothing.
+  body:
+  - Publish — staged build then independent verify then atomic promote; any failure exits non-zero, no partial release.
+  - CSV / JSON — stream with BOM and header safety; JSON rejects duplicate keys, NaN and over-depth.
+  - SQLite — online-backup snapshot with integrity, foreign-key and row-count checks.
+  source_refs: [{source_id: architecture, section: "7. Format adapters"}]
+  claim_ids: [rel-formats, arch-flow]
+  visual: {type: none, position: right, items: [], callouts: []}
+  claim_guard: {allowed_claim_ids: [rel-formats, arch-flow], requires_non_claim_ids: [], forbidden_unqualified: []}
+  elements: []
+  bindings: []
+  transition: slide
+  reveal: stagger_up
+  hidden: false
+  notes: Crash-safe publication and per-format oracles.
+- id: 05-evidence
+  order: 5
+  role: evidence
+  layout: proof_cards
+  visibility: public
+  title: Evidence — and the extras
+  message: Independent, adversarial, reproducible.
+  body:
+  - Tests — 62 deterministic covering unit, property, fail-closed, verifier-mutation, gray-box and black-box CLI attacks.
+  - Extra — containerized SAST via $hack (Semgrep + Bandit) found 0 critical and 0 high, plus dependency SCA.
+  - Method — three-lane white / gray / black-box, every finding retained as an in-repo regression.
+  source_refs: [{source_id: security, section: "Security review"}]
+  claim_ids: [ev-tests, ev-hack]
+  visual: {type: none, position: right, items: [], callouts: []}
+  claim_guard: {allowed_claim_ids: [ev-tests, ev-hack], requires_non_claim_ids: [], forbidden_unqualified: []}
+  elements: []
+  bindings: []
+  transition: slide
+  reveal: stagger_up
+  hidden: false
+  notes: Evidence quality is the differentiator; $hack is a supporting security gate.
+- id: 06-production
+  order: 6
+  role: production
+  layout: three_cards
+  visibility: public
+  title: Production scale (AWS reference)
+  message: Portable container, provider-specific orchestration.
+  body:
+  - AWS — S3 intake/quarantine/release, SQS, Fargate workers, KMS-scoped HMAC, distributed verify.
+  - Portable — the OCI container is the cloud-neutral boundary; AWS/GCP/Azure via a capability contract.
+  - Cost — about $52 at 1 TB, $51,836 at 1 PB (us-east-1 list prices, storage-dominant, unconfirmed).
+  source_refs: [{source_id: submission, section: "Portability (portable compute artifact, provider-specific orchestration)"}]
+  claim_ids: [prod-aws, prod-cost]
+  visual: {type: none, position: right, items: [], callouts: []}
+  claim_guard: {allowed_claim_ids: [prod-aws, prod-cost], requires_non_claim_ids: [], forbidden_unqualified: []}
+  elements: []
+  bindings: []
+  transition: slide
+  reveal: stagger_up
+  hidden: false
+  notes: What stays and what changes at 1 TB / 1 PB.
+- id: 07-nonclaims
+  order: 7
+  role: closing
+  layout: proof_cards
+  visibility: public
+  title: What this proves — and what it does not
+  message: Strong claims only where the evidence supports them.
+  body:
+  - Scope — proves declared-literal replacement and structural preservation, not re-identification resistance.
+  - Scans — static and security scans are supporting evidence, not proof of vulnerability-free software.
+  - Scale — not run at TB/PB; cloud prices unconfirmed; optional discovery/red-team lanes designed, not built.
+  source_refs: [{source_id: privacy-contract, section: "Not established (out of scope for a literal-policy pipeline)"}]
+  claim_ids: [nonclaim-reid, nonclaim-scans, nonclaim-scale]
+  visual: {type: none, position: right, items: [], callouts: []}
+  claim_guard: {allowed_claim_ids: [nonclaim-reid, nonclaim-scans, nonclaim-scale], requires_non_claim_ids: [nonclaim-reid, nonclaim-scans, nonclaim-scale], forbidden_unqualified: []}
+  elements: []
+  bindings: []
+  transition: slide
+  reveal: stagger_up
+  hidden: false
+  notes: Close on explicit non-claims; this is the credibility slide.

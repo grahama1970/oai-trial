@@ -44,7 +44,7 @@ sources:
     title: Fail-closed pipeline flow diagram
     path: ${PROJECT_ROOT}/docs/production-architecture.svg
     visibility: public
-    role: asset
+    role: design
     required: true
 policy:
   public_deck_source_ids:
