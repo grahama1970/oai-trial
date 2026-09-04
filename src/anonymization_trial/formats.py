@@ -16,7 +16,21 @@ import sqlite3
 from pathlib import Path
 from typing import Any
 
+from .errors import AnonError, AnonErrorCode
 from .policy import Policy, replace_text
+
+_BOM = b"\xef\xbb\xbf"
+
+
+def _count_lines(text: str) -> int:
+    """Physical line count: empty=0; final line without newline still counts."""
+    if not text:
+        return 0
+    return text.count("\n") + (0 if text.endswith("\n") else 1)
+
+
+def _detect_newline(raw: bytes) -> str:
+    return "\r\n" if b"\r\n" in raw else "\n"
 
 SUPPORTED_SUFFIXES = {".csv", ".json", ".txt", ".sqlite"}
 
@@ -35,25 +49,55 @@ def transform_file(source: Path, destination: Path, policy: Policy) -> tuple[int
 
 
 def _transform_text(source: Path, destination: Path, policy: Policy) -> tuple[int, int]:
-    text = source.read_text(encoding="utf-8")
+    raw = source.read_bytes()
+    had_bom = raw.startswith(_BOM)
+    body = raw[len(_BOM):] if had_bom else raw
+    try:
+        text = body.decode("utf-8")  # strict; no normalization
+    except UnicodeDecodeError as error:
+        raise AnonError(AnonErrorCode.MALFORMED_ENCODING, "text file is not valid UTF-8") from error
     transformed, count = replace_text(text, policy)
-    destination.write_text(transformed, encoding="utf-8")
-    return max(1, text.count("\n")), count
+    out = ("\ufeff" if had_bom else "") + transformed
+    destination.write_bytes(out.encode("utf-8"))  # exact bytes; BOM preserved
+    return _count_lines(text), count
 
 
 def _transform_csv(source: Path, destination: Path, policy: Policy) -> tuple[int, int]:
-    with source.open(newline="", encoding="utf-8") as handle:
-        rows = list(csv.reader(handle))
+    raw = source.read_bytes()
+    had_bom = raw.startswith(_BOM)
+    newline_style = _detect_newline(raw)
+    encoding = "utf-8-sig" if had_bom else "utf-8"
     count = 0
-    for row_index, row in enumerate(rows):
-        if row_index == 0:
-            continue
-        for column_index, value in enumerate(row):
-            row[column_index], replaced = replace_text(value, policy)
-            count += replaced
-    with destination.open("w", newline="", encoding="utf-8") as handle:
-        csv.writer(handle).writerows(rows)
-    return max(0, len(rows) - 1), count
+    data_rows = 0
+    try:
+        with source.open("r", encoding=encoding, newline="") as src, \
+                destination.open("w", encoding="utf-8", newline="") as dst:
+            if had_bom:
+                dst.write("\ufeff")
+            reader = csv.reader(src)
+            writer = csv.writer(dst, lineterminator=newline_style)
+            header_done = False
+            for row in reader:  # streamed row by row
+                if not header_done:
+                    for cell in row:
+                        if policy.matcher.find(cell):
+                            raise AnonError(
+                                AnonErrorCode.SENSITIVE_IN_SCHEMA,
+                                "a sensitive literal occurs in a CSV header",
+                            )
+                    writer.writerow(row)  # header preserved exactly
+                    header_done = True
+                    continue
+                new_row = []
+                for cell in row:
+                    replaced_cell, replaced = replace_text(cell, policy)
+                    new_row.append(replaced_cell)
+                    count += replaced
+                writer.writerow(new_row)
+                data_rows += 1
+    except UnicodeDecodeError as error:
+        raise AnonError(AnonErrorCode.MALFORMED_ENCODING, "CSV file is not valid UTF-8") from error
+    return data_rows, count
 
 
 def _replace_json(value: Any, policy: Policy) -> tuple[Any, int]:
