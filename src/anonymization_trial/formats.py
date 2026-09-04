@@ -299,7 +299,7 @@ def _transform_sqlite(source: Path, destination: Path, policy: Policy) -> tuple[
         if connection.execute("SELECT 1 FROM sqlite_master WHERE type='trigger'").fetchone():
             raise AnonError(AnonErrorCode.UNSUPPORTED_FORMAT, "triggers are not supported")
         tables = connection.execute(
-            "SELECT name, sql FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'"
+            "SELECT name, sql FROM sqlite_master WHERE type='table' AND name NOT GLOB 'sqlite_*'"
         ).fetchall()
         pre_counts: dict[str, int] = {}
         for table, sql in tables:
@@ -404,7 +404,7 @@ def iter_searchable_text(path: Path):
             tables = [
                 row[0]
                 for row in connection.execute(
-                    "SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'"
+                    "SELECT name FROM sqlite_master WHERE type='table' AND name NOT GLOB 'sqlite_*'"
                 )
             ]
             for table in tables:

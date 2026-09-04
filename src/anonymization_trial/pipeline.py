@@ -198,7 +198,12 @@ def _publish(staging: Path, output_root: Path, report: RunReport, sealed_digest:
     data = (json.dumps(asdict(report), indent=2, sort_keys=True) + "\n").encode("utf-8")
     fd = os.open(tmp, os.O_WRONLY | os.O_CREAT | os.O_TRUNC, 0o644)
     try:
-        os.write(fd, data)
+        remaining = memoryview(data)
+        while remaining:
+            written = os.write(fd, remaining)
+            if written <= 0:
+                raise OSError("report write made no progress")
+            remaining = remaining[written:]
         os.fsync(fd)
     finally:
         os.close(fd)

@@ -8,8 +8,9 @@ mismatch. This module rereads both corpora from disk and never calls the
 Failure modes: file-set divergence, a surviving sensitive literal in an output
 value, or a changed protected-value occurrence count.
 
-Independence: the transform uses the Aho-Corasick matcher; this verifier uses a
-plain ``str`` scan over freshly read output, so a matcher bug cannot mask itself.
+Independence: surviving-literal checks scan freshly read output, while location
+checks re-derive values using shared replacement primitives. This is independent
+reread/re-derivation, not an implementation-diverse matcher.
 
 Subject-level coverage (SPIA arXiv:2604.21211): span-absence alone is a weak
 unit of protection. This verifier additionally recomputes the expected
@@ -73,7 +74,22 @@ def _verify_sqlite_locations(source: Path, staged: Path, policy: Policy, name: s
     src = sqlite3.connect(f"file:{source}?mode=ro", uri=True)
     out = sqlite3.connect(f"file:{staged}?mode=ro", uri=True)
     try:
-        q = "SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'"
+        # Compare logical schema, never physical root pages. An adapter may
+        # corrupt DDL while leaving SELECT rowid,* values unchanged.
+        schema_query = "SELECT type, name, tbl_name, sql FROM sqlite_master ORDER BY type, name"
+        source_schema = src.execute(schema_query).fetchall()
+        output_schema = out.execute(schema_query).fetchall()
+        if source_schema != output_schema:
+            raise AnonError(
+                AnonErrorCode.VERIFICATION_FAILED, f"sqlite schema changed in {safe_ref(name)}"
+            )
+        for _kind, obj_name, table_name, sql in output_schema:
+            if any(policy.matcher.find(value) for value in (obj_name, table_name, sql) if value):
+                raise AnonError(
+                    AnonErrorCode.VERIFICATION_FAILED, "sensitive literal in output SQLite schema"
+                )
+        # GLOB's underscore is literal; LIKE 'sqlite_%' also excludes legal sqliteX.
+        q = "SELECT name FROM sqlite_master WHERE type='table' AND name NOT GLOB 'sqlite_*'"
         src_tables = sorted(r[0] for r in src.execute(q))
         out_tables = sorted(r[0] for r in out.execute(q))
         if src_tables != out_tables:
@@ -82,6 +98,13 @@ def _verify_sqlite_locations(source: Path, staged: Path, policy: Policy, name: s
             )
         for table in src_tables:
             ident = '"' + table.replace('"', '""') + '"'
+            for pragma in ("table_xinfo", "foreign_key_list"):
+                metadata = f"PRAGMA {pragma}({ident})"
+                if src.execute(metadata).fetchall() != out.execute(metadata).fetchall():
+                    raise AnonError(
+                        AnonErrorCode.VERIFICATION_FAILED,
+                        f"sqlite column/relationship metadata changed in {safe_ref(name)}",
+                    )
             sel = f"SELECT rowid, * FROM {ident} ORDER BY rowid"  # noqa: S608 (quoted)
             for s_row, o_row in zip(
                 src.execute(sel), out.execute(sel), strict=True

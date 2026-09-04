@@ -1,0 +1,30 @@
+{
+  "version": 2,
+  "skill": "oai-trial-release-review-fixes",
+  "trials": 2,
+  "proof_scope": "Real pipeline and CLI on synthetic inputs, including reviewer-provided adapter/schema and short-write fault injection.",
+  "claims": {
+    "proves": "Legal sqliteX tables are processed, schema mutations reject before publication, short report writes complete, zero-progress writes refuse, and the normal four-format demo still runs.",
+    "does_not_prove": "Power-loss recovery, hostile host isolation, production scale, fresh clean-archive Docker qualification, or a new external reviewer verdict."
+  },
+  "cases": [
+    {
+      "name": "reviewer-regressions-and-zero-progress-write",
+      "type": "adversarial",
+      "evidence_class": "fault_injected_deterministic",
+      "real_world": true,
+      "command": ["bash", "-c", "cd .. && uv run pytest -q security/tests/test_release_review_regressions.py"],
+      "expected": {"exit_code": 0},
+      "timeout_seconds": 60
+    },
+    {
+      "name": "normal-four-format-demo",
+      "type": "positive",
+      "evidence_class": "deterministic",
+      "real_world": true,
+      "command": ["bash", "-c", "cd .. && uv run anonymization-trial demo"],
+      "expected": {"exit_code": 0, "stdout_contains": ["\"demo\": \"success\""]},
+      "timeout_seconds": 120
+    }
+  ]
+}
