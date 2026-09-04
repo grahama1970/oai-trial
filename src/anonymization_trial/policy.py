@@ -142,8 +142,21 @@ def compile_policy(payload: object) -> Policy:
         AnonErrorCode.INVALID_POLICY,
         "policy has unknown top-level fields",
     )
-    raw_sensitive = payload.get("sensitive_values", [])
-    raw_protected = payload.get("protected_values", [])
+    # Both arrays are REQUIRED by examples/policy.schema.json. Defaulting a
+    # missing sensitive_values to [] would turn a schema-invalid policy into a
+    # successful no-op that publishes the untouched corpus READY (review #16/#2).
+    _require(
+        "sensitive_values" in payload,
+        AnonErrorCode.INVALID_POLICY,
+        "sensitive_values is required",
+    )
+    _require(
+        "protected_values" in payload,
+        AnonErrorCode.INVALID_POLICY,
+        "protected_values is required",
+    )
+    raw_sensitive = payload["sensitive_values"]
+    raw_protected = payload["protected_values"]
     _require(
         isinstance(raw_sensitive, list),
         AnonErrorCode.INVALID_POLICY,

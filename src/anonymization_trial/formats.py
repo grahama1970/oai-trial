@@ -255,6 +255,11 @@ def _transform_sqlite(source: Path, destination: Path, policy: Policy) -> tuple[
                 raise AnonError(
                     AnonErrorCode.UNSUPPORTED_FORMAT, "virtual tables are not supported"
                 )
+        # Triggers can mutate unrelated columns during an UPDATE, which the
+        # relational verifier cannot reproduce; reject rather than certify blind
+        # (review #14). Fail-closed on constructs the verifier cannot mirror.
+        if connection.execute("SELECT 1 FROM sqlite_master WHERE type='trigger'").fetchone():
+            raise AnonError(AnonErrorCode.UNSUPPORTED_FORMAT, "triggers are not supported")
         tables = connection.execute(
             "SELECT name, sql FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'"
         ).fetchall()
@@ -268,6 +273,18 @@ def _transform_sqlite(source: Path, destination: Path, policy: Policy) -> tuple[
                 raise AnonError(
                     AnonErrorCode.UNSUPPORTED_FORMAT, "WITHOUT ROWID tables are not supported"
                 )
+            # A user column named rowid/oid/_rowid_ shadows the hidden row id, so
+            # `WHERE rowid = ?` would match that column's value and could update
+            # several rows at once. An `INTEGER PRIMARY KEY` column IS the rowid
+            # alias (unique, safe); only a non-alias shadow is rejected (#14).
+            for info in connection.execute(f"PRAGMA table_info({_quote(table)})"):
+                name, ctype, is_pk = info[1], (info[2] or ""), info[5]
+                is_rowid_alias = bool(is_pk) and ctype.upper() == "INTEGER"
+                if name.lower() in {"rowid", "oid", "_rowid_"} and not is_rowid_alias:
+                    raise AnonError(
+                        AnonErrorCode.UNSUPPORTED_FORMAT,
+                        "a column shadows the SQLite rowid",
+                    )
             writable = _writable_columns(connection, table, policy)
             pre_counts[table] = connection.execute(
                 f"SELECT COUNT(*) FROM {_quote(table)}"  # noqa: S608 (identifier quoted)
@@ -331,11 +348,13 @@ def _json_strings(value: Any):
 
 def iter_searchable_text(path: Path):
     if path.suffix == ".json":
+        # utf-8-sig strips a leading BOM the transform is allowed to preserve, so
+        # the verifier parser mirrors the transform parser (review round 3 #5).
         # Duplicate keys must be rejected on the OUTPUT path too: a tampered
         # {"who":"Alice","who":"<pseudonym>"} would otherwise be read last-wins,
         # hiding the raw sensitive first value (review round 2 #3).
         parsed = json.loads(
-            path.read_text(encoding="utf-8"), object_pairs_hook=_no_duplicate_keys
+            path.read_text(encoding="utf-8-sig"), object_pairs_hook=_no_duplicate_keys
         )
         yield from _json_strings(parsed)
         return

@@ -53,9 +53,10 @@ def _no_duplicate_keys(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
 
 
 def _load_json(path: Path) -> Any:
-    # A duplicate-rejecting parse so a tampered output cannot hide a raw value
-    # behind a second same-named key that last-wins would keep (round 2 #3).
-    return json.loads(path.read_text(encoding="utf-8"), object_pairs_hook=_no_duplicate_keys)
+    # utf-8-sig mirrors the transform's BOM handling (round 3 #5). A duplicate-
+    # rejecting parse so a tampered output cannot hide a raw value behind a
+    # second same-named key that last-wins would keep (round 2 #3).
+    return json.loads(path.read_text(encoding="utf-8-sig"), object_pairs_hook=_no_duplicate_keys)
 
 
 def _csv_rows(path: Path) -> list[list[str]]:
