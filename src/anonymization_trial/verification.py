@@ -21,6 +21,7 @@ from __future__ import annotations
 
 import csv
 import json
+import sqlite3
 from pathlib import Path
 from typing import Any
 
@@ -59,6 +60,48 @@ def _load_json(path: Path) -> Any:
     return json.loads(path.read_text(encoding="utf-8-sig"), object_pairs_hook=_no_duplicate_keys)
 
 
+def _verify_sqlite_locations(source: Path, staged: Path, policy: Policy, name: str) -> None:
+    """Per-row location oracle for accepted SQLite files (review #1/#14).
+
+    The transform rejects triggers, rowid-shadowing, WITHOUT ROWID, and virtual
+    tables, so every accepted table is addressable by hidden rowid. Compare each
+    source row to the output row with the same rowid: text cells must equal the
+    independent recompute and non-text cells must be byte-identical, which
+    catches swapped pseudonyms and unrelated-value mutation that row counts,
+    integrity_check, and foreign_key_check cannot see.
+    """
+    src = sqlite3.connect(f"file:{source}?mode=ro", uri=True)
+    out = sqlite3.connect(f"file:{staged}?mode=ro", uri=True)
+    try:
+        q = "SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'"
+        src_tables = sorted(r[0] for r in src.execute(q))
+        out_tables = sorted(r[0] for r in out.execute(q))
+        if src_tables != out_tables:
+            raise AnonError(
+                AnonErrorCode.VERIFICATION_FAILED, f"sqlite table set changed in {name}"
+            )
+        for table in src_tables:
+            ident = '"' + table.replace('"', '""') + '"'
+            sel = f"SELECT rowid, * FROM {ident} ORDER BY rowid"  # noqa: S608 (quoted)
+            for s_row, o_row in zip(
+                src.execute(sel), out.execute(sel), strict=True
+            ):
+                if s_row[0] != o_row[0]:
+                    raise AnonError(
+                        AnonErrorCode.VERIFICATION_FAILED, f"sqlite row identity changed in {name}"
+                    )
+                for s_val, o_val in zip(s_row[1:], o_row[1:], strict=True):
+                    expected = replace_text(s_val, policy)[0] if isinstance(s_val, str) else s_val
+                    if o_val != expected:
+                        raise AnonError(
+                            AnonErrorCode.VERIFICATION_FAILED,
+                            f"sqlite cell location mismatch in {name}",
+                        )
+    finally:
+        src.close()
+        out.close()
+
+
 def _csv_rows(path: Path) -> list[list[str]]:
     with path.open(newline="", encoding="utf-8-sig") as handle:
         return list(csv.reader(handle))
@@ -75,6 +118,8 @@ def _verify_locations(source_corpus: Path, staged_corpus: Path, output_files: se
                 raise AnonError(
                     AnonErrorCode.VERIFICATION_FAILED, f"json location mismatch in {rel.name}"
                 )
+        elif rel.suffix == ".sqlite":
+            _verify_sqlite_locations(source_corpus / rel, staged_corpus / rel, policy, rel.name)
         elif rel.suffix == ".csv":
             src_rows = _csv_rows(source_corpus / rel)
             out_rows = _csv_rows(staged_corpus / rel)
