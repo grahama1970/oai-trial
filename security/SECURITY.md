@@ -34,12 +34,11 @@ bound as SQL parameters. The same lines carry `# noqa: S608` with that rationale
 No dynamic SQL is built from cell contents.
 
 ## Dependency analysis (SCA)
-The trial's **runtime dependency set is empty** (`pyproject.toml`
-`dependencies = []`, stdlib-only), so the released image introduces no
-third-party runtime packages. The SCA hits (`pip`, `setuptools`, `nltk`) are in
-the **local development virtualenv / base image**, not in the shipped artifact.
-Mitigation for the base image is to pin a patched `pip`/`setuptools`; it does not
-affect the trial's runtime code.
+The application's **runtime dependency set is empty** (`pyproject.toml`
+`dependencies = []`, stdlib-only). There is no SCA receipt committed, so no
+package-level vulnerability result is claimed for the development environment
+or container. The Python base image, OS packages, and packaging tools remain
+separate dependency-audit surfaces; stdlib-only does not establish their safety.
 
 ## Domain-specific controls (verified by tests, not the scanner)
 - Input filesystem treated as untrusted: symlinks/FIFO/socket/device rejected;

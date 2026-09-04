@@ -63,13 +63,27 @@ def _transform_text(source: Path, destination: Path, policy: Policy) -> tuple[in
     return _count_lines(text), count
 
 
-def _reject_unsupported_csv_dialect(first_line: str) -> None:
-    # The accepted dialect is comma-delimited (Python's default). If the first
-    # row parses to a single comma field yet clearly contains another common
-    # delimiter, it is almost certainly a different dialect; reject rather than
-    # silently reinterpret the whole file under the wrong structure (#4).
-    fields = next(csv.reader([first_line]), [])
-    if len(fields) <= 1 and any(delim in first_line for delim in (";", "\t", "|")):
+def _reject_unsupported_csv_dialect(text: str) -> None:
+    """Accept only comma CSV; alternate delimiters must be in quoted fields.
+
+    Check every record before writing output, including multiline quoted cells.
+    Quotes open only at a comma-field boundary; doubled quotes escape a quote.
+    Ambiguous unquoted punctuation is rejected rather than guessed as a dialect.
+    """
+    state = "start"
+    for char in text:
+        if state == "quoted":
+            if char == '"':
+                state = "closed"
+        elif char == '"' and state in {"start", "closed"}:
+            state = "quoted"
+        elif char in ",\r\n":
+            state = "start"
+        elif state == "closed" or char in ';\t|"':
+            raise AnonError(AnonErrorCode.UNSUPPORTED_FORMAT, "unsupported CSV dialect")
+        else:
+            state = "unquoted"
+    if state == "quoted":
         raise AnonError(AnonErrorCode.UNSUPPORTED_FORMAT, "unsupported CSV dialect")
 
 
@@ -80,7 +94,7 @@ def _transform_csv(source: Path, destination: Path, policy: Policy) -> tuple[int
     encoding = "utf-8-sig" if had_bom else "utf-8"
     body = raw[len(_BOM):] if had_bom else raw
     try:
-        _reject_unsupported_csv_dialect(body.split(b"\n", 1)[0].decode("utf-8"))
+        _reject_unsupported_csv_dialect(body.decode("utf-8"))
     except UnicodeDecodeError as error:
         raise AnonError(AnonErrorCode.MALFORMED_ENCODING, "CSV file is not valid UTF-8") from error
     count = 0

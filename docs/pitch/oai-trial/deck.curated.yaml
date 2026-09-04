@@ -66,7 +66,7 @@ slides:
   message: Deterministic matching and identity coherence.
   body:
   - Matcher — Aho-Corasick over original input only; leftmost-longest; emitted replacements never rescanned, so cascades are impossible.
-  - Identity — (data_type, subject_id) is canonical; aliases converge; same-type identities injective; collisions extend deterministically.
+  - Identity — (data_type, subject_id) is canonical; aliases converge; same-type identities injective; bounded collision search rejects exhaustion.
   - Rejection — protected/sensitive overlap and sensitive schema identifiers are refused, not silently resolved.
   source_refs: [{source_id: architecture, section: "6. Matching semantics"}]
   claim_ids: [sem-matcher, sem-identity, sem-protected]
@@ -87,8 +87,8 @@ slides:
   message: Verified, atomic, report-last — or nothing.
   body:
   - Publish — staged build then independent verify then atomic promote; any failure exits non-zero, no partial release.
-  - CSV / JSON — stream with BOM and header safety; JSON rejects duplicate keys, NaN and over-depth.
-  - SQLite — online-backup snapshot with integrity, foreign-key and row-count checks.
+  - CSV / JSON — per-file materialization with BOM and schema safety; JSON rejects duplicate keys, NaN and over-depth.
+  - SQLite — online-backup snapshot with typed per-row verification, integrity, foreign-key and row-count checks.
   source_refs: [{source_id: architecture, section: "7. Format adapters"}]
   claim_ids: [rel-formats, arch-flow]
   visual: {type: none, position: right, items: [], callouts: []}

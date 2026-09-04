@@ -1,297 +1,164 @@
 schema: pitchdeck.deck_manifest.v1
 deck:
-  id: oai-trial-cross-format-anonymization-public
-  title: Verified Cross-Format Anonymization — Technical Briefing
-  subtitle: 'Checked (deterministic, local):'
+  id: oai-trial-technical-briefing-public
+  title: Verified Cross-Format Anonymization
+  subtitle: An eight-hour privacy-engineering trial — technical briefing
   audience: OpenAI privacy-engineering trial reviewers (40-minute technical walkthrough)
   visibility: public
   target_editor: google_slides
   theme: dark_cyan_evidence
-  theme_tokens:
-    accent: '#22d3ee'
-    heading_font: Arial
-    body_font: Arial
+  theme_tokens: {accent: '#22d3ee', heading_font: Arial, body_font: Arial}
   source_policy: public_only
 slides:
-- id: 01-cover
+- id: 01-brief
   order: 1
   role: cover
-  layout: cover
+  layout: statement
   visibility: public
-  title: oai-trial — Cross-Format Data Anonymization
-  message: 'Checked (deterministic, local):'
-  body: []
-  source_refs:
-  - source_id: readme
-    section: Introduction
-  claim_ids:
-  - readme-introduction-01
-  visual:
-    type: none
-    position: right
-    items: []
-    callouts: []
-  claim_guard:
-    allowed_claim_ids:
-    - readme-introduction-01
-    requires_non_claim_ids: []
-    forbidden_unqualified: []
+  title: The assignment
+  message: Anonymize customer exports across four formats — and prove it.
+  body:
+  - Replace every policy-identified value across CSV, JSON, UTF-8 text and SQLite.
+  - Preserve structure, protected values and identity coherence; verify the whole corpus; fail closed.
+  - Eight hours, graded on judgement and evidence — not lines of code.
+  source_refs: [{source_id: architecture, section: "1. Problem in one paragraph"}]
+  claim_ids: [brief-outcome, brief-bar]
+  visual: {type: none, position: right, items: [], callouts: []}
+  claim_guard: {allowed_claim_ids: [brief-outcome, brief-bar], requires_non_claim_ids: [], forbidden_unqualified: []}
   elements: []
   bindings: []
   transition: slide
-  transition_duration_ms: 400
   reveal: stagger_up
   hidden: false
-  notes: 'Draft slide generated from README source material.
-
-    Required qualifiers:
-
-    - Verify this status against the pinned source commit and current evidence before external use.
-
-    Sources:
-
-    - readme — Introduction
-
-    Human review required before external use.'
-- id: 02-proof-today
+  notes: Open with the brief and the acceptance bar.
+- id: 02-architecture
   order: 2
-  role: proof-today
+  role: architecture
+  layout: split
+  visibility: public
+  title: Architecture — one fail-closed path
+  message: The transformer cannot certify itself.
+  body:
+  - Policy compile → format adapters → private staging → independent verify → atomic publish.
+  - report.json is written last as the sole readiness marker; quarantine is the fail-closed exit.
+  - An independent verifier rereads the output from disk, never trusting transform booleans.
+  source_refs: [{source_id: architecture, section: "9. Publication & crash recovery"}]
+  claim_ids: [arch-flow, arch-selfcert]
+  visual:
+    type: image
+    position: right
+    asset_id: architecture-3-system-at-a-glance-01
+    items: []
+    callouts: []
+  claim_guard: {allowed_claim_ids: [arch-flow, arch-selfcert], requires_non_claim_ids: [], forbidden_unqualified: []}
+  elements: []
+  bindings: []
+  transition: slide
+  reveal: stagger_up
+  hidden: false
+  notes: Show the SVG; emphasise trust boundaries and report-last publication.
+- id: 03-semantics
+  order: 3
+  role: semantics
   layout: proof_cards
   visibility: public
-  title: What is established today
-  message: 'ruff check src tests → clean; docker build + both docker run commands verified with read-back
-    of report.json and all four output formats; demo reports per-run peak memory. Containerized SAST (Semgrep
-    + Bandit) + dependency SCA via $hack: 0 critical / 0 high — see docs/security/. Privacy scope + non-claims:
-    docs/PRIVACY_CONTRACT.md.'
+  title: The hard semantics
+  message: Deterministic matching and identity coherence.
   body:
-  - 'Checked (deterministic, local): uv run pytest -q → 39 passed;'
-  - 'Not claimed here: TB/PB scale is designed and cost-modelled, not run at'
-  - scale; cloud prices are list prices not yet confirmed against a dated source; optional classifier/RapidFuzz
-    discovery and the concurrent ripgrep cross-check are…
-  - Preserve the baseline git history and the two required docker run commands. .env is gitignored; no
-    real personal data or credentials belong in the repo.
-  source_refs:
-  - source_id: readme
-    section: Proof and non-claims
-    locator: line 79
-  claim_ids:
-  - readme-proof-and-non-claims-01
-  - readme-proof-and-non-claims-02
-  - readme-proof-and-non-claims-03
-  - readme-proof-and-non-claims-04
-  visual:
-    type: none
-    position: right
-    items: []
-    callouts: []
-  claim_guard:
-    allowed_claim_ids:
-    - readme-proof-and-non-claims-01
-    - readme-proof-and-non-claims-02
-    - readme-proof-and-non-claims-03
-    - readme-proof-and-non-claims-04
-    requires_non_claim_ids: []
-    forbidden_unqualified: []
+  - Matcher — Aho-Corasick over original input only; leftmost-longest; emitted replacements never rescanned, so cascades are impossible.
+  - Identity — (data_type, subject_id) is canonical; aliases converge; same-type identities injective; bounded collision search rejects exhaustion.
+  - Rejection — protected/sensitive overlap and sensitive schema identifiers are refused, not silently resolved.
+  source_refs: [{source_id: architecture, section: "6. Matching semantics"}]
+  claim_ids: [sem-matcher, sem-identity, sem-protected]
+  visual: {type: none, position: right, items: [], callouts: []}
+  claim_guard: {allowed_claim_ids: [sem-matcher, sem-identity, sem-protected], requires_non_claim_ids: [], forbidden_unqualified: []}
   elements: []
   bindings: []
   transition: slide
-  transition_duration_ms: 400
   reveal: stagger_up
   hidden: false
-  notes: 'Draft slide generated from README source material.
-
-    Required qualifiers:
-
-    - Verify this status against the pinned source commit and current evidence before external use.
-
-    Sources:
-
-    - readme — Proof and non-claims (line 79)
-
-    Human review required before external use.'
-- id: 03-section-start-here
-  order: 3
-  role: section-start-here
-  layout: statement
-  visibility: public
-  title: Start here
-  message: You want to… — Go to
-  body:
-  - You want to… — Go to
-  - Understand the whole design in 10 min — docs/ARCHITECTURE.md
-  - Read the task as given — TRIAL_BRIEF.md
-  - See the frozen correctness rules — docs/ANONYMIZATION_SEMANTICS.md
-  source_refs:
-  - source_id: readme
-    section: Start here
-    locator: line 9
-  claim_ids:
-  - readme-start-here-01
-  - readme-start-here-02
-  - readme-start-here-03
-  visual:
-    type: none
-    position: right
-    items: []
-    callouts: []
-  claim_guard:
-    allowed_claim_ids:
-    - readme-start-here-01
-    - readme-start-here-02
-    - readme-start-here-03
-    requires_non_claim_ids: []
-    forbidden_unqualified: []
-  elements: []
-  bindings: []
-  transition: slide
-  transition_duration_ms: 400
-  reveal: stagger_up
-  hidden: false
-  notes: 'Draft slide generated from README source material.
-
-    Required qualifiers:
-
-    - Verify this status against the pinned source commit and current evidence before external use.
-
-    Sources:
-
-    - readme — Start here (line 9)
-
-    Human review required before external use.'
-- id: 04-section-inspect-a-release-no-server
+  notes: The four hardest correctness choices.
+- id: 04-reliability
   order: 4
-  role: section-inspect-a-release-no-server
-  layout: statement
+  role: reliability
+  layout: proof_cards
   visibility: public
-  title: Inspect a release (no server)
-  message: report.json conforms to schemas/report.schema.json.
-  body: []
-  source_refs:
-  - source_id: readme
-    section: Inspect a release (no server)
-    locator: line 37
-  claim_ids:
-  - readme-inspect-a-release-no-server-01
-  visual:
-    type: none
-    position: right
-    items: []
-    callouts: []
-  claim_guard:
-    allowed_claim_ids:
-    - readme-inspect-a-release-no-server-01
-    requires_non_claim_ids: []
-    forbidden_unqualified: []
+  title: Reliability and format hardening
+  message: Verified, atomic, report-last — or nothing.
+  body:
+  - Publish — staged build then independent verify then atomic promote; any failure exits non-zero, no partial release.
+  - CSV / JSON — per-file materialization with BOM and schema safety; JSON rejects duplicate keys, NaN and over-depth.
+  - SQLite — online-backup snapshot with typed per-row verification, integrity, foreign-key and row-count checks.
+  source_refs: [{source_id: architecture, section: "7. Format adapters"}]
+  claim_ids: [rel-formats, arch-flow]
+  visual: {type: none, position: right, items: [], callouts: []}
+  claim_guard: {allowed_claim_ids: [rel-formats, arch-flow], requires_non_claim_ids: [], forbidden_unqualified: []}
   elements: []
   bindings: []
   transition: slide
-  transition_duration_ms: 400
   reveal: stagger_up
   hidden: false
-  notes: 'Draft slide generated from README source material.
-
-    Sources:
-
-    - readme — Inspect a release (no server) (line 37)
-
-    Human review required before external use.'
-- id: 05-section-design-rules
+  notes: Crash-safe publication and per-format oracles.
+- id: 05-evidence
   order: 5
-  role: section-design-rules
-  layout: statement
+  role: evidence
+  layout: proof_cards
   visibility: public
-  title: Design rules
-  message: not silently resolved.
+  title: Evidence — and the extras
+  message: Independent, adversarial, reproducible.
   body:
-  - Deterministic literal matching only; regex removed from the value path.
-  - Match original input, never rescan replacements (no cascade).
-  - Protected/sensitive overlap and sensitive schema identifiers are rejected,
-  - Verify the whole corpus before release; fail closed (non-zero exit, no partial
-  source_refs:
-  - source_id: readme
-    section: Design rules
-    locator: line 69
-  claim_ids:
-  - readme-design-rules-01
-  - readme-design-rules-02
-  - readme-design-rules-03
-  visual:
-    type: none
-    position: right
-    items: []
-    callouts: []
-  claim_guard:
-    allowed_claim_ids:
-    - readme-design-rules-01
-    - readme-design-rules-02
-    - readme-design-rules-03
-    requires_non_claim_ids: []
-    forbidden_unqualified: []
+  - Tests — a deterministic pytest gate covering unit, property, fail-closed, verifier-mutation, gray-box and black-box CLI attacks.
+  - Extra — Bandit SAST via $hack found 0 critical and 0 high (scanner receipts are supporting evidence only).
+  - Method — three-lane white / gray / black-box, every finding retained as an in-repo regression.
+  source_refs: [{source_id: security, section: "Security review"}]
+  claim_ids: [ev-tests, ev-hack]
+  visual: {type: none, position: right, items: [], callouts: []}
+  claim_guard: {allowed_claim_ids: [ev-tests, ev-hack], requires_non_claim_ids: [], forbidden_unqualified: []}
   elements: []
   bindings: []
   transition: slide
-  transition_duration_ms: 400
   reveal: stagger_up
   hidden: false
-  notes: 'Draft slide generated from README source material.
-
-    Sources:
-
-    - readme — Design rules (line 69)
-
-    Human review required before external use.'
-- id: 06-collaboration-ask
+  notes: Evidence quality is the differentiator; $hack is a supporting security gate.
+- id: 06-production
   order: 6
-  role: collaboration-ask
-  layout: collaboration
+  role: production
+  layout: three_cards
   visibility: public
-  title: A useful next conversation
-  message: Use one representative claim to test workflow fit, evidence boundaries, and the next collaboration
-    step.
+  title: Production scale (AWS reference)
+  message: Portable container, provider-specific orchestration.
   body:
-  - Workflow co-design
-  - Integration design
-  - Deployment and governance planning
-  source_refs:
-  - source_id: readme
-    section: Collaboration / next step
-  claim_ids:
-  - non-claim-01-proves-declared-literal-replacement-
-  - non-claim-02-static-security-scans-are-supporting
-  - non-claim-03-candidate-slides-require-human-revie
-  visual:
-    type: none
-    position: right
-    items: []
-    callouts: []
-  claim_guard:
-    allowed_claim_ids: []
-    requires_non_claim_ids:
-    - non-claim-01-proves-declared-literal-replacement-
-    - non-claim-02-static-security-scans-are-supporting
-    - non-claim-03-candidate-slides-require-human-revie
-    forbidden_unqualified: []
+  - AWS — S3 intake/quarantine/release, SQS, Fargate workers, KMS-scoped HMAC, distributed verify.
+  - Portable — the OCI container is the cloud-neutral boundary; AWS/GCP/Azure via a capability contract.
+  - Cost — about $86 at 1 TB, $85,734 at 1 PB (us-east-1 list prices, storage-dominant, unconfirmed).
+  source_refs: [{source_id: submission, section: "Portability (portable compute artifact, provider-specific orchestration)"}]
+  claim_ids: [prod-aws, prod-cost]
+  visual: {type: none, position: right, items: [], callouts: []}
+  claim_guard: {allowed_claim_ids: [prod-aws, prod-cost], requires_non_claim_ids: [], forbidden_unqualified: []}
   elements: []
   bindings: []
   transition: slide
-  transition_duration_ms: 400
   reveal: stagger_up
   hidden: false
-  notes: 'Draft slide generated from README source material.
-
-    Sources:
-
-    - readme — Collaboration / next step
-
-    Human review required before external use.
-
-    Mandatory non-claims:
-
-    - Proves declared-literal replacement + structural preservation, not re-identification resistance.
-
-    - Static/security scans are supporting evidence, not proof of vulnerability-free software.
-
-    - Candidate slides require human review before external use.'
-seam_validation:
-  kind: deck_manifest
-  status: PASS
+  notes: What stays and what changes at 1 TB / 1 PB.
+- id: 07-nonclaims
+  order: 7
+  role: closing
+  layout: proof_cards
+  visibility: public
+  title: What this proves — and what it does not
+  message: Strong claims only where the evidence supports them.
+  body:
+  - Scope — proves declared-literal replacement and structural preservation, not re-identification resistance.
+  - Scans — static and security scans are supporting evidence, not proof of vulnerability-free software.
+  - Scale — not run at TB/PB; cloud prices unconfirmed; optional discovery/red-team lanes designed, not built.
+  source_refs: [{source_id: privacy-contract, section: "Not established (out of scope for a literal-policy pipeline)"}]
+  claim_ids: [nonclaim-reid, nonclaim-scans, nonclaim-scale]
+  visual: {type: none, position: right, items: [], callouts: []}
+  claim_guard: {allowed_claim_ids: [nonclaim-reid, nonclaim-scans, nonclaim-scale], requires_non_claim_ids: [nonclaim-reid, nonclaim-scans, nonclaim-scale], forbidden_unqualified: []}
+  elements: []
+  bindings: []
+  transition: slide
+  reveal: stagger_up
+  hidden: false
+  notes: Close on explicit non-claims; this is the credibility slide.

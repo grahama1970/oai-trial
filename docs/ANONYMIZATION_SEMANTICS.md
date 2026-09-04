@@ -53,6 +53,12 @@ Accept UTF-8 and UTF-8-with-BOM; preserve whether a text-bearing file had a BOM.
 Decode strictly; **reject** malformed or unsupported encodings before release
 with a privacy-safe error (no raw excerpt).
 
+CSV accepts comma-delimited records with double-quoted fields and doubled-quote
+escaping. Semicolons, tabs, and pipes outside quoted fields are rejected across
+the entire file, including data rows. Quote those characters when they are cell
+content. This deliberately rejects ambiguous inputs rather than guessing a dialect.
+Malformed quoting is rejected; multiline quoted fields remain supported.
+
 ## 9. Schema-bearing names are protected
 Reject the corpus before release when a **selected sensitive literal** occurs in
 a relative path, CSV header cell, JSON object key, SQLite table name, or SQLite
@@ -77,6 +83,6 @@ Deterministic pseudonyms derived from a versioned PRF/hash over
 - `name` → `Person-<hash>`
 - `email` → `user-<hash>@example.invalid`
 - `phone` → `+1-555-<NNNN>` (bounded domain: over-capacity policies rejected)
-- `ip_address` → `198.51.100.<N>` / `203.0.113.<N>` (TEST-NET; extended on collision)
+- `ip_address` → `198.51.100.<N>` (TEST-NET; N=1..253; bounded domain, exhausted searches or over-capacity policies rejected)
 - `secret` → `[REDACTED-<hash>]`
 - other → `anon-<type>-<hash>`

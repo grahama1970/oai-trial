@@ -1,7 +1,18 @@
 {
   "region": "us-east-1",
   "price_date": "2026-09-04",
-  "source": "AWS S3 pricing https://aws.amazon.com/s3/pricing/ and AWS Fargate pricing https://aws.amazon.com/fargate/pricing/ (list prices; confirm before use)",
+  "source": "Official AWS pricing pages, accessed 2026-09-04; see price_sources for each externally priced input. List-price scenario, not a deployment quote.",
+  "price_sources": {
+    "s3_standard_gb_month_usd": {"url": "https://aws.amazon.com/s3/pricing/", "accessed_on": "2026-09-04", "unit": "USD per GB-month", "scope": "us-east-1 S3 Standard first 50 TB tier"},
+    "s3_put_per_1k_usd": {"url": "https://aws.amazon.com/s3/pricing/", "accessed_on": "2026-09-04", "unit": "USD per 1000 requests", "scope": "us-east-1 S3 Standard PUT/COPY/POST/LIST"},
+    "s3_get_per_1k_usd": {"url": "https://aws.amazon.com/s3/pricing/", "accessed_on": "2026-09-04", "unit": "USD per 1000 requests", "scope": "us-east-1 S3 Standard GET"},
+    "fargate_vcpu_hour_usd": {"url": "https://aws.amazon.com/fargate/pricing/", "accessed_on": "2026-09-04", "unit": "USD per vCPU-hour", "scope": "us-east-1 Linux/x86 on-demand"},
+    "fargate_gb_hour_usd": {"url": "https://aws.amazon.com/fargate/pricing/", "accessed_on": "2026-09-04", "unit": "USD per GB-hour", "scope": "us-east-1 Linux/x86 on-demand memory"},
+    "sqs_per_million_requests_usd": {"url": "https://aws.amazon.com/sqs/pricing/", "accessed_on": "2026-09-04", "unit": "USD per million requests", "scope": "us-east-1 Standard queue, first paid tier; free tier excluded; dynamic numeric table requires confirmation"},
+    "eventbridge_per_million_events_usd": {"url": "https://aws.amazon.com/eventbridge/pricing/", "accessed_on": "2026-09-04", "unit": "USD per million events", "scope": "Custom event ingestion, up to 64 KB per event; same-account delivery; Event buses pricing example"},
+    "kms_per_10k_requests_usd": {"url": "https://aws.amazon.com/kms/pricing/", "accessed_on": "2026-09-04", "unit": "USD per 10000 requests", "scope": "Symmetric key requests; Amazon S3 example; free tier and key rental excluded"},
+    "cloudwatch_logs_gb_ingested_usd": {"url": "https://aws.amazon.com/cloudwatch/pricing/", "accessed_on": "2026-09-04", "unit": "USD per GB ingested", "scope": "Standard Logs ingestion in US East; Example 19 ECS Container Insights; free tier and retention excluded"}
+  },
   "note": "List on-demand prices as of price_date. UNVERIFIED against a dated screenshot; treat as illustrative until confirmed.",
   "s3_standard_gb_month_usd": 0.023,
   "s3_put_per_1k_usd": 0.005,

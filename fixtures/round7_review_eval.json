@@ -1,0 +1,37 @@
+{
+  "version": 2,
+  "skill": "oai-trial-round7-review",
+  "trials": 2,
+  "proof_scope": "The final reviewer CSV counterexamples exercise the real CLI and filesystem; price citations and public claims are checked against committed files.",
+  "claims": {
+    "proves": "Semicolon/tab/pipe quoted-comma bypasses are rejected with no release artifacts; valid quoted comma CSV remains supported; each price input has a dated AWS source; named stale public claims are absent and curated/generated manifests match.",
+    "does_not_prove": "Exhaustive CSV dialect detection, live AWS billing, rendered slide quality, or a new WebGPT PASS. CLI inputs are synthetic reviewer counterexamples, with no mocks."
+  },
+  "cases": [
+    {
+      "name": "csv-quoted-comma-bypass-and-positive-controls",
+      "type": "adversarial",
+      "evidence_class": "fault_injected_deterministic",
+      "real_world": true,
+      "command": ["bash", "-c", "cd .. && uv run pytest -q security/tests/test_csv_dialect.py"],
+      "expected": {"exit_code": 0},
+      "timeout_seconds": 60
+    },
+    {
+      "name": "all-price-inputs-cited-and-arithmetic-current",
+      "type": "positive",
+      "evidence_class": "deterministic",
+      "command": ["bash", "-c", "cd .. && uv run pytest -q tests/test_cost_model.py"],
+      "expected": {"exit_code": 0},
+      "timeout_seconds": 60
+    },
+    {
+      "name": "public-claim-drift-guard",
+      "type": "negative",
+      "evidence_class": "deterministic",
+      "command": ["bash", "-c", "cd .. && uv run pytest -q security/tests/test_claim_surface.py"],
+      "expected": {"exit_code": 0},
+      "timeout_seconds": 60
+    }
+  ]
+}

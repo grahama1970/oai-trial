@@ -1,53 +1,32 @@
-# Speaker notes — Verified Cross-Format Anonymization — Technical Briefing
+# Speaker notes — Verified Cross-Format Anonymization
 
-## 1. oai-trial — Cross-Format Data Anonymization
+Current seven-slide projection of `../deck.curated.yaml`; the earlier auto-plan
+receipts describe the initial draft, not acceptance of this briefing.
 
-Draft slide generated from README source material.
-Required qualifiers:
-- Verify this status against the pinned source commit and current evidence before external use.
-Sources:
-- readme — Introduction
-Human review required before external use.
+## 1. The assignment
+Open with the brief and the acceptance bar.
 
-## 2. What is established today
+## 2. Architecture — one fail-closed path
+Show the SVG; emphasise trust boundaries and report-last publication.
 
-Draft slide generated from README source material.
-Required qualifiers:
-- Verify this status against the pinned source commit and current evidence before external use.
-Sources:
-- readme — Proof and non-claims (line 79)
-Human review required before external use.
+## 3. The hard semantics
+Explain original-input matching, alias identity, bounded collision search, and
+fail-closed overlap rejection.
 
-## 3. Start here
+## 4. Reliability and format hardening
+Explain per-file materialization, strict comma CSV, typed JSON/SQLite per-row
+verification, and report-last publication. The verifier shares matching
+primitives with the transformer; it is a re-derivation, not a second implementation.
 
-Draft slide generated from README source material.
-Required qualifiers:
-- Verify this status against the pinned source commit and current evidence before external use.
-Sources:
-- readme — Start here (line 9)
-Human review required before external use.
+## 5. Evidence — and the extras
+Show a concrete fail-before-fix regression. Scanner receipts are supporting
+evidence only; Semgrep scanned no target files and no SCA receipt is committed.
 
-## 4. Inspect a release (no server)
+## 6. Production scale (AWS reference)
+Explain what stays and what changes at 1 TB / 1 PB. Use the estimator's current
+output and per-unit price citations, not a remembered total. This is a modeled
+scenario, not a deployment or throughput benchmark.
 
-Draft slide generated from README source material.
-Sources:
-- readme — Inspect a release (no server) (line 37)
-Human review required before external use.
-
-## 5. Design rules
-
-Draft slide generated from README source material.
-Sources:
-- readme — Design rules (line 69)
-Human review required before external use.
-
-## 6. A useful next conversation
-
-Draft slide generated from README source material.
-Sources:
-- readme — Collaboration / next step
-Human review required before external use.
-Mandatory non-claims:
-- Proves declared-literal replacement + structural preservation, not re-identification resistance.
-- Static/security scans are supporting evidence, not proof of vulnerability-free software.
-- Candidate slides require human review before external use.
+## 7. What this proves — and what it does not
+Close on explicit non-claims: unlisted PII, re-identification resistance, and
+TB/PB operation are not established. Keep future-work lanes out of the release.

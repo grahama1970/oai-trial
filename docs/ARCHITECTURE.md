@@ -30,7 +30,7 @@ staging is never consumer-visible; release appears only after verification.
 ## 5. Policy & identity model
 `(data_type, subject_id)` is the canonical identity (`policy.py`,
 `pseudonyms.py`). Aliases converge; distinct same-type identities are injective;
-collisions are extended deterministically; protected/sensitive overlap is
+collision search stays within bounded domains and rejects exhaustion; protected/sensitive overlap is
 rejected at compile time.
 
 ## 6. Matching semantics (`matcher.py`)
@@ -42,14 +42,16 @@ UTF-8/BOM preserved; no normalization; non-ASCII case-insensitive rejected.
 | Format | What changes | What must not | Reject |
 |---|---|---|---|
 | Text | selected spans | bytes outside spans, BOM, newlines | malformed UTF-8 |
-| CSV | data cells | header, order, quoting, line endings | sensitive header |
+| CSV | data cells; quoting normalized | logical header, row/cell order, newline style, BOM | sensitive header, malformed quoting, unquoted semicolon/tab/pipe |
 | JSON | string values | keys, order, scalar types/numbers | dup keys, NaN, sensitive key, over-depth |
 | SQLite | text values | schema, PK/FK, row counts, non-text | virtual/WITHOUT ROWID, sensitive identifier |
 
 ## 8. Independent verification (`verification.py`)
 Rereads source + staged output from disk (not transform booleans): file-set
 parity, no surviving literal, protected-count parity, subject-level presence,
-and a value-level text skeleton (catches swapped/wrong pseudonyms).
+and a value-level text skeleton (catches swapped/wrong pseudonyms). CSV/JSON
+values are recomputed per location; SQLite adds a typed per-row oracle by rowid
+to integrity, foreign-key, and row-count checks.
 
 ## 9. Publication & crash recovery (`pipeline.py`)
 ```

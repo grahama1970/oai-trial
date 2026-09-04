@@ -4,7 +4,9 @@ be internally consistent."""
 from __future__ import annotations
 
 import json
+from datetime import date
 from pathlib import Path
+from urllib.parse import urlparse
 
 from estimate_aws_cost import _TB, _one  # pythonpath includes scripts/
 
@@ -33,6 +35,20 @@ def test_1tb_1pb_cost_and_sla_contract() -> None:
     # every material line item exists and is positive
     for key in ("storage_usd", "requests_usd", "compute_usd", "orchestration_usd"):
         assert live_1pb[key] > 0
+
+
+def test_every_billing_unit_has_price_source() -> None:
+    prices = {key for key in _CFG if key.endswith("_usd")}
+    assert set(_CFG["price_sources"]) == prices
+    for key in prices:
+        citation = _CFG["price_sources"][key]
+        url = urlparse(citation["url"])
+        assert url.scheme == "https" and url.hostname == "aws.amazon.com"
+        assert "/pricing/" in url.path
+        assert date.fromisoformat(citation["accessed_on"]) >= date.fromisoformat(_CFG["price_date"])
+        assert citation["unit"] and citation["scope"]
+    committed = json.loads(Path("costs/example-estimates.json").read_text(encoding="utf-8"))
+    assert committed["assumptions"]["price_sources"] == _CFG["price_sources"]
 
 
 def test_required_billing_units_transfer_tiers_and_quotas_are_explicit() -> None:

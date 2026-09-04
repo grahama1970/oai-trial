@@ -42,7 +42,7 @@ claims:
   status: approved
   evidence_spans: []
 - id: sem-identity
-  text: (data_type, subject_id) is the canonical identity; aliases converge; distinct same-type identities are injective; collisions extend deterministically.
+  text: (data_type, subject_id) is the canonical identity; aliases converge; distinct same-type identities are injective; bounded collision search rejects exhaustion.
   kind: proof
   visibility: public
   source_refs: [{source_id: architecture, section: "5. Policy & identity model", locator: "line 1"}]
@@ -58,7 +58,7 @@ claims:
   status: approved
   evidence_spans: []
 - id: rel-formats
-  text: CSV/TXT stream with BOM and header safety; JSON rejects duplicate keys, NaN and over-depth; SQLite uses an online-backup snapshot with integrity, foreign-key and row-count checks.
+  text: CSV/TXT use per-file materialization with BOM and schema safety; JSON rejects duplicate keys, NaN and over-depth; SQLite uses an online-backup snapshot with typed per-row verification, integrity, foreign-key and row-count checks.
   kind: proof
   visibility: public
   source_refs: [{source_id: architecture, section: "7. Format adapters", locator: "line 1"}]

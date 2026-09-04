@@ -10,10 +10,10 @@ Resolves GitHub issue #2. Semantics referenced by number are from
 | R1 | Valid output in same logical format as each input | `formats/*` adapters | round-trip each format parses | truncated/malformed input rejected | verifier re-parses each output file |
 | R2 | Replace every policy-identified value | `matcher.py` | seeded values absent from output | leftmost-longest over the whole input (no chunk splitting) | verifier re-scans decoded output for surviving literals + per-location recompute (text/CSV/JSON) |
 | R3 | Stable replacements across files & reruns | `pseudonyms.py` | two runs byte-identical corpus | — | digest of two runs equal |
-| R4 | Distinct identities never share type replacement; aliases converge | `pseudonyms.py` (sem #1,#2) | alias→same, distinct→different | forced collision → domain-extend or `namespace_exhausted` | verifier cross-file alias/distinctness check |
+| R4 | Distinct identities never share type replacement; aliases converge | `pseudonyms.py` (sem #1,#2) | alias→same, distinct→different | forced collision → bounded search or `namespace_exhausted` | verifier cross-file alias/distinctness check |
 | R5 | Protected values preserved | `matcher.py` (sem #5) | protected unchanged, same count | protected∩sensitive overlap → reject | verifier per-literal count parity |
-| R6 | Preserve non-sensitive meaning/structure | adapters | non-sensitive cells/keys/rows unchanged | — | verifier recomputes expected output per location for text/CSV/JSON |
-| R7 | Preserve CSV headers/rows, JSON structure, SQLite tables/relationships/row-counts/integrity | `formats/*` | header/order/rowcount preserved | sensitive-in-header/key/identifier → reject (sem #9) | CSV/JSON per-location recompute; SQLite `integrity_check`+`foreign_key_check`+rowcount (relational, not per-row-located; triggers/rowid-shadow rejected) |
+| R6 | Preserve non-sensitive meaning/structure | adapters | non-sensitive cells/keys/rows unchanged | — | verifier recomputes expected output per location for text/CSV/JSON/SQLite |
+| R7 | Preserve CSV headers/rows, JSON structure, SQLite tables/relationships/row-counts/integrity | `formats/*` | header/order/rowcount preserved | sensitive-in-header/key/identifier → reject (sem #9) | CSV/JSON per-location recompute; SQLite typed per-row location oracle + `integrity_check`+`foreign_key_check`+rowcount (triggers/rowid-shadow rejected) |
 | R8 | Verify whole corpus before release | `verification.py` (#8) | verified corpus publishes | inject surviving literal → fail | verifier reads staged output from disk, not transform booleans |
 | R9 | Keep raw inputs, mappings, quarantine out of release & logs | `pipeline.py` (#4) | release has only corpus+report | prior release cleared before promote; staging is private 0700 | publish writes only `corpus/` + `report.json`; no mapping table is ever persisted |
 | R10 | Exit non-zero on failure; no partial ready corpus | `pipeline.py` (#4, sem #11) | success exits 0 | each failure class exits ≠0, no report.json | fresh read: `/trial/output` has no ready marker |
@@ -31,6 +31,7 @@ Resolves GitHub issue #2. Semantics referenced by number are from
 - Malformed/unsupported encoding → reject (sem #8).
 - SQLite: virtual tables, attached DBs, generated-column writes, or any construct
   the verifier cannot reproduce → reject (#7 bounded).
+- CSV: unquoted semicolons/tabs/pipes or malformed quoting → reject; quoted punctuation is supported.
 - JSON: duplicate keys, `NaN`/`Infinity`, depth/size over bound → reject (#6).
 
 Each rejection is a typed error from the closed `errors.py` vocabulary, exits

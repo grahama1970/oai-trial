@@ -111,8 +111,10 @@ booleans.
   the mounted-read-only container threat model.
 - **Not streaming/bounded-memory.** Per-file content is materialized in memory;
   TB/PB is designed and cost-modelled, not run at scale.
-- **CSV uses the default comma/quote dialect.** Alternative dialects are not
-  detected; newline/quoting is normalized (logical preservation, not byte-level).
+- **CSV uses a strict comma/double-quote dialect.** Unquoted semicolons, tabs,
+  and pipes are rejected throughout the file, even in data rows; quote those
+  characters when they are cell content. Malformed quoting is rejected.
+  Quoting is normalized (logical preservation, not byte-level).
 - **Single fixed pseudonym scope.** Local trial pseudonyms use the public fixed
   scope trial-v1; they provide no private-key secrecy or cross-tenant
   unlinkability. Production replaces this public namespace with a
@@ -120,10 +122,11 @@ booleans.
   cardinality preflight that rejects over-capacity policies up front.
 - The cost model includes storage (intake+staging+release), verify rereads,
   staging/promotion requests, a retry fraction, a 2x verify compute pass, and a
-  blended per-object orchestration floor (SQS/EventBridge/KMS/CloudWatch). It
-  still omits per-service orchestration unit prices, output expansion, transfer
-  pricing, and S3 tier/discount modeling; same-region transfer is assumed free
-  and totals assume standard-tier list prices within default quotas.
+  per-service SQS/EventBridge/KMS/CloudWatch quantity-times-unit-price estimate.
+  Dated price-source references are in the inputs JSON. It still omits output
+  expansion, transfer charges, KMS key rental, log retention, and S3 tier/discount
+  modeling. Same-region transfer is assumed free; prices use the first Standard
+  tier. The worker pool assumes a raised Fargate vCPU quota, not default quotas.
 - Cloud prices are list-price, unverified against a dated source.
 - Container runs as root for mounted-write robustness; non-root variant is
   documented in the Dockerfile.
