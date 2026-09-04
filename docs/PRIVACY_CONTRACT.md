@@ -21,15 +21,31 @@ release_standard: complete_verified_corpus_fail_closed
 adversary_assumption: release consumer lacks the raw input and the private key/mapping
 ```
 
-## Proven (deterministic, locally verified)
-- Every policy-selected literal occurrence is replaced (independently counted).
-- Protected values and their occurrence counts are preserved.
+## Verified locally (deterministic)
+
+The verifier rereads the output corpus from disk and re-derives the expected
+result; it does not trust the transform's return values. It shares the
+replacement primitive (`replace_text`/`build_replacements`) with the transform,
+so it is an independent RE-DERIVATION, not a fully separate second
+implementation (see Known gaps).
+
+- **Text, CSV, JSON: location-bound.** Output must equal an independent
+  recompute (text skeleton; per-cell CSV with row/column-count checks; per-node
+  JSON with decoded string values, duplicate-key rejection, and BOM handling).
+  This catches swapped pseudonyms, dropped rows, relocated protected values, and
+  escaped-literal evasion.
+- **SQLite: relational, not per-row-located.** Row counts, `integrity_check`,
+  and `foreign_key_check` are preserved; a per-row primary-key location oracle is
+  NOT implemented. Constructs the verifier cannot reproduce are rejected fail
+  closed: triggers, `rowid`-shadowing columns, virtual tables, `WITHOUT ROWID`.
+- Protected-value occurrence counts are preserved; protected/sensitive equality,
+  containment, and prefix/suffix boundary overlap are rejected at compile time.
 - Aliases of one subject converge to one pseudonym; distinct same-type subjects
-  get distinct pseudonyms (verified in output, not just at compile time).
-- Structure preserved per format (CSV headers/rows/order, JSON topology/keys,
-  SQLite schema/relationships/row counts/integrity).
-- The whole corpus is reread and verified before an atomic, report-last release;
-  any failure exits non-zero and leaves no ready corpus.
+  get distinct pseudonyms (checked in output, not only at compile time).
+- The whole corpus is reread and verified, then promoted with a same-filesystem
+  atomic rename and a durable (fsync + os.replace) report written last, under a
+  trusted single-writer staging assumption. Any failure exits non-zero and
+  leaves no ready corpus.
 - No replacement mapping or key material appears in the release dir or logs.
 
 ## Not established (out of scope for a literal-policy pipeline)

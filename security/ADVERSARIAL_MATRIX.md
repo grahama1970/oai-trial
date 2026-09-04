@@ -4,8 +4,7 @@ Source: WebGPT adversarial peer review, 2026-09-04 (verdict FAIL, 21 issues, 14
 rationale gaps). Full review: `../docs/research/webgpt/ADVERSARIAL_REVIEW_2026-09-04.md`.
 
 **Status legend**
-- `VERIFIED` — defect reproduced against the real code by a retained red test in
-  `security/tests/test_adversarial_matrix.py` (currently `xfail(strict)`).
+- `FIXED` — corrected, with a retained green regression test.
 - `CREDIBLE` — consistent with the code on read; needs a pipeline-level red test.
 - `BUNDLE-ARTIFACT` — an artifact of the 4-file review zip, not a repo defect
   (the repo contains tests, Dockerfile, `.git`, and all receipts).
@@ -18,8 +17,8 @@ rationale gaps). Full review: `../docs/research/webgpt/ADVERSARIAL_REVIEW_2026-0
 
 | # | Sev | Attack / defect | Target | Status | Test | Ticket |
 |---|-----|-----------------|--------|--------|------|--------|
-| 1 | high | Verifier admits swapped pseudonyms, dropped rows, relocated protected values (subject/global, not location-bound) | `verification.py::verify_corpus,_verify_subject_level` | CREDIBLE | pipeline red test pending | pending |
-| 2 | high | `"\u0041lice"` JSON-escape bypasses the verifier (scans serialized text, not decoded values) | `formats.py::iter_searchable_text`, `verification.py` | CREDIBLE | pipeline red test pending | pending |
+| 1 | high | Verifier admitted swapped pseudonyms, dropped rows, relocated protected values | `verification.py::_verify_locations` | FIXED for text/CSV/JSON (per-location recompute); SQLite is relational-only (fail-closed on unreproducible constructs) | `test_verifier_location.py` (green) | done |
+| 2 | high | `"\u0041lice"` JSON-escape bypassed the verifier (scanned serialized text) | `formats.py::iter_searchable_text`, `verification.py` | FIXED (decode keys+values; dup-key + BOM handling) | `test_verifier_location.py`, `test_round2_fixes.py`, `test_round3_fixes.py` (green) | done |
 | 3 | high | `{"n":1e400}` becomes `{"n": Infinity}` published as ready | `formats.py::_transform_json` | FIXED (parse_float rejects non-finite; allow_nan=False) | `test_non_finite_json_number_is_rejected` (green) | done |
 | 4 | high | Staging mutable between `verify_corpus` and `_manifest_digest`; published bytes are not the verified bytes | `pipeline.py::run_pipeline` | CREDIBLE | pipeline red test pending | pending |
 | 5 | high | Publish not atomic/crash-durable (delete-old then rename then `write_text`, no fsync/rollback) | `pipeline.py::_publish` | CREDIBLE | crash-injection test pending | pending |

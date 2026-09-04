@@ -91,6 +91,31 @@ booleans.
 
 ## Known gaps and next steps
 
+- **SQLite is verified relationally, not per-row-located.** Row counts,
+  `integrity_check`, and `foreign_key_check` are preserved; there is no per-row
+  primary-key location oracle. Constructs the verifier cannot reproduce are
+  rejected fail closed (triggers, `rowid`-shadowing columns, virtual tables,
+  `WITHOUT ROWID`).
+- **The verifier is an independent re-derivation, not a separate implementation.**
+  It rereads output from disk and recomputes expected results, but shares the
+  `replace_text`/`build_replacements` primitive with the transform; a fully
+  independent second matcher would be stronger assurance.
+- **verify -> publish assumes a trusted single-writer staging filesystem.** The
+  verified digest is re-checked immediately before the atomic promote, closing
+  the in-process window; concurrent external mutation of staging by another
+  writer is out of the assumed threat model.
+- **Source is assumed mounted read-only.** A source-snapshot/TOCTOU gate rejects
+  content that changes during a run; deeper host-side swap-and-restore is outside
+  the mounted-read-only container threat model.
+- **Not streaming/bounded-memory.** Per-file content is materialized in memory;
+  TB/PB is designed and cost-modelled, not run at scale.
+- **CSV uses the default comma/quote dialect.** Alternative dialects are not
+  detected; newline/quoting is normalized (logical preservation, not byte-level).
+- **Single fixed pseudonym scope.** `SCOPE_ID` is one namespace (no cross-tenant
+  unlinkability); IP/phone domains are bounded without a cardinality preflight.
+- The cost model is a **storage-dominant floor estimate**; it omits verifier
+  rereads, staging/promotion requests, SQS/KMS/logging/orchestration, retries,
+  output expansion, and transfer.
 - Cloud prices are list-price, unverified against a dated source.
 - Container runs as root for mounted-write robustness; non-root variant is
   documented in the Dockerfile.
