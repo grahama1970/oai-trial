@@ -1,0 +1,29 @@
+{
+  "battle_id": "battle-001",
+  "changed_files": [
+    "app.py"
+  ],
+  "commands_run": [
+    {
+      "command": [
+        "python",
+        "copy patched app.py into blue workspace"
+      ],
+      "exit_code": 0,
+      "stderr_path": null,
+      "stdout_path": "/tmp/oai-battle-proof/blue/patch.diff"
+    }
+  ],
+  "created_at": "2026-09-04T17:21:13Z",
+  "functional_artifact_sha256": null,
+  "functional_evidence_status": "INSUFFICIENT_EVIDENCE",
+  "functional_exit_code": null,
+  "functional_receipt_ref": null,
+  "functional_test_command": null,
+  "functionality_preserved": null,
+  "next_agent": "battle-scorekeeper",
+  "patch_artifact": "/tmp/oai-battle-proof/blue/patch.diff",
+  "round_number": 1,
+  "schema": "battle.blue_receipt.v1",
+  "status": "PASS"
+}

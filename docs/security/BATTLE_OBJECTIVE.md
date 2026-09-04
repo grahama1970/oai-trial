@@ -48,6 +48,17 @@ So the evaluator reproduces every important finding with `uv run pytest -q`
 alone — no battle environment required. The `source_snapshot` gate + regression
 above is the first such promoted finding.
 
+## Judge machinery — bounded proof (ran here)
+The independent-Judge mechanism this lane depends on is proven runnable via a
+bounded deterministic round: `skills/battle/run.sh battle-fixture`. Receipts are
+retained under [`battle/`](battle): `scoreboard.json` (verdict **BLUE_SUCCESS**,
+`tdsr=1.0`, `fdsr=0.0`, status PASS) is derived from `judge-receipt.json`, not
+from Red/Blue self-reported success. Proof boundary (from the run's own
+`non_claims`): this is a **fixture-contract proof** — it does not prove real
+agent behavior, multi-round learning, Docker/QEMU modes, or a campaign against
+`oai-trial` itself. The oai-trial evidence is the retained regression suite
+above; the full adaptive campaign against this target is issue #13.
+
 ## Command (external, opt-in)
 ```bash
 skills/hack/run.sh battle "$PWD" --rounds 100      # delegates to $battle
