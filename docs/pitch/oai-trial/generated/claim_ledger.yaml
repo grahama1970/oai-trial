@@ -43,7 +43,8 @@ claims:
       JSON, UTF-8 text, and SQLite database files. The same synthetic identity can appear in every format.
     section: Scenario
   notes: 'Project-agent source review, not human presentation approval. Runtime/source candidate 0795dc66deaa5991cd34959c6d8b81f80a8042a0.
-    Evidence command: docker run --rm anonymization-trial'
+    Evidence command: docker run --rm anonymization-trial Source semantics rechecked after the three concrete release
+    fixes; presentation export/GUI review remains deferred.'
   approval:
     approved_by: project-agent/source-review
     approved_at: '2026-09-04'
@@ -71,11 +72,12 @@ claims:
     text: 'def verify_corpus(source_corpus: Path, staged_corpus: Path, policy: Policy) -> None:'
     section: verify_corpus
   notes: 'Project-agent source review, not human presentation approval. Runtime/source candidate 0795dc66deaa5991cd34959c6d8b81f80a8042a0.
-    Evidence command: uv run pytest -q security/tests/test_publish_hardening.py'
+    Evidence command: uv run pytest -q security/tests/test_publish_hardening.py Source semantics rechecked after
+    the three concrete release fixes; presentation export/GUI review remains deferred.'
   approval:
     approved_by: project-agent/source-review
     approved_at: '2026-09-04'
-    source_snapshot_sha256: sha256:f85854417626d088c8e7a28a8a549aa64a7fb437f3d4040825da814ad8e926d5
+    source_snapshot_sha256: sha256:67cbe6771648d47e65706b6af60f01e8e1234d7db3a6cdeedc834b51e60548a7
 - id: semantics
   text: Aliases converge; original-input matching emits once; bounded domains reject exhaustion; SQLite uses typed
     per-row verification.
@@ -114,7 +116,8 @@ claims:
       \n  },\n  \"identity_proof\": \"/mnt/storage12tb/oai-trial/pitch-final/identity-vscode.json\"\n}\n"
     section: Docker measurements and observed identity locals
   notes: 'Project-agent source review, not human presentation approval. Runtime/source candidate 0795dc66deaa5991cd34959c6d8b81f80a8042a0.
-    Evidence command: uv run pytest -q tests/test_matcher.py security/tests/test_pseudonym_domains.py'
+    Evidence command: uv run pytest -q tests/test_matcher.py security/tests/test_pseudonym_domains.py Source semantics
+    rechecked after the three concrete release fixes; presentation export/GUI review remains deferred.'
   approval:
     approved_by: project-agent/source-review
     approved_at: '2026-09-04'
@@ -136,11 +139,12 @@ claims:
     text: '    os.replace(tmp, report_path)  # atomic readiness marker, written last'
     section: _publish
   notes: 'Project-agent source review, not human presentation approval. Runtime/source candidate 0795dc66deaa5991cd34959c6d8b81f80a8042a0.
-    Evidence command: uv run pytest -q security/tests/test_publish_hardening.py'
+    Evidence command: uv run pytest -q security/tests/test_publish_hardening.py Source semantics rechecked after
+    the three concrete release fixes; presentation export/GUI review remains deferred.'
   approval:
     approved_by: project-agent/source-review
     approved_at: '2026-09-04'
-    source_snapshot_sha256: sha256:f85854417626d088c8e7a28a8a549aa64a7fb437f3d4040825da814ad8e926d5
+    source_snapshot_sha256: sha256:67cbe6771648d47e65706b6af60f01e8e1234d7db3a6cdeedc834b51e60548a7
 - id: evidence
   text: Real output readback, deliberate mutations, and publication checks.
   kind: proof
@@ -171,7 +175,8 @@ claims:
       \n  },\n  \"identity_proof\": \"/mnt/storage12tb/oai-trial/pitch-final/identity-vscode.json\"\n}\n"
     section: Docker demo
   notes: 'Project-agent source review, not human presentation approval. Runtime/source candidate 0795dc66deaa5991cd34959c6d8b81f80a8042a0.
-    Evidence command: uv run pytest -q security/tests/test_sqlite_location.py security/tests/test_typed_scalar_verification.py'
+    Evidence command: uv run pytest -q security/tests/test_sqlite_location.py security/tests/test_typed_scalar_verification.py
+    Source semantics rechecked after the three concrete release fixes; presentation export/GUI review remains deferred.'
   approval:
     approved_by: project-agent/source-review
     approved_at: '2026-09-04'
@@ -217,7 +222,8 @@ claims:
       \ screenshot** —\n  treat as illustrative until verified.\n\n"
     section: SLA and Cost
   notes: 'Project-agent source review, not human presentation approval. Runtime/source candidate 0795dc66deaa5991cd34959c6d8b81f80a8042a0.
-    Evidence command: python scripts/estimate_aws_cost.py --inputs costs/aws-us-east-1-inputs.json'
+    Evidence command: python scripts/estimate_aws_cost.py --inputs costs/aws-us-east-1-inputs.json Source semantics
+    rechecked after the three concrete release fixes; presentation export/GUI review remains deferred.'
   approval:
     approved_by: project-agent/source-review
     approved_at: '2026-09-04'
@@ -239,7 +245,8 @@ claims:
     text: '## Not established (out of scope for a literal-policy pipeline)'
     section: Not established (out of scope for a literal-policy pipeline)
   notes: 'Project-agent source review, not human presentation approval. Runtime/source candidate 0795dc66deaa5991cd34959c6d8b81f80a8042a0.
-    Evidence command: uv run pytest -q security/tests/test_publish_hardening.py::test_report_binds_evidence_chain'
+    Evidence command: uv run pytest -q security/tests/test_publish_hardening.py::test_report_binds_evidence_chain
+    Source semantics rechecked after the three concrete release fixes; presentation export/GUI review remains deferred.'
   approval:
     approved_by: project-agent/source-review
     approved_at: '2026-09-04'

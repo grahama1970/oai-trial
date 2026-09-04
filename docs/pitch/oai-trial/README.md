@@ -4,7 +4,7 @@ Canonical sources: `deck.curated.yaml`, `claim_ledger.curated.yaml`, and
 `speaker_notes.curated.md`. The generated deck, ledger, notes, and source-state
 are projections of those files. The obsolete animated fan-out asset is retired.
 
-Current candidate: [PPTX](/mnt/storage12tb/oai-trial/pitch-final/oai-trial-6b69e18.pptx),
+Prior presentation export — **stale after runtime fixes; refresh over the weekend**: [PPTX](/mnt/storage12tb/oai-trial/pitch-final/oai-trial-6b69e18.pptx),
 [PDF](/mnt/storage12tb/oai-trial/pitch-final/frozen-render/oai-trial-6b69e18.pdf),
 [contact sheet](/mnt/storage12tb/oai-trial/pitch-final/frozen-render/contact-sheet.png).
 These artifact-volume paths are local handoff locations, not portable GitHub downloads.

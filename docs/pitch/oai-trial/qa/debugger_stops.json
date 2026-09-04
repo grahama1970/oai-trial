@@ -1,6 +1,6 @@
 {
-  "source_commit": "0795dc66deaa5991cd34959c6d8b81f80a8042a0",
-  "proof_boundary": "Real Python debugger-core captures and visible VS Code debugpy stops. Adapter setBreakpoints verification is unavailable through the VS Code API; each stopped frame matched the requested source line.",
+  "source_commit": "5b1f22d0b9fcc2f2eafa04cab30379d9f204e3bc",
+  "proof_boundary": "Current headless stops were recaptured and validated. Prior visible GUI proofs and presentation exports are historical; refresh/rehearse them over the weekend.",
   "stops": {
     "identity": {
       "slide_id": "03-semantics",
@@ -15,46 +15,58 @@
       "source_line": "return replacements",
       "capture_command": "PYTHONPATH=src \"$DEBUGGER_SKILL/run.sh\" break src/anonymization_trial/pseudonyms.py:104 --local unique --local replacements --out \"$ARTIFACT_DIR/identity-breakpoint.json\" -- python scripts/pitch_debug_demo.py identity",
       "gui_command": "DEBUGGER_LAUNCH_CONFIG=\"Pitch: identity\" \"$DEBUGGER_SKILL/run.sh\" stop src/anonymization_trial/pseudonyms.py:104 --local unique --local replacements --workspace-artifacts",
-      "proof_path": "/mnt/storage12tb/oai-trial/pitch-final/identity-breakpoint.json",
-      "proof_sha256": "ece3e606f3fadf542474931720afda9d5111eeb974b79679e06f33fc251c3e78",
-      "gui_proof_path": "/mnt/storage12tb/oai-trial/pitch-final/identity-vscode.json",
-      "gui_proof_sha256": "446bcef0b55382a4c4def3247bc62d711060fb260ed39c40f5f221a47f42ecab"
+      "proof_path": "/mnt/storage12tb/oai-trial/release-fixes/identity-breakpoint.json",
+      "proof_sha256": "cffb43b57274bac9a9d6b1e82821e21c86e85e040e464e96f969f1f11750369d",
+      "historical_gui_proof": {
+        "path": "/mnt/storage12tb/oai-trial/pitch-final/identity-vscode.json",
+        "sha256": "446bcef0b55382a4c4def3247bc62d711060fb260ed39c40f5f221a47f42ecab",
+        "source_commit": "0795dc66deaa5991cd34959c6d8b81f80a8042a0",
+        "status": "STALE"
+      }
     },
     "typed": {
       "slide_id": "05-evidence",
       "file": "src/anonymization_trial/verification.py",
-      "line": 113,
+      "line": 136,
       "locals": [
         "a",
         "b"
       ],
       "expected": "a=1 (mutated output), b=True (expected input); unequal types trigger rejection.",
-      "source_sha256": "5e7ecffbade1ea64d555dffaaeb77a6aad0e81bfc254d093a68ac27c190099a5",
+      "source_sha256": "834bf5de49f7c1ab7892db9bf5c7303cfd6f8c10808581ba81592118a01fd1bc",
       "source_line": "return False",
-      "capture_command": "PYTHONPATH=src \"$DEBUGGER_SKILL/run.sh\" break src/anonymization_trial/verification.py:113 --local a --local b --out \"$ARTIFACT_DIR/typed-breakpoint.json\" -- python scripts/pitch_debug_demo.py typed",
-      "gui_command": "DEBUGGER_LAUNCH_CONFIG=\"Pitch: typed\" \"$DEBUGGER_SKILL/run.sh\" stop src/anonymization_trial/verification.py:113 --local a --local b --workspace-artifacts",
-      "proof_path": "/mnt/storage12tb/oai-trial/pitch-final/typed-breakpoint.json",
-      "proof_sha256": "372380bfaebbbe3098edb69ea16ba3c7310a5beda70f1b1ae1e9d50eabf17475",
-      "gui_proof_path": "/mnt/storage12tb/oai-trial/pitch-final/typed-vscode.json",
-      "gui_proof_sha256": "7abcfb819c4823347c27bdfee4cdaa4d4a2614d0066073bd03b7407e56223749"
+      "capture_command": "PYTHONPATH=src \"$DEBUGGER_SKILL/run.sh\" break src/anonymization_trial/verification.py:136 --local a --local b --out \"$ARTIFACT_DIR/typed-breakpoint.json\" -- python scripts/pitch_debug_demo.py typed",
+      "gui_command": "DEBUGGER_LAUNCH_CONFIG=\"Pitch: typed\" \"$DEBUGGER_SKILL/run.sh\" stop src/anonymization_trial/verification.py:136 --local a --local b --workspace-artifacts",
+      "proof_path": "/mnt/storage12tb/oai-trial/release-fixes/typed-breakpoint.json",
+      "proof_sha256": "2fb427627972cceb85df82f3271b0215cdf1d2ac84b9f198640c0b812cf110f9",
+      "historical_gui_proof": {
+        "path": "/mnt/storage12tb/oai-trial/pitch-final/typed-vscode.json",
+        "sha256": "7abcfb819c4823347c27bdfee4cdaa4d4a2614d0066073bd03b7407e56223749",
+        "source_commit": "0795dc66deaa5991cd34959c6d8b81f80a8042a0",
+        "status": "STALE"
+      }
     },
     "publication": {
       "slide_id": "04-reliability",
       "file": "src/anonymization_trial/pipeline.py",
-      "line": 205,
+      "line": 210,
       "locals": [
         "report_path",
         "output_corpus"
       ],
       "expected": "Output corpus exists, report.json does not yet exist.",
-      "source_sha256": "f85854417626d088c8e7a28a8a549aa64a7fb437f3d4040825da814ad8e926d5",
+      "source_sha256": "67cbe6771648d47e65706b6af60f01e8e1234d7db3a6cdeedc834b51e60548a7",
       "source_line": "os.replace(tmp, report_path)  # atomic readiness marker, written last",
-      "capture_command": "PYTHONPATH=src \"$DEBUGGER_SKILL/run.sh\" break src/anonymization_trial/pipeline.py:205 --local report_path --local output_corpus --out \"$ARTIFACT_DIR/publication-breakpoint.json\" -- python scripts/pitch_debug_demo.py publication",
-      "gui_command": "DEBUGGER_LAUNCH_CONFIG=\"Pitch: publication\" \"$DEBUGGER_SKILL/run.sh\" stop src/anonymization_trial/pipeline.py:205 --local report_path --local output_corpus --workspace-artifacts",
-      "proof_path": "/mnt/storage12tb/oai-trial/pitch-final/publication-breakpoint.json",
-      "proof_sha256": "f755a5731b7c27aaf5bdbd00d4b475e4cecc39784a935f97b2ec5a9617e02f4c",
-      "gui_proof_path": "/mnt/storage12tb/oai-trial/pitch-final/publication-vscode.json",
-      "gui_proof_sha256": "29be92aaad8fd72ce907802989d505a408d611c396a9ebcffacf2582ac7322e2"
+      "capture_command": "PYTHONPATH=src \"$DEBUGGER_SKILL/run.sh\" break src/anonymization_trial/pipeline.py:210 --local report_path --local output_corpus --out \"$ARTIFACT_DIR/publication-breakpoint.json\" -- python scripts/pitch_debug_demo.py publication",
+      "gui_command": "DEBUGGER_LAUNCH_CONFIG=\"Pitch: publication\" \"$DEBUGGER_SKILL/run.sh\" stop src/anonymization_trial/pipeline.py:210 --local report_path --local output_corpus --workspace-artifacts",
+      "proof_path": "/mnt/storage12tb/oai-trial/release-fixes/publication-breakpoint.json",
+      "proof_sha256": "78b76e2a3ac5bd8e47c8cae563036d6353dff901c66c55a15901b32f352479cb",
+      "historical_gui_proof": {
+        "path": "/mnt/storage12tb/oai-trial/pitch-final/publication-vscode.json",
+        "sha256": "29be92aaad8fd72ce907802989d505a408d611c396a9ebcffacf2582ac7322e2",
+        "source_commit": "0795dc66deaa5991cd34959c6d8b81f80a8042a0",
+        "status": "STALE"
+      }
     }
   }
 }
