@@ -18,7 +18,11 @@
     "algorithm_version",
     "scope_id",
     "key_mode",
-    "does_not_establish"
+    "does_not_establish",
+    "report_schema",
+    "run_id",
+    "source_manifest_sha256",
+    "verification_sha256"
   ],
   "additionalProperties": false,
   "properties": {
@@ -39,6 +43,10 @@
       "type": "array",
       "items": {"type": "string", "minLength": 1},
       "minItems": 1
-    }
+    },
+    "report_schema": {"const": "anon.run_report.v1"},
+    "run_id": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "source_manifest_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "verification_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
   }
 }
