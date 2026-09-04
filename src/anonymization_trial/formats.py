@@ -11,7 +11,6 @@ from __future__ import annotations
 
 import csv
 import json
-import shutil
 import sqlite3
 from pathlib import Path
 from typing import Any
@@ -182,25 +181,82 @@ def _quote(identifier: str) -> str:
     return '"' + identifier.replace('"', '""') + '"'
 
 
+def _writable_columns(connection: sqlite3.Connection, table: str, policy: Policy) -> list[str]:
+    """Return non-generated, non-hidden column names; reject sensitive identifiers.
+
+    PRAGMA table_xinfo hidden flag: 0 normal, 1 hidden, 2 generated-virtual,
+    3 generated-stored. Only flag 0 is safely writable.
+    """
+    writable: list[str] = []
+    for row in connection.execute(f"PRAGMA table_xinfo({_quote(table)})"):
+        name, hidden = row[1], row[6]
+        if policy.matcher.find(name):
+            raise AnonError(
+                AnonErrorCode.SENSITIVE_IN_SCHEMA, "a sensitive literal occurs in a column name"
+            )
+        if hidden == 0:
+            writable.append(name)
+    return writable
+
+
+def _snapshot_sqlite(source: Path, destination: Path) -> None:
+    """Copy a consistent snapshot via the online backup API (WAL-safe)."""
+    src = sqlite3.connect(f"file:{source}?mode=ro", uri=True)
+    try:
+        dst = sqlite3.connect(destination)
+        try:
+            src.backup(dst)
+        finally:
+            dst.close()
+    except sqlite3.Error as error:
+        raise AnonError(
+            AnonErrorCode.UNSUPPORTED_FORMAT, "unreadable or malformed SQLite database"
+        ) from error
+    finally:
+        src.close()
+
+
 def _transform_sqlite(source: Path, destination: Path, policy: Policy) -> tuple[int, int]:
-    shutil.copy2(source, destination)
+    _snapshot_sqlite(source, destination)
     records = 0
     replacements = 0
     with sqlite3.connect(destination) as connection:
-        tables = [
-            row[0]
-            for row in connection.execute(
-                "SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'"
-            )
-        ]
-        for table in tables:
-            columns = [row[1] for row in connection.execute(f"PRAGMA table_info({_quote(table)})")]
-            rows = list(connection.execute(f"SELECT rowid, * FROM {_quote(table)}"))  # noqa: S608 (identifier quoted via _quote; no untrusted interpolation)
+        connection.execute("PRAGMA foreign_keys = ON")
+        for _name, sql in connection.execute(
+            "SELECT name, sql FROM sqlite_master WHERE sql IS NOT NULL"
+        ):
+            if sql and sql.strip().upper().startswith("CREATE VIRTUAL TABLE"):
+                raise AnonError(
+                    AnonErrorCode.UNSUPPORTED_FORMAT, "virtual tables are not supported"
+                )
+        tables = connection.execute(
+            "SELECT name, sql FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'"
+        ).fetchall()
+        pre_counts: dict[str, int] = {}
+        for table, sql in tables:
+            if policy.matcher.find(table):
+                raise AnonError(
+                    AnonErrorCode.SENSITIVE_IN_SCHEMA, "a sensitive literal occurs in a table name"
+                )
+            if sql and "WITHOUT ROWID" in sql.upper():
+                raise AnonError(
+                    AnonErrorCode.UNSUPPORTED_FORMAT, "WITHOUT ROWID tables are not supported"
+                )
+            writable = _writable_columns(connection, table, policy)
+            pre_counts[table] = connection.execute(
+                f"SELECT COUNT(*) FROM {_quote(table)}"  # noqa: S608 (identifier quoted)
+            ).fetchone()[0]
+            if not writable:
+                records += pre_counts[table]
+                continue
+            select_cols = ", ".join(_quote(c) for c in writable)
+            query = f"SELECT rowid, {select_cols} FROM {_quote(table)}"  # noqa: S608 (quoted)
+            rows = connection.execute(query).fetchall()
             records += len(rows)
             for row in rows:
                 rowid, values = row[0], row[1:]
                 updates: dict[str, str] = {}
-                for column, value in zip(columns, values, strict=True):
+                for column, value in zip(writable, values, strict=True):
                     if isinstance(value, str):
                         transformed, count = replace_text(value, policy)
                         replacements += count
@@ -209,14 +265,27 @@ def _transform_sqlite(source: Path, destination: Path, policy: Policy) -> tuple[
                 if updates:
                     assignments = ", ".join(f"{_quote(name)} = ?" for name in updates)
                     connection.execute(
-                        f"UPDATE {_quote(table)} SET {assignments} WHERE rowid = ?",  # noqa: S608 (identifiers quoted; values bound as parameters)
+                        f"UPDATE {_quote(table)} SET {assignments} WHERE rowid = ?",  # noqa: S608
                         [*updates.values(), rowid],
                     )
         connection.commit()
-        result = connection.execute("PRAGMA integrity_check").fetchone()
-        if not result or result[0] != "ok":
-            raise ValueError("SQLite integrity check failed")
+        _verify_sqlite(connection, pre_counts)
     return records, replacements
+
+
+def _verify_sqlite(connection: sqlite3.Connection, pre_counts: dict[str, int]) -> None:
+    """Independent relational checks: row counts, integrity, foreign keys."""
+    for table, expected in pre_counts.items():
+        actual = connection.execute(
+            f"SELECT COUNT(*) FROM {_quote(table)}"  # noqa: S608 (identifier quoted)
+        ).fetchone()[0]
+        if actual != expected:
+            raise AnonError(AnonErrorCode.VERIFICATION_FAILED, "SQLite row count changed")
+    integ = connection.execute("PRAGMA integrity_check").fetchone()
+    if not integ or integ[0] != "ok":
+        raise AnonError(AnonErrorCode.VERIFICATION_FAILED, "SQLite integrity_check failed")
+    if connection.execute("PRAGMA foreign_key_check").fetchall():
+        raise AnonError(AnonErrorCode.VERIFICATION_FAILED, "SQLite foreign_key_check failed")
 
 
 def iter_searchable_text(path: Path):
