@@ -136,13 +136,6 @@ claims:
     text: 'def test_json_bool_number_and_sqlite_integer_real_mutations_rejected(tmp_path: Path) -> None:'
     section: test_json_bool_number_and_sqlite_integer_real_mutations_rejected
   - source_id: runtime-metrics
-    text: '{"demo": "success", "runs": [{"bytes_per_second": 1387402.56, "bytes_read": 68310, "elapsed_seconds":
-      0.049236, "files_processed": 4, "logical_records": 100, "peak_memory_mb": 26.33, "records_per_second": 8164.78,
-      "records_processed": 402, "verification_passed": true}, {"bytes_per_second": 1326758.11, "bytes_read": 509366,
-      "elapsed_seconds": 0.383918, "files_processed": 4, "logical_records": 1000, "peak_memory_mb": 29.99, "records_per_second":
-      10424.11, "records_processed": 4002, "verification_passed": true}]}'
-    section: Docker demo
-  - source_id: runtime-metrics
     text: "{\n  \"demo\": \"success\",\n  \"runs\": [\n    {\n      \"bytes_per_second\": 1387402.56,\n      \"\
       bytes_read\": 68310,\n      \"elapsed_seconds\": 0.049236,\n      \"files_processed\": 4,\n      \"logical_records\"\
       : 100,\n      \"peak_memory_mb\": 26.33,\n      \"records_per_second\": 8164.78,\n      \"records_processed\"\
@@ -152,7 +145,7 @@ claims:
       \  \"records_processed\": 4002,\n      \"verification_passed\": true\n    }\n  ],\n  \"identity_observation\"\
       : {\n    \"replacements\": \"{('name', 'p1'): 'Person-29ec756d7d'}\",\n    \"unique\": \"[('name', 'p1')]\"\
       \n  },\n  \"identity_proof\": \"/mnt/storage12tb/oai-trial/pitch-final/identity-vscode.json\"\n}\n"
-    section: Docker measurements and observed identity locals
+    section: Docker demo
   notes: 'Project-agent source review, not human presentation approval. Runtime/source candidate 0795dc66deaa5991cd34959c6d8b81f80a8042a0.
     Evidence command: uv run pytest -q security/tests/test_sqlite_location.py security/tests/test_typed_scalar_verification.py'
   approval:

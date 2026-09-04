@@ -11,25 +11,85 @@
     {
       "name": "seven-slide-source-contracts",
       "type": "positive",
-      "command": ["bash", "-c", "cd .. && uv run pytest -q tests/test_pitch_contract.py security/tests/test_claim_surface.py"],
-      "expected": {"exit_code": 0},
+      "command": [
+        "bash",
+        "-c",
+        "cd .. && uv run pytest -q tests/test_pitch_contract.py security/tests/test_claim_surface.py"
+      ],
+      "expected": {
+        "exit_code": 0
+      },
       "timeout_seconds": 120
     },
     {
       "name": "live-alias-and-publication-demonstrations",
       "type": "positive",
       "real_world": true,
-      "command": ["bash", "-c", "cd .. && PYTHONPATH=src python3 scripts/pitch_debug_demo.py identity && PYTHONPATH=src python3 scripts/pitch_debug_demo.py publication"],
-      "expected": {"exit_code": 0, "stdout_contains": ["Person-29ec756d7d", "readback", "ready"]},
+      "command": [
+        "bash",
+        "-c",
+        "cd .. && PYTHONPATH=src python3 scripts/pitch_debug_demo.py identity && PYTHONPATH=src python3 scripts/pitch_debug_demo.py publication"
+      ],
+      "expected": {
+        "exit_code": 0,
+        "stdout_contains": [
+          "Person-29ec756d7d",
+          "readback",
+          "ready"
+        ]
+      },
       "timeout_seconds": 30
     },
     {
       "name": "live-typed-mutation-refused",
       "type": "adversarial",
       "real_world": true,
-      "command": ["bash", "-c", "cd .. && PYTHONPATH=src python3 scripts/pitch_debug_demo.py typed"],
-      "expected": {"exit_code": 0, "stdout_contains": ["REJECTED: JSON true mutated to integer 1"]},
+      "command": [
+        "bash",
+        "-c",
+        "cd .. && PYTHONPATH=src python3 scripts/pitch_debug_demo.py typed"
+      ],
+      "expected": {
+        "exit_code": 0,
+        "stdout_contains": [
+          "REJECTED: JSON true mutated to integer 1"
+        ]
+      },
       "timeout_seconds": 30
+    },
+    {
+      "name": "exported-pptx-links-and-source-hashes",
+      "type": "positive",
+      "real_world": true,
+      "command": [
+        "bash",
+        "-c",
+        "cd .. && python3 scripts/verify_pitch_bundle.py --bundle docs/pitch/oai-trial --require-build-receipt --require-zero-verify-errors"
+      ],
+      "expected": {
+        "exit_code": 0,
+        "stdout_contains": [
+          "\"status\": \"PASS\""
+        ]
+      },
+      "timeout_seconds": 30
+    },
+    {
+      "name": "real-publication-breakpoint-readback",
+      "type": "positive",
+      "real_world": true,
+      "command": [
+        "bash",
+        "-c",
+        "cd .. && PYTHONPATH=src \"$DEBUGGER_SKILL/run.sh\" break src/anonymization_trial/pipeline.py:205 --local report_path --local output_corpus --watch \"report_path.exists()\" --watch \"output_corpus.exists()\" --allow-watch-eval --out \"$ARTIFACT_DIR/eval-publication-breakpoint.json\" -- python scripts/pitch_debug_demo.py publication && python3 -c 'import os,json; r=json.load(open(os.environ[\"ARTIFACT_DIR\"]+\"/eval-publication-breakpoint.json\")); assert r[\"hit_count\"] == 1; w=r[\"hits\"][0][\"watches\"]; assert w[\"report_path.exists()\"][\"value\"] == \"False\"; assert w[\"output_corpus.exists()\"][\"value\"] == \"True\"; print(\"BREAKPOINT_READBACK_PASS\")'"
+      ],
+      "expected": {
+        "exit_code": 0,
+        "stdout_contains": [
+          "BREAKPOINT_READBACK_PASS"
+        ]
+      },
+      "timeout_seconds": 60
     }
   ]
 }

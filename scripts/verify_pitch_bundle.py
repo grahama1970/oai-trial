@@ -60,13 +60,13 @@ def verify(bundle: Path, args) -> list[str]:
             errors.append(f"{name}: nonzero verification errors")
         if receipt.get("readiness") not in {"READY", "USABLE_WITH_GAPS"}:
             errors.append(f"{name}: build/verify not established")
-        if receipt.get("snapshot_sha256") != sha(generated / "source_state.json"):
+        inputs, outputs = receipt.get("inputs", {}), receipt.get("outputs", {})
+        if inputs.get("source_snapshot_sha256") != sha(generated / "source_state.json"):
             errors.append(f"{name}: different source/asset snapshot")
-        if receipt.get("bundle_sha256") != sha(bundle / "deck.curated.yaml"):
+        if inputs.get("canonical_deck_sha256") != sha(bundle / "deck.curated.yaml"):
             errors.append(f"{name}: different canonical deck")
-        artifact = receipt.get("artifact", {})
-        pptx = Path(artifact.get("path", ""))
-        if not pptx.is_file() or sha(pptx) != artifact.get("sha256"):
+        pptx = Path(outputs.get("linked_pptx", ""))
+        if not pptx.is_file() or sha(pptx) != outputs.get("linked_pptx_sha256"):
             errors.append(f"{name}: missing or changed PPTX")
             continue
         with ZipFile(pptx) as archive:

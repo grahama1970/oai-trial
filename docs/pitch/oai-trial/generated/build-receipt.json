@@ -1,0 +1,47 @@
+{
+  "schema": "pitchdeck.build_receipt.v1",
+  "operation": "build",
+  "readiness": "READY",
+  "mocked": false,
+  "live": false,
+  "inputs": {
+    "deck_id": "oai-trial-technical-briefing-public",
+    "source_policy": "public_only",
+    "canonical_deck_sha256": "dadff64de476de8402a3e3470566fbbade8dc350de098439e592a5277e8c9208",
+    "source_snapshot_sha256": "150b2f94578b7265218c5fd57f33c7c51e0430a7b3bf739f0fb20783a2f42890"
+  },
+  "outputs": {
+    "pptx": "/mnt/storage12tb/oai-trial/pitch-final/briefing.pptx",
+    "pptx_sha256": "8196f9b9bc89c4079971d32ce13f28f21a18bc01b8fd376a5ceaccb4585832fe",
+    "linked_pptx": "/mnt/storage12tb/oai-trial/pitch-final/oai-trial-6b69e18.pptx",
+    "linked_pptx_sha256": "a9b7875f31d23da65c0555aaee80a94cc2b411c837e0a5811f3bc1b75aac0d04"
+  },
+  "counts": {
+    "slides": 7,
+    "claims_referenced": 7,
+    "sources_referenced": 7,
+    "validation_warnings": 0
+  },
+  "gaps": [
+    "KNOWN LIMITATION: browser-vs-PPTX visual fidelity is unverified; review the rendered PPTX before external delivery."
+  ],
+  "claims": {
+    "proves": [
+      "The PPTX was generated from typed, producer-validated manifests.",
+      "Narrative text and diagrams remain editable PowerPoint objects.",
+      "The generated PPTX was reopened and structurally verified.",
+      "Encoded public/private source and claim boundaries passed validation."
+    ],
+    "does_not_prove": [
+      "The source README claims match the current implementation or runtime.",
+      "Candidate claims have human approval unless require-approved-claims was used.",
+      "The deck is visually approved after import into Google Slides.",
+      "Screenshots or dated proof remain current at presentation time.",
+      "The product is production-ready, certified, accredited, or deployed."
+    ]
+  },
+  "seam_validation": {
+    "kind": "build_receipt",
+    "status": "PASS"
+  }
+}

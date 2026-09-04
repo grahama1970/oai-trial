@@ -4,6 +4,12 @@ Canonical sources: `deck.curated.yaml`, `claim_ledger.curated.yaml`, and
 `speaker_notes.curated.md`. The generated deck, ledger, notes, and source-state
 are projections of those files. The obsolete animated fan-out asset is retired.
 
+Current candidate: [PPTX](/mnt/storage12tb/oai-trial/pitch-final/oai-trial-6b69e18.pptx),
+[PDF](/mnt/storage12tb/oai-trial/pitch-final/frozen-render/oai-trial-6b69e18.pdf),
+[contact sheet](/mnt/storage12tb/oai-trial/pitch-final/frozen-render/contact-sheet.png).
+These artifact-volume paths are local handoff locations, not portable GitHub downloads.
+Hashes and pending human/import gates are in `qa/final-review.json`.
+
 ## Present
 - Explain slides full-screen at 16:9.
 - For three stops only, put the claim on the left and VS Code in the right
@@ -47,6 +53,13 @@ canonical deck hash. Review the actual rendered slides and the Google Slides
 import; do not transfer approval from an earlier deck hash. Keep binaries on the
 artifact volume, not in Git. Source tests and compiler warnings do not constitute
 human approval.
+
+## Retained evaluation
+
+With `DEBUGGER_SKILL` and `ARTIFACT_DIR` set as above, run the installed
+`agentic-evals/run.sh run fixtures/pitch_eval.json --output "$ARTIFACT_DIR/agentic-evals.json"`
+from the repo root. This exercises real runtime demonstrations, a real headless
+breakpoint with readback, and the emitted PPTX/hash gate. It does not approve visuals.
 
 ## Final rehearsal gate
 

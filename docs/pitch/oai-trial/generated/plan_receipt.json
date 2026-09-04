@@ -1,6 +1,6 @@
 {
   "schema": "oai_trial.pitch_projection.v1",
-  "source_commit": "43639b7463b919956fe79f62f6faa9519c05cacc",
+  "source_commit": "6b69e188832a97392925cdf423bc4c45573323c4",
   "canonical": [
     "deck.curated.yaml",
     "claim_ledger.curated.yaml",

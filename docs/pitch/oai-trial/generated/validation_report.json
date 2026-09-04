@@ -1,0 +1,11 @@
+{
+  "schema": "pitchdeck.validation_report.v1",
+  "readiness": "READY",
+  "errors": 0,
+  "warnings": 0,
+  "issues": [],
+  "seam_validation": {
+    "kind": "validation_report",
+    "status": "PASS"
+  }
+}

@@ -10,7 +10,7 @@ sources:
   visibility: public
   required: true
   repo: grahama1970/oai-trial
-  ref: 43639b7463b919956fe79f62f6faa9519c05cacc
+  ref: 6b69e188832a97392925cdf423bc4c45573323c4
   content_sha: sha256:83b1199fa7f0da86b6e0836b6634657a5ff92c6d9f8bd3014f115a3de4942bfc
 - id: local
   title: run_pipeline
@@ -19,7 +19,7 @@ sources:
   visibility: public
   required: true
   repo: grahama1970/oai-trial
-  ref: 43639b7463b919956fe79f62f6faa9519c05cacc
+  ref: 6b69e188832a97392925cdf423bc4c45573323c4
   content_sha: sha256:f85854417626d088c8e7a28a8a549aa64a7fb437f3d4040825da814ad8e926d5
 - id: semantics
   title: build_replacements
@@ -28,7 +28,7 @@ sources:
   visibility: public
   required: true
   repo: grahama1970/oai-trial
-  ref: 43639b7463b919956fe79f62f6faa9519c05cacc
+  ref: 6b69e188832a97392925cdf423bc4c45573323c4
   content_sha: sha256:358eb5bdb3e5f5767112d401857a4fe9a8517387f2cd5c70d11ca6e2bc7a9eb8
 - id: release
   title: _publish
@@ -37,7 +37,7 @@ sources:
   visibility: public
   required: true
   repo: grahama1970/oai-trial
-  ref: 43639b7463b919956fe79f62f6faa9519c05cacc
+  ref: 6b69e188832a97392925cdf423bc4c45573323c4
   content_sha: sha256:f85854417626d088c8e7a28a8a549aa64a7fb437f3d4040825da814ad8e926d5
 - id: evidence
   title: test_json_bool_number_and_sqlite_integer_real_mutations_rejected
@@ -46,7 +46,7 @@ sources:
   visibility: public
   required: true
   repo: grahama1970/oai-trial
-  ref: 43639b7463b919956fe79f62f6faa9519c05cacc
+  ref: 6b69e188832a97392925cdf423bc4c45573323c4
   content_sha: sha256:ae99a82b8e8183cffe52610cedb9f4ab6c3e7e4fde711b20c9d8b81f16c88209
 - id: production
   title: SLA (stated assumptions, arithmetic shown)
@@ -55,7 +55,7 @@ sources:
   visibility: public
   required: true
   repo: grahama1970/oai-trial
-  ref: 43639b7463b919956fe79f62f6faa9519c05cacc
+  ref: 6b69e188832a97392925cdf423bc4c45573323c4
   content_sha: sha256:e7eec4c10e62654e5a2874597e7c727e9dfd6030694051818b2563c453b4ddc8
 - id: nonclaims
   title: Not established (out of scope for a literal-policy pipeline)
@@ -64,7 +64,7 @@ sources:
   visibility: public
   required: true
   repo: grahama1970/oai-trial
-  ref: 43639b7463b919956fe79f62f6faa9519c05cacc
+  ref: 6b69e188832a97392925cdf423bc4c45573323c4
   content_sha: sha256:5a3998a468dc4497070711c084df079e09d2e96af330eb1f1fa7e0f6f6da6ab1
 - id: verify-code
   title: verify_corpus
@@ -73,7 +73,7 @@ sources:
   role: evidence
   required: true
   content_sha: sha256:5e7ecffbade1ea64d555dffaaeb77a6aad0e81bfc254d093a68ac27c190099a5
-  ref: 43639b7463b919956fe79f62f6faa9519c05cacc
+  ref: 6b69e188832a97392925cdf423bc4c45573323c4
 - id: format-code
   title: _transform_sqlite
   path: ${PROJECT_ROOT}/src/anonymization_trial/formats.py
@@ -81,7 +81,7 @@ sources:
   role: evidence
   required: true
   content_sha: sha256:84f36e06de5eacc7b2ca01cd869b04daef9b803ff619a4db2cbc02ec0b9989c7
-  ref: 43639b7463b919956fe79f62f6faa9519c05cacc
+  ref: 6b69e188832a97392925cdf423bc4c45573323c4
 - id: runtime-metrics
   title: Docker demo
   path: ${PROJECT_ROOT}/docs/pitch/oai-trial/qa/runtime-evidence.json
@@ -89,7 +89,7 @@ sources:
   role: evidence
   required: true
   content_sha: sha256:eff428dd95c3a87a18ec863059ed8aa046937654765599656c88e688a6dcb76a
-  ref: 43639b7463b919956fe79f62f6faa9519c05cacc
+  ref: 6b69e188832a97392925cdf423bc4c45573323c4
 - id: cost-inputs
   title: AWS price sources
   path: ${PROJECT_ROOT}/costs/aws-us-east-1-inputs.json
@@ -97,7 +97,7 @@ sources:
   role: evidence
   required: true
   content_sha: sha256:adb3eb1330ab84f5b43a2cb194b8fcadd170c728adf43f4a082cbed07edf3ded
-  ref: 43639b7463b919956fe79f62f6faa9519c05cacc
+  ref: 6b69e188832a97392925cdf423bc4c45573323c4
 policy:
   public_deck_source_ids:
   - brief

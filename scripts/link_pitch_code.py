@@ -31,6 +31,17 @@ def link(source: Path, output: Path, index: Path) -> None:
     links = json.loads(index.read_text())["slides"]
     with ZipFile(source) as archive:
         parts = {name: archive.read(name) for name in archive.namelist()}
+    # Keep link contrast on the dark slides; office viewers use theme hyperlink
+    # colors even when the source text run already carries an explicit color.
+    for name in list(parts):
+        if name.startswith("ppt/theme/") and name.endswith(".xml"):
+            theme = parse_xml(parts[name])
+            for tag in ("hlink", "folHlink"):
+                node = theme.find(f".//{{{A}}}{tag}")
+                if node is not None:
+                    node.clear()
+                    ET.SubElement(node, f"{{{A}}}srgbClr", {"val": "22D3EE"})
+            parts[name] = ET.tostring(theme, encoding="utf-8", xml_declaration=True)
     for number, item in enumerate(links.values(), 1):
         url = item["url"]
         if not url.startswith("https://github.com/grahama1970/oai-trial/blob/"):

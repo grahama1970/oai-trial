@@ -1,0 +1,71 @@
+{
+  "schema": "oai_trial.pitch_final_review.v1",
+  "source_commit": "6b69e188832a97392925cdf423bc4c45573323c4",
+  "status": "NEEDS_HUMAN",
+  "bundle_sha256": "dadff64de476de8402a3e3470566fbbade8dc350de098439e592a5277e8c9208",
+  "artifacts": {
+    "pptx": {
+      "path": "/mnt/storage12tb/oai-trial/pitch-final/oai-trial-6b69e18.pptx",
+      "sha256": "a9b7875f31d23da65c0555aaee80a94cc2b411c837e0a5811f3bc1b75aac0d04"
+    },
+    "pdf": {
+      "path": "/mnt/storage12tb/oai-trial/pitch-final/frozen-render/oai-trial-6b69e18.pdf",
+      "sha256": "9052865f95ecd91bebaa0c35ad7ed22ff2c86f1adfe408659be889b432e9ba36"
+    },
+    "contact_sheet": {
+      "path": "/mnt/storage12tb/oai-trial/pitch-final/frozen-render/contact-sheet.png",
+      "sha256": "b8dff4a329f83f66de8decac0a5723c5605db337b2351aa3fdb15a1b54e74f10"
+    },
+    "render_receipt": {
+      "path": "/mnt/storage12tb/oai-trial/pitch-final/frozen-render/render_receipt.json",
+      "sha256": "b79f15267b34aab5a157bf57708d5c3e6e65c0b1ef82351967873d8f929b5da0"
+    },
+    "surf_capture": {
+      "path": "/mnt/storage12tb/oai-trial/pitch-final/final-contact-sheet-surf.png",
+      "sha256": "c2dc3795afec5622216c1363d7315a12a23faf9a55ed79f175f37728eaa960f8"
+    },
+    "side_by_side_1080": {
+      "path": "/mnt/storage12tb/oai-trial/pitch-final/side-by-side-1080.png",
+      "sha256": "27dc39bb1eee09a0e3957a561370542fe735d9af56663d70e7479407fc4dbda7"
+    }
+  },
+  "agent_visual_review": {
+    "status": "INSPECTED",
+    "reviewer_kind": "agent",
+    "slides_inspected": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "observations": [
+      "Local release and publication state diagrams replace the fan-out.",
+      "Code/evidence link overlap and low-contrast hyperlink color corrected in the rendered PPTX.",
+      "Source and claim visible in 1080p side-by-side capture; human legibility approval remains required."
+    ]
+  },
+  "contact_sheet_review": {
+    "status": "PENDING",
+    "reviewer_kind": "human",
+    "bundle_sha256": "dadff64de476de8402a3e3470566fbbade8dc350de098439e592a5277e8c9208"
+  },
+  "google_slides_review": {
+    "status": "NOT_ESTABLISHED",
+    "reviewer_kind": "human",
+    "bundle_sha256": "dadff64de476de8402a3e3470566fbbade8dc350de098439e592a5277e8c9208",
+    "reason": "Google Drive menu reachable; final PPTX upload/import not proven."
+  },
+  "debugger": {
+    "headless_stops": 3,
+    "visible_vscode_stops": 3,
+    "adapter_limit": "VS Code API does not expose setBreakpoints response; actual paused frame matched each requested line."
+  },
+  "non_claims": [
+    "No human approval has been recorded.",
+    "No Google Slides import or typography comparison has been completed.",
+    "Side-by-side screenshot is a rehearsal capture, not a full 40-minute audience rehearsal."
+  ]
+}
