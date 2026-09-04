@@ -64,7 +64,7 @@ class PipelineTests(unittest.TestCase):
             _fixture_generator()(input_root, 3)
             run_pipeline(input_root, output_root)
             report = json.loads((output_root / "report.json").read_text(encoding="utf-8"))
-            self.assertEqual(report["status"], "success")
+            self.assertEqual(report["status"], "ready")
             self.assertTrue(report["verification_passed"])
             self.assertEqual(report["files_processed"], 4)
 

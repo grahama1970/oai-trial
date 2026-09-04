@@ -17,6 +17,7 @@ import time
 from dataclasses import asdict
 from pathlib import Path
 
+from .errors import AnonError
 from .fixture import generate_fixture
 from .pipeline import PipelineError, run_pipeline
 
@@ -74,8 +75,10 @@ def main(argv: list[str] | None = None) -> int:
         report = run_pipeline(args.input, args.output)
         print(json.dumps(asdict(report), sort_keys=True))
         return 0
-    except (OSError, ValueError, PipelineError) as error:
-        print(f"run failed: {type(error).__name__}", file=sys.stderr)
+    except (OSError, ValueError, PipelineError, AnonError) as error:
+        # Privacy-safe: report the error class/code only, never raw data.
+        detail = error.code.value if isinstance(error, AnonError) else type(error).__name__
+        print(f"run failed: {detail}", file=sys.stderr)
         return 1
 
 
