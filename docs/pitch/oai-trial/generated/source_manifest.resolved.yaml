@@ -5,7 +5,7 @@ audience: OpenAI privacy-engineering trial reviewers (40-minute technical walkth
 sources:
 - id: readme
   title: Repository README (start-here map)
-  path: /home/graham/workspace/experiments/oai-trial/README.md
+  path: ${PROJECT_ROOT}/README.md
   visibility: public
   role: primary
   required: true
@@ -13,7 +13,7 @@ sources:
   exclude_sections: []
 - id: architecture
   title: Architecture (design -> failure -> proof)
-  path: /home/graham/workspace/experiments/oai-trial/docs/ARCHITECTURE.md
+  path: ${PROJECT_ROOT}/docs/ARCHITECTURE.md
   visibility: public
   role: evidence
   required: true
@@ -21,7 +21,7 @@ sources:
   exclude_sections: []
 - id: submission
   title: Submission write-up (decisions, benchmark, cost, non-claims)
-  path: /home/graham/workspace/experiments/oai-trial/SUBMISSION.md
+  path: ${PROJECT_ROOT}/SUBMISSION.md
   visibility: public
   role: evidence
   required: true
@@ -29,7 +29,7 @@ sources:
   exclude_sections: []
 - id: privacy-contract
   title: Privacy contract (proven vs not established)
-  path: /home/graham/workspace/experiments/oai-trial/docs/PRIVACY_CONTRACT.md
+  path: ${PROJECT_ROOT}/docs/PRIVACY_CONTRACT.md
   visibility: public
   role: evidence
   required: true
@@ -37,7 +37,7 @@ sources:
   exclude_sections: []
 - id: acceptance-matrix
   title: Acceptance matrix (brief -> owner -> test -> evidence)
-  path: /home/graham/workspace/experiments/oai-trial/docs/ACCEPTANCE_MATRIX.md
+  path: ${PROJECT_ROOT}/docs/ACCEPTANCE_MATRIX.md
   visibility: public
   role: evidence
   required: true
@@ -45,7 +45,7 @@ sources:
   exclude_sections: []
 - id: security
   title: Security review (white/gray/black + adaptive lanes)
-  path: /home/graham/workspace/experiments/oai-trial/security/SECURITY.md
+  path: ${PROJECT_ROOT}/security/SECURITY.md
   visibility: public
   role: evidence
   required: false
@@ -53,7 +53,7 @@ sources:
   exclude_sections: []
 - id: arch-svg
   title: Fail-closed pipeline flow diagram
-  path: /home/graham/workspace/experiments/oai-trial/docs/production-architecture.svg
+  path: ${PROJECT_ROOT}/docs/production-architecture.svg
   visibility: public
   role: design
   required: true

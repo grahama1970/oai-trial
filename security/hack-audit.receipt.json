@@ -54,7 +54,7 @@
   ],
   "isolation": {
     "executor": "docker",
-    "mount_path": "/home/graham/workspace/experiments/oai-trial/src",
+    "mount_path": "${PROJECT_ROOT}/src",
     "network": "none",
     "scan_target": "/scan",
     "target_mount": "read_only"
@@ -85,7 +85,7 @@
       "MEDIUM": 5
     }
   },
-  "target": "/home/graham/workspace/experiments/oai-trial/src",
+  "target": "${PROJECT_ROOT}/src",
   "tool": "all",
   "tool_results": [
     {
@@ -95,7 +95,7 @@
         "--rm",
         "--network=none",
         "-v",
-        "/home/graham/workspace/experiments/oai-trial/src:/scan:ro",
+        "${PROJECT_ROOT}/src:/scan:ro",
         "hack-skill-security:latest",
         "semgrep",
         "scan",
@@ -121,7 +121,7 @@
         "--rm",
         "--network=none",
         "-v",
-        "/home/graham/workspace/experiments/oai-trial/src:/scan:ro",
+        "${PROJECT_ROOT}/src:/scan:ro",
         "hack-skill-security:latest",
         "bandit",
         "-r",

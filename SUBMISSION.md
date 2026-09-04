@@ -91,9 +91,10 @@ booleans.
 
 ## Known gaps and next steps
 
-- **SQLite is verified relationally, not per-row-located.** Row counts,
-  `integrity_check`, and `foreign_key_check` are preserved; there is no per-row
-  primary-key location oracle. Constructs the verifier cannot reproduce are
+- **SQLite is verified relationally AND per-row.** Row counts, `integrity_check`,
+  and `foreign_key_check` are preserved, plus a per-row location oracle (by
+  rowid: text cells vs the independent recompute, non-text cells byte-identical)
+  and a schema-object literal scan. Constructs the verifier cannot reproduce are
   rejected fail closed (triggers, `rowid`-shadowing columns, virtual tables,
   `WITHOUT ROWID`).
 - **The verifier is an independent re-derivation, not a separate implementation.**
@@ -138,5 +139,5 @@ minimal — adding those dependencies would violate the trial's container contra
 ## AI tool disclosure
 
 Built with an AI coding assistant. Output was checked by a deterministic gate on
-every change: `uv run pytest -q` (78 tests) and `ruff check`, plus live
+every change: `uv run pytest -q` (99 tests) and `ruff check`, plus live
 `docker build` and both `docker run` commands read back from produced artifacts.

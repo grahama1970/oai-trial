@@ -5,14 +5,14 @@
   "mocked": false,
   "live": false,
   "inputs": {
-    "source_manifest": "/home/graham/workspace/experiments/oai-trial/docs/pitch/oai-trial/source_manifest.yaml"
+    "source_manifest": "${PROJECT_ROOT}/docs/pitch/oai-trial/source_manifest.yaml"
   },
   "outputs": {
-    "source_manifest": "/home/graham/workspace/experiments/oai-trial/docs/pitch/oai-trial/generated/source_manifest.resolved.yaml",
-    "claim_ledger": "/home/graham/workspace/experiments/oai-trial/docs/pitch/oai-trial/generated/claim_ledger.yaml",
-    "asset_manifest": "/home/graham/workspace/experiments/oai-trial/docs/pitch/oai-trial/generated/asset_manifest.yaml",
-    "deck_manifest": "/home/graham/workspace/experiments/oai-trial/docs/pitch/oai-trial/generated/deck.public.yaml",
-    "speaker_notes": "/home/graham/workspace/experiments/oai-trial/docs/pitch/oai-trial/generated/speaker_notes.md"
+    "source_manifest": "${PROJECT_ROOT}/docs/pitch/oai-trial/generated/source_manifest.resolved.yaml",
+    "claim_ledger": "${PROJECT_ROOT}/docs/pitch/oai-trial/generated/claim_ledger.yaml",
+    "asset_manifest": "${PROJECT_ROOT}/docs/pitch/oai-trial/generated/asset_manifest.yaml",
+    "deck_manifest": "${PROJECT_ROOT}/docs/pitch/oai-trial/generated/deck.public.yaml",
+    "speaker_notes": "${PROJECT_ROOT}/docs/pitch/oai-trial/generated/speaker_notes.md"
   },
   "counts": {
     "sources": 7,

@@ -17,7 +17,7 @@
     "kind": "scene-to-svg",
     "status": "PASS"
   },
-  "source_path": "/home/graham/workspace/experiments/oai-trial/docs/pitch/oai-trial/assets/architecture.svg",
+  "source_path": "${PROJECT_ROOT}/docs/pitch/oai-trial/assets/architecture.svg",
   "source_sha256": "d4993c42a51e4a811fd6410c245f45b8a3ce17533c35a32d63c697259ebf7d22",
   "status": "PASS",
   "theme": "fixing-opus-neon-v1",

@@ -20,16 +20,16 @@ rationale gaps). Full review: `../docs/research/webgpt/ADVERSARIAL_REVIEW_2026-0
 | 1 | high | Verifier admitted swapped pseudonyms, dropped rows, relocated protected values | `verification.py::_verify_locations` | FIXED for text/CSV/JSON (per-location recompute); SQLite is relational-only (fail-closed on unreproducible constructs) | `test_verifier_location.py` (green) | done |
 | 2 | high | `"\u0041lice"` JSON-escape bypassed the verifier (scanned serialized text) | `formats.py::iter_searchable_text`, `verification.py` | FIXED (decode keys+values; dup-key + BOM handling) | `test_verifier_location.py`, `test_round2_fixes.py`, `test_round3_fixes.py` (green) | done |
 | 3 | high | `{"n":1e400}` becomes `{"n": Infinity}` published as ready | `formats.py::_transform_json` | FIXED (parse_float rejects non-finite; allow_nan=False) | `test_non_finite_json_number_is_rejected` (green) | done |
-| 4 | high | Staging mutable between `verify_corpus` and `_manifest_digest`; published bytes are not the verified bytes | `pipeline.py::run_pipeline` | CREDIBLE | pipeline red test pending | pending |
-| 5 | high | Publish not atomic/crash-durable (delete-old then rename then `write_text`, no fsync/rollback) | `pipeline.py::_publish` | CREDIBLE | crash-injection test pending | pending |
-| 6 | high | `.staging-*` inside the output mount; host-readable; survives SIGKILL, no startup recovery | `pipeline.py::run_pipeline` | CREDIBLE | test pending | pending |
-| 7 | high | TOCTOU: policy/source reread and re-hashed at different times; swap-and-restore window | `pipeline.py::_preflight,_source_digests`, `formats.py::_snapshot_sqlite` | CREDIBLE | extends `test_source_snapshot.py` | pending |
+| 4 | high | Staging mutable between verify and publish | `pipeline.py::run_pipeline,_publish` | MITIGATED (sealed digest re-checked before swap; single-writer staging assumption disclosed) | `test_publish_hardening.py` (green) | done |
+| 5 | high | Publish not atomic/crash-durable | `pipeline.py::_publish` | FIXED (readiness invalidated first; temp+fsync+os.replace+dir fsync) | `test_publish_hardening.py` (green) | done |
+| 6 | high | `.staging-*` inside the output mount; survives SIGKILL | `pipeline.py::run_pipeline` | FIXED (mode 0700 + stale-stage cleanup at startup) | `test_publish_hardening.py::test_no_staging_left_in_output` (green) | done |
+| 7 | high | TOCTOU: policy/source reread windows | `pipeline.py` | MITIGATED (policy symlink rejected before read; source-digest gate; deeper host swap-and-restore disclosed) | `test_round4_fixes.py`, `test_source_snapshot.py` (green) | done |
 | 8 | high | Protected/sensitive partial (prefix/suffix) overlap accepted; only equality/containment checked | `policy.py::_check_overlap` | FIXED (boundary-overlap check) | `test_round2_fixes.py::test_partial_boundary_overlap_rejected` (green) | done |
 | 9 | high | Two case-insensitive rules (`Alice`/`ALICE`) for distinct subjects accepted; one wins by `rule_id` | `policy.py::compile_policy`, `matcher.py::_select` | FIXED (match-domain conflict detection) | `test_case_insensitive_conflicting_identities_rejected` (green) | done |
-| 14 | high | SQLite bare `rowid` can shadow a declared column; triggers mutate unrelated values | `formats.py::_transform_sqlite,_verify_sqlite` | CREDIBLE | test pending | pending |
-| 15 | high | `report.json` binds no source/plan/verification digest chain | `pipeline.py::RunReport,run_pipeline` | CREDIBLE | schema test pending | pending |
+| 14 | high | SQLite rowid shadowing / trigger mutation / schema literals | `formats.py`, `verification.py` | FIXED (triggers + rowid-shadow + schema-literal rejection; per-row location oracle) | `test_round3_fixes.py`, `test_sqlite_location.py`, `test_sqlite_schema_literals.py` (green) | done |
+| 15 | high | `report.json` binds no evidence chain | `pipeline.py::RunReport` | FIXED (report_schema/run_id/source_manifest_sha256/verification_sha256 bound) | `test_publish_hardening.py` (green) | done |
 | 16 | med | Non-strict policy validation: `version:true`==1, duplicate keys last-wins (missing arrays still default empty) | `policy.py::compile_policy,load_policy` | FIXED (bool rejected; dup-key hook) | `test_version_true_is_rejected`, `test_duplicate_policy_keys_rejected` (green) | done |
-| 17 | med | Attacker-controlled `rule_id`/`data_type`/filenames interpolated into error messages | `errors.py::AnonError`, `policy.py`, `verification.py` | CREDIBLE | leak test pending | pending |
+| 17 | med | Attacker-controlled identifiers/filenames in error messages | `errors.py::safe_ref` | FIXED (rule_id/data_type/path material routed through safe_ref) | `test_error_privacy.py`, `test_sqlite_schema_literals.py` (green) | done |
 
 ## Scale, cost, robustness
 

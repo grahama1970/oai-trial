@@ -48,7 +48,7 @@ title: Remove real workstation paths from committed evidence artifacts
 severity: low
 scope: in_scope_for_8h_trial
 files: security/hack-audit.receipt.json, docs/pitch/oai-trial/generated/plan_receipt.json, docs/pitch/oai-trial/generated/asset_manifest.yaml, docs/pitch/oai-trial/generated/source_manifest.resolved.yaml, docs/pitch/oai-trial/assets/architecture.receipt.json
-problem: Committed receipts and generated pitch artifacts contain absolute workstation paths such as /home/graham/workspace/experiments/oai-trial. They are unnecessary provenance leakage and conflict with the submission instruction not to include real personal data.
+problem: Committed receipts and generated pitch artifacts contain absolute workstation paths such as ${PROJECT_ROOT}. They are unnecessary provenance leakage and conflict with the submission instruction not to include real personal data.
 fix: Regenerate or normalize committed evidence so paths are repository-relative or use a stable placeholder such as ${PROJECT_ROOT}; retain hashes and semantic provenance without host/user-specific path components.
 acceptance: ! rg -n '/home/graham|/home/[^/]+/workspace' security docs/pitch
 ```

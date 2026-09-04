@@ -4,8 +4,10 @@
     "fargate_gb_hour_usd": 0.004445,
     "fargate_vcpu_hour_usd": 0.04048,
     "note": "List on-demand prices as of price_date. UNVERIFIED against a dated screenshot; treat as illustrative until confirmed.",
+    "orchestration_per_object_usd": 2e-06,
     "price_date": "2026-09-04",
     "region": "us-east-1",
+    "retry_rate": 0.02,
     "s3_get_per_1k_usd": 0.0004,
     "s3_put_per_1k_usd": 0.005,
     "s3_standard_gb_month_usd": 0.023,
@@ -17,30 +19,36 @@
     "workers": 200
   },
   "estimate_1PB": {
-    "compute_usd": 685.69,
+    "compute_usd": 1398.82,
     "dominant_term": "storage",
     "objects": 953674316,
-    "requests_usd": 5149.84,
+    "orchestration_usd": 1907.35,
+    "requests_usd": 10894.78,
     "sensitivity": {
-      "double_throughput_total_usd": 51492.69,
-      "half_throughput_total_usd": 52521.23,
-      "tenth_file_size_total_usd": 98184.11
+      "double_throughput_total_usd": 82501.53,
+      "half_throughput_total_usd": 84599.76,
+      "tenth_file_size_total_usd": 198420.06
     },
-    "storage_usd": 46000.0,
-    "total_usd": 51835.54
+    "storage_usd": 69000.0,
+    "total_usd": 83200.94,
+    "wall_clock_hours_at_workers": 141.67,
+    "workers": 200
   },
   "estimate_1TB": {
-    "compute_usd": 0.69,
+    "compute_usd": 1.4,
     "dominant_term": "storage",
     "objects": 953674,
-    "requests_usd": 5.15,
+    "orchestration_usd": 1.91,
+    "requests_usd": 10.89,
     "sensitivity": {
-      "double_throughput_total_usd": 51.49,
-      "half_throughput_total_usd": 52.52,
-      "tenth_file_size_total_usd": 98.18
+      "double_throughput_total_usd": 82.5,
+      "half_throughput_total_usd": 84.6,
+      "tenth_file_size_total_usd": 198.42
     },
-    "storage_usd": 46.0,
-    "total_usd": 51.84
+    "storage_usd": 69.0,
+    "total_usd": 83.2,
+    "wall_clock_hours_at_workers": 0.14,
+    "workers": 200
   },
   "price_date": "2026-09-04",
   "region": "us-east-1",

@@ -4,7 +4,7 @@ assets:
 - id: readme-introduction-01
   kind: diagram
   visibility: public
-  local_path: /home/graham/workspace/experiments/oai-trial/docs/pitch/oai-trial/assets/architecture.svg
+  local_path: ${PROJECT_ROOT}/docs/pitch/oai-trial/assets/architecture.svg
   required: false
   alt_text: Pipeline
   target_aspect: '16:9'
@@ -16,7 +16,7 @@ assets:
 - id: architecture-3-system-at-a-glance-01
   kind: diagram
   visibility: public
-  local_path: /home/graham/workspace/experiments/oai-trial/docs/pitch/oai-trial/assets/architecture.svg
+  local_path: ${PROJECT_ROOT}/docs/pitch/oai-trial/assets/architecture.svg
   required: false
   alt_text: Cross-format anonymization engine fanning to four format adapters
   target_aspect: '16:9'

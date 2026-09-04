@@ -12,10 +12,11 @@ replacement.
 
 ## 2. Distinctness
 Two different canonical identities of the **same** `data_type` must receive
-**different** replacements. Collisions in bounded domains (e.g. phone suffixes,
-IPv4 host octet) are detected at compile time and resolved by deterministic
-domain extension, or the policy is rejected with a typed
-`namespace_exhausted` error.
+**different** replacements. Bounded domains (phone suffixes: 10,000; IPv4 host
+octet: 253) have a cardinality preflight: a policy naming more identities of a
+bounded type than its domain can injectively hold is rejected up front with a
+typed `namespace_exhausted` error, and the deterministic collision search is
+bounded by the domain capacity. There is no domain extension.
 
 ## 3. Match against original input only
 Matching runs against the **original decoded input**. Generated replacements are

@@ -67,7 +67,7 @@ Fail-closed guarantee unchanged: nothing unverified is ever released.
 ## Cost (reproducible)
 Run: `python scripts/estimate_aws_cost.py --inputs costs/aws-us-east-1-inputs.json`.
 With the committed us-east-1 list-price inputs (price_date 2026-09-04):
-- **1 TB ≈ $52** (storage-dominant), **1 PB ≈ $51,836** (storage-dominant).
+- **1 TB ≈ $83** (storage-dominant), **1 PB ≈ $83,201** (storage-dominant), including staging storage, verify rereads, promote requests, a 2% retry fraction, and an orchestration floor.
 - Sensitivity: halving throughput barely moves total (storage-bound); a 10×
   smaller avg file size raises the request term sharply — see
   `costs/example-estimates.json`.

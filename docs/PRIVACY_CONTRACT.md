@@ -34,10 +34,12 @@ implementation (see Known gaps).
   JSON with decoded string values, duplicate-key rejection, and BOM handling).
   This catches swapped pseudonyms, dropped rows, relocated protected values, and
   escaped-literal evasion.
-- **SQLite: relational, not per-row-located.** Row counts, `integrity_check`,
-  and `foreign_key_check` are preserved; a per-row primary-key location oracle is
-  NOT implemented. Constructs the verifier cannot reproduce are rejected fail
-  closed: triggers, `rowid`-shadowing columns, virtual tables, `WITHOUT ROWID`.
+- **SQLite: relational AND per-row-located.** Row counts, `integrity_check`, and
+  `foreign_key_check` are preserved, and a per-row location oracle compares
+  every accepted row by rowid: text cells against the independent recompute,
+  non-text cells byte-identical. Sensitive literals in any schema object SQL are
+  rejected. Constructs the verifier cannot reproduce are rejected fail closed:
+  triggers, `rowid`-shadowing columns, virtual tables, `WITHOUT ROWID`.
 - Protected-value occurrence counts are preserved; protected/sensitive equality,
   containment, and prefix/suffix boundary overlap are rejected at compile time.
 - Aliases of one subject converge to one pseudonym; distinct same-type subjects

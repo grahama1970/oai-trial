@@ -64,8 +64,10 @@ Closed error vocabulary (`errors.py`) never echoes raw data; no mapping/key in
 release or logs; source-snapshot/TOCTOU gate. Threat model: `security/THREAT_MODEL.md`.
 
 ## 11. Performance model
-Streaming CSV/text, SQLite online-backup snapshot, JSON bounded; demo measures
-per-run peak RSS across a 10× size step (roughly flat → bounded memory).
+Per-file processing (CSV rows are iterated, but file content, matches, and
+verifier text are materialized in memory — not TB-scale streaming; see
+SUBMISSION Known gaps). SQLite uses an online-backup snapshot; JSON is bounded
+by depth/size limits. The demo measures per-run peak RSS across a 10× size step.
 
 ## 12. Production architecture
 AWS reference + 1 TB/1 PB cost: `production-architecture.md`. Portability
