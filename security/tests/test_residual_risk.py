@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from residual_risk_probe import probe_corpus  # importable via pytest pythonpath=["scripts"]
+from residual_risk_probe import probe_corpus  # importable via pytest pythonpath=["security"]
 
 
 def _corpus(root: Path, csv_text: str) -> Path:

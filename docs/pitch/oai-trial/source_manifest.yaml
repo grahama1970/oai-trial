@@ -36,7 +36,7 @@ sources:
     required: true
   - id: security
     title: Security review (white/gray/black + adaptive lanes)
-    path: ${PROJECT_ROOT}/docs/security/SECURITY.md
+    path: ${PROJECT_ROOT}/security/SECURITY.md
     visibility: public
     role: evidence
     required: false

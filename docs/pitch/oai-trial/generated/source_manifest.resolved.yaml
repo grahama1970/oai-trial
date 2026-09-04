@@ -45,7 +45,7 @@ sources:
   exclude_sections: []
 - id: security
   title: Security review (white/gray/black + adaptive lanes)
-  path: /home/graham/workspace/experiments/oai-trial/docs/security/SECURITY.md
+  path: /home/graham/workspace/experiments/oai-trial/security/SECURITY.md
   visibility: public
   role: evidence
   required: false

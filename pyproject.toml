@@ -37,10 +37,10 @@ src = ["src", "tests"]
 select = ["E", "F", "I", "B", "UP", "S"]
 # assert is fine in tests; long DB/path literals in the starter fixture and
 # tests are readability-neutral. Hardened runtime modules still enforce E501.
-per-file-ignores = { "tests/*" = ["S101", "E501"], "src/anonymization_trial/fixture.py" = ["E501"] }
+per-file-ignores = { "tests/*" = ["S101", "E501"], "security/tests/*" = ["S101", "E501"], "src/anonymization_trial/fixture.py" = ["E501"] }
 
 [tool.pytest.ini_options]
-testpaths = ["tests"]
-# src layout: make the package (and dev-only scripts/) importable under
-# `uv run pytest` without install or sys.path surgery in tests.
-pythonpath = ["src", "scripts"]
+testpaths = ["tests", "security/tests"]
+# src layout: make the package (and dev-only scripts/ + security/) importable
+# under `uv run pytest` without install or sys.path surgery in tests.
+pythonpath = ["src", "scripts", "security"]

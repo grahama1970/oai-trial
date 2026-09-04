@@ -161,7 +161,7 @@ If we add HMAC:
 Something like:
 
 ```text
-docs/security/
+security/
     SECURITY.md
     THREAT_MODEL.md
     hack-audit.receipt.json

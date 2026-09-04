@@ -12,11 +12,20 @@ import subprocess
 import sys
 from pathlib import Path
 
-_SRC = str(Path(__file__).resolve().parents[1] / "src")
+
+def _src_dir() -> str:
+    # Locate src/ by walking up to the repo root (dir holding pyproject.toml)
+    # rather than counting parents[N], so relocating this test cannot break it.
+    for parent in Path(__file__).resolve().parents:
+        if (parent / "pyproject.toml").is_file():
+            return str(parent / "src")
+    raise RuntimeError("repo root (pyproject.toml) not found above this test")
 
 
 def _run(inp: Path, out: Path) -> subprocess.CompletedProcess:
-    env = {**os.environ, "PYTHONPATH": _SRC + os.pathsep + os.environ.get("PYTHONPATH", "")}
+    # The pytest interpreter (sys.executable) is the system python without the
+    # editable install, so the black-box subprocess needs src on PYTHONPATH.
+    env = {**os.environ, "PYTHONPATH": _src_dir() + os.pathsep + os.environ.get("PYTHONPATH", "")}
     return subprocess.run(  # noqa: S603 (fixed argv; no shell, no untrusted input)
         [
             sys.executable, "-m", "anonymization_trial", "run",
