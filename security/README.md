@@ -27,3 +27,10 @@ Static and adversarial scans are **supporting evidence, not proof of
 vulnerability-free software**. The pipeline proves declared-literal replacement
 and structural preservation, not resistance to re-identification. These lanes
 narrow risk; they do not certify the software.
+
+The committed security receipts are supporting evidence only: Semgrep scanned 0
+target files, no dependency-SCA receipt is committed, and the Battle artifact is
+a deterministic fixture rather than adaptive live lineage. The executable
+adversarial evidence for this repo is the retained test suite in
+`security/tests/` (fail-before-fix regressions from four external review
+rounds), not the scanner receipts.

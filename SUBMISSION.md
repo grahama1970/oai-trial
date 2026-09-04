@@ -111,8 +111,11 @@ booleans.
   TB/PB is designed and cost-modelled, not run at scale.
 - **CSV uses the default comma/quote dialect.** Alternative dialects are not
   detected; newline/quoting is normalized (logical preservation, not byte-level).
-- **Single fixed pseudonym scope.** `SCOPE_ID` is one namespace (no cross-tenant
-  unlinkability); IP/phone domains are bounded without a cardinality preflight.
+- **Single fixed pseudonym scope.** Local trial pseudonyms use the public fixed
+  scope trial-v1; they provide no private-key secrecy or cross-tenant
+  unlinkability. Production replaces this public namespace with a
+  tenant-or-purpose-scoped keyed HMAC. IP/phone domains are bounded with a
+  cardinality preflight that rejects over-capacity policies up front.
 - The cost model is a **storage-dominant floor estimate**; it omits verifier
   rereads, staging/promotion requests, SQS/KMS/logging/orchestration, retries,
   output expansion, and transfer.
