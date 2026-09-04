@@ -1,12 +1,9 @@
 """Bounded residual-risk probe tests (issue #12, control-plane demonstration)."""
 from __future__ import annotations
 
-import sys
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
-
-from residual_risk_probe import probe_corpus  # noqa: E402
+from residual_risk_probe import probe_corpus  # importable via pytest pythonpath=["scripts"]
 
 
 def _corpus(root: Path, csv_text: str) -> Path:

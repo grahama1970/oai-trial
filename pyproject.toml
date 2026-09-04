@@ -41,5 +41,6 @@ per-file-ignores = { "tests/*" = ["S101", "E501"], "src/anonymization_trial/fixt
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-# src layout: make the package importable under `uv run pytest` without install.
-pythonpath = ["src"]
+# src layout: make the package (and dev-only scripts/) importable under
+# `uv run pytest` without install or sys.path surgery in tests.
+pythonpath = ["src", "scripts"]

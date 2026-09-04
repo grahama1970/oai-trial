@@ -98,6 +98,15 @@ booleans.
   is designed but not built (opt-in, extra credit).
 - The `ripgrep` concurrent verification cross-check is designed, not yet wired.
 
+## Python conventions (deliberate overrides)
+The repo follows universal Python best practices (centralized `StrEnum` error
+codes, no runtime `assert`, no `shell=True`/`eval`/`exec`/`pickle`, `pathlib`,
+module docstrings, files < 800 lines, thin `__init__`, no `sys.path` surgery,
+regex removed from the value path). The house Loguru/Typer/httpx defaults are
+intentionally **overridden**: the runtime is stdlib-only (`argparse` + `print`,
+`dependencies = []`) so the container stays self-contained, offline, and
+minimal — adding those dependencies would violate the trial's container contract.
+
 ## AI tool disclosure
 
 Built with an AI coding assistant. Output was checked by a deterministic gate on
