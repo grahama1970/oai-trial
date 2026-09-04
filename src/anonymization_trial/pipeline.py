@@ -29,7 +29,19 @@ from pathlib import Path
 from .errors import AnonError, AnonErrorCode
 from .formats import SUPPORTED_SUFFIXES, transform_file
 from .policy import Policy, load_policy
+from .pseudonyms import ALGORITHM_VERSION, KEY_MODE, SCOPE_ID
 from .verification import verify_corpus
+
+# Explicit non-claims in the readiness report. A literal-policy pipeline proves
+# declared-literal replacement + structural preservation, not re-identification
+# resistance (RAT-Bench arXiv:2602.12806; SPIA arXiv:2604.21211; "Why Data
+# Anonymization Has Not Taken Off" arXiv:2509.10165).
+_DOES_NOT_ESTABLISH = (
+    "discovery_of_unlisted_sensitive_data",
+    "resistance_to_all_external_linkage",
+    "quasi_identifier_anonymity",
+    "formal_anonymity_or_differential_privacy",
+)
 
 
 class PipelineError(RuntimeError):
@@ -48,6 +60,10 @@ class RunReport:
     elapsed_seconds: float
     policy_sha256: str = ""
     corpus_manifest_sha256: str = ""
+    algorithm_version: str = ALGORITHM_VERSION
+    scope_id: str = SCOPE_ID
+    key_mode: str = KEY_MODE
+    does_not_establish: tuple[str, ...] = _DOES_NOT_ESTABLISH
 
 
 def _reject(code: AnonErrorCode, message: str) -> None:

@@ -10,6 +10,12 @@ value, or a changed protected-value occurrence count.
 
 Independence: the transform uses the Aho-Corasick matcher; this verifier uses a
 plain ``str`` scan over freshly read output, so a matcher bug cannot mask itself.
+
+Subject-level coverage (SPIA arXiv:2604.21211): span-absence alone is a weak
+unit of protection. This verifier additionally recomputes the expected
+pseudonym per canonical identity and requires every selected source occurrence
+to appear as its replacement in output, and requires distinct same-type
+identities to hold distinct replacements.
 """
 from __future__ import annotations
 
@@ -17,6 +23,7 @@ from pathlib import Path
 
 from .errors import AnonError, AnonErrorCode
 from .policy import Policy
+from .pseudonyms import build_replacements
 
 
 def _relative_files(root: Path) -> set[Path]:
@@ -63,4 +70,35 @@ def verify_corpus(source_corpus: Path, staged_corpus: Path, policy: Policy) -> N
         if _count(protected, source_texts, True) != _count(protected, output_texts, True):
             raise AnonError(
                 AnonErrorCode.VERIFICATION_FAILED, "a protected value occurrence count changed"
+            )
+
+    _verify_subject_level(policy, source_texts, output_texts)
+
+
+def _verify_subject_level(policy: Policy, source_texts: list[str], output_texts: list[str]) -> None:
+    """Subject-level coverage + same-type distinctness (independent recompute)."""
+    replacements = build_replacements([rule.identity for rule in policy.rules], policy.version)
+
+    # Distinctness: no two identities of the same data type share a replacement.
+    by_type: dict[str, set[str]] = {}
+    for (data_type, _identity), replacement in replacements.items():
+        seen = by_type.setdefault(data_type, set())
+        if replacement in seen:
+            raise AnonError(
+                AnonErrorCode.VERIFICATION_FAILED, "two identities share a type replacement"
+            )
+        seen.add(replacement)
+
+    # Coverage (presence-based, nesting-safe): any identity whose alias appears in
+    # the source must have its pseudonym present in output. Exact removal is
+    # already proven by the literal-absence scan above; counting per-rule would
+    # double-count nested aliases ("Ada" inside "Ada Lovelace").
+    present: set[tuple[str, str]] = set()
+    for rule in policy.rules:
+        if _count(rule.value, source_texts, rule.case_sensitive) > 0:
+            present.add(rule.identity)
+    for identity in present:
+        if _count(replacements[identity], output_texts, True) < 1:
+            raise AnonError(
+                AnonErrorCode.VERIFICATION_FAILED, "a subject's pseudonym is missing from output"
             )

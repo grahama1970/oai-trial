@@ -7,9 +7,17 @@ the same data type.
 Failure modes: raises ``AnonError(NAMESPACE_EXHAUSTED)`` if a bounded domain
 (phone suffix, IPv4 host octet) cannot yield a distinct replacement.
 
-Determinism: replacements derive from ``SHA256(policy_version:data_type:identity
-[:salt])``. Same inputs always produce the same output; no mapping table is
-persisted (a mapping table would itself be reversible PII).
+Determinism: replacements derive from a domain-separated digest over
+``(algorithm_version, scope_id, policy_version, data_type, identity, salt)``.
+Same inputs always produce the same output; no mapping table is persisted (a
+mapping table would itself be reversible PII).
+
+Provenance: keyed/domain-separated pseudonym derivation with the data type in
+the hash input follows AnonShield (arXiv:2606.15650); binding an
+``algorithm_version`` + ``scope_id`` (rather than a single global namespace)
+follows Proteus (arXiv:2603.06540). The local ``KEY_MODE`` is a public
+deterministic namespace: it proves identity coherence, not cryptographic
+secrecy. Production replaces it with a KMS-protected tenant/purpose-scoped HMAC.
 """
 from __future__ import annotations
 
@@ -19,9 +27,13 @@ from .errors import AnonError, AnonErrorCode
 
 CanonicalIdentity = tuple[str, str]  # (data_type, identity)
 
+ALGORITHM_VERSION = "pseudonym-v1"
+SCOPE_ID = "trial-v1"
+KEY_MODE = "public-deterministic-trial-namespace"
+
 
 def _digest(policy_version: int, data_type: str, identity: str, salt: int) -> str:
-    material = f"{policy_version}:{data_type}:{identity}:{salt}"
+    material = f"{ALGORITHM_VERSION}:{SCOPE_ID}:{policy_version}:{data_type}:{identity}:{salt}"
     return hashlib.sha256(material.encode("utf-8")).hexdigest()
 
 

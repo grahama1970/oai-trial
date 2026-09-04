@@ -6,7 +6,7 @@ from pathlib import Path
 import pytest
 
 from anonymization_trial.errors import AnonError, AnonErrorCode
-from anonymization_trial.policy import compile_policy
+from anonymization_trial.policy import compile_policy, replace_text
 from anonymization_trial.verification import verify_corpus
 
 
@@ -28,9 +28,11 @@ def _corpus(root: Path, files: dict[str, str]) -> Path:
 
 
 def test_verify_passes_on_clean_output(tmp_path: Path):
-    src = _corpus(tmp_path / "src", {"a.txt": "Ada at Northwind\n"})
-    out = _corpus(tmp_path / "out", {"a.txt": "Person-x at Northwind\n"})
-    verify_corpus(src, out, _pol())  # no raise
+    pol = _pol()
+    text = "Ada at Northwind\n"
+    src = _corpus(tmp_path / "src", {"a.txt": text})
+    out = _corpus(tmp_path / "out", {"a.txt": replace_text(text, pol)[0]})
+    verify_corpus(src, out, pol)  # no raise
 
 
 def test_verify_catches_surviving_literal(tmp_path: Path):
