@@ -11,3 +11,11 @@ demo-artifacts/
 # local env & agent-skills symlink
 .env
 agent-skills
+
+# terraform state / plans (never commit)
+*.tfstate
+*.tfstate.*
+.terraform/
+.terraform.lock.hcl
+*.tfplan
+plan.tfplan

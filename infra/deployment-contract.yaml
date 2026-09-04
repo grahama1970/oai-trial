@@ -1,0 +1,66 @@
+# Provider-neutral deployment contract.
+#
+# The anonymization engine is a self-contained OCI container (a portable batch
+# compute artifact). The cloud only needs to satisfy these capabilities; the
+# orchestration is provider-specific. This is "portable compute artifact,
+# provider-specific orchestration" — stronger than pretending one Terraform
+# config deploys identically everywhere. AWS is the worked reference
+# (docs/production-architecture.md); the mapping to GCP/Azure is in
+# infra/mappings/PROVIDER_MAPPING.md.
+schema: anonymization_trial.deployment_contract.v1
+
+deployment_contract:
+  input_store:
+    capabilities:
+      - immutable_object_versions
+      - encryption_at_rest
+      - read_only_worker_access
+
+  work_queue:
+    capabilities:
+      - at_least_once_delivery
+      - backpressure
+      - dead_letter_queue
+
+  orchestrator:
+    capabilities:
+      - durable_retries
+      - bounded_concurrency
+      - fan_out
+      - fan_in
+      - checkpoint_replay
+
+  compute:
+    capabilities:
+      - oci_container            # the anonymization-trial image, unchanged
+      - bounded_cpu_memory
+      - private_network
+      - ephemeral_local_storage  # same-filesystem staging
+
+  key_service:
+    capabilities:
+      - envelope_encryption
+      - audited_key_unwrap       # one unwrap per worker task, not per value
+      - key_versioning
+
+  release_store:
+    capabilities:
+      - immutable_objects
+      - conditional_pointer_update  # atomic, verified-only publish
+      - manifest_binding            # report binds policy + corpus digests
+
+  quarantine_store:
+    capabilities:
+      - isolated_from_release
+      - retention_policy
+
+  audit:
+    capabilities:
+      - immutable_activity_log
+      - no_sensitive_values_in_logs
+
+# Portability posture:
+#   application boundary (OCI container)          -> cloud-neutral
+#   data contract (policy+corpus -> report+corpus)-> cloud-neutral
+#   verification semantics (stage->verify->publish) -> cloud-neutral
+#   infrastructure                                -> provider adapters (AWS reference)

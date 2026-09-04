@@ -56,6 +56,18 @@ AWS design, diagram, SLA, and reproducible cost model in
 [`docs/production-architecture.md`](docs/production-architecture.md) and
 [`docs/production-architecture.svg`](docs/production-architecture.svg).
 
+## Portability (portable compute artifact, provider-specific orchestration)
+The anonymization engine is a self-contained OCI container, so the portability
+boundary is the image + data contract + verification semantics, not a Terraform
+config. A provider-neutral deployment contract
+([`infra/deployment-contract.yaml`](infra/deployment-contract.yaml)) lists the
+capabilities the cloud must supply; the AWS/GCP/Azure service mapping is in
+[`infra/mappings/PROVIDER_MAPPING.md`](infra/mappings/PROVIDER_MAPPING.md). AWS
+is the one worked reference. `infra/terraform/` is a read-only AWS reference
+module: `terraform fmt` + `validate` pass and `$ops-terraform check` returns
+`status=PASS` ([`infra/ops-terraform-check.receipt.json`](infra/ops-terraform-check.receipt.json));
+no state is committed and no `apply` is run (deployment earns no extra credit).
+
 ## SLA, capacity, and cost
 
 1 TB ≈ $52, 1 PB ≈ $51,836 (us-east-1 list prices, price_date 2026-09-04,

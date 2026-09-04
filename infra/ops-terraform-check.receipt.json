@@ -1,0 +1,8 @@
+{
+ "schema": "ops_terraform.check.v1",
+ "status": "PASS",
+ "module_dir": "infra/terraform",
+ "fmt_clean": true,
+ "valid": true,
+ "diagnostics": []
+}
