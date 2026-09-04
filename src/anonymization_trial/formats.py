@@ -17,7 +17,7 @@ from decimal import Decimal, InvalidOperation
 from pathlib import Path
 from typing import Any
 
-from .errors import AnonError, AnonErrorCode
+from .errors import AnonError, AnonErrorCode, safe_ref
 from .policy import Policy, replace_text
 
 _BOM = b"\xef\xbb\xbf"
@@ -46,7 +46,7 @@ def transform_file(source: Path, destination: Path, policy: Policy) -> tuple[int
         return _transform_text(source, destination, policy)
     if source.suffix == ".sqlite":
         return _transform_sqlite(source, destination, policy)
-    raise ValueError(f"unsupported input suffix: {source.suffix}")
+    raise ValueError(f"unsupported input suffix {safe_ref(source.suffix)}")
 
 
 def _transform_text(source: Path, destination: Path, policy: Policy) -> tuple[int, int]:
@@ -263,12 +263,21 @@ def _transform_sqlite(source: Path, destination: Path, policy: Policy) -> tuple[
     replacements = 0
     with sqlite3.connect(destination) as connection:
         connection.execute("PRAGMA foreign_keys = ON")
-        for _name, sql in connection.execute(
+        for obj_name, sql in connection.execute(
             "SELECT name, sql FROM sqlite_master WHERE sql IS NOT NULL"
         ):
             if sql and sql.strip().upper().startswith("CREATE VIRTUAL TABLE"):
                 raise AnonError(
                     AnonErrorCode.UNSUPPORTED_FORMAT, "virtual tables are not supported"
+                )
+            # A policy literal embedded in ANY schema object (view SQL, index
+            # expression, default, object name) is retained DDL that neither the
+            # row transform nor the row verifier touches -- e.g. CREATE VIEW
+            # leaked AS SELECT 'Alice'. Reject rather than publish (round5 #1).
+            if policy.matcher.find(obj_name) or (sql and policy.matcher.find(sql)):
+                raise AnonError(
+                    AnonErrorCode.SENSITIVE_IN_SCHEMA,
+                    "a sensitive literal occurs in a SQLite schema object",
                 )
         # Triggers can mutate unrelated columns during an UPDATE, which the
         # relational verifier cannot reproduce; reject rather than certify blind

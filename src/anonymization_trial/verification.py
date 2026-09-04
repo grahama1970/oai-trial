@@ -25,7 +25,7 @@ import sqlite3
 from pathlib import Path
 from typing import Any
 
-from .errors import AnonError, AnonErrorCode
+from .errors import AnonError, AnonErrorCode, safe_ref
 from .policy import Policy, replace_text
 from .pseudonyms import build_replacements
 
@@ -78,7 +78,7 @@ def _verify_sqlite_locations(source: Path, staged: Path, policy: Policy, name: s
         out_tables = sorted(r[0] for r in out.execute(q))
         if src_tables != out_tables:
             raise AnonError(
-                AnonErrorCode.VERIFICATION_FAILED, f"sqlite table set changed in {name}"
+                AnonErrorCode.VERIFICATION_FAILED, f"sqlite table set changed in {safe_ref(name)}"
             )
         for table in src_tables:
             ident = '"' + table.replace('"', '""') + '"'
@@ -88,14 +88,15 @@ def _verify_sqlite_locations(source: Path, staged: Path, policy: Policy, name: s
             ):
                 if s_row[0] != o_row[0]:
                     raise AnonError(
-                        AnonErrorCode.VERIFICATION_FAILED, f"sqlite row identity changed in {name}"
+                        AnonErrorCode.VERIFICATION_FAILED,
+                            f"sqlite row identity changed in {safe_ref(name)}"
                     )
                 for s_val, o_val in zip(s_row[1:], o_row[1:], strict=True):
                     expected = replace_text(s_val, policy)[0] if isinstance(s_val, str) else s_val
                     if o_val != expected:
                         raise AnonError(
                             AnonErrorCode.VERIFICATION_FAILED,
-                            f"sqlite cell location mismatch in {name}",
+                            f"sqlite cell location mismatch in {safe_ref(name)}",
                         )
     finally:
         src.close()
@@ -116,7 +117,8 @@ def _verify_locations(source_corpus: Path, staged_corpus: Path, output_files: se
             out = _load_json(staged_corpus / rel)
             if out != _expected_json(src, policy):
                 raise AnonError(
-                    AnonErrorCode.VERIFICATION_FAILED, f"json location mismatch in {rel.name}"
+                    AnonErrorCode.VERIFICATION_FAILED,
+                        f"json location mismatch in {safe_ref(rel.name)}"
                 )
         elif rel.suffix == ".sqlite":
             _verify_sqlite_locations(source_corpus / rel, staged_corpus / rel, policy, rel.name)
@@ -125,18 +127,20 @@ def _verify_locations(source_corpus: Path, staged_corpus: Path, output_files: se
             out_rows = _csv_rows(staged_corpus / rel)
             if len(src_rows) != len(out_rows):
                 raise AnonError(
-                    AnonErrorCode.VERIFICATION_FAILED, f"csv row count changed in {rel.name}"
+                    AnonErrorCode.VERIFICATION_FAILED,
+                        f"csv row count changed in {safe_ref(rel.name)}"
                 )
             for src_row, out_row in zip(src_rows, out_rows, strict=True):
                 if len(src_row) != len(out_row):
                     raise AnonError(
-                        AnonErrorCode.VERIFICATION_FAILED, f"csv column count changed in {rel.name}"
+                        AnonErrorCode.VERIFICATION_FAILED,
+                            f"csv column count changed in {safe_ref(rel.name)}"
                     )
                 for src_cell, out_cell in zip(src_row, out_row, strict=True):
                     if replace_text(src_cell, policy)[0] != out_cell:
                         raise AnonError(
                             AnonErrorCode.VERIFICATION_FAILED,
-                            f"csv cell location mismatch in {rel.name}",
+                            f"csv cell location mismatch in {safe_ref(rel.name)}",
                         )
 
 
@@ -175,7 +179,7 @@ def verify_corpus(source_corpus: Path, staged_corpus: Path, policy: Policy) -> N
                 if needle in haystack:
                     raise AnonError(
                         AnonErrorCode.VERIFICATION_FAILED,
-                        f"a sensitive literal survived in {rel.name}",
+                        f"a sensitive literal survived in {safe_ref(rel.name)}",
                     )
 
     # Value-level skeleton for text files: independently recompute the expected
@@ -188,7 +192,8 @@ def verify_corpus(source_corpus: Path, staged_corpus: Path, policy: Policy) -> N
             out_text = (staged_corpus / rel).read_text(encoding="utf-8")
             if replace_text(src_text, policy)[0] != out_text:
                 raise AnonError(
-                    AnonErrorCode.VERIFICATION_FAILED, f"text value skeleton mismatch in {rel.name}"
+                    AnonErrorCode.VERIFICATION_FAILED,
+                        f"text value skeleton mismatch in {safe_ref(rel.name)}"
                 )
 
     _verify_locations(source_corpus, staged_corpus, output_files, policy)

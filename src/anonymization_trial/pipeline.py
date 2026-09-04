@@ -26,7 +26,7 @@ import time
 from dataclasses import asdict, dataclass
 from pathlib import Path
 
-from .errors import AnonError, AnonErrorCode
+from .errors import AnonError, AnonErrorCode, safe_ref
 from .formats import SUPPORTED_SUFFIXES, transform_file
 from .policy import Policy, load_policy
 from .pseudonyms import ALGORITHM_VERSION, KEY_MODE, SCOPE_ID
@@ -105,7 +105,8 @@ def _preflight(input_root: Path, output_root: Path, policy: Policy) -> list[tupl
             _reject(AnonErrorCode.UNSAFE_INPUT, "only regular files are allowed in the corpus")
         relative = entry.relative_to(corpus)
         if entry.suffix.lower() not in SUPPORTED_SUFFIXES:
-            _reject(AnonErrorCode.UNSUPPORTED_FORMAT, f"unsupported input type: {entry.suffix}")
+            _reject(AnonErrorCode.UNSUPPORTED_FORMAT,
+                f"unsupported input type {safe_ref(entry.suffix)}")
         if policy.matcher.find(relative.as_posix()):
             _reject(
                 AnonErrorCode.SENSITIVE_IN_SCHEMA,
