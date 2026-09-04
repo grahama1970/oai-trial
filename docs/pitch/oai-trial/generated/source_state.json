@@ -1,13 +1,28 @@
 {
- "schema": "pitchdeck.source_state.v1",
- "hashes": {
-  "readme": "e425c3cd410e7ff7006f1c673ff34cccd6629d6e2253132bd0c8c33e6add1d9d",
-  "architecture": "4ea2aad487614611639451cc6c06fed7d525636f854f8e97a5e5e7d240b65220",
-  "submission": "eeefdbea4735ec1326640ab7257a20865f9d6fc64580b8a386fb48fd9a474271",
-  "privacy-contract": "86dab63694267151df7d63b14a4d24bf783fc285b0c8826dfe9c333ec90e13ad",
-  "acceptance-matrix": "568baef7055f92ff1e701e2e853dee1936b1c0df1a245eaec102a3636effee20",
-  "security": "ef70fde5bd8669da2abcf164cf3ec2a6358fa91e4f74570cd656253f07e72867",
-  "arch-svg": "9cd0cdf99e1131734a303cf82c63c4ef39c8ad1582ab601338f66de2a98d074d"
- },
- "missing": []
+  "schema": "pitchdeck.source_state.v1",
+  "source_commit": "0795dc66deaa5991cd34959c6d8b81f80a8042a0",
+  "hashes": {
+    "brief": "83b1199fa7f0da86b6e0836b6634657a5ff92c6d9f8bd3014f115a3de4942bfc",
+    "local": "f85854417626d088c8e7a28a8a549aa64a7fb437f3d4040825da814ad8e926d5",
+    "semantics": "358eb5bdb3e5f5767112d401857a4fe9a8517387f2cd5c70d11ca6e2bc7a9eb8",
+    "release": "f85854417626d088c8e7a28a8a549aa64a7fb437f3d4040825da814ad8e926d5",
+    "evidence": "ae99a82b8e8183cffe52610cedb9f4ab6c3e7e4fde711b20c9d8b81f16c88209",
+    "production": "e7eec4c10e62654e5a2874597e7c727e9dfd6030694051818b2563c453b4ddc8",
+    "nonclaims": "5a3998a468dc4497070711c084df079e09d2e96af330eb1f1fa7e0f6f6da6ab1",
+    "verify-code": "5e7ecffbade1ea64d555dffaaeb77a6aad0e81bfc254d093a68ac27c190099a5",
+    "format-code": "84f36e06de5eacc7b2ca01cd869b04daef9b803ff619a4db2cbc02ec0b9989c7",
+    "runtime-metrics": "7e9e09ccbaf7eef5a4c6f4ce406d12a988c34f9154ac7374b7908b1ad2f91ea6",
+    "cost-inputs": "adb3eb1330ab84f5b43a2cb194b8fcadd170c728adf43f4a082cbed07edf3ded"
+  },
+  "missing": [],
+  "canonical_hashes": {
+    "deck.curated.yaml": "77b2e1b3023d546b4637fb8fc4fb6d4b600829676ab7f71907cc91a5650e5c59",
+    "claim_ledger.curated.yaml": "8573c856a8653bcba7a1ae50e2e5df5680f0f377c37efbe3ac9afe27f757c0cb",
+    "speaker_notes.curated.md": "818b681405e349cb5bd5111d48b4ccc7310d4379426f7b168bb740ae0ddffc22"
+  },
+  "asset_hashes": {
+    "docs/pitch/oai-trial/assets/local-pipeline.svg": "55cbb14a0f1864cce5de3ea3d95b8f70f67906549371b1a35f44279e7d09713d",
+    "docs/pitch/oai-trial/assets/publication-state.svg": "92b692a0c38f37b397e3263a64984b99b41b03ae02e33a0b59c1f7deb88a1ced",
+    "docs/production-architecture.svg": "e50c5139c4714fd3a7621bc6630aaa335a3a4cd6723fab1b9bdb1033999b0816"
+  }
 }

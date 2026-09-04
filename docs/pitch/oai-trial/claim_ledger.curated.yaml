@@ -1,126 +1,186 @@
 schema: pitchdeck.claim_ledger.v1
-project_name: oai-trial cross-format anonymization
+project_name: oai-trial
 claims:
-- id: brief-outcome
-  text: Replace every policy-identified value across CSV, JSON, UTF-8 text and SQLite; preserve structure, protected values and identity coherence; verify the whole corpus; fail closed.
+- id: brief
+  text: Four formats. One literal policy. No partial READY release.
   kind: proof
   visibility: public
-  source_refs: [{source_id: architecture, section: "1. Problem in one paragraph", locator: "line 1"}]
-  risk: medium
+  risk: high
   status: approved
-  evidence_spans: []
-- id: brief-bar
-  text: Eight-hour trial graded on correctness, scale evidence, reliability, security, operability and clarity — not lines of code.
+  required_qualifier: Literal-policy pseudonymization; not a claim of formal anonymity.
+  source_refs:
+  - source_id: brief
+    section: Required behavior
+    locator: TRIAL_BRIEF.md:5 (Required behavior)
+  evidence_spans:
+  - source_id: brief
+    text: A fictional analytics company receives customer exports. Its privacy team must anonymize each export before
+      another internal team can use it. Exports can eventually reach terabyte or petabyte scale and contain CSV,
+      JSON, UTF-8 text, and SQLite database files. The same synthetic identity can appear in every format.
+    section: Required behavior
+  notes: 'Project-agent source review, not human presentation approval. Runtime/source candidate 0795dc66deaa5991cd34959c6d8b81f80a8042a0.
+    Evidence command: docker run --rm anonymization-trial'
+  approval:
+    approved_by: project-agent/source-review
+    approved_at: '2026-09-04'
+    source_snapshot_sha256: sha256:83b1199fa7f0da86b6e0836b6634657a5ff92c6d9f8bd3014f115a3de4942bfc
+- id: local
+  text: Private staging is reread before report-last authorization.
   kind: proof
   visibility: public
-  source_refs: [{source_id: submission, section: "Implemented scope", locator: "line 1"}]
-  risk: medium
+  risk: high
   status: approved
-  evidence_spans: []
-- id: arch-flow
-  text: Policy compile then format adapters then private staging then independent verify then atomic report-last publish; quarantine is the fail-closed exit.
+  required_qualifier: Independent reread/re-derivation, not a separate implementation; replacement primitives are
+    shared.
+  source_refs:
+  - source_id: local
+    section: run_pipeline
+    locator: src/anonymization_trial/pipeline.py:240 (run_pipeline)
+  - source_id: verify-code
+    section: verify_corpus
+    locator: src/anonymization_trial/verification.py:182 (verify_corpus)
+  evidence_spans:
+  - source_id: local
+    text: '        verify_corpus(input_root / "corpus", staged_corpus, policy)'
+    section: run_pipeline
+  - source_id: verify-code
+    text: 'def verify_corpus(source_corpus: Path, staged_corpus: Path, policy: Policy) -> None:'
+    section: verify_corpus
+  notes: 'Project-agent source review, not human presentation approval. Runtime/source candidate 0795dc66deaa5991cd34959c6d8b81f80a8042a0.
+    Evidence command: uv run pytest -q security/tests/test_publish_hardening.py'
+  approval:
+    approved_by: project-agent/source-review
+    approved_at: '2026-09-04'
+    source_snapshot_sha256: sha256:f85854417626d088c8e7a28a8a549aa64a7fb437f3d4040825da814ad8e926d5
+- id: semantics
+  text: Aliases converge; original-input matching emits once; bounded domains reject exhaustion; SQLite uses typed
+    per-row verification.
   kind: proof
   visibility: public
-  source_refs: [{source_id: architecture, section: "9. Publication & crash recovery", locator: "line 1"}]
-  risk: medium
+  risk: high
   status: approved
-  evidence_spans: []
-- id: arch-selfcert
-  text: The transformer cannot certify itself; an independent verifier rereads the output from disk and never trusts transform booleans.
+  required_qualifier: Local per-file materialization; CSV rows iterated. SQLite uses a typed per-row oracle. Public,
+    unkeyed scope.
+  source_refs:
+  - source_id: semantics
+    section: build_replacements
+    locator: src/anonymization_trial/pseudonyms.py:71 (build_replacements)
+  - source_id: format-code
+    section: _transform_sqlite
+    locator: src/anonymization_trial/formats.py:274 (_transform_sqlite)
+  evidence_spans:
+  - source_id: semantics
+    text: '    unique = sorted(set(identities))'
+    section: build_replacements
+  - source_id: format-code
+    text: 'def _transform_sqlite(source: Path, destination: Path, policy: Policy) -> tuple[int, int]:'
+    section: _transform_sqlite
+  notes: 'Project-agent source review, not human presentation approval. Runtime/source candidate 0795dc66deaa5991cd34959c6d8b81f80a8042a0.
+    Evidence command: uv run pytest -q tests/test_matcher.py security/tests/test_pseudonym_domains.py'
+  approval:
+    approved_by: project-agent/source-review
+    approved_at: '2026-09-04'
+    source_snapshot_sha256: sha256:358eb5bdb3e5f5767112d401857a4fe9a8517387f2cd5c70d11ca6e2bc7a9eb8
+- id: release
+  text: Only report.json written LAST authorizes READY.
   kind: proof
   visibility: public
-  source_refs: [{source_id: architecture, section: "8. Independent verification", locator: "line 1"}]
-  risk: medium
+  risk: high
   status: approved
-  evidence_spans: []
-- id: sem-matcher
-  text: Aho-Corasick over original input only; leftmost-longest with stable tie-break; emitted replacements are never rescanned so cascades are impossible.
+  required_qualifier: Trusted single writer; read-only input. A failed new run may leave an earlier valid release
+    untouched.
+  source_refs:
+  - source_id: release
+    section: _publish
+    locator: src/anonymization_trial/pipeline.py:205 (_publish)
+  evidence_spans:
+  - source_id: release
+    text: '    os.replace(tmp, report_path)  # atomic readiness marker, written last'
+    section: _publish
+  notes: 'Project-agent source review, not human presentation approval. Runtime/source candidate 0795dc66deaa5991cd34959c6d8b81f80a8042a0.
+    Evidence command: uv run pytest -q security/tests/test_publish_hardening.py'
+  approval:
+    approved_by: project-agent/source-review
+    approved_at: '2026-09-04'
+    source_snapshot_sha256: sha256:f85854417626d088c8e7a28a8a549aa64a7fb437f3d4040825da814ad8e926d5
+- id: evidence
+  text: Real output readback, deliberate mutations, and publication checks.
   kind: proof
   visibility: public
-  source_refs: [{source_id: architecture, section: "6. Matching semantics", locator: "line 1"}]
-  risk: medium
+  risk: high
   status: approved
-  evidence_spans: []
-- id: sem-identity
-  text: (data_type, subject_id) is the canonical identity; aliases converge; distinct same-type identities are injective; bounded collision search rejects exhaustion.
+  required_qualifier: Synthetic inputs, real container. One observed run; not a TB/PB throughput guarantee.
+  source_refs:
+  - source_id: evidence
+    section: test_json_bool_number_and_sqlite_integer_real_mutations_rejected
+    locator: security/tests/test_typed_scalar_verification.py:21 (test_json_bool_number_and_sqlite_integer_real_mutations_rejected)
+  - source_id: runtime-metrics
+    section: Docker demo
+    locator: docs/pitch/oai-trial/qa/runtime-evidence.json:1 (Docker demo)
+  evidence_spans:
+  - source_id: evidence
+    text: 'def test_json_bool_number_and_sqlite_integer_real_mutations_rejected(tmp_path: Path) -> None:'
+    section: test_json_bool_number_and_sqlite_integer_real_mutations_rejected
+  - source_id: runtime-metrics
+    text: '{"demo": "success", "runs": [{"bytes_per_second": 1387402.56, "bytes_read": 68310, "elapsed_seconds":
+      0.049236, "files_processed": 4, "logical_records": 100, "peak_memory_mb": 26.33, "records_per_second": 8164.78,
+      "records_processed": 402, "verification_passed": true}, {"bytes_per_second": 1326758.11, "bytes_read": 509366,
+      "elapsed_seconds": 0.383918, "files_processed": 4, "logical_records": 1000, "peak_memory_mb": 29.99, "records_per_second":
+      10424.11, "records_processed": 4002, "verification_passed": true}]}'
+    section: Docker demo
+  notes: 'Project-agent source review, not human presentation approval. Runtime/source candidate 0795dc66deaa5991cd34959c6d8b81f80a8042a0.
+    Evidence command: uv run pytest -q security/tests/test_sqlite_location.py security/tests/test_typed_scalar_verification.py'
+  approval:
+    approved_by: project-agent/source-review
+    approved_at: '2026-09-04'
+    source_snapshot_sha256: sha256:ae99a82b8e8183cffe52610cedb9f4ab6c3e7e4fde711b20c9d8b81f16c88209
+- id: production
+  text: 'AWS is the worked reference: immutable corpus manifest → atomic active pointer.'
   kind: proof
   visibility: public
-  source_refs: [{source_id: architecture, section: "5. Policy & identity model", locator: "line 1"}]
-  risk: medium
+  risk: high
   status: approved
-  evidence_spans: []
-- id: sem-protected
-  text: Protected/sensitive overlap and sensitive schema identifiers are rejected, not silently resolved.
-  kind: proof
-  visibility: public
-  source_refs: [{source_id: privacy-contract, section: "Proven (deterministic, locally verified)", locator: "line 1"}]
-  risk: medium
-  status: approved
-  evidence_spans: []
-- id: rel-formats
-  text: CSV/TXT use per-file materialization with BOM and schema safety; JSON rejects duplicate keys, NaN and over-depth; SQLite uses an online-backup snapshot with typed per-row verification, integrity, foreign-key and row-count checks.
-  kind: proof
-  visibility: public
-  source_refs: [{source_id: architecture, section: "7. Format adapters", locator: "line 1"}]
-  risk: medium
-  status: approved
-  evidence_spans: []
-- id: ev-tests
-  text: A deterministic pytest gate covers unit, property, fail-closed publication, verifier-mutation, gray-box and black-box CLI attacks, reproducible with uv run pytest -q.
-  kind: proof
-  visibility: public
-  source_refs: [{source_id: security, section: "Security review", locator: "line 1"}]
-  risk: medium
-  status: approved
-  evidence_spans: []
-- id: ev-hack
-  text: Bandit SAST via $hack returned 0 critical and 0 high; scanner receipts are supporting evidence only, under a three-lane white/gray/black-box methodology whose executable evidence is the retained adversarial test suite.
-  kind: proof
-  visibility: public
-  source_refs: [{source_id: security, section: "Static analysis (SAST)", locator: "line 1"}]
-  risk: medium
-  status: approved
-  evidence_spans: []
-- id: prod-aws
-  text: AWS reference — S3 intake/quarantine/release, SQS, Fargate workers, KMS-scoped HMAC, distributed verify; the portable OCI container is the cloud-neutral boundary.
-  kind: proof
-  visibility: public
-  source_refs: [{source_id: submission, section: "Portability (portable compute artifact, provider-specific orchestration)", locator: "line 1"}]
-  risk: medium
-  status: approved
-  evidence_spans: []
-- id: prod-cost
-  text: Reproducible cost model — about $86 at 1 TB and $85,734 at 1 PB (us-east-1 list prices, price date 2026-09-04, storage-dominant; list prices not yet confirmed against a dated source).
-  kind: proof
-  visibility: public
-  source_refs: [{source_id: submission, section: "SLA, capacity, and cost", locator: "line 1"}]
-  risk: medium
-  status: approved
-  evidence_spans: []
-- id: nonclaim-reid
-  text: Proves declared-literal replacement and structural preservation, not resistance to re-identification.
+  required_qualifier: Modeled, not deployed; price tables require confirmation. OCI/data contract portable; AWS
+    only here.
+  source_refs:
+  - source_id: production
+    section: SLA (stated assumptions, arithmetic shown)
+    locator: docs/production-architecture.md:56 (SLA (stated assumptions, arithmetic shown))
+  - source_id: cost-inputs
+    section: AWS price sources
+    locator: costs/aws-us-east-1-inputs.json:5 (AWS price sources)
+  evidence_spans:
+  - source_id: production
+    text: '## SLA (stated assumptions, arithmetic shown)'
+    section: SLA (stated assumptions, arithmetic shown)
+  - source_id: cost-inputs
+    text: '  "price_sources": {'
+    section: AWS price sources
+  notes: 'Project-agent source review, not human presentation approval. Runtime/source candidate 0795dc66deaa5991cd34959c6d8b81f80a8042a0.
+    Evidence command: python scripts/estimate_aws_cost.py --inputs costs/aws-us-east-1-inputs.json'
+  approval:
+    approved_by: project-agent/source-review
+    approved_at: '2026-09-04'
+    source_snapshot_sha256: sha256:e7eec4c10e62654e5a2874597e7c727e9dfd6030694051818b2563c453b4ddc8
+- id: nonclaims
+  text: Defend the literal-policy contract. Do not imply anonymity.
   kind: non_claim
   visibility: public
-  source_refs: [{source_id: privacy-contract, section: "Not established (out of scope for a literal-policy pipeline)", locator: "line 1"}]
-  risk: low
+  risk: high
   status: approved
-  evidence_spans: []
-- id: nonclaim-scans
-  text: Static and security scans are supporting evidence, not proof of vulnerability-free software.
-  kind: non_claim
-  visibility: public
-  source_refs: [{source_id: security, section: "Non-claims", locator: "line 1"}]
-  risk: low
-  status: approved
-  evidence_spans: []
-- id: nonclaim-scale
-  text: Not run at TB/PB scale; cloud prices are list prices unverified against a dated source; optional discovery and red-team lanes are designed, not built.
-  kind: non_claim
-  visibility: public
-  source_refs: [{source_id: submission, section: "Known gaps and next steps", locator: "line 1"}]
-  risk: low
-  status: approved
-  evidence_spans: []
-seam_validation:
-  kind: claim_ledger
-  status: PASS
+  required_qualifier: Scans do not establish vulnerability-free software. Future risk analysis and Battle remain
+    out of scope.
+  source_refs:
+  - source_id: nonclaims
+    section: Not established (out of scope for a literal-policy pipeline)
+    locator: docs/PRIVACY_CONTRACT.md:57 (Not established (out of scope for a literal-policy pipeline))
+  evidence_spans:
+  - source_id: nonclaims
+    text: '## Not established (out of scope for a literal-policy pipeline)'
+    section: Not established (out of scope for a literal-policy pipeline)
+  notes: 'Project-agent source review, not human presentation approval. Runtime/source candidate 0795dc66deaa5991cd34959c6d8b81f80a8042a0.
+    Evidence command: uv run pytest -q security/tests/test_publish_hardening.py::test_report_binds_evidence_chain'
+  approval:
+    approved_by: project-agent/source-review
+    approved_at: '2026-09-04'
+    source_snapshot_sha256: sha256:5a3998a468dc4497070711c084df079e09d2e96af330eb1f1fa7e0f6f6da6ab1

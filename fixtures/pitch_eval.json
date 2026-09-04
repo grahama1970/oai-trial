@@ -1,0 +1,35 @@
+{
+  "version": 2,
+  "skill": "oai-trial-presentation",
+  "trials": 2,
+  "proof_scope": "Seven-slide source contracts plus three real Python demonstrations on synthetic data. No human or Google Slides approval is implied.",
+  "claims": {
+    "proves": "Canonical/generated manifests agree, notes cover 36 minutes, source and breakpoint bindings match files, and real runtime demonstrations reproduce identity, typed rejection and report-last output.",
+    "does_not_prove": "Audience legibility, visible VS Code rehearsal, Google Slides import fidelity, human approval, or production scale."
+  },
+  "cases": [
+    {
+      "name": "seven-slide-source-contracts",
+      "type": "positive",
+      "command": ["bash", "-c", "cd .. && uv run pytest -q tests/test_pitch_contract.py security/tests/test_claim_surface.py"],
+      "expected": {"exit_code": 0},
+      "timeout_seconds": 120
+    },
+    {
+      "name": "live-alias-and-publication-demonstrations",
+      "type": "positive",
+      "real_world": true,
+      "command": ["bash", "-c", "cd .. && PYTHONPATH=src python3 scripts/pitch_debug_demo.py identity && PYTHONPATH=src python3 scripts/pitch_debug_demo.py publication"],
+      "expected": {"exit_code": 0, "stdout_contains": ["Person-29ec756d7d", "readback", "ready"]},
+      "timeout_seconds": 30
+    },
+    {
+      "name": "live-typed-mutation-refused",
+      "type": "adversarial",
+      "real_world": true,
+      "command": ["bash", "-c", "cd .. && PYTHONPATH=src python3 scripts/pitch_debug_demo.py typed"],
+      "expected": {"exit_code": 0, "stdout_contains": ["REJECTED: JSON true mutated to integer 1"]},
+      "timeout_seconds": 30
+    }
+  ]
+}

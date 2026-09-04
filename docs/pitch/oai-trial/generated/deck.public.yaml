@@ -2,163 +2,1255 @@ schema: pitchdeck.deck_manifest.v1
 deck:
   id: oai-trial-technical-briefing-public
   title: Verified Cross-Format Anonymization
-  subtitle: An eight-hour privacy-engineering trial — technical briefing
-  audience: OpenAI privacy-engineering trial reviewers (40-minute technical walkthrough)
+  audience: OpenAI privacy-engineering trial reviewers
   visibility: public
   target_editor: google_slides
   theme: dark_cyan_evidence
-  theme_tokens: {accent: '#22d3ee', heading_font: Arial, body_font: Arial}
+  theme_tokens:
+    accent: '#22d3ee'
+    heading_font: Arial
+    body_font: Arial
   source_policy: public_only
 slides:
 - id: 01-brief
   order: 1
-  role: cover
-  layout: statement
+  role: brief
+  layout: freeform
   visibility: public
-  title: The assignment
-  message: Anonymize customer exports across four formats — and prove it.
-  body:
-  - Replace every policy-identified value across CSV, JSON, UTF-8 text and SQLite.
-  - Preserve structure, protected values and identity coherence; verify the whole corpus; fail closed.
-  - Eight hours, graded on judgement and evidence — not lines of code.
-  source_refs: [{source_id: architecture, section: "1. Problem in one paragraph"}]
-  claim_ids: [brief-outcome, brief-bar]
-  visual: {type: none, position: right, items: [], callouts: []}
-  claim_guard: {allowed_claim_ids: [brief-outcome, brief-bar], requires_non_claim_ids: [], forbidden_unqualified: []}
-  elements: []
-  bindings: []
-  transition: slide
-  reveal: stagger_up
+  title: A release must earn trust
+  message: Four formats. One literal policy. No partial READY release.
+  body: []
+  source_refs:
+  - source_id: brief
+    section: Required behavior
+    locator: TRIAL_BRIEF.md:5
+  claim_ids:
+  - brief
+  visual:
+    type: none
+    items: []
+    callouts: []
+  claim_guard:
+    allowed_claim_ids:
+    - brief
+    requires_non_claim_ids: []
+    forbidden_unqualified: []
+  elements:
+  - id: title
+    type: text
+    text: A release must earn trust
+    x: 0.05
+    y: 0.055
+    w: 0.9
+    h: 0.09
+    size_pt: 32
+    color: '#e2e8f0'
+    bold: true
+  - id: thesis
+    type: text
+    text: Four formats. One literal policy. No partial READY release.
+    x: 0.05
+    y: 0.16
+    w: 0.9
+    h: 0.11
+    size_pt: 22
+    color: '#22d3ee'
+    bold: false
+  - id: formats
+    type: text
+    text: CSV   ·   JSON   ·   UTF-8 text   ·   SQLite
+    x: 0.07
+    y: 0.35
+    w: 0.86
+    h: 0.1
+    size_pt: 27
+    color: '#e2e8f0'
+    bold: true
+  - id: contract
+    type: text
+    text: 'REPLACE declared literals
+
+      PRESERVE structure + identity
+
+      VERIFY before release'
+    x: 0.08
+    y: 0.5
+    w: 0.85
+    h: 0.28
+    size_pt: 26
+    color: '#e2e8f0'
+    bold: false
+  - id: qualifier
+    type: text
+    text: Literal-policy pseudonymization; not a claim of formal anonymity.
+    x: 0.05
+    y: 0.865
+    w: 0.9
+    h: 0.06
+    size_pt: 13
+    color: '#94a3b8'
+    bold: false
+  - id: code-link
+    type: text
+    text: CODE / EVIDENCE
+    x: 0.75
+    y: 0.942
+    w: 0.14
+    h: 0.032
+    size_pt: 10
+    color: '#22d3ee'
+    bold: false
+  bindings:
+  - path: title
+    kind: claim_paraphrase
+    claim_id: brief
+    transform_class: generalization
+  - path: message
+    kind: claim_paraphrase
+    claim_id: brief
+    transform_class: generalization
+  - path: element:title
+    kind: claim_paraphrase
+    claim_id: brief
+    transform_class: generalization
+  - path: element:thesis
+    kind: claim_paraphrase
+    claim_id: brief
+    transform_class: generalization
+  - path: element:formats
+    kind: claim_paraphrase
+    claim_id: brief
+    transform_class: generalization
+  - path: element:contract
+    kind: claim_paraphrase
+    claim_id: brief
+    transform_class: generalization
+  - path: element:qualifier
+    kind: qualifier
+    claim_id: brief
+  - path: element:code-link
+    kind: claim_paraphrase
+    claim_id: brief
+    transform_class: generalization
+  transition: none
+  reveal: none
   hidden: false
-  notes: Open with the brief and the acceptance bar.
+  notes: 'Time: 4 minutes (00:00–04:00)
+
+    Claim: A release must replace declared literals across four formats without
+
+    changing protected meaning or identity, and must refuse ambiguous inputs.
+
+    Evidence: `TRIAL_BRIEF.md` §§ Required behavior, Container contract;
+
+    `docs/ACCEPTANCE_MATRIX.md` R1–R16. Claim ID: brief.
+
+    Live jump: Open the brief beside `README.md`; point at the two required Docker
+
+    commands and the policy contract. Explain that policy.json, not a detector, owns
+
+    what is sensitive. Use the prepared demo output; build before the meeting.
+
+    Likely challenge: Why call this anonymization rather than pseudonymization?
+
+    Concise answer: The assignment uses anonymization, but the implemented guarantee
+
+    is literal replacement with coherent pseudonyms. I explicitly do not establish
+
+    re-identification resistance or discovery of unlisted identifiers.
+
+    Required qualifier: Authoritative literal policy; no claim of formal anonymity.
+
+    Transition: The release decision is the core architecture, not the string replacement.'
 - id: 02-architecture
   order: 2
   role: architecture
-  layout: split
+  layout: freeform
   visibility: public
-  title: Architecture — one fail-closed path
-  message: The transformer cannot certify itself.
-  body:
-  - Policy compile → format adapters → private staging → independent verify → atomic publish.
-  - report.json is written last as the sole readiness marker; quarantine is the fail-closed exit.
-  - An independent verifier rereads the output from disk, never trusting transform booleans.
-  source_refs: [{source_id: architecture, section: "9. Publication & crash recovery"}]
-  claim_ids: [arch-flow, arch-selfcert]
+  title: The transformer cannot authorize release
+  message: Private staging is reread before report-last authorization.
+  body: []
+  source_refs:
+  - source_id: local
+    section: run_pipeline
+    locator: src/anonymization_trial/pipeline.py:240
+  claim_ids:
+  - local
   visual:
     type: image
-    position: right
-    asset_id: architecture-3-system-at-a-glance-01
+    asset_id: local-pipeline
+    position: full
     items: []
     callouts: []
-  claim_guard: {allowed_claim_ids: [arch-flow, arch-selfcert], requires_non_claim_ids: [], forbidden_unqualified: []}
-  elements: []
-  bindings: []
-  transition: slide
-  reveal: stagger_up
+  claim_guard:
+    allowed_claim_ids:
+    - local
+    requires_non_claim_ids: []
+    forbidden_unqualified: []
+  elements:
+  - id: title
+    type: text
+    text: The transformer cannot authorize release
+    x: 0.05
+    y: 0.055
+    w: 0.9
+    h: 0.09
+    size_pt: 32
+    color: '#e2e8f0'
+    bold: true
+  - id: thesis
+    type: text
+    text: Private staging is reread before report-last authorization.
+    x: 0.05
+    y: 0.16
+    w: 0.9
+    h: 0.11
+    size_pt: 22
+    color: '#22d3ee'
+    bold: false
+  - id: pipeline
+    type: asset
+    asset_id: local-pipeline
+    x: 0.03
+    y: 0.32
+    w: 0.94
+    h: 0.51
+  - id: qualifier
+    type: text
+    text: Independent reread/re-derivation, not a separate implementation; replacement primitives are shared.
+    x: 0.05
+    y: 0.865
+    w: 0.9
+    h: 0.06
+    size_pt: 13
+    color: '#94a3b8'
+    bold: false
+  - id: code-link
+    type: text
+    text: CODE / EVIDENCE
+    x: 0.75
+    y: 0.942
+    w: 0.14
+    h: 0.032
+    size_pt: 10
+    color: '#22d3ee'
+    bold: false
+  bindings:
+  - path: title
+    kind: claim_paraphrase
+    claim_id: local
+    transform_class: generalization
+  - path: message
+    kind: claim_paraphrase
+    claim_id: local
+    transform_class: generalization
+  - path: element:title
+    kind: claim_paraphrase
+    claim_id: local
+    transform_class: generalization
+  - path: element:thesis
+    kind: claim_paraphrase
+    claim_id: local
+    transform_class: generalization
+  - path: element:qualifier
+    kind: qualifier
+    claim_id: local
+  - path: element:code-link
+    kind: claim_paraphrase
+    claim_id: local
+    transform_class: generalization
+  transition: none
+  reveal: none
   hidden: false
-  notes: Show the SVG; emphasise trust boundaries and report-last publication.
+  notes: 'Time: 5 minutes (04:00–09:00)
+
+    Claim: Private staging is reread and re-derived before report-last authorization.
+
+    Evidence: `src/anonymization_trial/pipeline.py::run_pipeline`, `_publish`;
+
+    `src/anonymization_trial/verification.py::verify_corpus`. Claim ID: local.
+
+    Live jump: Open `run_pipeline`: policy load, inventory, staging, verify, source
+
+    digest check, sealed digest, publish. Then open `_publish` and point at the last
+
+    `os.replace(tmp, report_path)`. Keep the local-pipeline SVG visible beside code.
+
+    Likely challenge: Is the verifier independent if both sides share code?
+
+    Concise answer: It independently rereads the source and staged artifacts and
+
+    re-derives expected values. It shares replacement primitives, so correlated
+
+    matcher defects remain possible. It does not merely trust a success flag.
+
+    Required qualifier: Independent reread/re-derivation, not a separate implementation.
+
+    Local failures are FAILED/UNCOMMITTED; quarantine belongs to the production design.
+
+    Transition: To re-derive anything, the ambiguous matching semantics must first be frozen.'
 - id: 03-semantics
   order: 3
   role: semantics
-  layout: proof_cards
+  layout: freeform
   visibility: public
-  title: The hard semantics
-  message: Deterministic matching and identity coherence.
-  body:
-  - Matcher — Aho-Corasick over original input only; leftmost-longest; emitted replacements never rescanned, so cascades are impossible.
-  - Identity — (data_type, subject_id) is canonical; aliases converge; same-type identities injective; bounded collision search rejects exhaustion.
-  - Rejection — protected/sensitive overlap and sensitive schema identifiers are refused, not silently resolved.
-  source_refs: [{source_id: architecture, section: "6. Matching semantics"}]
-  claim_ids: [sem-matcher, sem-identity, sem-protected]
-  visual: {type: none, position: right, items: [], callouts: []}
-  claim_guard: {allowed_claim_ids: [sem-matcher, sem-identity, sem-protected], requires_non_claim_ids: [], forbidden_unqualified: []}
-  elements: []
-  bindings: []
-  transition: slide
-  reveal: stagger_up
+  title: Identity is stable; ambiguity is rejected
+  message: Aliases converge. Matches come only from original input.
+  body: []
+  source_refs:
+  - source_id: semantics
+    section: build_replacements
+    locator: src/anonymization_trial/pseudonyms.py:71
+  claim_ids:
+  - semantics
+  visual:
+    type: cards
+    position: full
+    items:
+    - '(name, p1)
+
+      one identity'
+    - ORIGINAL → leftmost-longest → EMIT ONCE
+    callouts: []
+  claim_guard:
+    allowed_claim_ids:
+    - semantics
+    requires_non_claim_ids: []
+    forbidden_unqualified: []
+  elements:
+  - id: title
+    type: text
+    text: Identity is stable; ambiguity is rejected
+    x: 0.05
+    y: 0.055
+    w: 0.9
+    h: 0.09
+    size_pt: 32
+    color: '#e2e8f0'
+    bold: true
+  - id: thesis
+    type: text
+    text: Aliases converge. Matches come only from original input.
+    x: 0.05
+    y: 0.16
+    w: 0.9
+    h: 0.11
+    size_pt: 22
+    color: '#22d3ee'
+    bold: false
+  - id: aliases
+    type: text
+    text: 'Bob
+
+      Bobby'
+    x: 0.06
+    y: 0.35
+    w: 0.19
+    h: 0.16
+    size_pt: 26
+    color: '#e2e8f0'
+    bold: false
+  - id: arrow1
+    type: text
+    text: →
+    x: 0.25
+    y: 0.39
+    w: 0.05
+    h: 0.08
+    size_pt: 30
+    color: '#22d3ee'
+    bold: false
+  - id: identity
+    type: text
+    text: '(name, p1)
+
+      one identity'
+    x: 0.32
+    y: 0.35
+    w: 0.25
+    h: 0.16
+    size_pt: 25
+    color: '#e2e8f0'
+    bold: false
+  - id: arrow2
+    type: text
+    text: →
+    x: 0.58
+    y: 0.39
+    w: 0.06
+    h: 0.08
+    size_pt: 30
+    color: '#22d3ee'
+    bold: false
+  - id: replacement
+    type: text
+    text: 'Person-29ec756d7d
+
+      one pseudonym'
+    x: 0.66
+    y: 0.35
+    w: 0.29
+    h: 0.17
+    size_pt: 23
+    color: '#e2e8f0'
+    bold: false
+  - id: matching
+    type: text
+    text: ORIGINAL → leftmost-longest → EMIT ONCE
+    x: 0.07
+    y: 0.6
+    w: 0.85
+    h: 0.1
+    size_pt: 25
+    color: '#22d3ee'
+    bold: false
+  - id: reject
+    type: text
+    text: 'Bounded domains reject exhaustion.
+
+      Protected overlap and schema-object literals reject.'
+    x: 0.07
+    y: 0.73
+    w: 0.85
+    h: 0.1
+    size_pt: 19
+    color: '#e2e8f0'
+    bold: false
+  - id: qualifier
+    type: text
+    text: Local per-file materialization; CSV rows iterated. SQLite uses a typed per-row oracle. Public, unkeyed
+      scope.
+    x: 0.05
+    y: 0.865
+    w: 0.9
+    h: 0.06
+    size_pt: 13
+    color: '#94a3b8'
+    bold: false
+  - id: code-link
+    type: text
+    text: CODE / EVIDENCE
+    x: 0.75
+    y: 0.942
+    w: 0.14
+    h: 0.032
+    size_pt: 10
+    color: '#22d3ee'
+    bold: false
+  bindings:
+  - path: title
+    kind: claim_paraphrase
+    claim_id: semantics
+    transform_class: generalization
+  - path: message
+    kind: claim_paraphrase
+    claim_id: semantics
+    transform_class: generalization
+  - path: element:title
+    kind: claim_paraphrase
+    claim_id: semantics
+    transform_class: generalization
+  - path: element:thesis
+    kind: claim_paraphrase
+    claim_id: semantics
+    transform_class: generalization
+  - path: element:aliases
+    kind: claim_paraphrase
+    claim_id: semantics
+    transform_class: generalization
+  - path: element:arrow1
+    kind: claim_paraphrase
+    claim_id: semantics
+    transform_class: generalization
+  - path: element:identity
+    kind: claim_paraphrase
+    claim_id: semantics
+    transform_class: generalization
+  - path: element:arrow2
+    kind: claim_paraphrase
+    claim_id: semantics
+    transform_class: generalization
+  - path: element:replacement
+    kind: claim_paraphrase
+    claim_id: semantics
+    transform_class: generalization
+  - path: element:matching
+    kind: claim_paraphrase
+    claim_id: semantics
+    transform_class: generalization
+  - path: element:reject
+    kind: claim_paraphrase
+    claim_id: semantics
+    transform_class: generalization
+  - path: element:qualifier
+    kind: qualifier
+    claim_id: semantics
+  - path: element:code-link
+    kind: claim_paraphrase
+    claim_id: semantics
+    transform_class: generalization
+  transition: none
+  reveal: none
   hidden: false
-  notes: The four hardest correctness choices.
+  notes: 'Time: 8 minutes (09:00–17:00)
+
+    Claim: Aliases share an identity; selected spans come only from original input;
+
+    bounded domains and contradictory policies fail closed.
+
+    Evidence: `docs/ANONYMIZATION_SEMANTICS.md` §§1–9;
+
+    `pseudonyms.py::build_replacements`, `matcher.py`; `formats.py` SQLite schema scan;
+
+    `verification.py::_typed_equal`, `_verify_sqlite_locations`.
+
+    Claim ID: semantics.
+
+    Live jump: Trace two aliases through `(type, subject_id)`, then show an overlapping
+
+    match on the original string. Spend the second half on JSON true versus 1 and
+
+    SQLite INTEGER versus REAL: open `security/tests/test_typed_scalar_verification.py`.
+
+    Run `uv run pytest -q security/tests/test_typed_scalar_verification.py` if time permits.
+
+    Explain schema-object rejection: a view literal can leak despite clean table cells.
+
+    Likely challenge: Why reject formats or collisions instead of trying harder?
+
+    Concise answer: The eight-hour contract favors a bounded refusal over a silent
+
+    semantic change. Phone/IP capacity and collision-search limits are explicit.
+
+    JSON scalar types are compared strictly; SQLite values are checked at their rowid.
+
+    Required qualifier: Per-file materialization; CSV rows are iterated, not TB-scale
+
+    streaming. The local namespace is public and unkeyed. No cross-tenant unlinkability.
+
+    Transition: Correct transformed values still do not make a released corpus.'
 - id: 04-reliability
   order: 4
   role: reliability
-  layout: proof_cards
+  layout: freeform
   visibility: public
-  title: Reliability and format hardening
-  message: Verified, atomic, report-last — or nothing.
-  body:
-  - Publish — staged build then independent verify then atomic promote; any failure exits non-zero, no partial release.
-  - CSV / JSON — per-file materialization with BOM and schema safety; JSON rejects duplicate keys, NaN and over-depth.
-  - SQLite — online-backup snapshot with typed per-row verification, integrity, foreign-key and row-count checks.
-  source_refs: [{source_id: architecture, section: "7. Format adapters"}]
-  claim_ids: [rel-formats, arch-flow]
-  visual: {type: none, position: right, items: [], callouts: []}
-  claim_guard: {allowed_claim_ids: [rel-formats, arch-flow], requires_non_claim_ids: [], forbidden_unqualified: []}
-  elements: []
-  bindings: []
-  transition: slide
-  reveal: stagger_up
+  title: A transformed corpus is not a release
+  message: Only report.json written LAST authorizes READY.
+  body: []
+  source_refs:
+  - source_id: release
+    section: _publish
+    locator: src/anonymization_trial/pipeline.py:205
+  claim_ids:
+  - release
+  visual:
+    type: image
+    asset_id: publication-state
+    position: full
+    items: []
+    callouts: []
+  claim_guard:
+    allowed_claim_ids:
+    - release
+    requires_non_claim_ids: []
+    forbidden_unqualified: []
+  elements:
+  - id: title
+    type: text
+    text: A transformed corpus is not a release
+    x: 0.05
+    y: 0.055
+    w: 0.9
+    h: 0.09
+    size_pt: 32
+    color: '#e2e8f0'
+    bold: true
+  - id: thesis
+    type: text
+    text: Only report.json written LAST authorizes READY.
+    x: 0.05
+    y: 0.16
+    w: 0.9
+    h: 0.11
+    size_pt: 22
+    color: '#22d3ee'
+    bold: false
+  - id: publication
+    type: asset
+    asset_id: publication-state
+    x: 0.03
+    y: 0.32
+    w: 0.94
+    h: 0.51
+  - id: qualifier
+    type: text
+    text: Trusted single writer; read-only input. A failed new run may leave an earlier valid release untouched.
+    x: 0.05
+    y: 0.865
+    w: 0.9
+    h: 0.06
+    size_pt: 13
+    color: '#94a3b8'
+    bold: false
+  - id: code-link
+    type: text
+    text: CODE / EVIDENCE
+    x: 0.75
+    y: 0.942
+    w: 0.14
+    h: 0.032
+    size_pt: 10
+    color: '#22d3ee'
+    bold: false
+  bindings:
+  - path: title
+    kind: claim_paraphrase
+    claim_id: release
+    transform_class: generalization
+  - path: message
+    kind: claim_paraphrase
+    claim_id: release
+    transform_class: generalization
+  - path: element:title
+    kind: claim_paraphrase
+    claim_id: release
+    transform_class: generalization
+  - path: element:thesis
+    kind: claim_paraphrase
+    claim_id: release
+    transform_class: generalization
+  - path: element:qualifier
+    kind: qualifier
+    claim_id: release
+  - path: element:code-link
+    kind: claim_paraphrase
+    claim_id: release
+    transform_class: generalization
+  transition: none
+  reveal: none
   hidden: false
-  notes: Crash-safe publication and per-format oracles.
+  notes: 'Time: 5 minutes (17:00–22:00)
+
+    Claim: Only report.json written last authorizes READY over the verified corpus.
+
+    Evidence: `pipeline.py::_publish`; `security/tests/test_publish_hardening.py`;
+
+    `tests/test_pipeline_failclosed.py`. Claim ID: release.
+
+    Live jump: Show the release-state SVG, then the report evidence chain in a prepared
+
+    output. Trace STAGED → REREAD/VERIFY → SEALED → CORPUS PUBLISHED → report.json LAST
+
+    → READY. Optional command: `uv run pytest -q security/tests/test_publish_hardening.py`.
+
+    Explain a crash between corpus promotion and report creation: corpus bytes may
+
+    exist, but no READY marker exists. This is not a multi-file transaction.
+
+    Likely challenge: Can another writer change the bytes after verification?
+
+    Concise answer: I recheck the sealed digest immediately before promotion. This
+
+    assumes a trusted, single-writer staging filesystem and read-only input mount.
+
+    External hostile writers and swap-and-restore attacks are explicitly outside scope.
+
+    Required qualifier: Failures produce no new READY release; an old valid release
+
+    may remain if the new run fails before publication. No claim of universal rollback.
+
+    Transition: The useful evidence is what happens when we deliberately violate these assumptions.'
 - id: 05-evidence
   order: 5
   role: evidence
-  layout: proof_cards
+  layout: freeform
   visibility: public
-  title: Evidence — and the extras
-  message: Independent, adversarial, reproducible.
-  body:
-  - Tests — a deterministic pytest gate covering unit, property, fail-closed, verifier-mutation, gray-box and black-box CLI attacks.
-  - Extra — Bandit SAST via $hack found 0 critical and 0 high (scanner receipts are supporting evidence only).
-  - Method — three-lane white / gray / black-box, every finding retained as an in-repo regression.
-  source_refs: [{source_id: security, section: "Security review"}]
-  claim_ids: [ev-tests, ev-hack]
-  visual: {type: none, position: right, items: [], callouts: []}
-  claim_guard: {allowed_claim_ids: [ev-tests, ev-hack], requires_non_claim_ids: [], forbidden_unqualified: []}
-  elements: []
-  bindings: []
-  transition: slide
-  reveal: stagger_up
+  title: Try to falsify the release
+  message: Real output readback, deliberate mutations, and publication checks.
+  body: []
+  source_refs:
+  - source_id: evidence
+    section: test_json_bool_number_and_sqlite_integer_real_mutations_rejected
+    locator: security/tests/test_typed_scalar_verification.py:21
+  claim_ids:
+  - evidence
+  visual:
+    type: cards
+    position: full
+    items:
+    - DOCKER DEMO
+    - ADVERSARIAL
+    - PUBLICATION
+    callouts: []
+  claim_guard:
+    allowed_claim_ids:
+    - evidence
+    requires_non_claim_ids: []
+    forbidden_unqualified: []
+  elements:
+  - id: title
+    type: text
+    text: Try to falsify the release
+    x: 0.05
+    y: 0.055
+    w: 0.9
+    h: 0.09
+    size_pt: 32
+    color: '#e2e8f0'
+    bold: true
+  - id: thesis
+    type: text
+    text: Real output readback, deliberate mutations, and publication checks.
+    x: 0.05
+    y: 0.16
+    w: 0.9
+    h: 0.11
+    size_pt: 22
+    color: '#22d3ee'
+    bold: false
+  - id: docker-title
+    type: text
+    text: DOCKER DEMO
+    x: 0.06
+    y: 0.32
+    w: 0.27
+    h: 0.06
+    size_pt: 22
+    color: '#22d3ee'
+    bold: true
+  - id: docker
+    type: text
+    text: '4 formats · 10× workload
+
+      100 → 1000 records
+
+      RSS 26.3 → 30.0 MB
+
+      8.2k → 10.4k records/s'
+    x: 0.06
+    y: 0.42
+    w: 0.27
+    h: 0.29
+    size_pt: 20
+    color: '#e2e8f0'
+    bold: false
+  - id: attack-title
+    type: text
+    text: ADVERSARIAL
+    x: 0.37
+    y: 0.32
+    w: 0.27
+    h: 0.06
+    size_pt: 22
+    color: '#22d3ee'
+    bold: true
+  - id: attack
+    type: text
+    text: 'Swap SQLite pseudonyms
+
+      Mutate true → 1
+
+      Retained regressions
+
+      reject both changes'
+    x: 0.37
+    y: 0.42
+    w: 0.27
+    h: 0.29
+    size_pt: 20
+    color: '#e2e8f0'
+    bold: false
+  - id: publish-title
+    type: text
+    text: PUBLICATION
+    x: 0.68
+    y: 0.32
+    w: 0.27
+    h: 0.06
+    size_pt: 22
+    color: '#22d3ee'
+    bold: true
+  - id: publish
+    type: text
+    text: 'Reread whole corpus
+
+      Check the sealed digest
+
+      Inspect report.json
+
+      No marker ≠ READY'
+    x: 0.68
+    y: 0.42
+    w: 0.27
+    h: 0.29
+    size_pt: 20
+    color: '#e2e8f0'
+    bold: false
+  - id: scanner
+    type: text
+    text: 'Supporting only: Bandit. No target-file Semgrep coverage or committed SCA result.'
+    x: 0.06
+    y: 0.765
+    w: 0.89
+    h: 0.065
+    size_pt: 14
+    color: '#94a3b8'
+    bold: false
+  - id: qualifier
+    type: text
+    text: Synthetic inputs, real container. One observed run; not a TB/PB throughput guarantee.
+    x: 0.05
+    y: 0.865
+    w: 0.9
+    h: 0.06
+    size_pt: 13
+    color: '#94a3b8'
+    bold: false
+  - id: code-link
+    type: text
+    text: CODE / EVIDENCE
+    x: 0.75
+    y: 0.942
+    w: 0.14
+    h: 0.032
+    size_pt: 10
+    color: '#22d3ee'
+    bold: false
+  bindings:
+  - path: title
+    kind: claim_paraphrase
+    claim_id: evidence
+    transform_class: generalization
+  - path: message
+    kind: claim_paraphrase
+    claim_id: evidence
+    transform_class: generalization
+  - path: element:title
+    kind: claim_paraphrase
+    claim_id: evidence
+    transform_class: generalization
+  - path: element:thesis
+    kind: claim_paraphrase
+    claim_id: evidence
+    transform_class: generalization
+  - path: element:docker-title
+    kind: claim_paraphrase
+    claim_id: evidence
+    transform_class: generalization
+  - path: element:docker
+    kind: claim_paraphrase
+    claim_id: evidence
+    transform_class: generalization
+  - path: element:attack-title
+    kind: claim_paraphrase
+    claim_id: evidence
+    transform_class: generalization
+  - path: element:attack
+    kind: claim_paraphrase
+    claim_id: evidence
+    transform_class: generalization
+  - path: element:publish-title
+    kind: claim_paraphrase
+    claim_id: evidence
+    transform_class: generalization
+  - path: element:publish
+    kind: claim_paraphrase
+    claim_id: evidence
+    transform_class: generalization
+  - path: element:scanner
+    kind: claim_paraphrase
+    claim_id: evidence
+    transform_class: generalization
+  - path: element:qualifier
+    kind: qualifier
+    claim_id: evidence
+  - path: element:code-link
+    kind: claim_paraphrase
+    claim_id: evidence
+    transform_class: generalization
+  transition: none
+  reveal: none
   hidden: false
-  notes: Evidence quality is the differentiator; $hack is a supporting security gate.
+  notes: 'Time: 5 minutes (22:00–27:00)
+
+    Claim: Concrete output readback and adversarial mutations are stronger evidence
+
+    than scanner labels or a large test count.
+
+    Evidence: `qa/runtime-evidence.json`; `security/tests/test_sqlite_location.py`;
+
+    `security/tests/test_typed_scalar_verification.py`; `security/tests/test_publish_hardening.py`.
+
+    Claim ID: evidence.
+
+    Live jump: `docker run --rm anonymization-trial` (or show the saved receipt).
+
+    Show the four formats, the 100→1000 logical-record step, and observed RSS/throughput.
+
+    Then run `uv run pytest -q security/tests/test_sqlite_location.py::test_swapped_sqlite_subject_pseudonyms_rejected`.
+
+    Open the test and point at the mutation, not just its green result: swapping two
+
+    valid pseudonyms preserves aggregate presence but violates row identity.
+
+    Second example: true→1 / INTEGER→REAL violates meaning despite Python equality.
+
+    Likely challenge: What does the 10× benchmark establish about a terabyte?
+
+    Concise answer: Nothing about TB throughput. It establishes a reproducible small
+
+    container demo and records measured costs at two sizes. Scaling is a separate model.
+
+    Required qualifier: Synthetic input, real container/CLI; observed measurements are
+
+    not SLA guarantees. Bandit is supporting evidence; no vulnerability-free claim.
+
+    Transition: Production must preserve these authorization semantics across many workers.'
 - id: 06-production
   order: 6
   role: production
-  layout: three_cards
+  layout: freeform
   visibility: public
-  title: Production scale (AWS reference)
-  message: Portable container, provider-specific orchestration.
-  body:
-  - AWS — S3 intake/quarantine/release, SQS, Fargate workers, KMS-scoped HMAC, distributed verify.
-  - Portable — the OCI container is the cloud-neutral boundary; AWS/GCP/Azure via a capability contract.
-  - Cost — about $86 at 1 TB, $85,734 at 1 PB (us-east-1 list prices, storage-dominant, unconfirmed).
-  source_refs: [{source_id: submission, section: "Portability (portable compute artifact, provider-specific orchestration)"}]
-  claim_ids: [prod-aws, prod-cost]
-  visual: {type: none, position: right, items: [], callouts: []}
-  claim_guard: {allowed_claim_ids: [prod-aws, prod-cost], requires_non_claim_ids: [], forbidden_unqualified: []}
-  elements: []
-  bindings: []
-  transition: slide
-  reveal: stagger_up
+  title: Scale the work; keep one release decision
+  message: 'AWS is the worked reference: immutable corpus manifest → atomic active pointer.'
+  body: []
+  source_refs:
+  - source_id: production
+    section: SLA (stated assumptions, arithmetic shown)
+    locator: docs/production-architecture.md:56
+  claim_ids:
+  - production
+  visual:
+    type: image
+    asset_id: aws-production
+    position: full
+    items: []
+    callouts: []
+  claim_guard:
+    allowed_claim_ids:
+    - production
+    requires_non_claim_ids: []
+    forbidden_unqualified: []
+  elements:
+  - id: title
+    type: text
+    text: Scale the work; keep one release decision
+    x: 0.05
+    y: 0.055
+    w: 0.9
+    h: 0.09
+    size_pt: 32
+    color: '#e2e8f0'
+    bold: true
+  - id: thesis
+    type: text
+    text: 'AWS is the worked reference: immutable corpus manifest → atomic active pointer.'
+    x: 0.05
+    y: 0.16
+    w: 0.9
+    h: 0.11
+    size_pt: 22
+    color: '#22d3ee'
+    bold: false
+  - id: aws
+    type: asset
+    asset_id: aws-production
+    x: 0.04
+    y: 0.255
+    w: 0.92
+    h: 0.54
+  - id: tb
+    type: text
+    text: 1 TB  ·  target ≤1 hour  ·  model $86
+    x: 0.06
+    y: 0.805
+    w: 0.43
+    h: 0.06
+    size_pt: 20
+    color: '#22d3ee'
+    bold: true
+  - id: pb
+    type: text
+    text: 1 PB  ·  target ≤7 days  ·  model $85,734
+    x: 0.51
+    y: 0.805
+    w: 0.45
+    h: 0.06
+    size_pt: 20
+    color: '#22d3ee'
+    bold: true
+  - id: qualifier
+    type: text
+    text: Modeled, not deployed; price tables require confirmation. OCI/data contract portable; AWS only here.
+    x: 0.05
+    y: 0.865
+    w: 0.9
+    h: 0.06
+    size_pt: 13
+    color: '#94a3b8'
+    bold: false
+  - id: code-link
+    type: text
+    text: CODE / EVIDENCE
+    x: 0.75
+    y: 0.942
+    w: 0.14
+    h: 0.032
+    size_pt: 10
+    color: '#22d3ee'
+    bold: false
+  bindings:
+  - path: title
+    kind: claim_paraphrase
+    claim_id: production
+    transform_class: generalization
+  - path: message
+    kind: claim_paraphrase
+    claim_id: production
+    transform_class: generalization
+  - path: element:title
+    kind: claim_paraphrase
+    claim_id: production
+    transform_class: generalization
+  - path: element:thesis
+    kind: claim_paraphrase
+    claim_id: production
+    transform_class: generalization
+  - path: element:tb
+    kind: claim_paraphrase
+    claim_id: production
+    transform_class: generalization
+  - path: element:pb
+    kind: claim_paraphrase
+    claim_id: production
+    transform_class: generalization
+  - path: element:qualifier
+    kind: qualifier
+    claim_id: production
+  - path: element:code-link
+    kind: claim_paraphrase
+    claim_id: production
+    transform_class: generalization
+  transition: none
+  reveal: none
   hidden: false
-  notes: What stays and what changes at 1 TB / 1 PB.
+  notes: 'Time: 5 minutes (27:00–32:00)
+
+    Claim: AWS workers can partition work while a manifest/pointer gates the corpus release.
+
+    Evidence: `docs/production-architecture.md` §§ Flow, Distribution, SLA, Cost;
+
+    `costs/example-estimates.json`, `scripts/estimate_aws_cost.py`. Claim ID: production.
+
+    Live jump: Use the AWS SVG. Walk intake → format-aware partitions → workers →
+
+    verifier fan-in → immutable corpus manifest → active pointer. Discuss retries and
+
+    quarantine, then run `python scripts/estimate_aws_cost.py --inputs costs/aws-us-east-1-inputs.json`.
+
+    Show 1 TB ≤1h and 1 PB ≤7d targets and the model totals, not a provider comparison.
+
+    Likely challenge: Why trust these cost and throughput estimates?
+
+    Concise answer: They are an explicit scenario: 200 workers at 20 MB/s each,
+
+    transform plus verify and retries, three stored copies, cited unit prices. Rates,
+
+    quotas, object size, retention and throughput must be validated before deployment.
+
+    Required qualifier: Modeled, not deployed or benchmarked at TB/PB; price tables
+
+    require confirmation. OCI/data/verification contracts are portable; AWS is the only
+
+    worked reference. Local report-last is not the cloud pointer implementation.
+
+    Transition: The final engineering decision is where to stop claiming certainty.'
 - id: 07-nonclaims
   order: 7
-  role: closing
-  layout: proof_cards
+  role: nonclaims
+  layout: freeform
   visibility: public
-  title: What this proves — and what it does not
-  message: Strong claims only where the evidence supports them.
-  body:
-  - Scope — proves declared-literal replacement and structural preservation, not re-identification resistance.
-  - Scans — static and security scans are supporting evidence, not proof of vulnerability-free software.
-  - Scale — not run at TB/PB; cloud prices unconfirmed; optional discovery/red-team lanes designed, not built.
-  source_refs: [{source_id: privacy-contract, section: "Not established (out of scope for a literal-policy pipeline)"}]
-  claim_ids: [nonclaim-reid, nonclaim-scans, nonclaim-scale]
-  visual: {type: none, position: right, items: [], callouts: []}
-  claim_guard: {allowed_claim_ids: [nonclaim-reid, nonclaim-scans, nonclaim-scale], requires_non_claim_ids: [nonclaim-reid, nonclaim-scans, nonclaim-scale], forbidden_unqualified: []}
-  elements: []
-  bindings: []
-  transition: slide
-  reveal: stagger_up
+  title: Know what this release does not establish
+  message: Defend the literal-policy contract. Do not imply anonymity.
+  body: []
+  source_refs:
+  - source_id: nonclaims
+    section: Not established (out of scope for a literal-policy pipeline)
+    locator: docs/PRIVACY_CONTRACT.md:57
+  claim_ids:
+  - nonclaims
+  visual:
+    type: cards
+    position: full
+    items:
+    - PROVES
+    - DOES NOT PROVE
+    callouts: []
+  claim_guard:
+    allowed_claim_ids:
+    - nonclaims
+    requires_non_claim_ids: []
+    forbidden_unqualified: []
+  elements:
+  - id: title
+    type: text
+    text: Know what this release does not establish
+    x: 0.05
+    y: 0.055
+    w: 0.9
+    h: 0.09
+    size_pt: 32
+    color: '#e2e8f0'
+    bold: true
+  - id: thesis
+    type: text
+    text: Defend the literal-policy contract. Do not imply anonymity.
+    x: 0.05
+    y: 0.16
+    w: 0.9
+    h: 0.11
+    size_pt: 22
+    color: '#22d3ee'
+    bold: false
+  - id: proves-title
+    type: text
+    text: PROVES
+    x: 0.07
+    y: 0.34
+    w: 0.39
+    h: 0.07
+    size_pt: 28
+    color: '#22d3ee'
+    bold: true
+  - id: proves
+    type: text
+    text: 'Declared-literal replacement
+
+      Identity coherence
+
+      Structural preservation
+
+      Report-last authorization'
+    x: 0.07
+    y: 0.46
+    w: 0.39
+    h: 0.3
+    size_pt: 22
+    color: '#e2e8f0'
+    bold: false
+  - id: not-title
+    type: text
+    text: DOES NOT PROVE
+    x: 0.54
+    y: 0.34
+    w: 0.4
+    h: 0.07
+    size_pt: 28
+    color: '#94a3b8'
+    bold: true
+  - id: not
+    type: text
+    text: 'Unlisted-PII discovery
+
+      Re-identification resistance
+
+      Formal anonymity
+
+      TB/PB operation'
+    x: 0.54
+    y: 0.46
+    w: 0.4
+    h: 0.3
+    size_pt: 22
+    color: '#e2e8f0'
+    bold: false
+  - id: qualifier
+    type: text
+    text: Scans do not establish vulnerability-free software. Future risk analysis and Battle remain out of scope.
+    x: 0.05
+    y: 0.865
+    w: 0.9
+    h: 0.06
+    size_pt: 13
+    color: '#94a3b8'
+    bold: false
+  - id: code-link
+    type: text
+    text: CODE / EVIDENCE
+    x: 0.75
+    y: 0.942
+    w: 0.14
+    h: 0.032
+    size_pt: 10
+    color: '#22d3ee'
+    bold: false
+  bindings:
+  - path: title
+    kind: claim_paraphrase
+    claim_id: nonclaims
+    transform_class: generalization
+  - path: message
+    kind: claim_paraphrase
+    claim_id: nonclaims
+    transform_class: generalization
+  - path: element:title
+    kind: claim_paraphrase
+    claim_id: nonclaims
+    transform_class: generalization
+  - path: element:thesis
+    kind: claim_paraphrase
+    claim_id: nonclaims
+    transform_class: generalization
+  - path: element:proves-title
+    kind: claim_paraphrase
+    claim_id: nonclaims
+    transform_class: generalization
+  - path: element:proves
+    kind: claim_paraphrase
+    claim_id: nonclaims
+    transform_class: generalization
+  - path: element:not-title
+    kind: claim_paraphrase
+    claim_id: nonclaims
+    transform_class: generalization
+  - path: element:not
+    kind: claim_paraphrase
+    claim_id: nonclaims
+    transform_class: generalization
+  - path: element:qualifier
+    kind: qualifier
+    claim_id: nonclaims
+  - path: element:code-link
+    kind: claim_paraphrase
+    claim_id: nonclaims
+    transform_class: generalization
+  transition: none
+  reveal: none
   hidden: false
-  notes: Close on explicit non-claims; this is the credibility slide.
+  notes: 'Time: 4 minutes (32:00–36:00)
+
+    Claim: The literal-policy guarantees do not imply anonymity or production readiness.
+
+    Evidence: `docs/PRIVACY_CONTRACT.md` §§ Verified locally, Not established;
+
+    `SUBMISSION.md` Known gaps. Claim ID: nonclaims.
+
+    Live jump: Open report.json''s `does_not_establish` beside the privacy contract.
+
+    Summarize three choices: reject ambiguity; preserve evidence; avoid building a
+
+    platform. Leave re-identification analysis and adaptive Battle outside this release.
+
+    Likely challenge: What would you implement next with more time?
+
+    Concise answer: First validate production throughput, object-size distributions,
+
+    key scope and billing assumptions against a representative corpus. Discovery and
+
+    re-identification need separate goals and evidence; they are not hidden in this claim.
+
+    Required qualifier: No unlisted-PII discovery, formal anonymity, external-linkage
+
+    resistance, TB/PB benchmark, or vulnerability-free assertion.
+
+    Transition: That is the boundary I would defend; which decision would you like to inspect?'

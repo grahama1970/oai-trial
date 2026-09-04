@@ -1,44 +1,22 @@
 {
-  "schema": "pitchdeck.plan_receipt.v1",
-  "operation": "plan",
-  "readiness": "USABLE_WITH_GAPS",
-  "mocked": false,
-  "live": false,
-  "inputs": {
-    "source_manifest": "${PROJECT_ROOT}/docs/pitch/oai-trial/source_manifest.yaml"
-  },
-  "outputs": {
-    "source_manifest": "${PROJECT_ROOT}/docs/pitch/oai-trial/generated/source_manifest.resolved.yaml",
-    "claim_ledger": "${PROJECT_ROOT}/docs/pitch/oai-trial/generated/claim_ledger.yaml",
-    "asset_manifest": "${PROJECT_ROOT}/docs/pitch/oai-trial/generated/asset_manifest.yaml",
-    "deck_manifest": "${PROJECT_ROOT}/docs/pitch/oai-trial/generated/deck.public.yaml",
-    "speaker_notes": "${PROJECT_ROOT}/docs/pitch/oai-trial/generated/speaker_notes.md"
-  },
-  "counts": {
-    "sources": 7,
-    "read_sources": 7,
-    "claims": 97,
-    "candidate_claims": 94,
-    "assets": 2,
-    "slides": 6
-  },
-  "gaps": [
-    "94 claims remain candidate and require human review"
+  "schema": "oai_trial.pitch_projection.v1",
+  "source_commit": "0795dc66deaa5991cd34959c6d8b81f80a8042a0",
+  "canonical": [
+    "deck.curated.yaml",
+    "claim_ledger.curated.yaml",
+    "speaker_notes.curated.md"
   ],
-  "claims": {
-    "proves": [
-      "A typed candidate deck manifest was generated from the listed local README sources.",
-      "Public/private visibility and mandatory non-claims were preserved in machine-readable artifacts."
-    ],
-    "does_not_prove": [
-      "The README claims match the current codebase or runtime.",
-      "Candidate claims are approved for external use.",
-      "Screenshots are current or visually approved.",
-      "The product is production-ready, certified, accredited, or deployed."
-    ]
-  },
-  "seam_validation": {
-    "kind": "plan_receipt",
-    "status": "PASS"
-  }
+  "slide_ids": [
+    "01-brief",
+    "02-architecture",
+    "03-semantics",
+    "04-reliability",
+    "05-evidence",
+    "06-production",
+    "07-nonclaims"
+  ],
+  "candidate_claims": 0,
+  "status": "SOURCE_SYNCHRONIZED",
+  "human_approval": "PENDING",
+  "non_claim": "Source synchronization does not establish build, render, import or human approval."
 }

@@ -1,0 +1,30 @@
+schema: oai_trial.static_flow.v1
+title: Local report-last release
+nodes:
+- label: 'POLICY
+
+    COMPILE'
+  state: ''
+- label: 'FOUR
+
+    ADAPTERS'
+  state: ''
+- label: 'PRIVATE
+
+    STAGING'
+  state: ''
+- label: 'REREAD /
+
+    RE-DERIVE'
+  state: verify
+- label: 'VERIFIED
+
+    CORPUS'
+  state: ''
+- label: 'report.json
+
+    LAST'
+  state: ''
+- label: READY
+  state: ready
+qualifier: Local failures remain uncommitted. Production quarantine is a separate design.

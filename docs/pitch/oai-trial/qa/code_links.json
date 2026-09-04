@@ -1,0 +1,47 @@
+{
+  "source_commit": "0795dc66deaa5991cd34959c6d8b81f80a8042a0",
+  "slides": {
+    "01-brief": {
+      "url": "https://github.com/grahama1970/oai-trial/blob/0795dc66deaa5991cd34959c6d8b81f80a8042a0/TRIAL_BRIEF.md#L5",
+      "path": "TRIAL_BRIEF.md",
+      "line": 5,
+      "command": "docker run --rm anonymization-trial"
+    },
+    "02-architecture": {
+      "url": "https://github.com/grahama1970/oai-trial/blob/0795dc66deaa5991cd34959c6d8b81f80a8042a0/src/anonymization_trial/pipeline.py#L240",
+      "path": "src/anonymization_trial/pipeline.py",
+      "line": 240,
+      "command": "uv run pytest -q security/tests/test_publish_hardening.py"
+    },
+    "03-semantics": {
+      "url": "https://github.com/grahama1970/oai-trial/blob/0795dc66deaa5991cd34959c6d8b81f80a8042a0/src/anonymization_trial/pseudonyms.py#L104",
+      "path": "src/anonymization_trial/pseudonyms.py",
+      "line": 104,
+      "command": "uv run pytest -q tests/test_matcher.py security/tests/test_pseudonym_domains.py"
+    },
+    "04-reliability": {
+      "url": "https://github.com/grahama1970/oai-trial/blob/0795dc66deaa5991cd34959c6d8b81f80a8042a0/src/anonymization_trial/pipeline.py#L205",
+      "path": "src/anonymization_trial/pipeline.py",
+      "line": 205,
+      "command": "uv run pytest -q security/tests/test_publish_hardening.py"
+    },
+    "05-evidence": {
+      "url": "https://github.com/grahama1970/oai-trial/blob/0795dc66deaa5991cd34959c6d8b81f80a8042a0/src/anonymization_trial/verification.py#L113",
+      "path": "src/anonymization_trial/verification.py",
+      "line": 113,
+      "command": "uv run pytest -q security/tests/test_sqlite_location.py security/tests/test_typed_scalar_verification.py"
+    },
+    "06-production": {
+      "url": "https://github.com/grahama1970/oai-trial/blob/0795dc66deaa5991cd34959c6d8b81f80a8042a0/docs/production-architecture.md#L56",
+      "path": "docs/production-architecture.md",
+      "line": 56,
+      "command": "python scripts/estimate_aws_cost.py --inputs costs/aws-us-east-1-inputs.json"
+    },
+    "07-nonclaims": {
+      "url": "https://github.com/grahama1970/oai-trial/blob/0795dc66deaa5991cd34959c6d8b81f80a8042a0/docs/PRIVACY_CONTRACT.md#L57",
+      "path": "docs/PRIVACY_CONTRACT.md",
+      "line": 57,
+      "command": "uv run pytest -q security/tests/test_publish_hardening.py::test_report_binds_evidence_chain"
+    }
+  }
+}

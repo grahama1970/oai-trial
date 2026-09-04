@@ -1,0 +1,22 @@
+schema: oai_trial.static_flow.v1
+title: Local release authorization
+nodes:
+- label: STAGED
+  state: ''
+- label: 'REREAD /
+
+    VERIFY'
+  state: verify
+- label: SEALED
+  state: ''
+- label: 'CORPUS
+
+    PUBLISHED'
+  state: ''
+- label: 'report.json
+
+    LAST'
+  state: ''
+- label: READY
+  state: ready
+qualifier: Local failures remain uncommitted. Production quarantine is a separate design.

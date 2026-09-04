@@ -48,8 +48,11 @@ report-last readiness.
 
 Local x86-64 Linux, in-container. `docker run --rm anonymization-trial` at sizes
 100 and 1000 (10×), all four formats, per-run peak memory measured in a
-subprocess: ~26 MB @100, ~29 MB @1000 (bounded, roughly flat across 10×);
-throughput ~16k–23k records/s. Exit 0 only when each run verifies.
+subprocess: 26.33 MB @100, 29.99 MB @1000; throughput 8,164.78 and
+10,424.11 records/s respectively in the retained presentation run
+(`docs/pitch/oai-trial/qa/runtime-evidence.json`). These are small synthetic
+workload observations, not bounded-memory or TB-scale guarantees.
+Exit 0 only when each run verifies.
 
 ## Production cloud design
 
