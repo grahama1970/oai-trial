@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/anonymization-trial/report.schema.json",
+  "title": "Anonymization trial readiness report",
+  "description": "Written last as the sole readiness marker. Contains counts, digests, and explicit non-claims only \u2014 never raw sensitive/protected values, rows, pseudonyms, or mappings.",
+  "type": "object",
+  "required": [
+    "status",
+    "files_processed",
+    "records_processed",
+    "bytes_read",
+    "bytes_written",
+    "replacements_applied",
+    "verification_passed",
+    "elapsed_seconds",
+    "policy_sha256",
+    "corpus_manifest_sha256",
+    "algorithm_version",
+    "scope_id",
+    "key_mode",
+    "does_not_establish"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "status": {"const": "ready"},
+    "files_processed": {"type": "integer", "minimum": 0},
+    "records_processed": {"type": "integer", "minimum": 0},
+    "bytes_read": {"type": "integer", "minimum": 0},
+    "bytes_written": {"type": "integer", "minimum": 0},
+    "replacements_applied": {"type": "integer", "minimum": 0},
+    "verification_passed": {"type": "boolean"},
+    "elapsed_seconds": {"type": "number", "minimum": 0},
+    "policy_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "corpus_manifest_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "algorithm_version": {"type": "string", "minLength": 1},
+    "scope_id": {"type": "string", "minLength": 1},
+    "key_mode": {"type": "string", "minLength": 1},
+    "does_not_establish": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1},
+      "minItems": 1
+    }
+  }
+}

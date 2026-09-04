@@ -1,12 +1,11 @@
-"""CLI entry point exposing the two required commands.
+"""CLI entry point: the two required commands plus operational inspection.
 
-``anonymization-trial demo`` runs a self-contained demonstration across all four
-formats at two workload sizes (largest >= 10x smallest) and reports throughput
-and per-run peak memory. Each size runs in its own subprocess so ``ru_maxrss``
-reflects that single run's peak rather than a cumulative total.
-``anonymization-trial run --input --output`` anonymizes a mounted bundle.
-Exit code is 0 only when the run/demo verification passes; any handled error
-prints a sanitized message to stderr and returns non-zero (fail closed).
+Required: ``demo`` (self-contained demonstration) and ``run --input --output``.
+Operational polish (all self-contained, no server): ``preflight`` (validate a
+bundle without producing data), ``verify`` (independently reverify an existing
+release), ``inspect`` (render a release's safe evidence summary), and ``explain``
+(print the mechanism/guarantees). Exit code is 0 only on success; handled errors
+print a sanitized code to stderr and return non-zero (fail closed).
 """
 from __future__ import annotations
 
@@ -22,7 +21,9 @@ from pathlib import Path
 
 from .errors import AnonError
 from .fixture import generate_fixture
-from .pipeline import PipelineError, run_pipeline
+from .pipeline import _DOES_NOT_ESTABLISH, PipelineError, _preflight, run_pipeline
+from .policy import load_policy
+from .verification import verify_corpus
 
 _DEMO_SIZES = (100, 1000)  # largest is 10x the smallest
 
@@ -79,6 +80,81 @@ def _demo() -> int:
     return 0
 
 
+def _explain() -> int:
+    """Print the mechanism and guarantees (no policy or data contents)."""
+    print(
+        json.dumps(
+            {
+                "matching": [
+                    "original-input spans only; generated output is never rescanned",
+                    "leftmost -> longest -> stable rule_id tie-break",
+                ],
+                "identity": [
+                    "(data_type, subject_id) is the canonical pseudonym identity",
+                    "aliases converge; distinct same-type identities are injective",
+                ],
+                "protected_values": ["sensitive/protected overlap is rejected at compile time"],
+                "publication": [
+                    "output staged privately; independently reread and verified",
+                    "report.json written last and binds the corpus manifest digest",
+                    "any failure exits non-zero and leaves no ready release",
+                ],
+                "encoding": [
+                    "UTF-8 / UTF-8 BOM; no Unicode normalization",
+                    "non-ASCII case-insensitive rules rejected in v1",
+                ],
+                "does_not_establish": list(_DOES_NOT_ESTABLISH),
+            },
+            indent=2,
+            sort_keys=True,
+        )
+    )
+    return 0
+
+
+def _preflight_cmd(input_root: Path) -> int:
+    policy = load_policy(input_root / "policy.json")
+    with tempfile.TemporaryDirectory(prefix="anon-preflight-") as tmp:
+        files = _preflight(input_root, Path(tmp), policy)
+    by_type: dict[str, int] = {}
+    for _src, rel in files:
+        by_type[rel.suffix.lower()] = by_type.get(rel.suffix.lower(), 0) + 1
+    print(
+        json.dumps(
+            {
+                "preflight": "PASS",
+                "policy": {
+                    "version": policy.version,
+                    "rules": len(policy.rules),
+                    "protected": len(policy.protected_values),
+                },
+                "corpus": {"files": len(files), "by_type": by_type},
+                "ready_to_transform": True,
+            },
+            sort_keys=True,
+        )
+    )
+    return 0
+
+
+def _verify_cmd(input_root: Path, output_root: Path) -> int:
+    policy = load_policy(input_root / "policy.json")
+    verify_corpus(input_root / "corpus", output_root / "corpus", policy)
+    print(json.dumps({"verify": "PASS", "output": str(output_root)}, sort_keys=True))
+    return 0
+
+
+def _inspect_cmd(output_root: Path) -> int:
+    report = json.loads((output_root / "report.json").read_text(encoding="utf-8"))
+    safe_keys = (
+        "status", "files_processed", "records_processed", "replacements_applied",
+        "verification_passed", "algorithm_version", "scope_id", "key_mode",
+        "policy_sha256", "corpus_manifest_sha256", "does_not_establish",
+    )
+    print(json.dumps({k: report.get(k) for k in safe_keys}, indent=2, sort_keys=True))
+    return 0 if report.get("status") == "ready" else 1
+
+
 def _parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Cross-format anonymization trial")
     subparsers = parser.add_subparsers(dest="command")
@@ -88,6 +164,14 @@ def _parser() -> argparse.ArgumentParser:
     run.add_argument("--output", type=Path, default=Path("/trial/output"))
     bench = subparsers.add_parser("bench-once", help="internal: one benchmark run as JSON")
     bench.add_argument("--records", type=int, required=True)
+    pre = subparsers.add_parser("preflight", help="validate a bundle without producing data")
+    pre.add_argument("--input", type=Path, default=Path("/trial/input"))
+    ver = subparsers.add_parser("verify", help="independently reverify an existing release")
+    ver.add_argument("--input", type=Path, default=Path("/trial/input"))
+    ver.add_argument("--output", type=Path, default=Path("/trial/output"))
+    ins = subparsers.add_parser("inspect", help="render a release's safe evidence summary")
+    ins.add_argument("output", type=Path)
+    subparsers.add_parser("explain", help="print the mechanism and guarantees")
     return parser
 
 
@@ -99,6 +183,14 @@ def main(argv: list[str] | None = None) -> int:
         if args.command == "bench-once":
             print(json.dumps(_run_once(args.records), sort_keys=True))
             return 0
+        if args.command == "explain":
+            return _explain()
+        if args.command == "preflight":
+            return _preflight_cmd(args.input)
+        if args.command == "verify":
+            return _verify_cmd(args.input, args.output)
+        if args.command == "inspect":
+            return _inspect_cmd(args.output)
         report = run_pipeline(args.input, args.output)
         print(json.dumps(asdict(report), sort_keys=True))
         return 0

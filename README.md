@@ -10,6 +10,7 @@ identity coherence — then verifies the whole corpus before it releases anythin
 
 | You want to… | Go to |
 |---|---|
+| Understand the whole design in 10 min | [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) |
 | Read the task as given | [`TRIAL_BRIEF.md`](TRIAL_BRIEF.md) |
 | See the frozen correctness rules | [`docs/ANONYMIZATION_SEMANTICS.md`](docs/ANONYMIZATION_SEMANTICS.md) |
 | Trace requirements → tests | [`docs/ACCEPTANCE_MATRIX.md`](docs/ACCEPTANCE_MATRIX.md) |
@@ -32,6 +33,17 @@ tests/             pytest suite (unit + fail-closed + per-format)
 docs/              semantics, acceptance matrix, production design, research
 costs/             price inputs + reproducible estimate output
 ```
+
+## Inspect a release (no server)
+
+```bash
+anonymization-trial explain                       # mechanism + guarantees
+anonymization-trial preflight --input IN          # validate a bundle, produce no data
+anonymization-trial run --input IN --output OUT   # anonymize
+anonymization-trial verify --input IN --output OUT # independently reverify
+anonymization-trial inspect OUT                    # safe evidence summary
+```
+`report.json` conforms to [`schemas/report.schema.json`](schemas/report.schema.json).
 
 ## Quickstart
 
