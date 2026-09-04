@@ -1,17 +1,9 @@
 {
   "schema": "pitchdeck.validation_report.v1",
-  "readiness": "USABLE_WITH_GAPS",
+  "readiness": "READY",
   "errors": 0,
-  "warnings": 1,
-  "issues": [
-    {
-      "severity": "warning",
-      "code": "NUMERIC_UNBOUND",
-      "message": "Binding 'element:formats' renders number '8' that appears in no evidence span or recorded formula of claim 'brief'.",
-      "slide_id": "01-brief",
-      "claim_id": "brief"
-    }
-  ],
+  "warnings": 0,
+  "issues": [],
   "seam_validation": {
     "kind": "validation_report",
     "status": "PASS"

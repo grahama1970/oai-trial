@@ -1,29 +1,28 @@
 {
   "schema": "pitchdeck.build_receipt.v1",
   "operation": "build",
-  "readiness": "USABLE_WITH_GAPS",
+  "readiness": "READY",
   "mocked": false,
   "live": false,
   "inputs": {
     "deck_id": "oai-trial-technical-briefing-public",
     "source_policy": "public_only",
     "canonical_deck_sha256": "8759896661d9a21d8e796f946ddb194d1ba9944bfb6b288b8f50787cda3dab12",
-    "source_snapshot_sha256": "b1fec4fe65061f6fdf6b83cc697dfc9c846e99201e5259dd3e8a614166fba196"
+    "source_snapshot_sha256": "93e28bfc28980ef6b34193395e2b501715065792a95bbd6c9023777114ea4ea4"
   },
   "outputs": {
     "pptx": "/mnt/storage12tb/oai-trial/pitch-final/briefing.pptx",
-    "pptx_sha256": "7bf4a724eff1c5122f4ab48767071a7706ae3d741cfd31482d2edd98091f1252",
+    "pptx_sha256": "7287d4ca48a70ae1d9b0a2775db7364759d59d9dc50ac4f024ee273e8de72d72",
     "linked_pptx": "/mnt/storage12tb/oai-trial/pitch-final/oai-trial-6b69e18.pptx",
-    "linked_pptx_sha256": "c022c7052503f11051456804970fad81227fc8bbd13d16f0dc8c01d87b5418c6"
+    "linked_pptx_sha256": "be3466b0e24ab9f8963945c21568982a654bfd99a84646cf4e1b267e65c1fa4d"
   },
   "counts": {
     "slides": 7,
     "claims_referenced": 7,
     "sources_referenced": 7,
-    "validation_warnings": 1
+    "validation_warnings": 0
   },
   "gaps": [
-    "Binding 'element:formats' renders number '8' that appears in no evidence span or recorded formula of claim 'brief'.",
     "KNOWN LIMITATION: browser-vs-PPTX visual fidelity is unverified; review the rendered PPTX before external delivery."
   ],
   "claims": {

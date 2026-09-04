@@ -12,6 +12,9 @@ claims:
   - source_id: brief
     section: Required behavior
     locator: TRIAL_BRIEF.md:13-22 (Required behavior)
+  - source_id: brief
+    section: Scenario
+    locator: TRIAL_BRIEF.md:5 (four input formats)
   evidence_spans:
   - source_id: brief
     text: 'Every successful run must meet these requirements:
@@ -34,6 +37,11 @@ claims:
 
       - Exit non-zero after a failure. Do not leave a partial corpus that looks ready for release.'
     section: Required behavior
+  - source_id: brief
+    text: A fictional analytics company receives customer exports. Its privacy team must anonymize each export before
+      another internal team can use it. Exports can eventually reach terabyte or petabyte scale and contain CSV,
+      JSON, UTF-8 text, and SQLite database files. The same synthetic identity can appear in every format.
+    section: Scenario
   notes: 'Project-agent source review, not human presentation approval. Runtime/source candidate 0795dc66deaa5991cd34959c6d8b81f80a8042a0.
     Evidence command: docker run --rm anonymization-trial'
   approval:

@@ -6,11 +6,11 @@
   "artifacts": {
     "pptx": {
       "path": "/mnt/storage12tb/oai-trial/pitch-final/oai-trial-6b69e18.pptx",
-      "sha256": "c022c7052503f11051456804970fad81227fc8bbd13d16f0dc8c01d87b5418c6"
+      "sha256": "be3466b0e24ab9f8963945c21568982a654bfd99a84646cf4e1b267e65c1fa4d"
     },
     "pdf": {
       "path": "/mnt/storage12tb/oai-trial/pitch-final/frozen-render/oai-trial-6b69e18.pdf",
-      "sha256": "eee04ba33dac7a03e7a374dff877fe49e962f9838021d0c47dd51b9b5b5aca91"
+      "sha256": "6900a088f95a6d815903e8ccb58e001f0b413f943d6bd90654a614e8de4de369"
     },
     "contact_sheet": {
       "path": "/mnt/storage12tb/oai-trial/pitch-final/frozen-render/contact-sheet.png",
@@ -18,7 +18,7 @@
     },
     "render_receipt": {
       "path": "/mnt/storage12tb/oai-trial/pitch-final/frozen-render/render_receipt.json",
-      "sha256": "922cccffc1d5f209f7d3469469b88bf351dc30653a023cd0b58152fce3b2255c"
+      "sha256": "d3d85c93cad47e8e3d783534e4175623a374de4b43f835a8425466b8b1e9f25a"
     },
     "surf_capture": {
       "path": "/mnt/storage12tb/oai-trial/pitch-final/final-contact-sheet-surf.png",
