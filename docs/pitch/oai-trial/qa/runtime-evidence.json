@@ -1,1 +1,32 @@
-{"demo": "success", "runs": [{"bytes_per_second": 1387402.56, "bytes_read": 68310, "elapsed_seconds": 0.049236, "files_processed": 4, "logical_records": 100, "peak_memory_mb": 26.33, "records_per_second": 8164.78, "records_processed": 402, "verification_passed": true}, {"bytes_per_second": 1326758.11, "bytes_read": 509366, "elapsed_seconds": 0.383918, "files_processed": 4, "logical_records": 1000, "peak_memory_mb": 29.99, "records_per_second": 10424.11, "records_processed": 4002, "verification_passed": true}]}
+{
+  "demo": "success",
+  "runs": [
+    {
+      "bytes_per_second": 1387402.56,
+      "bytes_read": 68310,
+      "elapsed_seconds": 0.049236,
+      "files_processed": 4,
+      "logical_records": 100,
+      "peak_memory_mb": 26.33,
+      "records_per_second": 8164.78,
+      "records_processed": 402,
+      "verification_passed": true
+    },
+    {
+      "bytes_per_second": 1326758.11,
+      "bytes_read": 509366,
+      "elapsed_seconds": 0.383918,
+      "files_processed": 4,
+      "logical_records": 1000,
+      "peak_memory_mb": 29.99,
+      "records_per_second": 10424.11,
+      "records_processed": 4002,
+      "verification_passed": true
+    }
+  ],
+  "identity_observation": {
+    "replacements": "{('name', 'p1'): 'Person-29ec756d7d'}",
+    "unique": "[('name', 'p1')]"
+  },
+  "identity_proof": "/mnt/storage12tb/oai-trial/pitch-final/identity-vscode.json"
+}

@@ -489,6 +489,14 @@ slides:
     kind: claim_paraphrase
     claim_id: semantics
     transform_class: generalization
+  - path: visual.items:0
+    kind: claim_paraphrase
+    claim_id: semantics
+    transform_class: generalization
+  - path: visual.items:1
+    kind: claim_paraphrase
+    claim_id: semantics
+    transform_class: generalization
   transition: none
   reveal: none
   hidden: false
@@ -868,6 +876,18 @@ slides:
     kind: claim_paraphrase
     claim_id: evidence
     transform_class: generalization
+  - path: visual.items:0
+    kind: claim_paraphrase
+    claim_id: evidence
+    transform_class: generalization
+  - path: visual.items:1
+    kind: claim_paraphrase
+    claim_id: evidence
+    transform_class: generalization
+  - path: visual.items:2
+    kind: claim_paraphrase
+    claim_id: evidence
+    transform_class: generalization
   transition: none
   reveal: none
   hidden: false
@@ -1221,6 +1241,14 @@ slides:
     kind: qualifier
     claim_id: nonclaims
   - path: element:code-link
+    kind: claim_paraphrase
+    claim_id: nonclaims
+    transform_class: generalization
+  - path: visual.items:0
+    kind: claim_paraphrase
+    claim_id: nonclaims
+    transform_class: generalization
+  - path: visual.items:1
     kind: claim_paraphrase
     claim_id: nonclaims
     transform_class: generalization

@@ -68,6 +68,9 @@ claims:
   - source_id: format-code
     section: _transform_sqlite
     locator: src/anonymization_trial/formats.py:274 (_transform_sqlite)
+  - source_id: runtime-metrics
+    section: identity_observation
+    locator: 'docs/pitch/oai-trial/qa/runtime-evidence.json: identity_observation'
   evidence_spans:
   - source_id: semantics
     text: '    unique = sorted(set(identities))'
@@ -75,6 +78,17 @@ claims:
   - source_id: format-code
     text: 'def _transform_sqlite(source: Path, destination: Path, policy: Policy) -> tuple[int, int]:'
     section: _transform_sqlite
+  - source_id: runtime-metrics
+    text: "{\n  \"demo\": \"success\",\n  \"runs\": [\n    {\n      \"bytes_per_second\": 1387402.56,\n      \"\
+      bytes_read\": 68310,\n      \"elapsed_seconds\": 0.049236,\n      \"files_processed\": 4,\n      \"logical_records\"\
+      : 100,\n      \"peak_memory_mb\": 26.33,\n      \"records_per_second\": 8164.78,\n      \"records_processed\"\
+      : 402,\n      \"verification_passed\": true\n    },\n    {\n      \"bytes_per_second\": 1326758.11,\n    \
+      \  \"bytes_read\": 509366,\n      \"elapsed_seconds\": 0.383918,\n      \"files_processed\": 4,\n      \"\
+      logical_records\": 1000,\n      \"peak_memory_mb\": 29.99,\n      \"records_per_second\": 10424.11,\n    \
+      \  \"records_processed\": 4002,\n      \"verification_passed\": true\n    }\n  ],\n  \"identity_observation\"\
+      : {\n    \"replacements\": \"{('name', 'p1'): 'Person-29ec756d7d'}\",\n    \"unique\": \"[('name', 'p1')]\"\
+      \n  },\n  \"identity_proof\": \"/mnt/storage12tb/oai-trial/pitch-final/identity-vscode.json\"\n}\n"
+    section: Docker measurements and observed identity locals
   notes: 'Project-agent source review, not human presentation approval. Runtime/source candidate 0795dc66deaa5991cd34959c6d8b81f80a8042a0.
     Evidence command: uv run pytest -q tests/test_matcher.py security/tests/test_pseudonym_domains.py'
   approval:
@@ -128,12 +142,25 @@ claims:
       "elapsed_seconds": 0.383918, "files_processed": 4, "logical_records": 1000, "peak_memory_mb": 29.99, "records_per_second":
       10424.11, "records_processed": 4002, "verification_passed": true}]}'
     section: Docker demo
+  - source_id: runtime-metrics
+    text: "{\n  \"demo\": \"success\",\n  \"runs\": [\n    {\n      \"bytes_per_second\": 1387402.56,\n      \"\
+      bytes_read\": 68310,\n      \"elapsed_seconds\": 0.049236,\n      \"files_processed\": 4,\n      \"logical_records\"\
+      : 100,\n      \"peak_memory_mb\": 26.33,\n      \"records_per_second\": 8164.78,\n      \"records_processed\"\
+      : 402,\n      \"verification_passed\": true\n    },\n    {\n      \"bytes_per_second\": 1326758.11,\n    \
+      \  \"bytes_read\": 509366,\n      \"elapsed_seconds\": 0.383918,\n      \"files_processed\": 4,\n      \"\
+      logical_records\": 1000,\n      \"peak_memory_mb\": 29.99,\n      \"records_per_second\": 10424.11,\n    \
+      \  \"records_processed\": 4002,\n      \"verification_passed\": true\n    }\n  ],\n  \"identity_observation\"\
+      : {\n    \"replacements\": \"{('name', 'p1'): 'Person-29ec756d7d'}\",\n    \"unique\": \"[('name', 'p1')]\"\
+      \n  },\n  \"identity_proof\": \"/mnt/storage12tb/oai-trial/pitch-final/identity-vscode.json\"\n}\n"
+    section: Docker measurements and observed identity locals
   notes: 'Project-agent source review, not human presentation approval. Runtime/source candidate 0795dc66deaa5991cd34959c6d8b81f80a8042a0.
     Evidence command: uv run pytest -q security/tests/test_sqlite_location.py security/tests/test_typed_scalar_verification.py'
   approval:
     approved_by: project-agent/source-review
     approved_at: '2026-09-04'
     source_snapshot_sha256: sha256:ae99a82b8e8183cffe52610cedb9f4ab6c3e7e4fde711b20c9d8b81f16c88209
+  formula: 1000 / 100 = 10; round(26.33,1) = 26.3; round(29.99,1) = 30.0; round(8164.78/1000,1) = 8.2; round(10424.11/1000,1)
+    = 10.4
 - id: production
   text: 'AWS is the worked reference: immutable corpus manifest → atomic active pointer.'
   kind: proof
@@ -156,6 +183,22 @@ claims:
   - source_id: cost-inputs
     text: '  "price_sources": {'
     section: AWS price sources
+  - source_id: production
+    text: "## SLA (stated assumptions, arithmetic shown)\nAssume avg file ~1 MiB, mixed formats, batch arrival,\
+      \ 200 concurrent 1-vCPU\nworkers at ~20 MB/s each → ~4 GB/s aggregate ideal.\n- **1 TB**: ideal transform\
+      \ ≈ 250 s (~4.2 min); with the verify re-read (~2x\n  IO), queueing, stragglers, and retries, target **verified-published\
+      \ ≤ 1\n  hour** — overhead-dominated, not throughput-dominated.\n- **1 PB**: ideal transform ≈ 250,000 s (~2.9\
+      \ days) at the same pool; target\n  **≤ 7 days**, or scale the pool (2,000 workers → ideal ≈ 7 h, target ≤\
+      \ 1 day).\n  Throughput scales linearly until S3 request rates / account quotas bind.\nFail-closed guarantee\
+      \ unchanged: nothing unverified is ever released.\n\n## Cost (reproducible)\nRun: `python scripts/estimate_aws_cost.py\
+      \ --inputs costs/aws-us-east-1-inputs.json`.\nWith the committed us-east-1 list-price inputs (price_date 2026-09-04):\n\
+      - **1 TB ≈ $86** (storage-dominant), **1 PB ≈ $85,734** (storage-dominant), including staging storage, verify\
+      \ rereads, promote requests, a 2% retry fraction, and explicit per-object SQS/EventBridge/KMS/CloudWatch line\
+      \ items. Transfer, tier, and quota assumptions are stated in the committed inputs file.\n- Sensitivity: halving\
+      \ throughput barely moves total (storage-bound); a 10×\n  smaller avg file size raises the request term sharply\
+      \ — see\n  `costs/example-estimates.json`.\n- Prices are **list prices, not yet confirmed against a dated\
+      \ screenshot** —\n  treat as illustrative until verified.\n\n"
+    section: SLA and Cost
   notes: 'Project-agent source review, not human presentation approval. Runtime/source candidate 0795dc66deaa5991cd34959c6d8b81f80a8042a0.
     Evidence command: python scripts/estimate_aws_cost.py --inputs costs/aws-us-east-1-inputs.json'
   approval:
