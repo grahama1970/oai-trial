@@ -70,7 +70,7 @@ no state is committed and no `apply` is run (deployment earns no extra credit).
 
 ## SLA, capacity, and cost
 
-1 TB ≈ $52, 1 PB ≈ $51,836 (us-east-1 list prices, price_date 2026-09-04,
+1 TB ≈ $83, 1 PB ≈ $83,201 (us-east-1 list prices, price_date 2026-09-04,
 storage-dominant). Reproduce: `python scripts/estimate_aws_cost.py --inputs
 costs/aws-us-east-1-inputs.json`. Prices are **list prices not yet confirmed
 against a dated screenshot** — illustrative until verified.

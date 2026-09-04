@@ -130,7 +130,7 @@ slides:
   body:
   - AWS — S3 intake/quarantine/release, SQS, Fargate workers, KMS-scoped HMAC, distributed verify.
   - Portable — the OCI container is the cloud-neutral boundary; AWS/GCP/Azure via a capability contract.
-  - Cost — about $52 at 1 TB, $51,836 at 1 PB (us-east-1 list prices, storage-dominant, unconfirmed).
+  - Cost — about $83 at 1 TB, $83,201 at 1 PB (us-east-1 list prices, storage-dominant, unconfirmed).
   source_refs: [{source_id: submission, section: "Portability (portable compute artifact, provider-specific orchestration)"}]
   claim_ids: [prod-aws, prod-cost]
   visual: {type: none, position: right, items: [], callouts: []}

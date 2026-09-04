@@ -23,24 +23,46 @@ _PB = 10**15
 def _one(total_bytes: float, cfg: dict) -> dict:
     gb = total_bytes / 1e9
     objects = total_bytes / cfg["avg_file_bytes"]
-    # Store intake + released copy for the retention window.
-    storage = gb * cfg["s3_standard_gb_month_usd"] * cfg["storage_months"] * 2
-    # One PUT (write release) + one GET (read intake) per object.
-    requests = objects * (cfg["s3_put_per_1k_usd"] + cfg["s3_get_per_1k_usd"]) / 1000
-    worker_hours = (total_bytes / cfg["throughput_bytes_per_s_per_worker"]) / 3600
+    retry_rate = cfg.get("retry_rate", 0.02)
+    # Storage: intake + staging + released copy for the retention window.
+    storage = gb * cfg["s3_standard_gb_month_usd"] * cfg["storage_months"] * 3
+    # Requests per object across the full flow:
+    #   GETs: 1 intake read (transform) + 2 verify rereads (staged + source)
+    #   PUTs: 1 staging write + 1 release promote (manifest amortized)
+    # plus a retry fraction re-running transform+verify requests.
+    puts_per_obj = 2.0 * (1.0 + retry_rate)
+    gets_per_obj = 3.0 * (1.0 + retry_rate)
+    requests = objects * (
+        puts_per_obj * cfg["s3_put_per_1k_usd"] + gets_per_obj * cfg["s3_get_per_1k_usd"]
+    ) / 1000
+    # Compute: transform pass + verify reread pass (~2x IO-bound time) + retries.
+    compute_seconds = (total_bytes / cfg["throughput_bytes_per_s_per_worker"]) * 2.0
+    worker_hours = compute_seconds * (1.0 + retry_rate) / 3600
     compute = worker_hours * (
         cfg["worker_vcpu"] * cfg["fargate_vcpu_hour_usd"]
         + cfg["worker_gb"] * cfg["fargate_gb_hour_usd"]
     )
-    total = storage + requests + compute
+    # Orchestration floor: SQS + EventBridge + KMS + CloudWatch per object.
+    orchestration = objects * cfg.get("orchestration_per_object_usd", 0.000002)
+    total = storage + requests + compute + orchestration
+    workers = cfg.get("workers", 200)
+    wall_hours = compute_seconds * (1.0 + retry_rate) / max(workers, 1) / 3600
     return {
         "objects": round(objects),
         "storage_usd": round(storage, 2),
         "requests_usd": round(requests, 2),
         "compute_usd": round(compute, 2),
+        "orchestration_usd": round(orchestration, 2),
         "total_usd": round(total, 2),
+        "wall_clock_hours_at_workers": round(wall_hours, 2),
+        "workers": workers,
         "dominant_term": max(
-            (("storage", storage), ("requests", requests), ("compute", compute)),
+            (
+                ("storage", storage),
+                ("requests", requests),
+                ("compute", compute),
+                ("orchestration", orchestration),
+            ),
             key=lambda kv: kv[1],
         )[0],
     }

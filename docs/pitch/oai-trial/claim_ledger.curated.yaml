@@ -90,7 +90,7 @@ claims:
   status: approved
   evidence_spans: []
 - id: prod-cost
-  text: Reproducible cost model — about $52 at 1 TB and $51,836 at 1 PB (us-east-1 list prices, price date 2026-09-04, storage-dominant; list prices not yet confirmed against a dated source).
+  text: Reproducible cost model — about $83 at 1 TB and $83,201 at 1 PB (us-east-1 list prices, price date 2026-09-04, storage-dominant; list prices not yet confirmed against a dated source).
   kind: proof
   visibility: public
   source_refs: [{source_id: submission, section: "SLA, capacity, and cost", locator: "line 1"}]

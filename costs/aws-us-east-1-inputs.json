@@ -13,5 +13,7 @@
   "worker_gb": 2,
   "throughput_bytes_per_s_per_worker": 20000000,
   "storage_months": 1,
-  "workers": 200
+  "workers": 200,
+  "retry_rate": 0.02,
+  "orchestration_per_object_usd": 2e-06
 }
