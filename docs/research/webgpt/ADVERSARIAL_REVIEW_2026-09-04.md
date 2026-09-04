@@ -1,8 +1,8 @@
 # WebGPT adversarial peer review — 2026-09-04
 
-Reviewer persona: senior OpenAI privacy-engineering reviewer (adversarial). Run: `/mnt/storage12tb/skills/ask/outputs/oai-trial-review/ask-tau-you-are-a-senior-openai-privacy--ce0a239570c5`. Handler receipt PASS; verdict FAIL (expected for an adversarial pass). Bundle attached: README+SUBMISSION+ARCHITECTURE, PRIVACY/SEMANTICS/ACCEPTANCE, security lineage, all src.
+Reviewer: senior OpenAI privacy-engineering reviewer (adversarial). Run: `/mnt/storage12tb/skills/ask/outputs/oai-trial-review/ask-tau-you-are-a-senior-openai-privacy--ce0a239570c5`. Handler receipt PASS; verdict FAIL. Bundle: docs + security lineage + all src (4-file zip).
 
-> Note: the review's TOP_3 item #3 ('bundle omits tests/Dockerfile/.git/receipts') is a BUNDLE-ATTACHMENT artifact — the zip carried only docs+src. The repo itself contains tests, Dockerfile, .git, and all receipts. The other 15 issues are substantive code-level findings.
+> TOP_3 item #3 and ISSUES #19/#20/#21 are BUNDLE-ATTACHMENT artifacts — the zip carried only docs+src; the repo has tests, Dockerfile, .git, cost files, and all receipts. The other findings are substantive. Triage + status: security/ADVERSARIAL_MATRIX.md.
 
 ---
 

@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import csv
 import json
+import math
 import sqlite3
 from pathlib import Path
 from typing import Any
@@ -116,6 +117,16 @@ def _reject_constant(_: str) -> Any:
     raise AnonError(AnonErrorCode.MALFORMED_JSON, "non-finite JSON number is not allowed")
 
 
+def _finite_float(token: str) -> float:
+    # parse_constant only fires for the Infinity/NaN *literals*; an overflowing
+    # number token like 1e400 reaches parse_float and becomes float('inf'),
+    # which json.dumps would then emit as invalid `Infinity`. Reject it here.
+    value = float(token)
+    if not math.isfinite(value):
+        raise AnonError(AnonErrorCode.MALFORMED_JSON, "non-finite JSON number is not allowed")
+    return value
+
+
 def _replace_json(value: Any, policy: Policy, depth: int) -> tuple[Any, int]:
     if depth > _MAX_DEPTH:
         raise AnonError(
@@ -165,12 +176,15 @@ def _transform_json(source: Path, destination: Path, policy: Policy) -> tuple[in
         raise AnonError(AnonErrorCode.MALFORMED_ENCODING, "JSON file is not valid UTF-8") from error
     try:
         value = json.loads(
-            text, object_pairs_hook=_no_duplicate_keys, parse_constant=_reject_constant
+            text,
+            object_pairs_hook=_no_duplicate_keys,
+            parse_constant=_reject_constant,
+            parse_float=_finite_float,
         )
     except json.JSONDecodeError as error:
         raise AnonError(AnonErrorCode.MALFORMED_JSON, "input is not valid JSON") from error
     transformed, count = _replace_json(value, policy, 0)
-    body_out = json.dumps(transformed, indent=2, ensure_ascii=False) + "\n"
+    body_out = json.dumps(transformed, indent=2, ensure_ascii=False, allow_nan=False) + "\n"
     out = ("\ufeff" if had_bom else "") + body_out
     destination.write_bytes(out.encode("utf-8"))
     records = len(value) if isinstance(value, list) else 1

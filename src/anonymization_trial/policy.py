@@ -112,8 +112,11 @@ def _check_overlap(rules: tuple[Rule, ...], protected: tuple[str, ...]) -> None:
 def compile_policy(payload: object) -> Policy:
     """Validate a policy payload strictly and compile its matcher."""
     _require(isinstance(payload, dict), AnonErrorCode.INVALID_POLICY, "policy is not an object")
+    version = payload.get("version")
+    # `True == 1` in Python, so a bool must be rejected explicitly before the
+    # value comparison, or `"version": true` would pass as version 1.
     _require(
-        payload.get("version") == 1,
+        isinstance(version, int) and not isinstance(version, bool) and version == 1,
         AnonErrorCode.INVALID_POLICY,
         "unsupported policy version",
     )
@@ -173,16 +176,26 @@ def compile_policy(payload: object) -> Policy:
         )
         protected.append(value)
 
-    # One source literal must not map to conflicting identities/types.
-    literal_identity: dict[str, CanonicalIdentity] = {}
+    # One source text must not map to conflicting identities. Conflict is judged
+    # over each rule's MATCH DOMAIN, not its exact literal: two case-insensitive
+    # rules 'Alice' and 'ALICE' both match the input 'alice', so keying only the
+    # exact spelling would let them claim the same text for different subjects.
+    # Group by case-folded value; within a group, two rules with different
+    # identities conflict unless BOTH are case-sensitive with differing exact
+    # spellings (their match sets are then disjoint).
+    domain: dict[str, list[Rule]] = {}
     for rule in rules:
-        prior = literal_identity.get(rule.value)
-        if prior is not None and prior != rule.identity:
-            raise AnonError(
-                AnonErrorCode.IDENTITY_CONFLICT,
-                f"literal for rule {rule.rule_id!r} maps to conflicting identities",
-            )
-        literal_identity[rule.value] = rule.identity
+        key = ascii_lower(rule.value)
+        for prior in domain.get(key, ()):
+            if prior.identity == rule.identity:
+                continue
+            both_cs = rule.case_sensitive and prior.case_sensitive
+            if not both_cs or prior.value == rule.value:
+                raise AnonError(
+                    AnonErrorCode.IDENTITY_CONFLICT,
+                    f"rule {rule.rule_id!r} shares a match domain with a conflicting identity",
+                )
+        domain.setdefault(key, []).append(rule)
 
     rules_tuple = tuple(rules)
     protected_tuple = tuple(protected)
@@ -204,8 +217,20 @@ def compile_policy(payload: object) -> Policy:
     )
 
 
+def _no_duplicate_keys(pairs: list[tuple[str, object]]) -> dict[str, object]:
+    seen: set[str] = set()
+    for key, _ in pairs:
+        _require(key not in seen, AnonErrorCode.INVALID_POLICY, "duplicate key in policy JSON")
+        seen.add(key)
+    return dict(pairs)
+
+
 def load_policy(path: Path) -> Policy:
-    return compile_policy(json.loads(path.read_text(encoding="utf-8")))
+    # Reject duplicate keys instead of silently last-wins, which could drop a
+    # sensitive rule and pass its value through unredacted.
+    return compile_policy(
+        json.loads(path.read_text(encoding="utf-8"), object_pairs_hook=_no_duplicate_keys)
+    )
 
 
 def replace_text(text: str, policy: Policy) -> tuple[str, int]:
