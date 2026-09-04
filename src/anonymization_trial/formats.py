@@ -124,7 +124,9 @@ def _replace_json(value: Any, policy: Policy, depth: int) -> tuple[Any, int]:
         )
     if isinstance(value, str):
         if len(value) > _MAX_STRING:
-            raise AnonError(AnonErrorCode.STRUCTURE_TOO_COMPLEX, "JSON string exceeds the size bound")
+            raise AnonError(
+                AnonErrorCode.STRUCTURE_TOO_COMPLEX, "JSON string exceeds the size bound"
+            )
         return replace_text(value, policy)
     if isinstance(value, list):
         output = []
