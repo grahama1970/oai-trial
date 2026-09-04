@@ -1,0 +1,70 @@
+schema: pitchdeck.source_manifest.v1
+project_name: oai-trial cross-format anonymization
+deck_title: Verified Cross-Format Anonymization — Technical Briefing
+audience: OpenAI privacy-engineering trial reviewers (40-minute technical walkthrough)
+# All sources are public: this trial repo is self-contained and public-safe.
+sources:
+  - id: readme
+    title: Repository README (start-here map)
+    path: ${PROJECT_ROOT}/README.md
+    visibility: public
+    role: primary
+    required: true
+  - id: architecture
+    title: Architecture (design -> failure -> proof)
+    path: ${PROJECT_ROOT}/docs/ARCHITECTURE.md
+    visibility: public
+    role: evidence
+    required: true
+  - id: submission
+    title: Submission write-up (decisions, benchmark, cost, non-claims)
+    path: ${PROJECT_ROOT}/SUBMISSION.md
+    visibility: public
+    role: evidence
+    required: true
+  - id: privacy-contract
+    title: Privacy contract (proven vs not established)
+    path: ${PROJECT_ROOT}/docs/PRIVACY_CONTRACT.md
+    visibility: public
+    role: evidence
+    required: true
+  - id: acceptance-matrix
+    title: Acceptance matrix (brief -> owner -> test -> evidence)
+    path: ${PROJECT_ROOT}/docs/ACCEPTANCE_MATRIX.md
+    visibility: public
+    role: evidence
+    required: true
+  - id: security
+    title: Security review (white/gray/black + adaptive lanes)
+    path: ${PROJECT_ROOT}/docs/security/SECURITY.md
+    visibility: public
+    role: evidence
+    required: false
+  - id: arch-svg
+    title: Fail-closed pipeline flow diagram
+    path: ${PROJECT_ROOT}/docs/production-architecture.svg
+    visibility: public
+    role: asset
+    required: true
+policy:
+  public_deck_source_ids:
+    - readme
+    - architecture
+    - submission
+    - privacy-contract
+    - acceptance-matrix
+    - security
+    - arch-svg
+  forbidden_unqualified_claims:
+    - production-ready
+    - fully validated
+    - deployed in production
+    - provably anonymous
+    - anonymized
+  mandatory_non_claims:
+    - Proves declared-literal replacement + structural preservation, not re-identification resistance.
+    - Static/security scans are supporting evidence, not proof of vulnerability-free software.
+    - Candidate slides require human review before external use.
+seam_validation:
+  kind: source_manifest
+  status: PASS
