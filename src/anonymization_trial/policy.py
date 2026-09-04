@@ -18,7 +18,7 @@ import json
 from dataclasses import dataclass
 from pathlib import Path
 
-from .errors import AnonError, AnonErrorCode
+from .errors import AnonError, AnonErrorCode, safe_ref
 from .matcher import Matcher, ascii_lower, build_matcher
 from .pseudonyms import CanonicalIdentity, build_replacements
 
@@ -122,7 +122,7 @@ def _check_overlap(rules: tuple[Rule, ...], protected: tuple[str, ...]) -> None:
             ):
                 raise AnonError(
                     AnonErrorCode.PROTECTED_SENSITIVE_OVERLAP,
-                    f"sensitive rule {rule.rule_id!r} overlaps a protected value",
+                    f"sensitive rule {safe_ref(rule.rule_id)} overlaps a protected value",
                 )
 
 
@@ -175,14 +175,14 @@ def compile_policy(payload: object) -> Policy:
         _require(
             rule.rule_id not in seen_ids,
             AnonErrorCode.DUPLICATE_RULE_ID,
-            f"duplicate rule_id {rule.rule_id!r}",
+            f"duplicate rule_id {safe_ref(rule.rule_id)}",
         )
         seen_ids.add(rule.rule_id)
         if not rule.case_sensitive:
             _require(
                 rule.value.isascii(),
                 AnonErrorCode.NON_ASCII_INSENSITIVE,
-                f"rule {rule.rule_id!r} is case-insensitive but not ASCII",
+                f"rule {safe_ref(rule.rule_id)} is case-insensitive but not ASCII",
             )
         rules.append(rule)
 
@@ -229,7 +229,7 @@ def compile_policy(payload: object) -> Policy:
             if not both_cs or prior.value == rule.value:
                 raise AnonError(
                     AnonErrorCode.IDENTITY_CONFLICT,
-                    f"rule {rule.rule_id!r} shares a match domain with a conflicting identity",
+                    f"rule {safe_ref(rule.rule_id)} shares a match domain with a conflict",
                 )
         domain.setdefault(key, []).append(rule)
 

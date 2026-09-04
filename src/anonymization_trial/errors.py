@@ -8,7 +8,19 @@ convert it to a non-zero exit with no ready release.
 """
 from __future__ import annotations
 
+import hashlib
 from enum import StrEnum
+
+
+def safe_ref(value: str) -> str:
+    """An opaque, stable reference to an attacker-controlled identifier.
+
+    Policy fields such as ``rule_id`` and ``data_type`` are attacker-controlled
+    and could carry PII (an email in a rule_id). Error text must never echo them
+    raw, so it references them by a short non-reversible digest instead, which a
+    developer can still correlate against the policy without leaking the value.
+    """
+    return "ref:" + hashlib.sha256(value.encode("utf-8")).hexdigest()[:12]
 
 
 class AnonErrorCode(StrEnum):

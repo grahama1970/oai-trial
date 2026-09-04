@@ -23,13 +23,19 @@ from __future__ import annotations
 
 import hashlib
 
-from .errors import AnonError, AnonErrorCode
+from .errors import AnonError, AnonErrorCode, safe_ref
 
 CanonicalIdentity = tuple[str, str]  # (data_type, identity)
 
 ALGORITHM_VERSION = "pseudonym-v1"
 SCOPE_ID = "trial-v1"
 KEY_MODE = "public-deterministic-trial-namespace"
+
+# Bounded per-type replacement domains. build_replacements rejects a policy that
+# names more distinct identities of a type than its domain can injectively hold,
+# BEFORE any collision search, so an over-capacity policy fails fast instead of
+# burning a large salted-hash loop (review ticket pseudonym-domain-preflight).
+_DOMAIN_CAPACITY = {"phone": 10_000, "ip_address": 253}
 
 
 def _digest(policy_version: int, data_type: str, identity: str, salt: int) -> str:
@@ -62,20 +68,36 @@ def build_replacements(
     order. On a collision within a bounded domain, the salt is incremented
     deterministically until the replacement is unique for that data type.
     """
+    unique = sorted(set(identities))
+    # Cardinality preflight: reject over-capacity bounded types up front.
+    counts: dict[str, int] = {}
+    for data_type, _identity in unique:
+        counts[data_type] = counts.get(data_type, 0) + 1
+    for data_type, capacity in _DOMAIN_CAPACITY.items():
+        if counts.get(data_type, 0) > capacity:
+            raise AnonError(
+                AnonErrorCode.NAMESPACE_EXHAUSTED,
+                f"data_type={safe_ref(data_type)} has {counts[data_type]} identities but its "
+                f"bounded domain holds at most {capacity}",
+            )
+
     replacements: dict[CanonicalIdentity, str] = {}
     used_by_type: dict[str, set[str]] = {}
-    for data_type, identity in sorted(set(identities)):
+    for data_type, identity in unique:
         seen = used_by_type.setdefault(data_type, set())
+        # Bound the collision search to the domain capacity so it can never spin
+        # far beyond the number of distinct values the domain can hold.
+        attempt_cap = _DOMAIN_CAPACITY.get(data_type, 100_000)
         salt = 0
         while True:
             candidate = _render(data_type, _digest(policy_version, data_type, identity, salt))
             if candidate not in seen:
                 break
             salt += 1
-            if salt > 100_000:
+            if salt > attempt_cap:
                 raise AnonError(
                     AnonErrorCode.NAMESPACE_EXHAUSTED,
-                    f"cannot derive a distinct replacement for data_type={data_type!r}",
+                    f"cannot derive a distinct replacement for data_type={safe_ref(data_type)}",
                 )
         seen.add(candidate)
         replacements[(data_type, identity)] = candidate
