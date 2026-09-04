@@ -5,12 +5,41 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "cloud-data-anonymization-trial"
 version = "0.1.0"
-description = "Starter implementation for a cloud data anonymization work trial"
+description = "Cloud data anonymization pipeline (CSV/JSON/TXT/SQLite) with deterministic pseudonymization and fail-closed release"
+readme = "README.md"
 requires-python = ">=3.12"
+# Runtime is intentionally stdlib-only so the container stays small, offline,
+# self-contained, and deterministic. Every import in src/ resolves from the
+# standard library, so [project.dependencies] is complete when empty.
 dependencies = []
+
+[project.optional-dependencies]
+# Dev/CI only — never shipped in the runtime image.
+dev = [
+  "ruff>=0.6",
+  "pytest>=8.0",
+]
 
 [project.scripts]
 anonymization-trial = "anonymization_trial.__main__:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+# correctness + security + pyflakes/pycodestyle/bugbear/isort, matching
+# best-practices-python house rules.
+select = ["E", "F", "I", "B", "UP", "S"]
+# assert is fine in tests; long DB/path literals in the starter fixture and
+# tests are readability-neutral. Hardened runtime modules still enforce E501.
+per-file-ignores = { "tests/*" = ["S101", "E501"], "src/anonymization_trial/fixture.py" = ["E501"] }
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+# src layout: make the package importable under `uv run pytest` without install.
+pythonpath = ["src"]

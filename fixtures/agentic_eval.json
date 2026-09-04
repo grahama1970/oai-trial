@@ -1,0 +1,81 @@
+{
+  "version": 2,
+  "skill": "oai-trial-anonymization",
+  "trials": 1,
+  "proof_scope": "The anonymization pipeline replaces policy values across CSV/JSON/TXT/SQLite, verifies the output corpus, writes report.json, and fails closed on unsupported input.",
+  "claims": {
+    "proves": "demo runs all four formats and exits 0; a mounted run produces a verified report.json; unsupported input exits non-zero.",
+    "does_not_prove": "terabyte/petabyte scale, the production cloud design, or overlap/protected-value precedence beyond current starter behavior."
+  },
+  "capability_claims": [
+    {
+      "id": "anon.demo_all_formats",
+      "description": "The bundled demo processes all four formats at two sizes and verifies output.",
+      "criticality": "critical",
+      "evidence_required": {"deterministic": true}
+    },
+    {
+      "id": "anon.run_produces_verified_report",
+      "description": "A run over a fixture corpus writes report.json with verification_passed true.",
+      "criticality": "critical",
+      "evidence_required": {"deterministic": true}
+    },
+    {
+      "id": "anon.fails_closed",
+      "description": "An unsupported input type makes the run exit non-zero.",
+      "criticality": "critical",
+      "evidence_required": {"deterministic": true}
+    }
+  ],
+  "seams": [
+    {"seam_id": "anon.demo", "seam_type": "filesystem/process", "criticality": "critical", "claim_id": "anon.demo_all_formats", "required_evidence": ["deterministic"]},
+    {"seam_id": "anon.run", "seam_type": "filesystem/process", "criticality": "critical", "claim_id": "anon.run_produces_verified_report", "required_evidence": ["deterministic"]},
+    {"seam_id": "anon.failclosed", "seam_type": "filesystem/process", "criticality": "critical", "claim_id": "anon.fails_closed", "required_evidence": ["deterministic"]}
+  ],
+  "cases": [
+    {
+      "name": "unittest-suite",
+      "type": "positive",
+      "evidence_class": "deterministic",
+      "real_world": true,
+      "supports_claims": ["anon.run_produces_verified_report"],
+      "seams": ["anon.run"],
+      "command": ["bash", "-c", ".venv/bin/python -m unittest discover -s tests"],
+      "expected": {"exit_code": 0},
+      "timeout_seconds": 120
+    },
+    {
+      "name": "demo-all-formats",
+      "type": "positive",
+      "evidence_class": "deterministic",
+      "real_world": true,
+      "supports_claims": ["anon.demo_all_formats"],
+      "seams": ["anon.demo"],
+      "command": ["bash", "-c", ".venv/bin/anonymization-trial demo"],
+      "expected": {"exit_code": 0, "stdout_contains": ["\"demo\": \"success\""]},
+      "timeout_seconds": 120
+    },
+    {
+      "name": "run-produces-verified-report",
+      "type": "positive",
+      "evidence_class": "deterministic",
+      "real_world": true,
+      "supports_claims": ["anon.run_produces_verified_report"],
+      "seams": ["anon.run"],
+      "command": ["bash", "-c", "w=$(mktemp -d); .venv/bin/python fixtures/generate_fixture.py \"$w/input\" --records 200 && .venv/bin/anonymization-trial run --input \"$w/input\" --output \"$w/output\" && python3 -c \"import json,sys; r=json.load(open('$w/output/report.json')); print('VERIFIED' if r['verification_passed'] else 'FAILED')\""],
+      "expected": {"exit_code": 0, "stdout_contains": ["VERIFIED"]},
+      "timeout_seconds": 180
+    },
+    {
+      "name": "fails-closed-on-unsupported-input",
+      "type": "negative",
+      "evidence_class": "deterministic",
+      "real_world": true,
+      "supports_claims": ["anon.fails_closed"],
+      "seams": ["anon.failclosed"],
+      "command": ["bash", "-c", "w=$(mktemp -d); mkdir -p \"$w/input/corpus\"; echo '{}' > \"$w/input/policy.json\"; echo x > \"$w/input/corpus/bad.parquet\"; .venv/bin/anonymization-trial run --input \"$w/input\" --output \"$w/output\"; test $? -ne 0 && echo FAILCLOSED_OK"],
+      "expected": {"exit_code": 0, "stdout_contains": ["FAILCLOSED_OK"]},
+      "timeout_seconds": 120
+    }
+  ]
+}

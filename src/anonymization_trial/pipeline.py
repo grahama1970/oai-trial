@@ -1,3 +1,12 @@
+"""Pipeline orchestration: load policy, transform the corpus, verify, report.
+
+Inputs: an input bundle root containing ``policy.json`` and ``corpus/``, and an
+output root.
+Outputs: an anonymized ``corpus/`` mirroring input paths plus a sanitized
+``report.json``; returns a ``RunReport``.
+Failure modes: raises ``PipelineError`` on a missing corpus, an unsupported input
+type, or verification finding a surviving sensitive literal in the output.
+"""
 from __future__ import annotations
 
 import json

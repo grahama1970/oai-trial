@@ -1,3 +1,10 @@
+"""Synthetic corpus generator for demos and tests.
+
+Inputs: a target directory and a logical record count.
+Outputs: a ``policy.json`` plus a ``corpus/`` containing CSV, JSON, UTF-8 text,
+and SQLite files seeded with the same synthetic identities across formats.
+Failure modes: raises on filesystem errors; all data is synthetic (no real PII).
+"""
 from __future__ import annotations
 
 import csv
@@ -5,7 +12,6 @@ import json
 import shutil
 import sqlite3
 from pathlib import Path
-
 
 IDENTITIES = (
     {"subject_id": "person-001", "name": "Mara Ellison", "email": "mara.ellison@northwind.test", "phone": "+1-202-555-0147", "ip_address": "203.0.113.42"},

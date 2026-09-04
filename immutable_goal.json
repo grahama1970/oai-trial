@@ -1,0 +1,49 @@
+{
+  "schema": "oai_trial.immutable_goal.v1",
+  "classification": "internal",
+  "goal_id": "oai-trial-anonymization-fail-closed-v1",
+  "goal_hash": "sha256:37f5e92b43f392fe75cbff7435912dcc0e64bf9e7525f5778c78028e0e89d9cb",
+  "outcome": "Harden the anonymization starter into a fail-closed, scale-aware pipeline whose unseen mounted run produces a verified releasable corpus meeting every requirement in TRIAL_BRIEF.md",
+  "primary_proof": {
+    "command": "docker build -t anonymization-trial . && docker run --rm anonymization-trial && docker run --rm -v \"$INPUT\":/trial/input:ro -v \"$OUTPUT\":/trial/output anonymization-trial run",
+    "expected": "build succeeds; bare run prints demo success across all 4 formats at >=2 sizes (largest >=10x) and exits 0 only when verification passes; mounted run writes only /trial/output/report.json and /trial/output/corpus mirroring input paths"
+  },
+  "secondary_proofs": [
+    ".venv/bin/python -m unittest discover -s tests -v exits 0",
+    ".venv/bin/anonymization-trial demo prints {\"demo\": \"success\"} with per-run throughput and peak memory",
+    "a corpus with a value that survives replacement makes the run exit non-zero and leave no release-looking /trial/output/corpus"
+  ],
+  "completion_criteria": [
+    "Every policy-identified value is replaced across .csv, .json, .txt, and .sqlite, with same-format valid output.",
+    "Replacements are stable across files and repeated runs; one identity forms one pseudonymous profile via subject_id; distinct identities never share a type-specific replacement.",
+    "protected_values are preserved even when they overlap, contain, or intersect a sensitive literal, under a documented deterministic precedence (longest-match-first, no replacement cascades).",
+    "CSV headers, JSON structure, and SQLite tables/relationships/row-counts/integrity are preserved; a sensitive literal in a CSV header is transformed or rejected, never silently retained.",
+    "The whole output corpus is verified before release; on any failure the process exits non-zero and leaves no partial corpus that looks releasable (atomic staging + publish).",
+    "Raw inputs, replacement mappings, and quarantined content never appear in /trial/output or logs.",
+    "Malformed or unsupported encodings are rejected safely with a sanitized message instead of a partial release.",
+    "docker build and both required docker run commands work on a clean host with only the Dockerfile's declared dependencies."
+  ],
+  "allowed_scope": [
+    "src/anonymization_trial/**",
+    "tests/**",
+    "fixtures/**",
+    "Dockerfile",
+    ".dockerignore",
+    "docker-compose.yml",
+    "scripts/**",
+    "SUBMISSION.md",
+    "infra/terraform/** (plan-only production design handoff)"
+  ],
+  "forbidden_drift": [
+    "Do not change the two required docker run commands or the /trial/input and /trial/output contract.",
+    "Do not remove the baseline git history.",
+    "Do not weaken verification, swallow errors, or leave a partial corpus to make a run look successful.",
+    "Do not add dashboards, extra services, or cloud deploys before the primary proof passes; infra/terraform stays plan-only.",
+    "Do not commit real personal data, credentials, generated large datasets, or replacement-mapping files."
+  ],
+  "retry_stop_rule": {
+    "attempts_per_blocker": 2,
+    "stop_condition": "If the same blocker survives two focused attempts, stop and report the exact failed proof command, error/output, changed files, artifact paths, current hypothesis, and one recommended next action."
+  },
+  "final_report_rule": "This goal may be claimed met only after the primary proof passes on a clean build with a fixture-generated corpus, with the run artifact and the fail-closed evidence cited."
+}

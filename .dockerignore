@@ -1,0 +1,14 @@
+.git
+.venv
+__pycache__
+*.py[cod]
+*.egg-info
+build
+dist
+.pytest_cache
+.coverage
+demo-artifacts
+.trial
+infra
+agent-skills
+.env

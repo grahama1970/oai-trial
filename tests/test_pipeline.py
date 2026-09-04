@@ -10,7 +10,6 @@ from pathlib import Path
 
 from anonymization_trial.pipeline import run_pipeline
 
-
 ROOT = Path(__file__).resolve().parents[1]
 
 

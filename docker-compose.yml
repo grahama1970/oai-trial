@@ -1,0 +1,17 @@
+# Convenience wrappers around the required docker commands.
+#   docker compose run --rm demo          # self-contained demonstration
+#   TRIAL_INPUT=/abs/in TRIAL_OUTPUT=/abs/out docker compose run --rm run
+# The image and the two commands stay identical to the trial contract.
+services:
+  demo:
+    build: .
+    image: anonymization-trial
+    command: demo
+
+  run:
+    build: .
+    image: anonymization-trial
+    command: run
+    volumes:
+      - ${TRIAL_INPUT:-./.trial/input}:/trial/input:ro
+      - ${TRIAL_OUTPUT:-./.trial/output}:/trial/output

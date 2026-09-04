@@ -1,3 +1,12 @@
+"""Per-format value transformers for CSV, JSON, UTF-8 text, and SQLite.
+
+Inputs: a source file, a destination path, and a loaded ``Policy``.
+Outputs: the transformed file written to destination in the same logical format,
+plus ``(records, replacements)`` counts; ``iter_searchable_text`` yields output
+strings for verification.
+Failure modes: raises ``ValueError`` on an unsupported suffix or a SQLite
+integrity-check failure; decoding is strict UTF-8 and raises on malformed input.
+"""
 from __future__ import annotations
 
 import csv
@@ -8,7 +17,6 @@ from pathlib import Path
 from typing import Any
 
 from .policy import Policy, replace_text
-
 
 SUPPORTED_SUFFIXES = {".csv", ".json", ".txt", ".sqlite"}
 
@@ -95,7 +103,7 @@ def _transform_sqlite(source: Path, destination: Path, policy: Policy) -> tuple[
         ]
         for table in tables:
             columns = [row[1] for row in connection.execute(f"PRAGMA table_info({_quote(table)})")]
-            rows = list(connection.execute(f"SELECT rowid, * FROM {_quote(table)}"))
+            rows = list(connection.execute(f"SELECT rowid, * FROM {_quote(table)}"))  # noqa: S608 (identifier quoted via _quote; no untrusted interpolation)
             records += len(rows)
             for row in rows:
                 rowid, values = row[0], row[1:]
@@ -109,7 +117,7 @@ def _transform_sqlite(source: Path, destination: Path, policy: Policy) -> tuple[
                 if updates:
                     assignments = ", ".join(f"{_quote(name)} = ?" for name in updates)
                     connection.execute(
-                        f"UPDATE {_quote(table)} SET {assignments} WHERE rowid = ?",
+                        f"UPDATE {_quote(table)} SET {assignments} WHERE rowid = ?",  # noqa: S608 (identifiers quoted; values bound as parameters)
                         [*updates.values(), rowid],
                     )
         connection.commit()
@@ -132,7 +140,7 @@ def iter_searchable_text(path: Path):
                 )
             ]
             for table in tables:
-                for row in connection.execute(f"SELECT * FROM {_quote(table)}"):
+                for row in connection.execute(f"SELECT * FROM {_quote(table)}"):  # noqa: S608 (identifier quoted via _quote)
                     for value in row:
                         if isinstance(value, str):
                             yield value

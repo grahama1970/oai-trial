@@ -1,3 +1,11 @@
+"""CLI entry point exposing the two required commands.
+
+``anonymization-trial demo`` runs a self-contained demonstration across all four
+formats at two workload sizes and reports throughput and peak memory.
+``anonymization-trial run --input --output`` anonymizes a mounted bundle.
+Exit code is 0 only when the run/demo verification passes; any handled error
+prints a sanitized message to stderr and returns non-zero (fail closed).
+"""
 from __future__ import annotations
 
 import argparse

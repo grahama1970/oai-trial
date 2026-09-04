@@ -1,3 +1,14 @@
+"""Policy loading and deterministic replacement generation.
+
+Inputs: a schema-version-1 ``policy.json`` (sensitive values with type, optional
+subject_id, literal match, case sensitivity; plus protected_values).
+Outputs: a frozen ``Policy`` of ``Rule`` records, and stable per-rule
+replacement strings derived by hashing ``identity:data_type`` (identity =
+subject_id or rule_id) so one identity converges and distinct identities do not
+share a type-specific replacement.
+Failure modes: raises ``ValueError`` on unsupported policy version, duplicate or
+empty rule ids, or a non-literal ``match`` value (starter is literal-only).
+"""
 from __future__ import annotations
 
 import hashlib
