@@ -93,7 +93,7 @@ def _verify_sqlite_locations(source: Path, staged: Path, policy: Policy, name: s
                     )
                 for s_val, o_val in zip(s_row[1:], o_row[1:], strict=True):
                     expected = replace_text(s_val, policy)[0] if isinstance(s_val, str) else s_val
-                    if o_val != expected:
+                    if not _typed_equal(o_val, expected):
                         raise AnonError(
                             AnonErrorCode.VERIFICATION_FAILED,
                             f"sqlite cell location mismatch in {safe_ref(name)}",
@@ -101,6 +101,23 @@ def _verify_sqlite_locations(source: Path, staged: Path, policy: Policy, name: s
     finally:
         src.close()
         out.close()
+
+
+def _typed_equal(a: Any, b: Any) -> bool:
+    """Equality that also requires identical scalar TYPES (round6 #1).
+
+    Python's == treats True == 1 and 1 == 1.0 as equal, so a JSON true mutated
+    to 1, or a SQLite INTEGER mutated to REAL, would pass a plain != check.
+    """
+    if type(a) is not type(b):
+        return False
+    if isinstance(a, dict):
+        return a.keys() == b.keys() and all(_typed_equal(a[k], b[k]) for k in a)
+    if isinstance(a, list):
+        return len(a) == len(b) and all(
+            _typed_equal(x, y) for x, y in zip(a, b, strict=True)
+        )
+    return a == b
 
 
 def _csv_rows(path: Path) -> list[list[str]]:
@@ -115,7 +132,7 @@ def _verify_locations(source_corpus: Path, staged_corpus: Path, output_files: se
         if rel.suffix == ".json":
             src = _load_json(source_corpus / rel)
             out = _load_json(staged_corpus / rel)
-            if out != _expected_json(src, policy):
+            if not _typed_equal(out, _expected_json(src, policy)):
                 raise AnonError(
                     AnonErrorCode.VERIFICATION_FAILED,
                         f"json location mismatch in {safe_ref(rel.name)}"

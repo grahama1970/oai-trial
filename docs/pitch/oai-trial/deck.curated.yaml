@@ -107,8 +107,8 @@ slides:
   title: Evidence — and the extras
   message: Independent, adversarial, reproducible.
   body:
-  - Tests — 62 deterministic covering unit, property, fail-closed, verifier-mutation, gray-box and black-box CLI attacks.
-  - Extra — containerized SAST via $hack (Semgrep + Bandit) found 0 critical and 0 high, plus dependency SCA.
+  - Tests — a deterministic pytest gate covering unit, property, fail-closed, verifier-mutation, gray-box and black-box CLI attacks.
+  - Extra — Bandit SAST via $hack found 0 critical and 0 high (scanner receipts are supporting evidence only).
   - Method — three-lane white / gray / black-box, every finding retained as an in-repo regression.
   source_refs: [{source_id: security, section: "Security review"}]
   claim_ids: [ev-tests, ev-hack]
@@ -130,7 +130,7 @@ slides:
   body:
   - AWS — S3 intake/quarantine/release, SQS, Fargate workers, KMS-scoped HMAC, distributed verify.
   - Portable — the OCI container is the cloud-neutral boundary; AWS/GCP/Azure via a capability contract.
-  - Cost — about $83 at 1 TB, $83,201 at 1 PB (us-east-1 list prices, storage-dominant, unconfirmed).
+  - Cost — about $86 at 1 TB, $85,734 at 1 PB (us-east-1 list prices, storage-dominant, unconfirmed).
   source_refs: [{source_id: submission, section: "Portability (portable compute artifact, provider-specific orchestration)"}]
   claim_ids: [prod-aws, prod-cost]
   visual: {type: none, position: right, items: [], callouts: []}

@@ -56,14 +56,13 @@ beyond the brief; `designed` = specified but not run/built (an explicit non-clai
 |---|---|
 | Independent verifier rereads output from disk (transformer cannot self-certify) | `verification.py`, `docs/ARCHITECTURE.md` |
 | TOCTOU / `SOURCE_CHANGED` source-snapshot gate | `security/tests/test_source_snapshot.py` |
-| White/gray/black-box adversarial lanes + bounded red/blue battle | `security/` (README, `tests/`, `battle/`) |
-| Containerized SAST (Semgrep + Bandit) + dependency SCA via `$hack`: 0 crit / 0 high | `security/hack-audit.receipt.json` |
+| Retained adversarial regression suite (fail-before-fix counterexamples from six external review rounds) | `security/tests/`, `security/ADVERSARIAL_MATRIX.md` |
+| Bandit SAST clean via `$hack` (committed receipt shows Semgrep scanned 0 target files and no SCA receipt is committed — supporting evidence only) | `security/hack-audit.receipt.json`, `security/README.md` |
 | Residual-risk probe | `security/residual_risk_probe.py` |
 | Machine-readable privacy non-claims + `algorithm_version`/`scope_id` binding | `docs/PRIVACY_CONTRACT.md`, `pseudonyms.py` |
 | Terraform AWS reference module (fmt+validate, plan-only) + provider capability map | `infra/terraform/`, `infra/mappings/` |
 | Operability CLI: `explain` / `preflight` / `verify` / `inspect` | `__main__.py` |
-| 40 cited arXiv papers archived (research lineage) | `docs/research/arxiv/` |
-| Technical-briefing deck (`$pitchdeck`) + `$create-svg` architecture | `docs/pitch/oai-trial/`, `.../assets/architecture.svg` |
+| Presentation briefing deck (projection of this repo, for the walkthrough) | `docs/pitch/oai-trial/` |
 
 ### Future optimizations (designed, not built)
 
@@ -136,11 +135,13 @@ docker run --rm \
 
 ## Proof and non-claims
 
-- **Checked (deterministic, local):** `uv run pytest -q` → 99 passed;
+- **Checked (deterministic, local):** the full pytest gate passes (`uv run pytest -q`);
   `ruff check src tests scripts security` → clean; `docker build` + both `docker run` commands
   verified with read-back of `report.json` and all four output formats; demo
-  reports per-run peak memory. Containerized SAST (Semgrep + Bandit) + dependency
-  SCA via `$hack`: 0 critical / 0 high — see [`security/`](security).
+  reports per-run peak memory. Bandit SAST clean via `$hack`; the committed
+  receipt shows Semgrep scanned 0 target files and no dependency-SCA receipt is
+  committed, so scanner receipts are supporting evidence only — the executable
+  adversarial evidence is the retained suite in [`security/`](security).
   Privacy scope + non-claims: [`docs/PRIVACY_CONTRACT.md`](docs/PRIVACY_CONTRACT.md).
 - **Not claimed here:** TB/PB scale is designed and cost-modelled, not run at
   scale; cloud prices are list prices not yet confirmed against a dated source;

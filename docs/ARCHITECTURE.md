@@ -11,7 +11,7 @@ re-identification (see `PRIVACY_CONTRACT.md`).
 
 ## 2. Design principles
 Deterministic · identity-coherent · fail-closed · independently verified ·
-report-last publication · bounded memory · no raw/mapping leakage.
+report-last publication · per-file processing (not TB-scale streaming) · no raw/mapping leakage.
 
 ## 3. System at a glance
 ![architecture](production-architecture.svg)

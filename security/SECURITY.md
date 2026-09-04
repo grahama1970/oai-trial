@@ -5,7 +5,7 @@ across three perspectives (methodology names, not attacker affiliation):
 
 | Lane | Knowledge | Evidence |
 |---|---|---|
-| **White-box** | full source | containerized Semgrep + Bandit SAST, dependency SCA (`$hack`) |
+| **White-box** | full source | Bandit SAST via `$hack` (committed Semgrep receipt scanned 0 target files; no SCA receipt committed — supporting evidence only) |
 | **Gray-box** | data contracts | `tests/test_graybox_adversarial.py` (pathological policy/overlap, large fields, deep JSON, SQLite UNIQUE) + verifier mutation tests |
 | **Black-box** | only the CLI/mount contract | `tests/test_blackbox_contract.py` (hostile mounted corpus via `python -m anonymization_trial run`, deterministic replay, fail-closed, no stdio leak) |
 | **Adaptive red/blue** | evolving Judge-scored lineage | `$battle` (P1+, external dev-only) — see [`BATTLE_OBJECTIVE.md`](BATTLE_OBJECTIVE.md); promoted findings become retained regressions (first: the `source_snapshot` TOCTOU gate + `tests/test_source_snapshot.py`) |

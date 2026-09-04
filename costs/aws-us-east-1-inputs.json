@@ -15,5 +15,12 @@
   "storage_months": 1,
   "workers": 200,
   "retry_rate": 0.02,
-  "orchestration_per_object_usd": 2e-06
+  "sqs_per_million_requests_usd": 0.4,
+  "eventbridge_per_million_events_usd": 1.0,
+  "kms_per_10k_requests_usd": 0.03,
+  "cloudwatch_logs_gb_ingested_usd": 0.5,
+  "log_bytes_per_object": 512,
+  "transfer_assumption": "same-region S3<->Fargate transfer is free; no egress modeled (release consumed in-region)",
+  "s3_tier_assumption": "S3 Standard first-50TB tier list price for both 1 TB and 1 PB; no volume discounts or savings plans modeled",
+  "quota_assumptions": "S3 default 3,500 PUT/s + 5,500 GET/s per prefix (sharded prefixes); SQS unlimited standard-queue throughput; Fargate default vCPU quota raised to cover the configured worker pool"
 }

@@ -76,7 +76,7 @@ Deterministic pseudonyms derived from a versioned PRF/hash over
 `(policy_version, data_type, canonical_identity)`:
 - `name` → `Person-<hash>`
 - `email` → `user-<hash>@example.invalid`
-- `phone` → `+1-555-<NNNN>` (domain-extended on collision)
+- `phone` → `+1-555-<NNNN>` (bounded domain: over-capacity policies rejected)
 - `ip_address` → `198.51.100.<N>` / `203.0.113.<N>` (TEST-NET; extended on collision)
 - `secret` → `[REDACTED-<hash>]`
 - other → `anon-<type>-<hash>`

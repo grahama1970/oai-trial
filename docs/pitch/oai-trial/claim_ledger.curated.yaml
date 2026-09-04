@@ -66,7 +66,7 @@ claims:
   status: approved
   evidence_spans: []
 - id: ev-tests
-  text: 62 deterministic tests cover unit, property, fail-closed publication, verifier-mutation, gray-box and black-box CLI attacks, reproducible with uv run pytest -q.
+  text: A deterministic pytest gate covers unit, property, fail-closed publication, verifier-mutation, gray-box and black-box CLI attacks, reproducible with uv run pytest -q.
   kind: proof
   visibility: public
   source_refs: [{source_id: security, section: "Security review", locator: "line 1"}]
@@ -74,7 +74,7 @@ claims:
   status: approved
   evidence_spans: []
 - id: ev-hack
-  text: Containerized SAST (Semgrep + Bandit) via $hack returned 0 critical and 0 high, plus dependency SCA, under a three-lane white/gray/black-box methodology.
+  text: Bandit SAST via $hack returned 0 critical and 0 high; scanner receipts are supporting evidence only, under a three-lane white/gray/black-box methodology whose executable evidence is the retained adversarial test suite.
   kind: proof
   visibility: public
   source_refs: [{source_id: security, section: "Static analysis (SAST)", locator: "line 1"}]
@@ -90,7 +90,7 @@ claims:
   status: approved
   evidence_spans: []
 - id: prod-cost
-  text: Reproducible cost model — about $83 at 1 TB and $83,201 at 1 PB (us-east-1 list prices, price date 2026-09-04, storage-dominant; list prices not yet confirmed against a dated source).
+  text: Reproducible cost model — about $86 at 1 TB and $85,734 at 1 PB (us-east-1 list prices, price date 2026-09-04, storage-dominant; list prices not yet confirmed against a dated source).
   kind: proof
   visibility: public
   source_refs: [{source_id: submission, section: "SLA, capacity, and cost", locator: "line 1"}]

@@ -42,8 +42,14 @@ def _one(total_bytes: float, cfg: dict) -> dict:
         cfg["worker_vcpu"] * cfg["fargate_vcpu_hour_usd"]
         + cfg["worker_gb"] * cfg["fargate_gb_hour_usd"]
     )
-    # Orchestration floor: SQS + EventBridge + KMS + CloudWatch per object.
-    orchestration = objects * cfg.get("orchestration_per_object_usd", 0.000002)
+    # Orchestration: explicit per-service quantity x unit price (one SQS message,
+    # one EventBridge event, one KMS data-key request, and log bytes per object).
+    orchestration = objects * (
+        cfg["sqs_per_million_requests_usd"] / 1e6
+        + cfg["eventbridge_per_million_events_usd"] / 1e6
+        + cfg["kms_per_10k_requests_usd"] / 1e4
+        + cfg["log_bytes_per_object"] / 1e9 * cfg["cloudwatch_logs_gb_ingested_usd"]
+    )
     total = storage + requests + compute + orchestration
     workers = cfg.get("workers", 200)
     wall_hours = compute_seconds * (1.0 + retry_rate) / max(workers, 1) / 3600

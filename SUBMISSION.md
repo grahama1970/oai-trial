@@ -15,7 +15,8 @@ A fail-closed, deterministic cross-format anonymization pipeline.
   case-insensitive over an ASCII-lowered view); leftmost-longest with stable
   `rule_id` tie-break; matches only original input, never rescans replacements
   (no cascade); deterministic per-type-distinct, collision-safe pseudonyms.
-- **Adapters** (`formats.py`): CSV and TXT stream with strict UTF-8 + BOM
+- **Adapters** (`formats.py`): CSV rows are iterated and TXT processed per file
+  (content materialized in memory, not TB-scale streaming) with strict UTF-8 + BOM
   preservation and header/schema rejection; JSON rejects duplicate keys, NaN/Inf,
   sensitive keys, and enforces depth/size bounds; SQLite uses the online backup
   API, skips generated columns via `table_xinfo`, and verifies
@@ -70,7 +71,7 @@ no state is committed and no `apply` is run (deployment earns no extra credit).
 
 ## SLA, capacity, and cost
 
-1 TB ≈ $83, 1 PB ≈ $83,201 (us-east-1 list prices, price_date 2026-09-04,
+1 TB ≈ $86, 1 PB ≈ $85,734 (us-east-1 list prices, price_date 2026-09-04,
 storage-dominant). Reproduce: `python scripts/estimate_aws_cost.py --inputs
 costs/aws-us-east-1-inputs.json`. Prices are **list prices not yet confirmed
 against a dated screenshot** — illustrative until verified.
@@ -117,9 +118,12 @@ booleans.
   unlinkability. Production replaces this public namespace with a
   tenant-or-purpose-scoped keyed HMAC. IP/phone domains are bounded with a
   cardinality preflight that rejects over-capacity policies up front.
-- The cost model is a **storage-dominant floor estimate**; it omits verifier
-  rereads, staging/promotion requests, SQS/KMS/logging/orchestration, retries,
-  output expansion, and transfer.
+- The cost model includes storage (intake+staging+release), verify rereads,
+  staging/promotion requests, a retry fraction, a 2x verify compute pass, and a
+  blended per-object orchestration floor (SQS/EventBridge/KMS/CloudWatch). It
+  still omits per-service orchestration unit prices, output expansion, transfer
+  pricing, and S3 tier/discount modeling; same-region transfer is assumed free
+  and totals assume standard-tier list prices within default quotas.
 - Cloud prices are list-price, unverified against a dated source.
 - Container runs as root for mounted-write robustness; non-root variant is
   documented in the Dockerfile.
@@ -139,5 +143,5 @@ minimal — adding those dependencies would violate the trial's container contra
 ## AI tool disclosure
 
 Built with an AI coding assistant. Output was checked by a deterministic gate on
-every change: `uv run pytest -q` (99 tests) and `ruff check`, plus live
+every change: the full pytest gate (`uv run pytest -q`) and `ruff check`, plus live
 `docker build` and both `docker run` commands read back from produced artifacts.

@@ -14,11 +14,15 @@ scope_id: trial-v1
 discovery_authority: policy.json only
 matching: { mode: literal, normalization: none, case: exact_or_ascii_insensitive }
 schema_identifier_policy: reject_if_sensitive
-allowed_linkage: { within_file: true, across_files: true, across_formats: true, across_retries: true, across_tenants: false }
+allowed_linkage: { within_file: true, across_files: true, across_formats: true, across_retries: true }
+# Local trial pseudonyms use the public fixed scope trial-v1; they provide no
+# private-key secrecy or cross-tenant unlinkability. Production replaces this
+# with a tenant-or-purpose-scoped keyed HMAC.
 transformation: deterministic_type_specific_pseudonymization
 key_mode: public-deterministic-trial-namespace   # local; production uses KMS-scoped HMAC
 release_standard: complete_verified_corpus_fail_closed
-adversary_assumption: release consumer lacks the raw input and the private key/mapping
+adversary_assumption: release consumer lacks the raw input; the local algorithm
+# is a PUBLIC unkeyed namespace (assume the adversary knows it) — no private key exists locally
 ```
 
 ## Verified locally (deterministic)

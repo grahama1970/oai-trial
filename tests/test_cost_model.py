@@ -33,3 +33,20 @@ def test_1tb_1pb_cost_and_sla_contract() -> None:
     # every material line item exists and is positive
     for key in ("storage_usd", "requests_usd", "compute_usd", "orchestration_usd"):
         assert live_1pb[key] > 0
+
+
+def test_required_billing_units_transfer_tiers_and_quotas_are_explicit() -> None:
+    """Round-6 ticket cost-model-required-units: explicit service billing units
+    plus transfer/tier/quota assumptions must exist in the committed inputs."""
+    for key in (
+        "sqs_per_million_requests_usd",
+        "eventbridge_per_million_events_usd",
+        "kms_per_10k_requests_usd",
+        "cloudwatch_logs_gb_ingested_usd",
+        "log_bytes_per_object",
+    ):
+        assert isinstance(_CFG[key], (int, float)) and _CFG[key] > 0, key
+    for key in ("transfer_assumption", "s3_tier_assumption", "quota_assumptions"):
+        assert isinstance(_CFG[key], str) and len(_CFG[key]) > 20, key
+    # blended floor removed: orchestration must derive from the explicit units
+    assert "orchestration_per_object_usd" not in _CFG
