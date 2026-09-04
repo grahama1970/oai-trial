@@ -27,8 +27,9 @@ from dataclasses import asdict, dataclass
 from pathlib import Path
 
 from .errors import AnonError, AnonErrorCode
-from .formats import SUPPORTED_SUFFIXES, iter_searchable_text, transform_file
+from .formats import SUPPORTED_SUFFIXES, transform_file
 from .policy import Policy, load_policy
+from .verification import verify_corpus
 
 
 class PipelineError(RuntimeError):
@@ -91,19 +92,6 @@ def _preflight(input_root: Path, output_root: Path, policy: Policy) -> list[tupl
     return files
 
 
-def _verify(corpus: Path, policy: Policy) -> None:
-    for path in sorted(item for item in corpus.rglob("*") if item.is_file()):
-        for text in iter_searchable_text(path):
-            for rule in policy.rules:
-                haystack = text if rule.case_sensitive else text.casefold()
-                needle = rule.value if rule.case_sensitive else rule.value.casefold()
-                if needle in haystack:
-                    _reject(
-                        AnonErrorCode.VERIFICATION_FAILED,
-                        f"verification failed in {path.name}",
-                    )
-
-
 def _manifest_digest(corpus: Path) -> str:
     digest = hashlib.sha256()
     for path in sorted(p for p in corpus.rglob("*") if p.is_file()):
@@ -149,7 +137,7 @@ def run_pipeline(input_root: Path, output_root: Path) -> RunReport:
             replacements += file_replacements
             bytes_read += source.stat().st_size
 
-        _verify(staged_corpus, policy)
+        verify_corpus(input_root / "corpus", staged_corpus, policy)
         bytes_written = sum(p.stat().st_size for p in staged_corpus.rglob("*") if p.is_file())
         report = RunReport(
             status="ready",
