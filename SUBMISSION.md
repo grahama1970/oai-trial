@@ -9,6 +9,33 @@ That span includes review waits and presentation work; active engineering time
 was not tracked separately. This candidate includes post-timebox corrections
 and must not be represented as a verified under-eight-hour completion.
 
+### Retrospective time estimate
+
+The operator's approximate allocation is 3 hours research, 2 hours implementation
+and testing, 1 hour extra-credit work, and 2 hours polish: 8 hours total. This is
+not an instrumented time log or proof of compliance with the eight-hour limit.
+The recorded post-timebox corrections and subsequent extensions remain disclosed
+above and below; this estimate does not erase or reclassify that additional work.
+
+## Unfinished work and deliberate exclusions
+
+- **Follow-up peer review:** the canonical-path fix for the reported discovery/
+  approval release-boundary bypass has not yet received a follow-up WebGPT PASS.
+  Its targeted CLI/wrapper regression and retained evals are separate evidence,
+  not a substitute claim that the reviewer accepted the corrected candidate.
+- **Presentation:** refreshing the exported deck, human contact-sheet approval,
+  Google Slides import checks, and final rehearsal remain outside this technical
+  submission. Older presentation exports must not be treated as current QA.
+- **Production deployment:** no cloud deployment or measured TB/PB execution was
+  performed. The required cloud architecture and cost model are design work with
+  explicit assumptions, not production benchmarks.
+- **Production hardening:** implementation-diverse verification, exhaustive crash/
+  power-loss testing, bounded-memory/distributed processing, managed quarantine,
+  and tenant-scoped keys/rotation remain future work, detailed below.
+- **Privacy scope:** broad unlisted-PII discovery, quasi-identifier anonymity, and
+  resistance to linkage are not established. Optional name-alias proposals do
+  not expand the exact-policy engine into a general anonymization guarantee.
+
 ## Implemented scope
 
 A fail-closed, deterministic cross-format anonymization pipeline.
@@ -217,6 +244,8 @@ implementation choice, not a requirement invented from the brief.
 
 ## AI tool disclosure
 
-Built with an AI coding assistant. Output was checked by a deterministic gate on
-every change: the full pytest gate (`uv run pytest -q`) and `ruff check`, plus live
-`docker build` and both `docker run` commands read back from produced artifacts.
+Built with AI coding assistance and browser-backed WebGPT peer review. Validation
+includes pytest, Ruff, retained agentic evals, and live Docker build/run checks
+with output readback. The accompanying qualification receipt identifies the
+checks performed against the exact packaged commit; earlier review PASS results
+apply only to their stated versions.
