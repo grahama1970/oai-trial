@@ -1,5 +1,5 @@
 {
-  "source_commit": "5b1f22d0b9fcc2f2eafa04cab30379d9f204e3bc",
+  "source_commit": "d0039613fa8acfaeba164eed9761632e2d8a5f41",
   "proof_boundary": "Current headless stops were recaptured and validated. Prior visible GUI proofs and presentation exports are historical; refresh/rehearse them over the weekend.",
   "stops": {
     "identity": {
@@ -55,12 +55,12 @@
         "output_corpus"
       ],
       "expected": "Output corpus exists, report.json does not yet exist.",
-      "source_sha256": "67cbe6771648d47e65706b6af60f01e8e1234d7db3a6cdeedc834b51e60548a7",
+      "source_sha256": "75b1174870b407ed1ed01550eca9b534266fcd91c11341c154516fb947215ae0",
       "source_line": "os.replace(tmp, report_path)  # atomic readiness marker, written last",
       "capture_command": "PYTHONPATH=src \"$DEBUGGER_SKILL/run.sh\" break src/anonymization_trial/pipeline.py:210 --local report_path --local output_corpus --out \"$ARTIFACT_DIR/publication-breakpoint.json\" -- python scripts/pitch_debug_demo.py publication",
       "gui_command": "DEBUGGER_LAUNCH_CONFIG=\"Pitch: publication\" \"$DEBUGGER_SKILL/run.sh\" stop src/anonymization_trial/pipeline.py:210 --local report_path --local output_corpus --workspace-artifacts",
-      "proof_path": "/mnt/storage12tb/oai-trial/release-fixes/publication-breakpoint.json",
-      "proof_sha256": "78b76e2a3ac5bd8e47c8cae563036d6353dff901c66c55a15901b32f352479cb",
+      "proof_path": "/mnt/storage12tb/oai-trial/skill-feature/publication-proof.json",
+      "proof_sha256": "57683c52e9a7ffaec450262bd07c2232a30fe4e825583fe47f189c0522cc1b23",
       "historical_gui_proof": {
         "path": "/mnt/storage12tb/oai-trial/pitch-final/publication-vscode.json",
         "sha256": "29be92aaad8fd72ce907802989d505a408d611c396a9ebcffacf2582ac7322e2",

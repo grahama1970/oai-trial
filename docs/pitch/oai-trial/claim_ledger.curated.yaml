@@ -77,7 +77,7 @@ claims:
   approval:
     approved_by: project-agent/source-review
     approved_at: '2026-09-04'
-    source_snapshot_sha256: sha256:67cbe6771648d47e65706b6af60f01e8e1234d7db3a6cdeedc834b51e60548a7
+    source_snapshot_sha256: sha256:75b1174870b407ed1ed01550eca9b534266fcd91c11341c154516fb947215ae0
 - id: semantics
   text: Aliases converge; original-input matching emits once; bounded domains reject exhaustion; SQLite uses typed
     per-row verification.
@@ -144,7 +144,7 @@ claims:
   approval:
     approved_by: project-agent/source-review
     approved_at: '2026-09-04'
-    source_snapshot_sha256: sha256:67cbe6771648d47e65706b6af60f01e8e1234d7db3a6cdeedc834b51e60548a7
+    source_snapshot_sha256: sha256:75b1174870b407ed1ed01550eca9b534266fcd91c11341c154516fb947215ae0
 - id: evidence
   text: Real output readback, deliberate mutations, and publication checks.
   kind: proof

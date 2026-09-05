@@ -1,4 +1,10 @@
-# Matcher + discovery design (settled decisions)
+# Historical matcher/discovery proposal — superseded
+
+**Not an implementation inventory.** FlashText, classifier flags, protected-first
+precedence and full Unicode case folding below were proposals, not shipped
+behavior. The exact engine uses local `_Aho`, rejects protected overlap, and folds
+ASCII only. The implemented RapidFuzz workflow is review-only whole-value alias
+discovery followed by explicit policy approval: see `../DISCOVERY.md`.
 
 ## No regex for matching/classification
 best-practices-python `correctness-regex-only-known-grammar`: regex is brittle

@@ -1,11 +1,11 @@
 {
   "schema": "pitchdeck.source_state.v1",
-  "source_commit": "5b1f22d0b9fcc2f2eafa04cab30379d9f204e3bc",
+  "source_commit": "d0039613fa8acfaeba164eed9761632e2d8a5f41",
   "hashes": {
     "brief": "83b1199fa7f0da86b6e0836b6634657a5ff92c6d9f8bd3014f115a3de4942bfc",
-    "local": "67cbe6771648d47e65706b6af60f01e8e1234d7db3a6cdeedc834b51e60548a7",
+    "local": "75b1174870b407ed1ed01550eca9b534266fcd91c11341c154516fb947215ae0",
     "semantics": "358eb5bdb3e5f5767112d401857a4fe9a8517387f2cd5c70d11ca6e2bc7a9eb8",
-    "release": "67cbe6771648d47e65706b6af60f01e8e1234d7db3a6cdeedc834b51e60548a7",
+    "release": "75b1174870b407ed1ed01550eca9b534266fcd91c11341c154516fb947215ae0",
     "evidence": "ae99a82b8e8183cffe52610cedb9f4ab6c3e7e4fde711b20c9d8b81f16c88209",
     "production": "e7eec4c10e62654e5a2874597e7c727e9dfd6030694051818b2563c453b4ddc8",
     "nonclaims": "5a3998a468dc4497070711c084df079e09d2e96af330eb1f1fa7e0f6f6da6ab1",
@@ -17,7 +17,7 @@
   "missing": [],
   "canonical_hashes": {
     "deck.curated.yaml": "2217b64c1a990f8e0fdeadf6ba661f4880b3d83025c50211c8b2681990caa1b8",
-    "claim_ledger.curated.yaml": "dd11b63a236e432818fb23d4ad0d46a01e69d1ec15cf80e13f48f15edbae137a",
+    "claim_ledger.curated.yaml": "034e3a8dd6f38875f642786d14dcc95da66ab1b8cc8ed886c2de821dd464d959",
     "speaker_notes.curated.md": "3984ca37769d45c4d9dab9a301add2df7c05bc988f55ca723be4f67cc7a4b8f5"
   },
   "asset_hashes": {

@@ -65,7 +65,7 @@ class Candidate:
             or not math.isfinite(self.similarity)
             or not 0 <= self.similarity <= 100
             or type(self.occurrences) is not int
-            or self.occurrences < 1
+            or not 1 <= self.occurrences <= 10000
         ):
             _reject(AnonErrorCode.DISCOVERY_INVALID, "invalid candidate fields")
 
@@ -123,7 +123,7 @@ class DiscoveryReport:
             "ambiguous",
         }:
             _reject(AnonErrorCode.DISCOVERY_INVALID, "invalid review counts")
-        if any(type(n) is not int or n < 0 for n in self.counts.values()):
+        if any(type(n) is not int or not 0 <= n <= 10000 for n in self.counts.values()):
             _reject(AnonErrorCode.DISCOVERY_INVALID, "invalid review counts")
         for candidate in self.candidates:
             candidate.validate()
@@ -137,6 +137,45 @@ class DiscoveryReport:
             or sum(c.occurrences for c in self.candidates) > self.counts["values"]
         ):
             _reject(AnonErrorCode.DISCOVERY_INVALID, "candidate count mismatch")
+        return self
+
+
+@dataclass(frozen=True)
+class ApprovalReceipt:
+    approved_ids: list[str]
+    source_policy_sha256: str
+    source_corpus_sha256: str
+    policy_sha256: str
+    schema: str = "anon.discovery_approval.v1"
+    release_ready: bool = False
+    seam_validation: dict[str, str] = field(
+        default_factory=lambda: {
+            "kind": "compiled_policy",
+            "status": "PASS",
+        }
+    )
+
+    def validate(self):
+        digests = (self.source_policy_sha256, self.source_corpus_sha256, self.policy_sha256)
+        if any(
+            type(v) is not str or len(v) != 64 or any(c not in "0123456789abcdef" for c in v)
+            for v in digests
+        ):
+            _reject(AnonErrorCode.DISCOVERY_INVALID, "invalid approval digest")
+        if (
+            type(self.approved_ids) is not list
+            or not self.approved_ids
+            or any(type(v) is not str for v in self.approved_ids)
+            or len(set(self.approved_ids)) != len(self.approved_ids)
+            or any(
+                len(v) != 24 or any(c not in "0123456789abcdef" for c in v)
+                for v in self.approved_ids
+            )
+            or self.schema != "anon.discovery_approval.v1"
+            or self.release_ready is not False
+            or self.seam_validation != {"kind": "compiled_policy", "status": "PASS"}
+        ):
+            _reject(AnonErrorCode.DISCOVERY_INVALID, "invalid approval contract")
         return self
 
 
@@ -321,16 +360,15 @@ def approve(bundle: Path, review_path: Path, ids: list[str], output: Path) -> di
     if receipt_path.exists():
         _reject(AnonErrorCode.DISCOVERY_REJECTED, "approval receipt already exists")
     write_private(output, payload)
-    receipt = {
-        "schema": "anon.discovery_approval.v1",
-        "approved_ids": sorted(ids),
-        "source_policy_sha256": fresh.policy_sha256,
-        "source_corpus_sha256": fresh.corpus_sha256,
-        "policy_sha256": hashlib.sha256(output.read_bytes()).hexdigest(),
-        "release_ready": False,
-        "seam_validation": {"kind": "compiled_policy", "status": "PASS"},
-    }
     try:
+        receipt = asdict(
+            ApprovalReceipt(
+                sorted(ids),
+                fresh.policy_sha256,
+                fresh.corpus_sha256,
+                hashlib.sha256(output.read_bytes()).hexdigest(),
+            ).validate()
+        )
         write_private(receipt_path, receipt)
     except Exception:
         output.unlink(missing_ok=True)

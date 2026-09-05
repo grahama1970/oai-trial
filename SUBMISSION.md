@@ -187,14 +187,33 @@ A script or a passing unit suite is not qualification: require that receipt's
 PASS and read back its archive hash. Presentation QA remains a separate weekend
 activity, not a technical-runtime release prerequisite.
 
+## Operator-requested post-trial integration
+
+The shared `anonymize-data` skill is a thin wrapper around this project; it adds
+no duplicate engine or host-service dependency. The `anonymize` command accepts
+a supported file/folder plus a separate policy and empty output directory.
+
+Optional RapidFuzz discovery now proposes whole-field/whole-line name aliases.
+It never replaces data automatically. Explicit candidate-ID approval recomputes
+source-bound proposals and emits a validated exact-match policy; the normal
+pipeline still owns release. Defaults are threshold 90 and identity separation
+margin 5, with tie refusal, protected-value checks, strict bounds and private
+work artifacts. See `docs/DISCOVERY.md` and `fixtures/discovery_eval.json`.
+
+These extensions were explicitly requested after the qualified `9ebb447`
+candidate. That earlier archive and reviewer PASS are preserved, not relabeled
+as proof of these additions. The default Docker image retains the exact engine;
+`INCLUDE_DISCOVERY=1` includes the pinned optional RapidFuzz dependency.
+
 ## Python conventions (deliberate overrides)
 The repo follows universal Python best practices (centralized `StrEnum` error
 codes, no runtime `assert`, no `shell=True`/`eval`/`exec`/`pickle`, `pathlib`,
 module docstrings, files < 800 lines, thin `__init__`, no `sys.path` surgery,
 regex removed from the value path). The house Loguru/Typer/httpx defaults are
-intentionally **overridden**: the runtime is stdlib-only (`argparse` + `print`,
-`dependencies = []`) so the container stays self-contained, offline, and
-minimal — adding those dependencies would violate the trial's container contract.
+intentionally **overridden**: the exact engine is stdlib-only (`argparse` + `print`,
+`dependencies = []`). Optional discovery adds RapidFuzz only. Self-contained
+Docker does not forbid dependencies; the small default dependency set is an
+implementation choice, not a requirement invented from the brief.
 
 ## AI tool disclosure
 

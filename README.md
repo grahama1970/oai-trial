@@ -16,6 +16,7 @@ identity coherence — then verifies the whole corpus before it releases anythin
 | Trace requirements → tests | [`docs/ACCEPTANCE_MATRIX.md`](docs/ACCEPTANCE_MATRIX.md) |
 | Read the submission write-up | [`SUBMISSION.md`](SUBMISSION.md) |
 | See the production design + cost | [`docs/production-architecture.md`](docs/production-architecture.md) |
+| Use the agent skill or reviewed fuzzy aliases | [`docs/DISCOVERY.md`](docs/DISCOVERY.md) |
 | Read the code | `src/anonymization_trial/` |
 
 ## Requirement traceability
@@ -48,7 +49,7 @@ beyond the brief; `designed` = specified but not run/built (an explicit non-clai
 | State/flow diagram, labels agree with prose, trust boundaries | done | `docs/production-architecture.svg` |
 | Capacity + cost for 1 TB & 1 PB, reproducible arithmetic, cited prices, sensitivity | designed | `scripts/estimate_aws_cost.py`, `costs/` (list prices, unconfirmed) |
 | Which local parts carry to prod vs replace, with triggering limit/tradeoff | done | `SUBMISSION.md`, `infra/mappings/PROVIDER_MAPPING.md` |
-| Return whole repo incl `.git`; preserve baseline history; completed `SUBMISSION.md`; dependency declarations | done | baseline `eed780c` intact; stdlib-only |
+| Return whole repo incl `.git`; preserve baseline history; completed `SUBMISSION.md`; dependency declarations | done | baseline `eed780c` intact; exact engine stdlib-only, discovery dependency optional |
 
 ### Extra credit (beyond the brief)
 
@@ -62,13 +63,15 @@ beyond the brief; `designed` = specified but not run/built (an explicit non-clai
 | Machine-readable privacy non-claims + `algorithm_version`/`scope_id` binding | `docs/PRIVACY_CONTRACT.md`, `pseudonyms.py` |
 | Terraform AWS reference module (fmt+validate, plan-only) + provider capability map | `infra/terraform/`, `infra/mappings/` |
 | Operability CLI: `explain` / `preflight` / `verify` / `inspect` | `__main__.py` |
+| File/folder + separate policy interface; shared `anonymize-data` skill | [`docs/DISCOVERY.md`](docs/DISCOVERY.md), `bundle.py` |
+| Opt-in RapidFuzz name proposals → explicit approval → exact policy | `discovery.py`, `tests/test_discovery*.py`, `fixtures/discovery_eval.json` |
 | Presentation briefing deck (projection of this repo, for the walkthrough) | `docs/pitch/oai-trial/` |
 
 ### Future optimizations (designed, not built)
 
 | Optimization | Trigger to build it |
 |---|---|
-| Entity discovery beyond literal policy (classifier / RapidFuzz) | inputs with un-catalogued identities |
+| Broad NER/classifier or within-paragraph name discovery | workloads beyond whole-value name-alias proposals |
 | Concurrent `ripgrep` cross-check of the verifier | large-corpus verify latency |
 | Run at real TB/PB scale | scale acceptance beyond the cost model |
 | Confirm cloud prices against a dated source | promoting the cost claim past a list-price estimate |
@@ -85,6 +88,8 @@ src/anonymization_trial/
   pipeline.py      preflight -> stage -> verify -> atomic publish
   verification.py  independent whole-corpus verifier
   errors.py        closed, privacy-safe error vocabulary
+  bundle.py        safe file/folder adapter; delegates to the same engine
+  discovery.py     optional RapidFuzz review + explicit exact-policy approval
 tests/             pytest suite (unit + per-format + CLI)
 security/          white/gray/black-box + adversarial lineage (tests, battle, SAST)
 docs/              semantics, acceptance matrix, production design, research
@@ -101,6 +106,26 @@ anonymization-trial verify --input IN --output OUT # independently reverify
 anonymization-trial inspect OUT                    # safe evidence summary
 ```
 `report.json` conforms to [`schemas/report.schema.json`](schemas/report.schema.json).
+
+## Agent skill and optional name discovery
+
+The shared skill is [`anonymize-data`](https://github.com/grahama1970/agent-skills/tree/main/skills/anonymize-data).
+It only invokes this project's CLI; it contains no matcher, discovery, policy or
+verification implementation. Use an empty output directory and keep the policy
+outside the input corpus:
+
+```bash
+# From the installed anonymize-data skill directory:
+./run.sh setup
+./run.sh --input /data/exports --policy /data/policy.json --output /data/release
+./run.sh discover --input /data/exports --policy /data/policy.json --output /data/work/candidates.json
+```
+
+Read and explicitly approve candidate IDs before using an augmented policy.
+Unapproved fuzzy suggestions never change the exact-policy run. Work artifacts
+contain raw names and stay private/outside releases. See [the full workflow and
+Docker examples](docs/DISCOVERY.md). These are operator-requested post-trial
+extensions; the old `9ebb447` qualification does not cover them automatically.
 
 ## Quickstart
 
@@ -145,8 +170,9 @@ docker run --rm \
   Privacy scope + non-claims: [`docs/PRIVACY_CONTRACT.md`](docs/PRIVACY_CONTRACT.md).
 - **Not claimed here:** TB/PB scale is designed and cost-modelled, not run at
   scale; cloud prices are list prices not yet confirmed against a dated source;
-  optional classifier/RapidFuzz discovery and the concurrent `ripgrep`
-  cross-check are designed, not built.
+  broad classifier/span-level discovery and the concurrent `ripgrep`
+  cross-check are designed, not built. Whole-value RapidFuzz alias proposals and
+  explicit approval are implemented separately from the exact engine.
 
 Preserve the baseline git history and the two required `docker run` commands.
 `.env` is gitignored; no real personal data or credentials belong in the repo.

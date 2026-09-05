@@ -27,7 +27,10 @@ def separate_output(output: Path, *inputs: Path) -> None:
             raise AnonError(AnonErrorCode.UNSAFE_INPUT, "output overlaps an input")
     if output.is_dir() and any(output.iterdir()):
         raise AnonError(AnonErrorCode.UNSAFE_INPUT, "use an empty output directory")
-    if any((parent / "report.json").exists() for parent in output.parents):
+    if any(
+        (parent / "report.json").is_file() and (parent / "corpus").is_dir()
+        for parent in output.parents
+    ):
         raise AnonError(AnonErrorCode.UNSAFE_INPUT, "work artifacts must stay outside a release")
 
 

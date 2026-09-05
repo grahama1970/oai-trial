@@ -12,7 +12,7 @@
       "name": "four-formats-and-relative-file-interface",
       "type": "positive",
       "real_world": true,
-      "command": ["bash", "-c", "cd .. && uv run --extra dev --extra discovery python -m pytest -q tests/test_discovery.py tests/test_discovery_boundaries.py -k 'all_four_formats or single_file_relative_paths'"],
+      "command": ["bash", "-c", "cd .. && uv run --extra dev --extra discovery python -m pytest -q tests/test_discovery.py tests/test_discovery_boundaries.py -k 'all_four_formats or single_file_relative_paths or customer_file_named'"],
       "expected": {"exit_code": 0},
       "timeout_seconds": 120
     },

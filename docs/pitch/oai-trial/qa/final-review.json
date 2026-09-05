@@ -1,7 +1,7 @@
 {
   "schema": "oai_trial.pitch_final_review.v1",
   "source_commit": "6b69e188832a97392925cdf423bc4c45573323c4",
-  "status": "STALE_AFTER_RUNTIME_FIXES",
+  "status": "STALE_AFTER_POST_TRIAL_EXTENSIONS",
   "bundle_sha256": "8759896661d9a21d8e796f946ddb194d1ba9944bfb6b288b8f50787cda3dab12",
   "artifacts": {
     "pptx": {
@@ -70,6 +70,6 @@
     "Side-by-side screenshot is a rehearsal capture, not a full 40-minute audience rehearsal.",
     "Old exports and GUI captures do not qualify the corrected runtime."
   ],
-  "runtime_candidate": "5b1f22d0b9fcc2f2eafa04cab30379d9f204e3bc",
-  "stale_reason": "Runtime SQLite/schema and report-write fixes supersede the exported presentation evidence. Refresh the deck and visible GUI rehearsal over the weekend."
+  "runtime_candidate": "d0039613fa8acfaeba164eed9761632e2d8a5f41",
+  "stale_reason": "New file/folder and optional RapidFuzz commands need separate qualification. Prior deck exports and GUI proof remain historical."
 }

@@ -16,6 +16,7 @@ import stat
 import subprocess
 from pathlib import Path
 
+import jsonschema
 import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -86,6 +87,9 @@ def test_discover_approve_and_anonymize_all_four_formats(tmp_path):
     assert result.returncode == 0, result.stderr
     assert "Alicee" not in result.stdout and "Alice" not in result.stdout
     data = json.loads(review.read_text())
+    jsonschema.Draft202012Validator(
+        json.loads((ROOT / "schemas/discovery.schema.json").read_text())
+    ).validate(data)
     assert data["release_ready"] is False
     assert data["seam_validation"]["status"] == "PASS"
     assert len(data["candidates"]) == 1
@@ -107,6 +111,9 @@ def test_discover_approve_and_anonymize_all_four_formats(tmp_path):
     assert result.returncode == 0, result.stderr
     assert stat.S_IMODE(approved.stat().st_mode) == 0o600
     receipt = json.loads(approved.with_name("approved.json.approval.json").read_text())
+    jsonschema.Draft202012Validator(
+        json.loads((ROOT / "schemas/discovery-approval.schema.json").read_text())
+    ).validate(receipt)
     assert receipt["policy_sha256"] == hashlib.sha256(approved.read_bytes()).hexdigest()
     out = tmp_path / "out"
     result = cli("anonymize", "--input", source, "--policy", approved, "--output", out)

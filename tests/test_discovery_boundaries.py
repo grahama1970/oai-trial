@@ -153,10 +153,21 @@ def test_work_artifacts_cannot_overwrite_inputs_existing_files_or_releases(tmp_p
     assert cli("discover", *common, "--output", policy).returncode != 0
     release = tmp_path / "release"
     release.mkdir()
+    (release / "corpus").mkdir()
     (release / "report.json").write_text('{"status":"ready"}')
     assert cli("discover", *common, "--output", release / "review.json").returncode != 0
-    assert {p.name for p in release.iterdir()} == {"report.json"}
+    assert {p.name for p in release.iterdir()} == {"report.json", "corpus"}
     assert cli("discover", *common, "--output", tmp_path / "report.json").returncode != 0
+
+
+def test_customer_file_named_report_json_is_not_a_release_marker(tmp_path):
+    source, policy = make_input(tmp_path)
+    customer_report = tmp_path / "report.json"
+    customer_report.write_bytes((source / "sample.json").read_bytes())
+    out = tmp_path / "out"
+    result = cli("anonymize", "--input", customer_report, "--policy", policy, "--output", out)
+    assert result.returncode == 0, result.stderr
+    assert (out / "corpus/report.json").is_file()
 
 
 def test_text_value_budget_fails_closed_without_partial_proposals(tmp_path):

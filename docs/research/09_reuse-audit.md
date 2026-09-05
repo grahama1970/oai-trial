@@ -1,4 +1,10 @@
-# Reuse audit — pre-existing projects, skills, and OSS repos
+# Historical reuse audit — pre-existing projects, skills, and OSS repos
+
+**Historical design record, not the current contract.** The shipped exact matcher
+is the local `_Aho` implementation; no comparative FlashText benchmark established
+that choice as superior. The notes below about protected-first precedence and
+HMAC-style local replacement were superseded by overlap rejection and a public
+SHA-256 namespace. Current opt-in RapidFuzz behavior is in `../DISCOVERY.md`.
 
 Goal: borrow proven ideas, bespoke as little new code as possible.
 

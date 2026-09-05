@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Private name-alias review; not release authorization",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "policy_sha256", "corpus_sha256", "rapidfuzz_version", "threshold", "margin", "candidates", "counts", "release_ready", "seam_validation"],
+  "properties": {
+    "schema": {"const": "anon.discovery_review.v1"},
+    "policy_sha256": {"$ref": "#/$defs/digest"},
+    "corpus_sha256": {"$ref": "#/$defs/digest"},
+    "rapidfuzz_version": {"type": "string", "minLength": 1},
+    "threshold": {"type": "number", "minimum": 80, "maximum": 100},
+    "margin": {"type": "number", "minimum": 0, "maximum": 20},
+    "release_ready": {"const": false},
+    "seam_validation": {"const": {"kind": "discovery_review", "status": "PASS"}},
+    "candidates": {"type": "array", "maxItems": 10000, "items": {"$ref": "#/$defs/candidate"}},
+    "counts": {
+      "type": "object", "additionalProperties": false,
+      "required": ["values", "proposed", "known", "protected", "noise", "low_score", "ambiguous"],
+      "properties": {
+        "values": {"$ref": "#/$defs/count"}, "proposed": {"$ref": "#/$defs/count"},
+        "known": {"$ref": "#/$defs/count"}, "protected": {"$ref": "#/$defs/count"},
+        "noise": {"$ref": "#/$defs/count"}, "low_score": {"$ref": "#/$defs/count"},
+        "ambiguous": {"$ref": "#/$defs/count"}
+      }
+    }
+  },
+  "$defs": {
+    "digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "count": {"type": "integer", "minimum": 0, "maximum": 10000},
+    "candidate": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "value", "rule_id", "subject_id", "similarity", "occurrences"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[0-9a-f]{24}$"},
+        "value": {"type": "string", "minLength": 3, "maxLength": 128},
+        "rule_id": {"type": "string", "minLength": 1},
+        "subject_id": {"type": "string", "minLength": 1},
+        "similarity": {"type": "number", "minimum": 0, "maximum": 100},
+        "occurrences": {"type": "integer", "minimum": 1, "maximum": 10000}
+      }
+    }
+  }
+}
