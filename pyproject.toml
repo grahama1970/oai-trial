@@ -19,6 +19,7 @@ dev = [
   "ruff>=0.6",
   "pytest>=8.0",
   "PyYAML>=6.0",  # dev-only presentation manifests; never a runtime dependency
+  "jsonschema>=4.0",  # dev-only independent release-report validation
 ]
 
 [project.scripts]
@@ -38,7 +39,7 @@ src = ["src", "tests"]
 select = ["E", "F", "I", "B", "UP", "S"]
 # assert is fine in tests; long DB/path literals in the starter fixture and
 # tests are readability-neutral. Hardened runtime modules still enforce E501.
-per-file-ignores = { "tests/*" = ["S101", "E501"], "security/tests/*" = ["S101", "E501"], "src/anonymization_trial/fixture.py" = ["E501"] }
+per-file-ignores = { "tests/*" = ["S101", "E501"], "security/tests/*" = ["S101", "E501"], "src/anonymization_trial/fixture.py" = ["E501"], "scripts/qualify_submission.py" = ["S101"] }
 
 [tool.pytest.ini_options]
 testpaths = ["tests", "security/tests"]

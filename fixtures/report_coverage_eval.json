@@ -1,0 +1,28 @@
+{
+  "version": 2,
+  "skill": "oai-trial-test-coverage-report",
+  "trials": 2,
+  "proof_scope": "Generate a source-bound coverage report from actual pytest JUnit results; reject stale/tampered run evidence.",
+  "claims": {
+    "proves": "Every recorded security case maps once to the explicit catalog and totals reconcile; changed JUnit bytes are refused.",
+    "does_not_prove": "Coverage sufficiency, privacy guarantees, clean Docker qualification, or human report approval."
+  },
+  "cases": [
+    {
+      "name": "report-from-real-security-run",
+      "type": "positive",
+      "real_world": true,
+      "command": ["bash", "-c", "cd .. && w=$(mktemp -d \"$QUALIFICATION_ROOT/report-XXXXXX\") && python3 scripts/report_test_coverage.py --junit security/reports/adversarial-coverage/security-junit.xml --run security/reports/adversarial-coverage/test-run.json --output \"$w\" && python3 -c 'import json,sys; r=json.load(open(sys.argv[1]+\"/inventory.json\")); assert sum(f[\"total\"] for f in r[\"families\"]) == r[\"case_count\"]; assert len({x[\"nodeid\"] for x in r[\"cases\"]}) == r[\"case_count\"]; print(\"RECONCILED\")' \"$w\""],
+      "expected": {"exit_code": 0, "stdout_contains": ["RECONCILED"]},
+      "timeout_seconds": 60
+    },
+    {
+      "name": "tampered-junit-refused",
+      "type": "adversarial",
+      "real_world": true,
+      "command": ["bash", "-c", "cd .. && w=$(mktemp -d \"$QUALIFICATION_ROOT/tamper-XXXXXX\") && cp security/reports/adversarial-coverage/security-junit.xml \"$w/results.xml\" && printf '\\n' >> \"$w/results.xml\" && python3 scripts/report_test_coverage.py --junit \"$w/results.xml\" --run security/reports/adversarial-coverage/test-run.json --output \"$w/report\""],
+      "expected": {"exit_code": 1, "stderr_contains": ["JUnit changed after the recorded run"]},
+      "timeout_seconds": 60
+    }
+  ]
+}

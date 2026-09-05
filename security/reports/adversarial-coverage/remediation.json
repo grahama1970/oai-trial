@@ -1,0 +1,11 @@
+{
+  "schema": "oai_trial.review_remediation.v1",
+  "source_before": "4f332a7d95fd712186c892f1e2d67d292bba901b",
+  "source_after": "5b1f22d",
+  "before_junit": "/mnt/storage12tb/oai-trial/release-fixes/before.xml",
+  "after_junit": "/mnt/storage12tb/oai-trial/release-fixes/after.xml",
+  "supplied_test_sha256": "e547ab07c32dc029fc01797a19fc18d0ce5907753fd6f3217b43a7174d99c7be",
+  "supplied_cases": 4,
+  "extra_local_case": "zero-progress write refusal",
+  "proof_boundary": "Synthetic fixtures through real pipeline/CLI; controlled adapter and os.write fault injection, not a real power loss."
+}

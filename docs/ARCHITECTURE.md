@@ -68,7 +68,7 @@ release or logs; source-snapshot/TOCTOU gate. Threat model: `security/THREAT_MOD
 ## 11. Performance model
 Per-file processing (CSV rows are iterated, but file content, matches, and
 verifier text are materialized in memory — not TB-scale streaming; see
-SUBMISSION Known gaps). SQLite uses an online-backup snapshot; JSON is bounded
+SUBMISSION production-hardening boundary). SQLite uses an online-backup snapshot; JSON is bounded
 by depth/size limits. The demo measures per-run peak RSS across a 10× size step.
 
 ## 12. Production architecture

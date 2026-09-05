@@ -1,0 +1,447 @@
+{
+  "schema": "create_report.report.v1",
+  "report_id": "oai-trial-adversarial-coverage",
+  "title": "Adversarial test coverage by failure family",
+  "persona": "OpenAI trial reviewer / release owner",
+  "primary_object": "source-bound security test inventory and family matrix",
+  "decision_supported": "Decide what required qualification remains before shipping",
+  "overall_finding": "Partially Verified",
+  "core_conclusion": "83 collected cases across 74 functions: 50 adversarial, 21 positive controls, 6 boundary/stress probes, and 6 evidence checks. ADEQUACY: inadequate for the reviewed pre-fix snapshot. Targeted fixes require local qualification; this is not a new verdict on the corrected source. Response: /mnt/storage12tb/oai-trial/test-coverage-review/ask/ask-tau-please-assess-whether-the-curren-15df2b2d2829/node-artifacts/handler-webgpt/response.md",
+  "evidence_basis": "Fresh JUnit results joined to a source-reviewed catalog. Tests use synthetic inputs and, where stated, controlled adapter/write faults against real runtime code. Classification is project-agent judgment, not an automatic metric.",
+  "highest_risk_issues": [
+    "F-002 Publication failure sequences and clean-submission qualification",
+    "F-003 Sufficiency not inferred from counts"
+  ],
+  "immediate_next_steps": [
+    "Reconcile the bounded WebGPT review",
+    "A-001 Run the exact submitted Docker contract"
+  ],
+  "scope": {
+    "reviewed": [
+      "Every collected security/tests case at 4947044f05bf9c52d60162de54ae78ba8f2b7474"
+    ],
+    "excluded": [
+      "Core tests/ cases outside security/tests are not classified in this matrix",
+      "Weekend pitch-deck QA",
+      "Unimplemented risk-plane and adaptive Battle",
+      "Complete production hardening"
+    ],
+    "evidence_available": [
+      "security/reports/adversarial-coverage/security-junit.xml",
+      "security/reports/adversarial-coverage/test-run.json",
+      "security/test_catalog.json"
+    ]
+  },
+  "project_context": {
+    "goals": [
+      "Qualify the smallest fail-closed implementation against TRIAL_BRIEF.md"
+    ],
+    "current_state": "Security cases ran; clean-submission qualification is pending.",
+    "recent_decisions": [
+      "Feature freeze; additions only for concrete required-invariant violations."
+    ],
+    "open_questions": [
+      "Which missing failure sequences are release-blocking?"
+    ],
+    "takeover_notes": [
+      "No PROJECT_KNOWLEDGE.md found; Memory returned related prep material, not an authoritative coverage verdict."
+    ],
+    "sources": [
+      "GOAL.md",
+      "TRIAL_BRIEF.md",
+      "memory-recall.json"
+    ]
+  },
+  "source_of_truth_inventory": [
+    {
+      "id": "Policy schema and identity conflicts",
+      "kind": "8 cases: 7 adversarial; 1 controls; 0 boundary; 0 evidence. PASS 8; FAIL 0; SKIP 0",
+      "path": "security/tests/test_adversarial_matrix.py; security/tests/test_round3_fixes.py; security/tests/test_round4_fixes.py",
+      "limitation": "Oracle: compile_policy/load_policy reject malformed or contradictory policies. Boundary: Mostly function-level rejection checks; not every malformed policy is exercised through Docker."
+    },
+    {
+      "id": "Bounded pseudonym domains",
+      "kind": "2 cases: 1 adversarial; 0 controls; 1 boundary; 0 evidence. PASS 2; FAIL 0; SKIP 0",
+      "path": "security/tests/test_pseudonym_domains.py",
+      "limitation": "Oracle: Distinct replacement cardinality at the IPv4 limit; over-capacity refusal. Boundary: IPv4 capacity is covered here; equivalent phone-capacity and forced collision exhaustion are not covered by these two cases."
+    },
+    {
+      "id": "Original-input matching and overlap",
+      "kind": "4 cases: 1 adversarial; 0 controls; 3 boundary; 0 evidence. PASS 4; FAIL 0; SKIP 0",
+      "path": "security/tests/test_graybox_adversarial.py; security/tests/test_round2_fixes.py",
+      "limitation": "Oracle: Replacement count, sampled literal absence, repeatability and overlap refusal. Boundary: Stress inputs are bounded; many-literal absence is sampled rather than exhaustively checked."
+    },
+    {
+      "id": "CSV dialect and located cell/row fidelity",
+      "kind": "18 cases: 12 adversarial; 5 controls; 1 boundary; 0 evidence. PASS 18; FAIL 0; SKIP 0",
+      "path": "security/tests/test_csv_dialect.py; security/tests/test_graybox_adversarial.py; security/tests/test_verifier_location.py",
+      "limitation": "Oracle: Unsupported/malformed dialect rejected; cells/rows reread; swaps/dropped rows rejected. Boundary: Six dialect variants use the CLI and empty-output oracle; other cases mostly call adapters/verifier directly."
+    },
+    {
+      "id": "JSON parsing, numbers and encoding",
+      "kind": "9 cases: 5 adversarial; 3 controls; 1 boundary; 0 evidence. PASS 9; FAIL 0; SKIP 0",
+      "path": "security/tests/test_adversarial_matrix.py; security/tests/test_graybox_adversarial.py; security/tests/test_round2_fixes.py; security/tests/test_round3_fixes.py; security/tests/test_verifier_location.py",
+      "limitation": "Oracle: Overflow/lossy numbers, depth, duplicate output keys and escaped literals; positive parsing controls. Boundary: Some positive controls assert only no exception. JSON key-set, list-order and scalar mutations outside these cases need separate coverage assessment."
+    },
+    {
+      "id": "SQLite row identity, schema and integrity",
+      "kind": "11 cases: 8 adversarial; 3 controls; 0 boundary; 0 evidence. PASS 11; FAIL 0; SKIP 0",
+      "path": "security/tests/test_graybox_adversarial.py; security/tests/test_release_review_regressions.py; security/tests/test_round3_fixes.py; security/tests/test_sqlite_location.py; security/tests/test_sqlite_schema_literals.py",
+      "limitation": "Oracle: Row swaps/non-text mutations rejected; trigger/rowid-shadow/view literal rejection; integrity/distinctness checks; legal sqliteX inventory and pre-verification schema mutations are checked through the complete pipeline. Boundary: DDL, column and foreign-key metadata are compared. The two supplied schema mutations are not exhaustive; wider supported schemas remain workload-driven."
+    },
+    {
+      "id": "Filesystem boundaries and privacy-safe failures",
+      "kind": "8 cases: 7 adversarial; 1 controls; 0 boundary; 0 evidence. PASS 8; FAIL 0; SKIP 0",
+      "path": "security/tests/test_blackbox_contract.py; security/tests/test_error_privacy.py; security/tests/test_pipeline_failclosed.py; security/tests/test_round4_fixes.py; security/tests/test_sqlite_schema_literals.py",
+      "limitation": "Oracle: Symlink/nested-root/type refusal, source-bound error redaction and CLI no-leak checks. Boundary: These cases do not exercise every special-file type, error identifier, or external writer race."
+    },
+    {
+      "id": "Publication, replay and source lineage",
+      "kind": "11 cases: 4 adversarial; 5 controls; 0 boundary; 2 evidence. PASS 11; FAIL 0; SKIP 0",
+      "path": "security/tests/test_blackbox_contract.py; security/tests/test_pipeline_failclosed.py; security/tests/test_publish_hardening.py; security/tests/test_release_review_regressions.py; security/tests/test_source_snapshot.py",
+      "limitation": "Oracle: Report/corpus existence, evidence hashes, clean output, prior release retention, changed-source digest detection; short writes must complete and zero-progress writes reject. Boundary: Short/zero writes are fault-injected through the real pipeline. Broader fsync/rename/power-loss campaigns remain future hardening; the source-mutation probe is helper-level."
+    },
+    {
+      "id": "Cross-format and text verifier mutations",
+      "kind": "6 cases: 4 adversarial; 2 controls; 0 boundary; 0 evidence. PASS 6; FAIL 0; SKIP 0",
+      "path": "security/tests/test_typed_scalar_verification.py; security/tests/test_verifier_sensitivity.py",
+      "limitation": "Oracle: Restored/removed/swapped text values and JSON bool/SQLite numeric type mutation rejected. Boundary: Re-derivation shares replacement primitives. One typed-scalar case contains two mutations, not two collected cases."
+    },
+    {
+      "id": "Public claims and report non-claims",
+      "kind": "3 cases: 0 adversarial; 0 controls; 0 boundary; 3 evidence. PASS 3; FAIL 0; SKIP 0",
+      "path": "security/tests/test_blackbox_contract.py; security/tests/test_claim_surface.py; security/tests/test_verifier_sensitivity.py",
+      "limitation": "Oracle: Known stale prose refused; report namespace and non-claim fields present. Boundary: Documentation/metadata checks, not adversarial data transformations."
+    },
+    {
+      "id": "Optional residual-risk demonstration",
+      "kind": "3 cases: 1 adversarial; 1 controls; 0 boundary; 1 evidence. PASS 3; FAIL 0; SKIP 0",
+      "path": "security/tests/test_residual_risk.py",
+      "limitation": "Oracle: Quasi-identifier singleton detection and declared-model scope. Boundary: Dev-only demonstration outside the release path; does not establish non-reidentifiability or close future issue 12."
+    },
+    {
+      "id": "S-RUN",
+      "kind": "pytest result + source-hash binding",
+      "path": "security/reports/adversarial-coverage/security-junit.xml",
+      "limitation": "Synthetic data; no full clean-submission Docker gate."
+    },
+    {
+      "id": "S-GOAL",
+      "kind": "required trial contract",
+      "path": "GOAL.md; TRIAL_BRIEF.md",
+      "limitation": "Normative requirements, not execution results."
+    },
+    {
+      "id": "S-WEBGPT",
+      "kind": "external reviewer evidence",
+      "path": "/mnt/storage12tb/oai-trial/test-coverage-review/ask/ask-tau-please-assess-whether-the-curren-15df2b2d2829/node-artifacts/handler-webgpt/response.md",
+      "limitation": "Reviewer judgment is not local closure proof."
+    }
+  ],
+  "findings": [
+    {
+      "id": "F-001",
+      "title": "Directory totals are not attack coverage",
+      "status": "Verified",
+      "evidence": [
+        "inventory.json",
+        "security/reports/adversarial-coverage/security-junit.xml"
+      ],
+      "rationale": "83 collected cases across 74 functions: 50 adversarial, 21 positive controls, 6 boundary/stress probes, and 6 evidence checks.",
+      "impact": "Calling every case an attack inflates the assurance story.",
+      "owner": "project maintainer",
+      "valid_next_actions": [
+        "Use the family matrix and named oracles, not a count quota."
+      ],
+      "acceptance_check": "Every JUnit case maps once; all totals reconcile.",
+      "non_claims": [
+        "Not a coverage percentage or independent-trial count."
+      ]
+    },
+    {
+      "id": "F-002",
+      "title": "Release qualification is still a separate gate",
+      "status": "Needs Decision",
+      "evidence": [
+        "GOAL.md",
+        "security/reports/adversarial-coverage/security-junit.xml"
+      ],
+      "rationale": "Nominal cleanup and digest tests do not establish crash recovery.",
+      "impact": "Passing pytest alone cannot authorize shipment.",
+      "owner": "release owner",
+      "valid_next_actions": [
+        "Run clean Docker qualification after reviewing required failure sequences."
+      ],
+      "acceptance_check": "Bare/mounted Docker commands, independent four-format readback, replay and negative cases pass from the submitted archive.",
+      "non_claims": [
+        "No claim that production-hardening gaps are automatically in scope."
+      ]
+    },
+    {
+      "id": "F-003",
+      "title": "Coverage sufficiency requires bounded review",
+      "status": "Verified",
+      "evidence": [
+        "ADEQUACY: inadequate for the reviewed pre-fix snapshot. Targeted fixes require local qualification; this is not a new verdict on the corrected source. Response: /mnt/storage12tb/oai-trial/test-coverage-review/ask/ask-tau-please-assess-whether-the-curren-15df2b2d2829/node-artifacts/handler-webgpt/response.md"
+      ],
+      "rationale": "Oracles must detect defects, not just run hostile-looking inputs.",
+      "impact": "Adequacy requires reconciliation of named requirements and gaps.",
+      "owner": "project maintainer",
+      "valid_next_actions": [
+        "Reconcile WebGPT's actual findings with local source and reproducers."
+      ],
+      "acceptance_check": "Required blockers have fail-before/pass-after proof; disclosed future work stays separate.",
+      "non_claims": [
+        "No universal security or anonymity guarantee."
+      ]
+    },
+    {
+      "id": "F-004",
+      "title": "Three release defects were reproduced and fixed",
+      "status": "Verified",
+      "evidence": [
+        "security/reports/adversarial-coverage/remediation.json",
+        "/mnt/storage12tb/oai-trial/release-fixes/before.xml",
+        "/mnt/storage12tb/oai-trial/release-fixes/after.xml"
+      ],
+      "rationale": "All 4 supplied failing cases pass after the targeted fixes. The local zero-progress write complement also passes.",
+      "impact": "Wrong-READY paths are closed under the named fault model.",
+      "owner": "project maintainer",
+      "valid_next_actions": [
+        "Qualify the clean container"
+      ],
+      "acceptance_check": "Run supplied regressions and clean container qualification.",
+      "non_claims": [
+        "Not a fresh reviewer PASS or completed Docker qualification."
+      ]
+    }
+  ],
+  "surface_contracts": [
+    {
+      "name": "Policy schema and identity conflicts",
+      "owning_persona": "trial reviewer",
+      "core_purpose": "Inspect policy schema and identity conflicts against R2, R3, R4, R5",
+      "primary_object": "security/tests/test_adversarial_matrix.py::test_case_insensitive_conflicting_identities_rejected; security/tests/test_adversarial_matrix.py::test_duplicate_policy_keys_rejected; security/tests/test_adversarial_matrix.py::test_version_true_is_rejected; security/tests/test_round3_fixes.py::test_missing_protected_values_rejected; security/tests/test_round3_fixes.py::test_missing_sensitive_values_rejected; security/tests/test_round4_fixes.py::test_empty_protected_reason_is_rejected; security/tests/test_round4_fixes.py::test_non_string_protected_reason_is_rejected; security/tests/test_round4_fixes.py::test_valid_protected_reason_accepted",
+      "source_of_truth": "inventory.json and source-bound security-junit.xml",
+      "valid_actions": [
+        "Read the named test and oracle",
+        "Reproduce a missing required failure sequence"
+      ],
+      "outstanding_broken_constraints": [
+        "Mostly function-level rejection checks; not every malformed policy is exercised through Docker."
+      ]
+    },
+    {
+      "name": "Bounded pseudonym domains",
+      "owning_persona": "trial reviewer",
+      "core_purpose": "Inspect bounded pseudonym domains against R3, R4",
+      "primary_object": "security/tests/test_pseudonym_domains.py::test_at_capacity_ip_policy_is_accepted; security/tests/test_pseudonym_domains.py::test_over_capacity_ip_policy_rejects_before_collision_search",
+      "source_of_truth": "inventory.json and source-bound security-junit.xml",
+      "valid_actions": [
+        "Read the named test and oracle",
+        "Reproduce a missing required failure sequence"
+      ],
+      "outstanding_broken_constraints": [
+        "IPv4 capacity is covered here; equivalent phone-capacity and forced collision exhaustion are not covered by these two cases."
+      ]
+    },
+    {
+      "name": "Original-input matching and overlap",
+      "owning_persona": "trial reviewer",
+      "core_purpose": "Inspect original-input matching and overlap against R2, R5, R12",
+      "primary_object": "security/tests/test_graybox_adversarial.py::test_many_literals_completes_and_removes_all; security/tests/test_graybox_adversarial.py::test_pathological_overlap_is_deterministic; security/tests/test_graybox_adversarial.py::test_very_long_literal; security/tests/test_round2_fixes.py::test_partial_boundary_overlap_rejected",
+      "source_of_truth": "inventory.json and source-bound security-junit.xml",
+      "valid_actions": [
+        "Read the named test and oracle",
+        "Reproduce a missing required failure sequence"
+      ],
+      "outstanding_broken_constraints": [
+        "Stress inputs are bounded; many-literal absence is sampled rather than exhaustively checked."
+      ]
+    },
+    {
+      "name": "CSV dialect and located cell/row fidelity",
+      "owning_persona": "trial reviewer",
+      "core_purpose": "Inspect csv dialect and located cell/row fidelity against R1, R2, R6, R7, R11",
+      "primary_object": "security/tests/test_csv_dialect.py::test_comma_csv_multi_column_still_accepted; security/tests/test_csv_dialect.py::test_malformed_comma_quoting_is_rejected; security/tests/test_csv_dialect.py::test_quoted_punctuation_and_multiline_comma_csv_are_preserved; security/tests/test_csv_dialect.py::test_semicolon_csv_is_rejected_not_silently_reinterpreted; security/tests/test_csv_dialect.py::test_semicolon_dialect_with_quoted_comma_is_rejected_before_release; security/tests/test_csv_dialect.py::test_single_column_comma_csv_still_accepted; security/tests/test_graybox_adversarial.py::test_csv_embedded_multiline_and_quotes_preserved; security/tests/test_graybox_adversarial.py::test_large_csv_field_preserved; security/tests/test_verifier_location.py::test_dropped_csv_row_rejected; security/tests/test_verifier_location.py::test_swapped_pseudonyms_in_csv_rejected",
+      "source_of_truth": "inventory.json and source-bound security-junit.xml",
+      "valid_actions": [
+        "Read the named test and oracle",
+        "Reproduce a missing required failure sequence"
+      ],
+      "outstanding_broken_constraints": [
+        "Six dialect variants use the CLI and empty-output oracle; other cases mostly call adapters/verifier directly."
+      ]
+    },
+    {
+      "name": "JSON parsing, numbers and encoding",
+      "owning_persona": "trial reviewer",
+      "core_purpose": "Inspect json parsing, numbers and encoding against R1, R2, R6, R7, R11",
+      "primary_object": "security/tests/test_adversarial_matrix.py::test_non_finite_json_number_is_rejected; security/tests/test_graybox_adversarial.py::test_json_deep_within_bound_ok; security/tests/test_graybox_adversarial.py::test_json_over_depth_rejected; security/tests/test_round2_fixes.py::test_exact_float_still_allowed; security/tests/test_round2_fixes.py::test_lossy_float_rejected; security/tests/test_round2_fixes.py::test_verifier_rejects_duplicate_output_keys; security/tests/test_round3_fixes.py::test_json_bom_is_stripped_by_searcher; security/tests/test_verifier_location.py::test_clean_run_still_verifies; security/tests/test_verifier_location.py::test_escaped_json_sensitive_value_rejected",
+      "source_of_truth": "inventory.json and source-bound security-junit.xml",
+      "valid_actions": [
+        "Read the named test and oracle",
+        "Reproduce a missing required failure sequence"
+      ],
+      "outstanding_broken_constraints": [
+        "Some positive controls assert only no exception. JSON key-set, list-order and scalar mutations outside these cases need separate coverage assessment."
+      ]
+    },
+    {
+      "name": "SQLite row identity, schema and integrity",
+      "owning_persona": "trial reviewer",
+      "core_purpose": "Inspect sqlite row identity, schema and integrity against R1, R2, R4, R6, R7",
+      "primary_object": "security/tests/test_graybox_adversarial.py::test_sqlite_unique_column_integrity_preserved; security/tests/test_release_review_regressions.py::test_schema_mutation_is_rejected_before_publication; security/tests/test_release_review_regressions.py::test_sqlite_prefix_lookalike_is_processed; security/tests/test_round3_fixes.py::test_sqlite_rowid_shadow_rejected; security/tests/test_round3_fixes.py::test_sqlite_trigger_rejected; security/tests/test_sqlite_location.py::test_clean_sqlite_run_verifies; security/tests/test_sqlite_location.py::test_swapped_sqlite_subject_pseudonyms_rejected; security/tests/test_sqlite_location.py::test_unrelated_value_mutation_rejected; security/tests/test_sqlite_schema_literals.py::test_clean_view_still_accepted; security/tests/test_sqlite_schema_literals.py::test_sensitive_literal_in_view_sql_is_rejected",
+      "source_of_truth": "inventory.json and source-bound security-junit.xml",
+      "valid_actions": [
+        "Read the named test and oracle",
+        "Reproduce a missing required failure sequence"
+      ],
+      "outstanding_broken_constraints": [
+        "DDL, column and foreign-key metadata are compared. The two supplied schema mutations are not exhaustive; wider supported schemas remain workload-driven."
+      ]
+    },
+    {
+      "name": "Filesystem boundaries and privacy-safe failures",
+      "owning_persona": "trial reviewer",
+      "core_purpose": "Inspect filesystem boundaries and privacy-safe failures against R9, R10",
+      "primary_object": "security/tests/test_blackbox_contract.py::test_hostile_input_fails_closed_no_ready_marker; security/tests/test_blackbox_contract.py::test_no_sensitive_value_in_release_or_stdio; security/tests/test_error_privacy.py::test_hostile_policy_identifiers_never_appear_in_error_text; security/tests/test_pipeline_failclosed.py::test_nested_roots_rejected; security/tests/test_pipeline_failclosed.py::test_symlink_in_corpus_rejected; security/tests/test_pipeline_failclosed.py::test_unsupported_input_fails_closed; security/tests/test_round4_fixes.py::test_policy_symlink_rejected_before_policy_read; security/tests/test_sqlite_schema_literals.py::test_hostile_filenames_never_appear_in_error_text",
+      "source_of_truth": "inventory.json and source-bound security-junit.xml",
+      "valid_actions": [
+        "Read the named test and oracle",
+        "Reproduce a missing required failure sequence"
+      ],
+      "outstanding_broken_constraints": [
+        "These cases do not exercise every special-file type, error identifier, or external writer race."
+      ]
+    },
+    {
+      "name": "Publication, replay and source lineage",
+      "owning_persona": "trial reviewer",
+      "core_purpose": "Inspect publication, replay and source lineage against R3, R8, R9, R10",
+      "primary_object": "security/tests/test_blackbox_contract.py::test_deterministic_replay; security/tests/test_pipeline_failclosed.py::test_prior_release_survives_failed_rerun; security/tests/test_pipeline_failclosed.py::test_success_writes_report_last; security/tests/test_publish_hardening.py::test_no_staging_left_in_output; security/tests/test_publish_hardening.py::test_report_binds_evidence_chain; security/tests/test_publish_hardening.py::test_report_is_regular_file_no_temp_left; security/tests/test_publish_hardening.py::test_report_matches_committed_schema; security/tests/test_release_review_regressions.py::test_short_report_write_cannot_return_success_with_truncated_json; security/tests/test_release_review_regressions.py::test_zero_report_write_fails_closed; security/tests/test_source_snapshot.py::test_source_digest_detects_content_change_even_if_mtime_preserved; security/tests/test_source_snapshot.py::test_source_digest_stable_when_unchanged",
+      "source_of_truth": "inventory.json and source-bound security-junit.xml",
+      "valid_actions": [
+        "Read the named test and oracle",
+        "Reproduce a missing required failure sequence"
+      ],
+      "outstanding_broken_constraints": [
+        "Short/zero writes are fault-injected through the real pipeline. Broader fsync/rename/power-loss campaigns remain future hardening; the source-mutation probe is helper-level."
+      ]
+    },
+    {
+      "name": "Cross-format and text verifier mutations",
+      "owning_persona": "trial reviewer",
+      "core_purpose": "Inspect cross-format and text verifier mutations against R2, R4, R6, R8",
+      "primary_object": "security/tests/test_typed_scalar_verification.py::test_clean_typed_run_verifies; security/tests/test_typed_scalar_verification.py::test_json_bool_number_and_sqlite_integer_real_mutations_rejected; security/tests/test_verifier_sensitivity.py::test_baseline_passes; security/tests/test_verifier_sensitivity.py::test_incomplete_subject_coverage_is_caught; security/tests/test_verifier_sensitivity.py::test_restored_literal_is_caught; security/tests/test_verifier_sensitivity.py::test_swapped_subject_pseudonyms_is_caught",
+      "source_of_truth": "inventory.json and source-bound security-junit.xml",
+      "valid_actions": [
+        "Read the named test and oracle",
+        "Reproduce a missing required failure sequence"
+      ],
+      "outstanding_broken_constraints": [
+        "Re-derivation shares replacement primitives. One typed-scalar case contains two mutations, not two collected cases."
+      ]
+    },
+    {
+      "name": "Public claims and report non-claims",
+      "owning_persona": "trial reviewer",
+      "core_purpose": "Inspect public claims and report non-claims against R9, R15",
+      "primary_object": "security/tests/test_blackbox_contract.py::test_report_declares_non_claims; security/tests/test_claim_surface.py::test_public_claims_match_current_evidence; security/tests/test_verifier_sensitivity.py::test_report_carries_non_claims",
+      "source_of_truth": "inventory.json and source-bound security-junit.xml",
+      "valid_actions": [
+        "Read the named test and oracle",
+        "Reproduce a missing required failure sequence"
+      ],
+      "outstanding_broken_constraints": [
+        "Documentation/metadata checks, not adversarial data transformations."
+      ]
+    },
+    {
+      "name": "Optional residual-risk demonstration",
+      "owning_persona": "trial reviewer",
+      "core_purpose": "Inspect optional residual-risk demonstration against OUT_OF_SCOPE_RISK_PLANE",
+      "primary_object": "security/tests/test_residual_risk.py::test_flags_unique_quasi_identifier_combo; security/tests/test_residual_risk.py::test_pass_when_all_combos_repeat; security/tests/test_residual_risk.py::test_schema_and_non_claims_present",
+      "source_of_truth": "inventory.json and source-bound security-junit.xml",
+      "valid_actions": [
+        "Read the named test and oracle",
+        "Reproduce a missing required failure sequence"
+      ],
+      "outstanding_broken_constraints": [
+        "Dev-only demonstration outside the release path; does not establish non-reidentifiability or close future issue 12."
+      ]
+    }
+  ],
+  "state_split": {
+    "finished": [
+      "JUnit reconciles all 83 cases and 74 functions."
+    ],
+    "pending": [
+      "ADEQUACY: inadequate for the reviewed pre-fix snapshot. Targeted fixes require local qualification; this is not a new verdict on the corrected source. Response: /mnt/storage12tb/oai-trial/test-coverage-review/ask/ask-tau-please-assess-whether-the-curren-15df2b2d2829/node-artifacts/handler-webgpt/response.md",
+      "A-001 clean-submission qualification"
+    ],
+    "outstanding": [
+      "Reconcile the named oracle limitations, without reopening future scope."
+    ],
+    "broken": [],
+    "unproven": [
+      "Exhaustive security, anonymity, crash/power-loss behavior and production scale."
+    ]
+  },
+  "plan_ready_next_actions": [
+    {
+      "id": "A-001",
+      "related_finding": "F-002",
+      "action": "Run the final release gate after bounded coverage review.",
+      "owner_persona": "release owner",
+      "primary_object": "submission archive and qualification receipt",
+      "rationale": "Shipping is a contract decision, not a test-count threshold.",
+      "acceptance_check": "Bare/mounted Docker commands, independent four-format readback, replay and negative cases pass from the submitted archive.",
+      "dependencies": [
+        "WebGPT findings reconciled"
+      ],
+      "risk_if_skipped": "The exact deliverable has not been qualified.",
+      "suggested_priority": "P1"
+    }
+  ],
+  "plan_iterate_seed": {
+    "recommended_phase_id": "release-qualification",
+    "objective": "Run the final release gate after bounded coverage review.",
+    "candidate_phases": [
+      "Reconcile concrete reviewer blockers",
+      "Run minimal reproducers",
+      "Qualify submitted Docker artifact",
+      "Archive evidence and decide shipment"
+    ],
+    "deterministic_evidence_gates": [
+      "uv run pytest -q",
+      "docker build -t anonymization-trial .",
+      "docker run --rm anonymization-trial",
+      "Mounted four-format run and independent output readback"
+    ],
+    "domain_review_loops": [
+      "Bounded WebGPT coverage review via Ask/Tau; local reproduction owns closure"
+    ],
+    "interaction_evidence": "Static report; Surf proves visibility, not security.",
+    "ask_persona_review": "ADEQUACY: inadequate for the reviewed pre-fix snapshot. Targeted fixes require local qualification; this is not a new verdict on the corrected source. Response: /mnt/storage12tb/oai-trial/test-coverage-review/ask/ask-tau-please-assess-whether-the-curren-15df2b2d2829/node-artifacts/handler-webgpt/response.md",
+    "dogpile_reference_research": "Only for unclear failure semantics, not a count target.",
+    "human_decisions": [
+      "Final shipment authorization and acceptance of explicit non-claims"
+    ],
+    "stop_conditions": [
+      "Any concrete required-invariant violation",
+      "Missing artifact/readback",
+      "Unavailable reviewer evidence"
+    ],
+    "non_claims": [
+      "This report is not execution of the final qualification phase."
+    ]
+  },
+  "non_claims": [
+    "This covers security/tests, not all tests/ cases or a repo-wide attack count.",
+    "Collected cases are not distinct attacks or statistically independent trials.",
+    "Optional residual-risk tests are outside the release path.",
+    "A passing test does not establish that its assertion catches every intended defect.",
+    "This is not a new WebGPT PASS, proof of anonymity, or a shipping authorization."
+  ]
+}

@@ -2,9 +2,12 @@
 
 ## Time spent
 
-Development was assistant-driven across a single working session (well under the
-eight-hour cap). See `git log` for the per-issue commit trail (#2 → #9 plus this
-production design).
+The brief sets an eight-hour limit. The recorded work-commit span starts at
+2026-09-04 15:09:10 UTC (`d8ad9e4`); the final SQLite/report-write corrections
+were committed at 23:40:24 UTC (`5b1f22d`), after the eight-hour elapsed point.
+That span includes review waits and presentation work; active engineering time
+was not tracked separately. This candidate includes post-timebox corrections
+and must not be represented as a verified under-eight-hour completion.
 
 ## Implemented scope
 
@@ -93,49 +96,96 @@ values. Raw inputs, mappings, and quarantine never enter the release dir or
 logs. The verifier rereads output from disk and does not trust transform
 booleans.
 
-## Known gaps and next steps
+## Production hardening after the eight-hour trial
 
-- **SQLite is verified relationally AND per-row.** Row counts, `integrity_check`,
-  and `foreign_key_check` are preserved, plus a per-row location oracle (by
-  rowid: text cells vs the independent recompute, non-text cells byte-identical)
-  and a schema-object literal scan. Constructs the verifier cannot reproduce are
-  rejected fail closed (triggers, `rowid`-shadowing columns, virtual tables,
-  `WITHOUT ROWID`).
-- **The verifier is an independent re-derivation, not a separate implementation.**
-  It rereads output from disk and recomputes expected results, but shares the
-  `replace_text`/`build_replacements` primitive with the transform; a fully
-  independent second matcher would be stronger assurance.
-- **verify -> publish assumes a trusted single-writer staging filesystem.** The
-  verified digest is re-checked immediately before the atomic promote, closing
-  the in-process window; concurrent external mutation of staging by another
-  writer is out of the assumed threat model.
-- **Source is assumed mounted read-only.** A source-snapshot/TOCTOU gate rejects
-  content that changes during a run; deeper host-side swap-and-restore is outside
-  the mounted-read-only container threat model.
-- **Not streaming/bounded-memory.** Per-file content is materialized in memory;
-  TB/PB is designed and cost-modelled, not run at scale.
-- **CSV uses a strict comma/double-quote dialect.** Unquoted semicolons, tabs,
-  and pipes are rejected throughout the file, even in data rows; quote those
-  characters when they are cell content. Malformed quoting is rejected.
-  Quoting is normalized (logical preservation, not byte-level).
-- **Single fixed pseudonym scope.** Local trial pseudonyms use the public fixed
-  scope trial-v1; they provide no private-key secrecy or cross-tenant
-  unlinkability. Production replaces this public namespace with a
-  tenant-or-purpose-scoped keyed HMAC. IP/phone domains are bounded with a
-  cardinality preflight that rejects over-capacity policies up front.
-- The cost model includes storage (intake+staging+release), verify rereads,
-  staging/promotion requests, a retry fraction, a 2x verify compute pass, and a
-  per-service SQS/EventBridge/KMS/CloudWatch quantity-times-unit-price estimate.
-  Dated price-source references are in the inputs JSON. It still omits output
-  expansion, transfer charges, KMS key rental, log retention, and S3 tier/discount
-  modeling. Same-region transfer is assumed free; prices use the first Standard
-  tier. The worker pool assumes a raised Fargate vCPU quota, not default quotas.
-- Cloud prices are list-price, unverified against a dated source.
-- Container runs as root for mounted-write robustness; non-root variant is
-  documented in the Dockerfile.
-- Discovery beyond policy literals (RapidFuzz aliases / deterministic classifier)
-  is designed but not built (opt-in, extra credit).
-- The `ripgrep` concurrent verification cross-check is designed, not yet wired.
+The implementation optimizes for a small, auditable correctness boundary rather
+than production completeness. The priorities below are deliberate next steps if
+this mechanism is promoted beyond the trial, not claims of shipped functionality.
+Post-timebox corrections are disclosed above.
+
+### Assurance
+
+**Must be correct now:** literal replacement, identity coherence, format and
+protected-value preservation, whole-corpus verification, and report-last release.
+SQLite verification includes logical schema/object definitions, column and
+foreign-key metadata, and typed per-row values; legal `sqliteX` tables are not
+mistaken for reserved `sqlite_` objects. Report writes handle partial progress
+and reject zero progress before a readiness marker can be committed.
+
+**Bounded now:** verification independently rereads/re-derives values but shares
+replacement primitives. Input is mounted read-only; staging is trusted and
+single-writer. Ordinary source mutation is detected, but a hostile host capable
+of swapping and restoring bytes is outside this threat model. Local failure is
+uncommitted output, not a quarantine service.
+
+**Next:** an implementation-diverse verifier, systematic write/fsync/rename/crash
+qualification, and immutable object versions/snapshots. The concurrent `ripgrep`
+cross-check is designed, not wired. Successful cleanup and digest-helper tests
+are not presented as an exhaustive crash campaign.
+
+### Scale and operations
+
+Local processing uses **per-file materialization**, not bounded-memory TB/PB
+streaming. CSV is a strict comma/double-quote dialect: unquoted semicolons, tabs,
+and pipes or malformed quoting reject; quote punctuation when it is cell data.
+Quoting is normalized logically. SQLite rejects triggers, unsafe rowid shadows,
+virtual tables, and `WITHOUT ROWID`; wider support should follow real workloads.
+The container runs as root for mounted-write robustness.
+
+**Next:** format-aware bounded-memory processing, distributed checkpoints/replay,
+safe observability, quarantine/access/retention workflows, and workload-driven
+optimization. Replace assumed object sizes, throughput, retries, list prices and
+quotas with measurements before deployment—not a local production platform now.
+
+The cost model includes three stored copies, verifier rereads, staging/promotion
+requests, retries, and per-service SQS/EventBridge/KMS/CloudWatch unit prices.
+It excludes output expansion, transfer charges, KMS key rental, log retention and
+S3 tier/discount modeling. Same-region transfer is assumed free; the worker pool
+assumes a raised Fargate vCPU quota. Price citations are dated, but not a billing
+quote or demonstrated TB/PB execution.
+
+### Privacy posture
+
+The public deterministic `trial-v1` namespace demonstrates identity coherence,
+not private-key secrecy or cross-tenant unlinkability. Phone/IP domains are
+bounded and reject exhaustion. Literal replacement does not establish discovery
+of unlisted identifiers, quasi-identifier anonymity, or resistance to linkage.
+
+**Next:** tenant/purpose-scoped HMAC keys with rotation/version semantics,
+workload-driven discovery, and a separate residual-risk plane. Adaptive red-team
+lineage stays development-only; useful findings become small retained regressions.
+Issues #12 and #13 remain future work, not prerequisites for this bounded runtime.
+
+### Stopping rule
+
+Reopen the implementation only for a reproducible required-invariant violation,
+a missing mandatory brief requirement, or a false evaluator-facing claim. After
+the three concrete review defects are closed, qualify the exact container/archive
+and stop. Stronger assurance, additional formats and optimizations are documented
+priorities, not an open-ended feature backlog for this submission.
+
+## Candidate qualification
+
+The three concrete release fixes are recorded in runtime commit
+`5b1f22d` (SQLite inventory/schema and partial report writes). The reproducible
+qualification command is:
+
+```bash
+uv run --extra dev python scripts/qualify_submission.py --output "$QUALIFICATION_OUTPUT"
+```
+
+Use a new directory on the artifact volume. The procedure clones the pushed
+candidate, preserves baseline history, runs full pytest/Ruff, performs a clean
+Docker build and the exact evaluator commands, independently reads all four
+formats and report digests, tests early/late refusal, and compares an offline
+replay. It verifies every packaged file, including `.git`, against that checkout.
+
+`QUALIFICATION.json` beside the resulting ZIP records the exact qualified
+checkout SHA, image ID, commands, exit codes and artifact hashes. Keeping that
+receipt outside the immutable ZIP avoids a self-referential commit/hash loop.
+A script or a passing unit suite is not qualification: require that receipt's
+PASS and read back its archive hash. Presentation QA remains a separate weekend
+activity, not a technical-runtime release prerequisite.
 
 ## Python conventions (deliberate overrides)
 The repo follows universal Python best practices (centralized `StrEnum` error

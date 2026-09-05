@@ -45,7 +45,7 @@ separate dependency-audit surfaces; stdlib-only does not establish their safety.
   distinct non-nested input/output roots; sensitive literal in a path rejected.
 - SQLite: identifiers quoted + inventoried; values parameterized; read-only
   source via the online backup API; virtual/`WITHOUT ROWID` tables rejected.
-- Parsing bounds: strict UTF-8; JSON depth/size limits; per-file CSV/text processing (not streaming; see SUBMISSION Known gaps).
+- Parsing bounds: strict UTF-8; JSON depth/size limits; per-file CSV/text processing (not streaming; see SUBMISSION production-hardening boundary).
 - No sensitive data in logs/reports: closed `errors.py` vocabulary; `report.json`
   carries counts + digests only and a `does_not_establish` non-claims list.
 - Private same-filesystem staging; report-last atomic publish; fail closed.

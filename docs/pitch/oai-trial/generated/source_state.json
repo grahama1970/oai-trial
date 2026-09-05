@@ -16,9 +16,9 @@
   },
   "missing": [],
   "canonical_hashes": {
-    "deck.curated.yaml": "8759896661d9a21d8e796f946ddb194d1ba9944bfb6b288b8f50787cda3dab12",
+    "deck.curated.yaml": "2217b64c1a990f8e0fdeadf6ba661f4880b3d83025c50211c8b2681990caa1b8",
     "claim_ledger.curated.yaml": "dd11b63a236e432818fb23d4ad0d46a01e69d1ec15cf80e13f48f15edbae137a",
-    "speaker_notes.curated.md": "818b681405e349cb5bd5111d48b4ccc7310d4379426f7b168bb740ae0ddffc22"
+    "speaker_notes.curated.md": "3984ca37769d45c4d9dab9a301add2df7c05bc988f55ca723be4f67cc7a4b8f5"
   },
   "asset_hashes": {
     "docs/pitch/oai-trial/assets/local-pipeline.svg": "55cbb14a0f1864cce5de3ea3d95b8f70f67906549371b1a35f44279e7d09713d",

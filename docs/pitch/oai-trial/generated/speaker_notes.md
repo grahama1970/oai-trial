@@ -122,7 +122,7 @@ Transition: The final engineering decision is where to stop claiming certainty.
 Time: 4 minutes (32:00–36:00)
 Claim: The literal-policy guarantees do not imply anonymity or production readiness.
 Evidence: `docs/PRIVACY_CONTRACT.md` §§ Verified locally, Not established;
-`SUBMISSION.md` Known gaps. Claim ID: nonclaims.
+`SUBMISSION.md` Production hardening after the eight-hour trial. Claim ID: nonclaims.
 Live jump: Open report.json's `does_not_establish` beside the privacy contract.
 Summarize three choices: reject ambiguity; preserve evidence; avoid building a
 platform. Leave re-identification analysis and adaptive Battle outside this release.

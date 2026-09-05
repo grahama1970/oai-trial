@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Adversarial coverage</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="report.css" />
+</head>
+<body>
+<h1 id="adversarial-test-coverage-by-failure-family">Adversarial test
+coverage by failure family</h1>
+<h2 id="report-summary">Report Summary</h2>
+<p><strong>Overall Finding:</strong> Partially Verified</p>
+<p><strong>Core Conclusion:</strong><br />
+83 collected cases across 74 functions: 50 adversarial, 21 positive
+controls, 6 boundary/stress probes, and 6 evidence checks. ADEQUACY:
+inadequate for the reviewed pre-fix snapshot. Targeted fixes require
+local qualification; this is not a new verdict on the corrected source.
+Response:
+/mnt/storage12tb/oai-trial/test-coverage-review/ask/ask-tau-please-assess-whether-the-curren-15df2b2d2829/node-artifacts/handler-webgpt/response.md</p>
+<p><strong>Evidence Basis:</strong><br />
+Fresh JUnit results joined to a source-reviewed catalog. Tests use
+synthetic inputs and, where stated, controlled adapter/write faults
+against real runtime code. Classification is project-agent judgment, not
+an automatic metric.</p>
+<p><strong>Highest-Risk Issues:</strong></p>
+<ul>
+<li>F-002 Publication failure sequences and clean-submission
+qualification</li>
+<li>F-003 Sufficiency not inferred from counts</li>
+</ul>
+<p><strong>Immediate Next Steps:</strong></p>
+<ul>
+<li>Reconcile the bounded WebGPT review</li>
+<li>A-001 Run the exact submitted Docker contract</li>
+</ul>
+<p><strong>Non-Claims:</strong></p>
+<ul>
+<li>This covers security/tests, not all tests/ cases or a repo-wide
+attack count.</li>
+<li>Collected cases are not distinct attacks or statistically
+independent trials.</li>
+<li>Optional residual-risk tests are outside the release path.</li>
+<li>A passing test does not establish that its assertion catches every
+intended defect.</li>
+<li>This is not a new WebGPT PASS, proof of anonymity, or a shipping
+authorization.</li>
+</ul>
+<h2 id="scope">Scope</h2>
+<ul>
+<li>Every collected security/tests case at
+4947044f05bf9c52d60162de54ae78ba8f2b7474</li>
+</ul>
+<h2 id="project-context">Project Context</h2>
+<p>Security cases ran; clean-submission qualification is pending.</p>
+<h2 id="source-of-truth-inventory">Source-of-Truth Inventory</h2>
+<table>
+<thead>
+<tr class="header">
+<th>ID</th>
+<th>Kind</th>
+<th>Path</th>
+<th>Limitation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Policy schema and identity conflicts</td>
+<td>8 cases: 7 adversarial; 1 controls; 0 boundary; 0 evidence. PASS 8;
+FAIL 0; SKIP 0</td>
+<td>security/tests/test_adversarial_matrix.py;
+security/tests/test_round3_fixes.py;
+security/tests/test_round4_fixes.py</td>
+<td>Oracle: compile_policy/load_policy reject malformed or contradictory
+policies. Boundary: Mostly function-level rejection checks; not every
+malformed policy is exercised through Docker.</td>
+</tr>
+<tr class="even">
+<td>Bounded pseudonym domains</td>
+<td>2 cases: 1 adversarial; 0 controls; 1 boundary; 0 evidence. PASS 2;
+FAIL 0; SKIP 0</td>
+<td>security/tests/test_pseudonym_domains.py</td>
+<td>Oracle: Distinct replacement cardinality at the IPv4 limit;
+over-capacity refusal. Boundary: IPv4 capacity is covered here;
+equivalent phone-capacity and forced collision exhaustion are not
+covered by these two cases.</td>
+</tr>
+<tr class="odd">
+<td>Original-input matching and overlap</td>
+<td>4 cases: 1 adversarial; 0 controls; 3 boundary; 0 evidence. PASS 4;
+FAIL 0; SKIP 0</td>
+<td>security/tests/test_graybox_adversarial.py;
+security/tests/test_round2_fixes.py</td>
+<td>Oracle: Replacement count, sampled literal absence, repeatability
+and overlap refusal. Boundary: Stress inputs are bounded; many-literal
+absence is sampled rather than exhaustively checked.</td>
+</tr>
+<tr class="even">
+<td>CSV dialect and located cell/row fidelity</td>
+<td>18 cases: 12 adversarial; 5 controls; 1 boundary; 0 evidence. PASS
+18; FAIL 0; SKIP 0</td>
+<td>security/tests/test_csv_dialect.py;
+security/tests/test_graybox_adversarial.py;
+security/tests/test_verifier_location.py</td>
+<td>Oracle: Unsupported/malformed dialect rejected; cells/rows reread;
+swaps/dropped rows rejected. Boundary: Six dialect variants use the CLI
+and empty-output oracle; other cases mostly call adapters/verifier
+directly.</td>
+</tr>
+<tr class="odd">
+<td>JSON parsing, numbers and encoding</td>
+<td>9 cases: 5 adversarial; 3 controls; 1 boundary; 0 evidence. PASS 9;
+FAIL 0; SKIP 0</td>
+<td>security/tests/test_adversarial_matrix.py;
+security/tests/test_graybox_adversarial.py;
+security/tests/test_round2_fixes.py;
+security/tests/test_round3_fixes.py;
+security/tests/test_verifier_location.py</td>
+<td>Oracle: Overflow/lossy numbers, depth, duplicate output keys and
+escaped literals; positive parsing controls. Boundary: Some positive
+controls assert only no exception. JSON key-set, list-order and scalar
+mutations outside these cases need separate coverage assessment.</td>
+</tr>
+<tr class="even">
+<td>SQLite row identity, schema and integrity</td>
+<td>11 cases: 8 adversarial; 3 controls; 0 boundary; 0 evidence. PASS
+11; FAIL 0; SKIP 0</td>
+<td>security/tests/test_graybox_adversarial.py;
+security/tests/test_release_review_regressions.py;
+security/tests/test_round3_fixes.py;
+security/tests/test_sqlite_location.py;
+security/tests/test_sqlite_schema_literals.py</td>
+<td>Oracle: Row swaps/non-text mutations rejected;
+trigger/rowid-shadow/view literal rejection; integrity/distinctness
+checks; legal sqliteX inventory and pre-verification schema mutations
+are checked through the complete pipeline. Boundary: DDL, column and
+foreign-key metadata are compared. The two supplied schema mutations are
+not exhaustive; wider supported schemas remain workload-driven.</td>
+</tr>
+<tr class="odd">
+<td>Filesystem boundaries and privacy-safe failures</td>
+<td>8 cases: 7 adversarial; 1 controls; 0 boundary; 0 evidence. PASS 8;
+FAIL 0; SKIP 0</td>
+<td>security/tests/test_blackbox_contract.py;
+security/tests/test_error_privacy.py;
+security/tests/test_pipeline_failclosed.py;
+security/tests/test_round4_fixes.py;
+security/tests/test_sqlite_schema_literals.py</td>
+<td>Oracle: Symlink/nested-root/type refusal, source-bound error
+redaction and CLI no-leak checks. Boundary: These cases do not exercise
+every special-file type, error identifier, or external writer race.</td>
+</tr>
+<tr class="even">
+<td>Publication, replay and source lineage</td>
+<td>11 cases: 4 adversarial; 5 controls; 0 boundary; 2 evidence. PASS
+11; FAIL 0; SKIP 0</td>
+<td>security/tests/test_blackbox_contract.py;
+security/tests/test_pipeline_failclosed.py;
+security/tests/test_publish_hardening.py;
+security/tests/test_release_review_regressions.py;
+security/tests/test_source_snapshot.py</td>
+<td>Oracle: Report/corpus existence, evidence hashes, clean output,
+prior release retention, changed-source digest detection; short writes
+must complete and zero-progress writes reject. Boundary: Short/zero
+writes are fault-injected through the real pipeline. Broader
+fsync/rename/power-loss campaigns remain future hardening; the
+source-mutation probe is helper-level.</td>
+</tr>
+<tr class="odd">
+<td>Cross-format and text verifier mutations</td>
+<td>6 cases: 4 adversarial; 2 controls; 0 boundary; 0 evidence. PASS 6;
+FAIL 0; SKIP 0</td>
+<td>security/tests/test_typed_scalar_verification.py;
+security/tests/test_verifier_sensitivity.py</td>
+<td>Oracle: Restored/removed/swapped text values and JSON bool/SQLite
+numeric type mutation rejected. Boundary: Re-derivation shares
+replacement primitives. One typed-scalar case contains two mutations,
+not two collected cases.</td>
+</tr>
+<tr class="even">
+<td>Public claims and report non-claims</td>
+<td>3 cases: 0 adversarial; 0 controls; 0 boundary; 3 evidence. PASS 3;
+FAIL 0; SKIP 0</td>
+<td>security/tests/test_blackbox_contract.py;
+security/tests/test_claim_surface.py;
+security/tests/test_verifier_sensitivity.py</td>
+<td>Oracle: Known stale prose refused; report namespace and non-claim
+fields present. Boundary: Documentation/metadata checks, not adversarial
+data transformations.</td>
+</tr>
+<tr class="odd">
+<td>Optional residual-risk demonstration</td>
+<td>3 cases: 1 adversarial; 1 controls; 0 boundary; 1 evidence. PASS 3;
+FAIL 0; SKIP 0</td>
+<td>security/tests/test_residual_risk.py</td>
+<td>Oracle: Quasi-identifier singleton detection and declared-model
+scope. Boundary: Dev-only demonstration outside the release path; does
+not establish non-reidentifiability or close future issue 12.</td>
+</tr>
+<tr class="even">
+<td>S-RUN</td>
+<td>pytest result + source-hash binding</td>
+<td>security/reports/adversarial-coverage/security-junit.xml</td>
+<td>Synthetic data; no full clean-submission Docker gate.</td>
+</tr>
+<tr class="odd">
+<td>S-GOAL</td>
+<td>required trial contract</td>
+<td>GOAL.md; TRIAL_BRIEF.md</td>
+<td>Normative requirements, not execution results.</td>
+</tr>
+<tr class="even">
+<td>S-WEBGPT</td>
+<td>external reviewer evidence</td>
+<td>/mnt/storage12tb/oai-trial/test-coverage-review/ask/ask-tau-please-assess-whether-the-curren-15df2b2d2829/node-artifacts/handler-webgpt/response.md</td>
+<td>Reviewer judgment is not local closure proof.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="findings">Findings</h2>
+<h3 id="finding-directory-totals-are-not-attack-coverage">Finding:
+Directory totals are not attack coverage</h3>
+<p><strong>Finding ID:</strong> F-001 <strong>Status:</strong> Verified
+<strong>Evidence:</strong> inventory.json;
+security/reports/adversarial-coverage/security-junit.xml
+<strong>Rationale:</strong> 83 collected cases across 74 functions: 50
+adversarial, 21 positive controls, 6 boundary/stress probes, and 6
+evidence checks. <strong>Impact:</strong> Calling every case an attack
+inflates the assurance story. <strong>Owner:</strong> project maintainer
+<strong>Valid Next Actions:</strong> Use the family matrix and named
+oracles, not a count quota. <strong>Acceptance Check:</strong> Every
+JUnit case maps once; all totals reconcile. <strong>Non-Claims:</strong>
+Not a coverage percentage or independent-trial count.</p>
+<h3 id="finding-release-qualification-is-still-a-separate-gate">Finding:
+Release qualification is still a separate gate</h3>
+<p><strong>Finding ID:</strong> F-002 <strong>Status:</strong> Needs
+Decision <strong>Evidence:</strong> GOAL.md;
+security/reports/adversarial-coverage/security-junit.xml
+<strong>Rationale:</strong> Nominal cleanup and digest tests do not
+establish crash recovery. <strong>Impact:</strong> Passing pytest alone
+cannot authorize shipment. <strong>Owner:</strong> release owner
+<strong>Valid Next Actions:</strong> Run clean Docker qualification
+after reviewing required failure sequences. <strong>Acceptance
+Check:</strong> Bare/mounted Docker commands, independent four-format
+readback, replay and negative cases pass from the submitted archive.
+<strong>Non-Claims:</strong> No claim that production-hardening gaps are
+automatically in scope.</p>
+<h3 id="finding-coverage-sufficiency-requires-bounded-review">Finding:
+Coverage sufficiency requires bounded review</h3>
+<p><strong>Finding ID:</strong> F-003 <strong>Status:</strong> Verified
+<strong>Evidence:</strong> ADEQUACY: inadequate for the reviewed pre-fix
+snapshot. Targeted fixes require local qualification; this is not a new
+verdict on the corrected source. Response:
+/mnt/storage12tb/oai-trial/test-coverage-review/ask/ask-tau-please-assess-whether-the-curren-15df2b2d2829/node-artifacts/handler-webgpt/response.md
+<strong>Rationale:</strong> Oracles must detect defects, not just run
+hostile-looking inputs. <strong>Impact:</strong> Adequacy requires
+reconciliation of named requirements and gaps. <strong>Owner:</strong>
+project maintainer <strong>Valid Next Actions:</strong> Reconcile
+WebGPT's actual findings with local source and reproducers.
+<strong>Acceptance Check:</strong> Required blockers have
+fail-before/pass-after proof; disclosed future work stays separate.
+<strong>Non-Claims:</strong> No universal security or anonymity
+guarantee.</p>
+<h3
+id="finding-three-release-defects-were-reproduced-and-fixed">Finding:
+Three release defects were reproduced and fixed</h3>
+<p><strong>Finding ID:</strong> F-004 <strong>Status:</strong> Verified
+<strong>Evidence:</strong>
+security/reports/adversarial-coverage/remediation.json;
+/mnt/storage12tb/oai-trial/release-fixes/before.xml;
+/mnt/storage12tb/oai-trial/release-fixes/after.xml
+<strong>Rationale:</strong> All 4 supplied failing cases pass after the
+targeted fixes. The local zero-progress write complement also passes.
+<strong>Impact:</strong> Wrong-READY paths are closed under the named
+fault model. <strong>Owner:</strong> project maintainer <strong>Valid
+Next Actions:</strong> Qualify the clean container <strong>Acceptance
+Check:</strong> Run supplied regressions and clean container
+qualification. <strong>Non-Claims:</strong> Not a fresh reviewer PASS or
+completed Docker qualification.</p>
+<h2 id="surface--module-contracts">Surface / Module Contracts</h2>
+<h3 id="surface-contract-policy-schema-and-identity-conflicts">Surface
+Contract: Policy schema and identity conflicts</h3>
+<ul>
+<li>Owning Persona: trial reviewer</li>
+<li>Core Purpose: Inspect policy schema and identity conflicts against
+R2, R3, R4, R5</li>
+<li>Primary Object:
+security/tests/test_adversarial_matrix.py::test_case_insensitive_conflicting_identities_rejected;
+security/tests/test_adversarial_matrix.py::test_duplicate_policy_keys_rejected;
+security/tests/test_adversarial_matrix.py::test_version_true_is_rejected;
+security/tests/test_round3_fixes.py::test_missing_protected_values_rejected;
+security/tests/test_round3_fixes.py::test_missing_sensitive_values_rejected;
+security/tests/test_round4_fixes.py::test_empty_protected_reason_is_rejected;
+security/tests/test_round4_fixes.py::test_non_string_protected_reason_is_rejected;
+security/tests/test_round4_fixes.py::test_valid_protected_reason_accepted</li>
+<li>Source of Truth: inventory.json and source-bound
+security-junit.xml</li>
+</ul>
+<h3 id="surface-contract-bounded-pseudonym-domains">Surface Contract:
+Bounded pseudonym domains</h3>
+<ul>
+<li>Owning Persona: trial reviewer</li>
+<li>Core Purpose: Inspect bounded pseudonym domains against R3, R4</li>
+<li>Primary Object:
+security/tests/test_pseudonym_domains.py::test_at_capacity_ip_policy_is_accepted;
+security/tests/test_pseudonym_domains.py::test_over_capacity_ip_policy_rejects_before_collision_search</li>
+<li>Source of Truth: inventory.json and source-bound
+security-junit.xml</li>
+</ul>
+<h3 id="surface-contract-original-input-matching-and-overlap">Surface
+Contract: Original-input matching and overlap</h3>
+<ul>
+<li>Owning Persona: trial reviewer</li>
+<li>Core Purpose: Inspect original-input matching and overlap against
+R2, R5, R12</li>
+<li>Primary Object:
+security/tests/test_graybox_adversarial.py::test_many_literals_completes_and_removes_all;
+security/tests/test_graybox_adversarial.py::test_pathological_overlap_is_deterministic;
+security/tests/test_graybox_adversarial.py::test_very_long_literal;
+security/tests/test_round2_fixes.py::test_partial_boundary_overlap_rejected</li>
+<li>Source of Truth: inventory.json and source-bound
+security-junit.xml</li>
+</ul>
+<h3
+id="surface-contract-csv-dialect-and-located-cellrow-fidelity">Surface
+Contract: CSV dialect and located cell/row fidelity</h3>
+<ul>
+<li>Owning Persona: trial reviewer</li>
+<li>Core Purpose: Inspect csv dialect and located cell/row fidelity
+against R1, R2, R6, R7, R11</li>
+<li>Primary Object:
+security/tests/test_csv_dialect.py::test_comma_csv_multi_column_still_accepted;
+security/tests/test_csv_dialect.py::test_malformed_comma_quoting_is_rejected;
+security/tests/test_csv_dialect.py::test_quoted_punctuation_and_multiline_comma_csv_are_preserved;
+security/tests/test_csv_dialect.py::test_semicolon_csv_is_rejected_not_silently_reinterpreted;
+security/tests/test_csv_dialect.py::test_semicolon_dialect_with_quoted_comma_is_rejected_before_release;
+security/tests/test_csv_dialect.py::test_single_column_comma_csv_still_accepted;
+security/tests/test_graybox_adversarial.py::test_csv_embedded_multiline_and_quotes_preserved;
+security/tests/test_graybox_adversarial.py::test_large_csv_field_preserved;
+security/tests/test_verifier_location.py::test_dropped_csv_row_rejected;
+security/tests/test_verifier_location.py::test_swapped_pseudonyms_in_csv_rejected</li>
+<li>Source of Truth: inventory.json and source-bound
+security-junit.xml</li>
+</ul>
+<h3 id="surface-contract-json-parsing-numbers-and-encoding">Surface
+Contract: JSON parsing, numbers and encoding</h3>
+<ul>
+<li>Owning Persona: trial reviewer</li>
+<li>Core Purpose: Inspect json parsing, numbers and encoding against R1,
+R2, R6, R7, R11</li>
+<li>Primary Object:
+security/tests/test_adversarial_matrix.py::test_non_finite_json_number_is_rejected;
+security/tests/test_graybox_adversarial.py::test_json_deep_within_bound_ok;
+security/tests/test_graybox_adversarial.py::test_json_over_depth_rejected;
+security/tests/test_round2_fixes.py::test_exact_float_still_allowed;
+security/tests/test_round2_fixes.py::test_lossy_float_rejected;
+security/tests/test_round2_fixes.py::test_verifier_rejects_duplicate_output_keys;
+security/tests/test_round3_fixes.py::test_json_bom_is_stripped_by_searcher;
+security/tests/test_verifier_location.py::test_clean_run_still_verifies;
+security/tests/test_verifier_location.py::test_escaped_json_sensitive_value_rejected</li>
+<li>Source of Truth: inventory.json and source-bound
+security-junit.xml</li>
+</ul>
+<h3
+id="surface-contract-sqlite-row-identity-schema-and-integrity">Surface
+Contract: SQLite row identity, schema and integrity</h3>
+<ul>
+<li>Owning Persona: trial reviewer</li>
+<li>Core Purpose: Inspect sqlite row identity, schema and integrity
+against R1, R2, R4, R6, R7</li>
+<li>Primary Object:
+security/tests/test_graybox_adversarial.py::test_sqlite_unique_column_integrity_preserved;
+security/tests/test_release_review_regressions.py::test_schema_mutation_is_rejected_before_publication;
+security/tests/test_release_review_regressions.py::test_sqlite_prefix_lookalike_is_processed;
+security/tests/test_round3_fixes.py::test_sqlite_rowid_shadow_rejected;
+security/tests/test_round3_fixes.py::test_sqlite_trigger_rejected;
+security/tests/test_sqlite_location.py::test_clean_sqlite_run_verifies;
+security/tests/test_sqlite_location.py::test_swapped_sqlite_subject_pseudonyms_rejected;
+security/tests/test_sqlite_location.py::test_unrelated_value_mutation_rejected;
+security/tests/test_sqlite_schema_literals.py::test_clean_view_still_accepted;
+security/tests/test_sqlite_schema_literals.py::test_sensitive_literal_in_view_sql_is_rejected</li>
+<li>Source of Truth: inventory.json and source-bound
+security-junit.xml</li>
+</ul>
+<h3
+id="surface-contract-filesystem-boundaries-and-privacy-safe-failures">Surface
+Contract: Filesystem boundaries and privacy-safe failures</h3>
+<ul>
+<li>Owning Persona: trial reviewer</li>
+<li>Core Purpose: Inspect filesystem boundaries and privacy-safe
+failures against R9, R10</li>
+<li>Primary Object:
+security/tests/test_blackbox_contract.py::test_hostile_input_fails_closed_no_ready_marker;
+security/tests/test_blackbox_contract.py::test_no_sensitive_value_in_release_or_stdio;
+security/tests/test_error_privacy.py::test_hostile_policy_identifiers_never_appear_in_error_text;
+security/tests/test_pipeline_failclosed.py::test_nested_roots_rejected;
+security/tests/test_pipeline_failclosed.py::test_symlink_in_corpus_rejected;
+security/tests/test_pipeline_failclosed.py::test_unsupported_input_fails_closed;
+security/tests/test_round4_fixes.py::test_policy_symlink_rejected_before_policy_read;
+security/tests/test_sqlite_schema_literals.py::test_hostile_filenames_never_appear_in_error_text</li>
+<li>Source of Truth: inventory.json and source-bound
+security-junit.xml</li>
+</ul>
+<h3 id="surface-contract-publication-replay-and-source-lineage">Surface
+Contract: Publication, replay and source lineage</h3>
+<ul>
+<li>Owning Persona: trial reviewer</li>
+<li>Core Purpose: Inspect publication, replay and source lineage against
+R3, R8, R9, R10</li>
+<li>Primary Object:
+security/tests/test_blackbox_contract.py::test_deterministic_replay;
+security/tests/test_pipeline_failclosed.py::test_prior_release_survives_failed_rerun;
+security/tests/test_pipeline_failclosed.py::test_success_writes_report_last;
+security/tests/test_publish_hardening.py::test_no_staging_left_in_output;
+security/tests/test_publish_hardening.py::test_report_binds_evidence_chain;
+security/tests/test_publish_hardening.py::test_report_is_regular_file_no_temp_left;
+security/tests/test_publish_hardening.py::test_report_matches_committed_schema;
+security/tests/test_release_review_regressions.py::test_short_report_write_cannot_return_success_with_truncated_json;
+security/tests/test_release_review_regressions.py::test_zero_report_write_fails_closed;
+security/tests/test_source_snapshot.py::test_source_digest_detects_content_change_even_if_mtime_preserved;
+security/tests/test_source_snapshot.py::test_source_digest_stable_when_unchanged</li>
+<li>Source of Truth: inventory.json and source-bound
+security-junit.xml</li>
+</ul>
+<h3
+id="surface-contract-cross-format-and-text-verifier-mutations">Surface
+Contract: Cross-format and text verifier mutations</h3>
+<ul>
+<li>Owning Persona: trial reviewer</li>
+<li>Core Purpose: Inspect cross-format and text verifier mutations
+against R2, R4, R6, R8</li>
+<li>Primary Object:
+security/tests/test_typed_scalar_verification.py::test_clean_typed_run_verifies;
+security/tests/test_typed_scalar_verification.py::test_json_bool_number_and_sqlite_integer_real_mutations_rejected;
+security/tests/test_verifier_sensitivity.py::test_baseline_passes;
+security/tests/test_verifier_sensitivity.py::test_incomplete_subject_coverage_is_caught;
+security/tests/test_verifier_sensitivity.py::test_restored_literal_is_caught;
+security/tests/test_verifier_sensitivity.py::test_swapped_subject_pseudonyms_is_caught</li>
+<li>Source of Truth: inventory.json and source-bound
+security-junit.xml</li>
+</ul>
+<h3 id="surface-contract-public-claims-and-report-non-claims">Surface
+Contract: Public claims and report non-claims</h3>
+<ul>
+<li>Owning Persona: trial reviewer</li>
+<li>Core Purpose: Inspect public claims and report non-claims against
+R9, R15</li>
+<li>Primary Object:
+security/tests/test_blackbox_contract.py::test_report_declares_non_claims;
+security/tests/test_claim_surface.py::test_public_claims_match_current_evidence;
+security/tests/test_verifier_sensitivity.py::test_report_carries_non_claims</li>
+<li>Source of Truth: inventory.json and source-bound
+security-junit.xml</li>
+</ul>
+<h3 id="surface-contract-optional-residual-risk-demonstration">Surface
+Contract: Optional residual-risk demonstration</h3>
+<ul>
+<li>Owning Persona: trial reviewer</li>
+<li>Core Purpose: Inspect optional residual-risk demonstration against
+OUT_OF_SCOPE_RISK_PLANE</li>
+<li>Primary Object:
+security/tests/test_residual_risk.py::test_flags_unique_quasi_identifier_combo;
+security/tests/test_residual_risk.py::test_pass_when_all_combos_repeat;
+security/tests/test_residual_risk.py::test_schema_and_non_claims_present</li>
+<li>Source of Truth: inventory.json and source-bound
+security-junit.xml</li>
+</ul>
+<h2
+id="finished--pending--outstanding--broken--blocked--unproven">Finished
+/ Pending / Outstanding / Broken / Blocked / Unproven</h2>
+<h3 id="finished">Finished</h3>
+<ul>
+<li>JUnit reconciles all 83 cases and 74 functions.</li>
+</ul>
+<h3 id="pending">Pending</h3>
+<ul>
+<li>ADEQUACY: inadequate for the reviewed pre-fix snapshot. Targeted
+fixes require local qualification; this is not a new verdict on the
+corrected source. Response:
+/mnt/storage12tb/oai-trial/test-coverage-review/ask/ask-tau-please-assess-whether-the-curren-15df2b2d2829/node-artifacts/handler-webgpt/response.md</li>
+<li>A-001 clean-submission qualification</li>
+</ul>
+<h3 id="outstanding">Outstanding</h3>
+<ul>
+<li>Reconcile the named oracle limitations, without reopening future
+scope.</li>
+</ul>
+<h3 id="broken">Broken</h3>
+<ul>
+<li>none</li>
+</ul>
+<h3 id="blocked">Blocked</h3>
+<ul>
+<li>none</li>
+</ul>
+<h3 id="unproven">Unproven</h3>
+<ul>
+<li>Exhaustive security, anonymity, crash/power-loss behavior and
+production scale.</li>
+</ul>
+<h2 id="plan-ready-next-actions">Plan-Ready Next Actions</h2>
+<ul>
+<li><strong>A-001</strong> (F-002, P1): Run the final release gate after
+bounded coverage review. Acceptance: Bare/mounted Docker commands,
+independent four-format readback, replay and negative cases pass from
+the submitted archive.</li>
+</ul>
+<h2 id="plan-iterate-seed">Plan-Iterate Seed</h2>
+<p><strong>Recommended phase id:</strong>
+<code>release-qualification</code></p>
+<p><strong>Objective:</strong> Run the final release gate after bounded
+coverage review.</p>
+<p><strong>Deterministic Evidence Gates:</strong></p>
+<ul>
+<li>uv run pytest -q</li>
+<li>docker build -t anonymization-trial .</li>
+<li>docker run --rm anonymization-trial</li>
+<li>Mounted four-format run and independent output readback</li>
+</ul>
+<h2 id="new-plan-iterate-instructions">New Plan-Iterate
+Instructions</h2>
+<p>Use the Plan-Iterate Seed above as the initial phase contract.</p>
+<h2 id="non-claims">Non-Claims</h2>
+<ul>
+<li>This covers security/tests, not all tests/ cases or a repo-wide
+attack count.</li>
+<li>Collected cases are not distinct attacks or statistically
+independent trials.</li>
+<li>Optional residual-risk tests are outside the release path.</li>
+<li>A passing test does not establish that its assertion catches every
+intended defect.</li>
+<li>This is not a new WebGPT PASS, proof of anonymity, or a shipping
+authorization.</li>
+</ul>
+</body>
+</html>

@@ -1,0 +1,572 @@
+{
+  "schema": "oai_trial.test_catalog.v1",
+  "classification": "One primary family and kind per test function, reviewed from source. Parametrizations count as cases, not independent attacks.",
+  "kind_definitions": {
+    "adversarial": "Malformed input, deliberate corruption or a hostile execution sequence.",
+    "positive_control": "Supported input/replay used to guard against false rejection.",
+    "boundary_stress": "Large/edge input inside a supported contract; not necessarily a malicious attack.",
+    "evidence_check": "Report metadata, schema or public-claim assertions; not a data attack."
+  },
+  "families": {
+    "policy": {
+      "name": "Policy schema and identity conflicts",
+      "requirements": [
+        "R2",
+        "R3",
+        "R4",
+        "R5"
+      ],
+      "oracle": "compile_policy/load_policy reject malformed or contradictory policies",
+      "limitations": "Mostly function-level rejection checks; not every malformed policy is exercised through Docker."
+    },
+    "pseudonyms": {
+      "name": "Bounded pseudonym domains",
+      "requirements": [
+        "R3",
+        "R4"
+      ],
+      "oracle": "Distinct replacement cardinality at the IPv4 limit; over-capacity refusal",
+      "limitations": "IPv4 capacity is covered here; equivalent phone-capacity and forced collision exhaustion are not covered by these two cases."
+    },
+    "matching": {
+      "name": "Original-input matching and overlap",
+      "requirements": [
+        "R2",
+        "R5",
+        "R12"
+      ],
+      "oracle": "Replacement count, sampled literal absence, repeatability and overlap refusal",
+      "limitations": "Stress inputs are bounded; many-literal absence is sampled rather than exhaustively checked."
+    },
+    "csv": {
+      "name": "CSV dialect and located cell/row fidelity",
+      "requirements": [
+        "R1",
+        "R2",
+        "R6",
+        "R7",
+        "R11"
+      ],
+      "oracle": "Unsupported/malformed dialect rejected; cells/rows reread; swaps/dropped rows rejected",
+      "limitations": "Six dialect variants use the CLI and empty-output oracle; other cases mostly call adapters/verifier directly."
+    },
+    "json": {
+      "name": "JSON parsing, numbers and encoding",
+      "requirements": [
+        "R1",
+        "R2",
+        "R6",
+        "R7",
+        "R11"
+      ],
+      "oracle": "Overflow/lossy numbers, depth, duplicate output keys and escaped literals; positive parsing controls",
+      "limitations": "Some positive controls assert only no exception. JSON key-set, list-order and scalar mutations outside these cases need separate coverage assessment."
+    },
+    "sqlite": {
+      "name": "SQLite row identity, schema and integrity",
+      "requirements": [
+        "R1",
+        "R2",
+        "R4",
+        "R6",
+        "R7"
+      ],
+      "oracle": "Row swaps/non-text mutations rejected; trigger/rowid-shadow/view literal rejection; integrity/distinctness checks; legal sqliteX inventory and pre-verification schema mutations are checked through the complete pipeline",
+      "limitations": "DDL, column and foreign-key metadata are compared. The two supplied schema mutations are not exhaustive; wider supported schemas remain workload-driven."
+    },
+    "filesystem": {
+      "name": "Filesystem boundaries and privacy-safe failures",
+      "requirements": [
+        "R9",
+        "R10"
+      ],
+      "oracle": "Symlink/nested-root/type refusal, source-bound error redaction and CLI no-leak checks",
+      "limitations": "These cases do not exercise every special-file type, error identifier, or external writer race."
+    },
+    "publication": {
+      "name": "Publication, replay and source lineage",
+      "requirements": [
+        "R3",
+        "R8",
+        "R9",
+        "R10"
+      ],
+      "oracle": "Report/corpus existence, evidence hashes, clean output, prior release retention, changed-source digest detection; short writes must complete and zero-progress writes reject",
+      "limitations": "Short/zero writes are fault-injected through the real pipeline. Broader fsync/rename/power-loss campaigns remain future hardening; the source-mutation probe is helper-level."
+    },
+    "verifier": {
+      "name": "Cross-format and text verifier mutations",
+      "requirements": [
+        "R2",
+        "R4",
+        "R6",
+        "R8"
+      ],
+      "oracle": "Restored/removed/swapped text values and JSON bool/SQLite numeric type mutation rejected",
+      "limitations": "Re-derivation shares replacement primitives. One typed-scalar case contains two mutations, not two collected cases."
+    },
+    "declarations": {
+      "name": "Public claims and report non-claims",
+      "requirements": [
+        "R9",
+        "R15"
+      ],
+      "oracle": "Known stale prose refused; report namespace and non-claim fields present",
+      "limitations": "Documentation/metadata checks, not adversarial data transformations."
+    },
+    "residual": {
+      "name": "Optional residual-risk demonstration",
+      "requirements": [
+        "OUT_OF_SCOPE_RISK_PLANE"
+      ],
+      "oracle": "Quasi-identifier singleton detection and declared-model scope",
+      "limitations": "Dev-only demonstration outside the release path; does not establish non-reidentifiability or close future issue 12."
+    }
+  },
+  "cases": {
+    "security/tests/test_adversarial_matrix.py::test_version_true_is_rejected": {
+      "family": "policy",
+      "kind": "adversarial",
+      "line": 21,
+      "end_line": 23
+    },
+    "security/tests/test_adversarial_matrix.py::test_duplicate_policy_keys_rejected": {
+      "family": "policy",
+      "kind": "adversarial",
+      "line": 26,
+      "end_line": 38
+    },
+    "security/tests/test_adversarial_matrix.py::test_case_insensitive_conflicting_identities_rejected": {
+      "family": "policy",
+      "kind": "adversarial",
+      "line": 41,
+      "end_line": 51
+    },
+    "security/tests/test_adversarial_matrix.py::test_non_finite_json_number_is_rejected": {
+      "family": "json",
+      "kind": "adversarial",
+      "line": 54,
+      "end_line": 65
+    },
+    "security/tests/test_blackbox_contract.py::test_no_sensitive_value_in_release_or_stdio": {
+      "family": "filesystem",
+      "kind": "positive_control",
+      "line": 58,
+      "end_line": 65
+    },
+    "security/tests/test_blackbox_contract.py::test_deterministic_replay": {
+      "family": "publication",
+      "kind": "positive_control",
+      "line": 68,
+      "end_line": 76
+    },
+    "security/tests/test_blackbox_contract.py::test_hostile_input_fails_closed_no_ready_marker": {
+      "family": "filesystem",
+      "kind": "adversarial",
+      "line": 79,
+      "end_line": 86
+    },
+    "security/tests/test_blackbox_contract.py::test_report_declares_non_claims": {
+      "family": "declarations",
+      "kind": "evidence_check",
+      "line": 89,
+      "end_line": 95
+    },
+    "security/tests/test_claim_surface.py::test_public_claims_match_current_evidence": {
+      "family": "declarations",
+      "kind": "evidence_check",
+      "line": 12,
+      "end_line": 54
+    },
+    "security/tests/test_csv_dialect.py::test_semicolon_csv_is_rejected_not_silently_reinterpreted": {
+      "family": "csv",
+      "kind": "adversarial",
+      "line": 24,
+      "end_line": 28
+    },
+    "security/tests/test_csv_dialect.py::test_semicolon_dialect_with_quoted_comma_is_rejected_before_release": {
+      "family": "csv",
+      "kind": "adversarial",
+      "line": 33,
+      "end_line": 55
+    },
+    "security/tests/test_csv_dialect.py::test_comma_csv_multi_column_still_accepted": {
+      "family": "csv",
+      "kind": "positive_control",
+      "line": 58,
+      "end_line": 61
+    },
+    "security/tests/test_csv_dialect.py::test_quoted_punctuation_and_multiline_comma_csv_are_preserved": {
+      "family": "csv",
+      "kind": "positive_control",
+      "line": 65,
+      "end_line": 77
+    },
+    "security/tests/test_csv_dialect.py::test_malformed_comma_quoting_is_rejected": {
+      "family": "csv",
+      "kind": "adversarial",
+      "line": 81,
+      "end_line": 86
+    },
+    "security/tests/test_csv_dialect.py::test_single_column_comma_csv_still_accepted": {
+      "family": "csv",
+      "kind": "positive_control",
+      "line": 89,
+      "end_line": 92
+    },
+    "security/tests/test_error_privacy.py::test_hostile_policy_identifiers_never_appear_in_error_text": {
+      "family": "filesystem",
+      "kind": "adversarial",
+      "line": 12,
+      "end_line": 26
+    },
+    "security/tests/test_graybox_adversarial.py::test_many_literals_completes_and_removes_all": {
+      "family": "matching",
+      "kind": "boundary_stress",
+      "line": 25,
+      "end_line": 35
+    },
+    "security/tests/test_graybox_adversarial.py::test_very_long_literal": {
+      "family": "matching",
+      "kind": "boundary_stress",
+      "line": 38,
+      "end_line": 42
+    },
+    "security/tests/test_graybox_adversarial.py::test_pathological_overlap_is_deterministic": {
+      "family": "matching",
+      "kind": "boundary_stress",
+      "line": 45,
+      "end_line": 56
+    },
+    "security/tests/test_graybox_adversarial.py::test_large_csv_field_preserved": {
+      "family": "csv",
+      "kind": "boundary_stress",
+      "line": 59,
+      "end_line": 66
+    },
+    "security/tests/test_graybox_adversarial.py::test_csv_embedded_multiline_and_quotes_preserved": {
+      "family": "csv",
+      "kind": "positive_control",
+      "line": 69,
+      "end_line": 76
+    },
+    "security/tests/test_graybox_adversarial.py::test_json_deep_within_bound_ok": {
+      "family": "json",
+      "kind": "boundary_stress",
+      "line": 79,
+      "end_line": 85
+    },
+    "security/tests/test_graybox_adversarial.py::test_json_over_depth_rejected": {
+      "family": "json",
+      "kind": "adversarial",
+      "line": 88,
+      "end_line": 96
+    },
+    "security/tests/test_graybox_adversarial.py::test_sqlite_unique_column_integrity_preserved": {
+      "family": "sqlite",
+      "kind": "positive_control",
+      "line": 99,
+      "end_line": 117
+    },
+    "security/tests/test_pipeline_failclosed.py::test_success_writes_report_last": {
+      "family": "publication",
+      "kind": "positive_control",
+      "line": 20,
+      "end_line": 28
+    },
+    "security/tests/test_pipeline_failclosed.py::test_unsupported_input_fails_closed": {
+      "family": "filesystem",
+      "kind": "adversarial",
+      "line": 31,
+      "end_line": 39
+    },
+    "security/tests/test_pipeline_failclosed.py::test_symlink_in_corpus_rejected": {
+      "family": "filesystem",
+      "kind": "adversarial",
+      "line": 42,
+      "end_line": 49
+    },
+    "security/tests/test_pipeline_failclosed.py::test_prior_release_survives_failed_rerun": {
+      "family": "publication",
+      "kind": "adversarial",
+      "line": 52,
+      "end_line": 61
+    },
+    "security/tests/test_pipeline_failclosed.py::test_nested_roots_rejected": {
+      "family": "filesystem",
+      "kind": "adversarial",
+      "line": 64,
+      "end_line": 68
+    },
+    "security/tests/test_pseudonym_domains.py::test_over_capacity_ip_policy_rejects_before_collision_search": {
+      "family": "pseudonyms",
+      "kind": "adversarial",
+      "line": 10,
+      "end_line": 15
+    },
+    "security/tests/test_pseudonym_domains.py::test_at_capacity_ip_policy_is_accepted": {
+      "family": "pseudonyms",
+      "kind": "boundary_stress",
+      "line": 18,
+      "end_line": 21
+    },
+    "security/tests/test_publish_hardening.py::test_report_binds_evidence_chain": {
+      "family": "publication",
+      "kind": "evidence_check",
+      "line": 26,
+      "end_line": 31
+    },
+    "security/tests/test_publish_hardening.py::test_report_matches_committed_schema": {
+      "family": "publication",
+      "kind": "evidence_check",
+      "line": 34,
+      "end_line": 38
+    },
+    "security/tests/test_publish_hardening.py::test_no_staging_left_in_output": {
+      "family": "publication",
+      "kind": "positive_control",
+      "line": 41,
+      "end_line": 47
+    },
+    "security/tests/test_publish_hardening.py::test_report_is_regular_file_no_temp_left": {
+      "family": "publication",
+      "kind": "positive_control",
+      "line": 50,
+      "end_line": 56
+    },
+    "security/tests/test_residual_risk.py::test_flags_unique_quasi_identifier_combo": {
+      "family": "residual",
+      "kind": "adversarial",
+      "line": 15,
+      "end_line": 21
+    },
+    "security/tests/test_residual_risk.py::test_pass_when_all_combos_repeat": {
+      "family": "residual",
+      "kind": "positive_control",
+      "line": 24,
+      "end_line": 28
+    },
+    "security/tests/test_residual_risk.py::test_schema_and_non_claims_present": {
+      "family": "residual",
+      "kind": "evidence_check",
+      "line": 31,
+      "end_line": 35
+    },
+    "security/tests/test_round2_fixes.py::test_lossy_float_rejected": {
+      "family": "json",
+      "kind": "adversarial",
+      "line": 21,
+      "end_line": 25
+    },
+    "security/tests/test_round2_fixes.py::test_exact_float_still_allowed": {
+      "family": "json",
+      "kind": "positive_control",
+      "line": 28,
+      "end_line": 31
+    },
+    "security/tests/test_round2_fixes.py::test_verifier_rejects_duplicate_output_keys": {
+      "family": "json",
+      "kind": "adversarial",
+      "line": 34,
+      "end_line": 44
+    },
+    "security/tests/test_round2_fixes.py::test_partial_boundary_overlap_rejected": {
+      "family": "matching",
+      "kind": "adversarial",
+      "line": 47,
+      "end_line": 53
+    },
+    "security/tests/test_round3_fixes.py::test_missing_sensitive_values_rejected": {
+      "family": "policy",
+      "kind": "adversarial",
+      "line": 20,
+      "end_line": 22
+    },
+    "security/tests/test_round3_fixes.py::test_missing_protected_values_rejected": {
+      "family": "policy",
+      "kind": "adversarial",
+      "line": 25,
+      "end_line": 27
+    },
+    "security/tests/test_round3_fixes.py::test_json_bom_is_stripped_by_searcher": {
+      "family": "json",
+      "kind": "positive_control",
+      "line": 30,
+      "end_line": 35
+    },
+    "security/tests/test_round3_fixes.py::test_sqlite_trigger_rejected": {
+      "family": "sqlite",
+      "kind": "adversarial",
+      "line": 45,
+      "end_line": 55
+    },
+    "security/tests/test_round3_fixes.py::test_sqlite_rowid_shadow_rejected": {
+      "family": "sqlite",
+      "kind": "adversarial",
+      "line": 58,
+      "end_line": 62
+    },
+    "security/tests/test_round4_fixes.py::test_non_string_protected_reason_is_rejected": {
+      "family": "policy",
+      "kind": "adversarial",
+      "line": 15,
+      "end_line": 21
+    },
+    "security/tests/test_round4_fixes.py::test_empty_protected_reason_is_rejected": {
+      "family": "policy",
+      "kind": "adversarial",
+      "line": 24,
+      "end_line": 30
+    },
+    "security/tests/test_round4_fixes.py::test_valid_protected_reason_accepted": {
+      "family": "policy",
+      "kind": "positive_control",
+      "line": 33,
+      "end_line": 38
+    },
+    "security/tests/test_round4_fixes.py::test_policy_symlink_rejected_before_policy_read": {
+      "family": "filesystem",
+      "kind": "adversarial",
+      "line": 41,
+      "end_line": 49
+    },
+    "security/tests/test_source_snapshot.py::test_source_digest_detects_content_change_even_if_mtime_preserved": {
+      "family": "publication",
+      "kind": "adversarial",
+      "line": 15,
+      "end_line": 27
+    },
+    "security/tests/test_source_snapshot.py::test_source_digest_stable_when_unchanged": {
+      "family": "publication",
+      "kind": "positive_control",
+      "line": 30,
+      "end_line": 34
+    },
+    "security/tests/test_sqlite_location.py::test_swapped_sqlite_subject_pseudonyms_rejected": {
+      "family": "sqlite",
+      "kind": "adversarial",
+      "line": 39,
+      "end_line": 49
+    },
+    "security/tests/test_sqlite_location.py::test_unrelated_value_mutation_rejected": {
+      "family": "sqlite",
+      "kind": "adversarial",
+      "line": 52,
+      "end_line": 59
+    },
+    "security/tests/test_sqlite_location.py::test_clean_sqlite_run_verifies": {
+      "family": "sqlite",
+      "kind": "positive_control",
+      "line": 62,
+      "end_line": 64
+    },
+    "security/tests/test_sqlite_schema_literals.py::test_sensitive_literal_in_view_sql_is_rejected": {
+      "family": "sqlite",
+      "kind": "adversarial",
+      "line": 21,
+      "end_line": 32
+    },
+    "security/tests/test_sqlite_schema_literals.py::test_clean_view_still_accepted": {
+      "family": "sqlite",
+      "kind": "positive_control",
+      "line": 35,
+      "end_line": 45
+    },
+    "security/tests/test_sqlite_schema_literals.py::test_hostile_filenames_never_appear_in_error_text": {
+      "family": "filesystem",
+      "kind": "adversarial",
+      "line": 48,
+      "end_line": 61
+    },
+    "security/tests/test_typed_scalar_verification.py::test_json_bool_number_and_sqlite_integer_real_mutations_rejected": {
+      "family": "verifier",
+      "kind": "adversarial",
+      "line": 21,
+      "end_line": 50
+    },
+    "security/tests/test_typed_scalar_verification.py::test_clean_typed_run_verifies": {
+      "family": "verifier",
+      "kind": "positive_control",
+      "line": 53,
+      "end_line": 59
+    },
+    "security/tests/test_verifier_location.py::test_swapped_pseudonyms_in_csv_rejected": {
+      "family": "csv",
+      "kind": "adversarial",
+      "line": 40,
+      "end_line": 47
+    },
+    "security/tests/test_verifier_location.py::test_dropped_csv_row_rejected": {
+      "family": "csv",
+      "kind": "adversarial",
+      "line": 50,
+      "end_line": 55
+    },
+    "security/tests/test_verifier_location.py::test_escaped_json_sensitive_value_rejected": {
+      "family": "json",
+      "kind": "adversarial",
+      "line": 58,
+      "end_line": 62
+    },
+    "security/tests/test_verifier_location.py::test_clean_run_still_verifies": {
+      "family": "json",
+      "kind": "positive_control",
+      "line": 65,
+      "end_line": 68
+    },
+    "security/tests/test_verifier_sensitivity.py::test_baseline_passes": {
+      "family": "verifier",
+      "kind": "positive_control",
+      "line": 52,
+      "end_line": 53
+    },
+    "security/tests/test_verifier_sensitivity.py::test_restored_literal_is_caught": {
+      "family": "verifier",
+      "kind": "adversarial",
+      "line": 56,
+      "end_line": 62
+    },
+    "security/tests/test_verifier_sensitivity.py::test_incomplete_subject_coverage_is_caught": {
+      "family": "verifier",
+      "kind": "adversarial",
+      "line": 65,
+      "end_line": 72
+    },
+    "security/tests/test_verifier_sensitivity.py::test_swapped_subject_pseudonyms_is_caught": {
+      "family": "verifier",
+      "kind": "adversarial",
+      "line": 75,
+      "end_line": 91
+    },
+    "security/tests/test_verifier_sensitivity.py::test_report_carries_non_claims": {
+      "family": "declarations",
+      "kind": "evidence_check",
+      "line": 94,
+      "end_line": 104
+    },
+    "security/tests/test_release_review_regressions.py::test_sqlite_prefix_lookalike_is_processed": {
+      "family": "sqlite",
+      "kind": "adversarial",
+      "line": 48,
+      "end_line": 60
+    },
+    "security/tests/test_release_review_regressions.py::test_schema_mutation_is_rejected_before_publication": {
+      "family": "sqlite",
+      "kind": "adversarial",
+      "line": 71,
+      "end_line": 93
+    },
+    "security/tests/test_release_review_regressions.py::test_short_report_write_cannot_return_success_with_truncated_json": {
+      "family": "publication",
+      "kind": "adversarial",
+      "line": 96,
+      "end_line": 117
+    },
+    "security/tests/test_release_review_regressions.py::test_zero_report_write_fails_closed": {
+      "family": "publication",
+      "kind": "adversarial",
+      "line": 120,
+      "end_line": 126
+    }
+  }
+}

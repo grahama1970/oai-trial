@@ -1,0 +1,20 @@
+{
+  "version": 2,
+  "skill": "oai-trial-clean-submission-qualification",
+  "trials": 2,
+  "proof_scope": "Build an exact clean GitHub checkout, exercise real Docker interfaces with independent four-format readback, reject early/late bad inputs, replay offline, and verify a ZIP including .git.",
+  "claims": {
+    "proves": "The recorded candidate, image and packaged repository passed the named synthetic qualification cases.",
+    "does_not_prove": "Eight-hour compliance, production scale, exhaustive faults, anonymity, or presentation approval."
+  },
+  "cases": [
+    {
+      "name": "clean-container-and-adversarial-release-gate",
+      "type": "adversarial",
+      "real_world": true,
+      "command": ["bash", "-c", "cd .. && w=$(mktemp -d \"$QUALIFICATION_ROOT/clean-XXXXXX\") && uv run --extra dev python scripts/qualify_submission.py --output \"$w/run\" && python3 -c 'import json,sys,hashlib,zipfile; r=json.load(open(sys.argv[1]+\"/QUALIFICATION.json\")); assert r[\"status\"] == \"PASS\"; p=r[\"archive\"]; assert hashlib.sha256(open(p,\"rb\").read()).hexdigest() == r[\"archive_sha256\"]; z=zipfile.ZipFile(p); assert \"oai-trial/.git/HEAD\" in z.namelist(); print(\"QUALIFICATION_PASS \"+sys.argv[1])' \"$w/run\""],
+      "expected": {"exit_code": 0, "stdout_contains": ["QUALIFICATION_PASS"]},
+      "timeout_seconds": 900
+    }
+  ]
+}
