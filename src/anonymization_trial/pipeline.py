@@ -213,6 +213,9 @@ def _publish(staging: Path, output_root: Path, report: RunReport, sealed_digest:
 
 def run_pipeline(input_root: Path, output_root: Path) -> RunReport:
     started = time.perf_counter()
+    # mkdtemp returns an absolute path; use the same form during publication
+    # so a relative output does not cause the cleanup loop to delete its stage.
+    output_root = output_root.absolute()
     # Reject an unsafe policy path BEFORE reading/following it, so an untrusted
     # policy.json symlink is never opened (review #policy-preflight-before-read).
     policy_file = input_root / "policy.json"

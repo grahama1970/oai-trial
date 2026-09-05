@@ -1,0 +1,44 @@
+{
+  "version": 2,
+  "skill": "anonymize-data-project",
+  "trials": 3,
+  "proof_scope": "Real project CLI: file/folder anonymization, review-only RapidFuzz discovery and explicit exact-policy approval on synthetic inputs.",
+  "claims": {
+    "proves": "Four-format approved-alias workflow, unchanged originals, private artifacts, safe paths, deterministic proposals, ambiguity/type/protected boundaries, stale/forged review refusal and resource caps.",
+    "does_not_prove": "General PII discovery, correct human identity adjudication, hostile-host isolation, production scale or the previously qualified archive covering this new feature."
+  },
+  "cases": [
+    {
+      "name": "four-formats-and-relative-file-interface",
+      "type": "positive",
+      "real_world": true,
+      "command": ["bash", "-c", "cd .. && uv run --extra dev --extra discovery python -m pytest -q tests/test_discovery.py tests/test_discovery_boundaries.py -k 'all_four_formats or single_file_relative_paths'"],
+      "expected": {"exit_code": 0},
+      "timeout_seconds": 120
+    },
+    {
+      "name": "approval-authority-and-tampering",
+      "type": "adversarial",
+      "real_world": true,
+      "command": ["bash", "-c", "cd .. && uv run --extra dev --extra discovery python -m pytest -q tests/test_discovery.py tests/test_discovery_boundaries.py -k 'forged or stale_or_edited or approval_requires or approval_rechecks'"],
+      "expected": {"exit_code": 0},
+      "timeout_seconds": 120
+    },
+    {
+      "name": "identity-ambiguity-and-discovery-scope",
+      "type": "adversarial",
+      "real_world": true,
+      "command": ["bash", "-c", "cd .. && uv run --extra dev --extra discovery python -m pytest -q tests/test_discovery.py tests/test_discovery_boundaries.py -k 'noise or near_ties or aliases_of_one or policy_without or deterministic_and'"],
+      "expected": {"exit_code": 0},
+      "timeout_seconds": 120
+    },
+    {
+      "name": "input-resource-and-filesystem-boundaries",
+      "type": "negative",
+      "real_world": true,
+      "command": ["bash", "-c", "cd .. && uv run --extra dev --extra discovery python -m pytest -q tests/test_discovery.py tests/test_discovery_boundaries.py -k 'invalid or malformed or budget or special_file or work_artifacts'"],
+      "expected": {"exit_code": 0},
+      "timeout_seconds": 120
+    }
+  ]
+}

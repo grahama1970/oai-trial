@@ -16,7 +16,10 @@ WORKDIR /trial
 COPY pyproject.toml README.md ./
 COPY src ./src
 COPY fixtures ./fixtures
-RUN pip install .
+ARG INCLUDE_DISCOVERY=0
+RUN if [ "$INCLUDE_DISCOVERY" = "1" ]; then pip install '.[discovery]'; \
+    elif [ "$INCLUDE_DISCOVERY" = "0" ]; then pip install .; \
+    else echo 'INCLUDE_DISCOVERY must be 0 or 1' >&2; exit 2; fi
 
 # Runs as root by default so the evaluator's mounted /trial/output is always
 # writable (the brief's mounted-run contract is the hard requirement). The

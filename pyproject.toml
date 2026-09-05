@@ -21,6 +21,9 @@ dev = [
   "PyYAML>=6.0",  # dev-only presentation manifests; never a runtime dependency
   "jsonschema>=4.0",  # dev-only independent release-report validation
 ]
+discovery = [
+    "rapidfuzz==3.14.6",
+]
 
 [project.scripts]
 anonymization-trial = "anonymization_trial.__main__:main"

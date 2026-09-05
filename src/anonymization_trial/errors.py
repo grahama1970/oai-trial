@@ -42,6 +42,10 @@ class AnonErrorCode(StrEnum):
     PUBLICATION_FAILED = "publication_failed"
     UNSAFE_INPUT = "unsafe_input"
     SOURCE_CHANGED = "source_changed"
+    DISCOVERY_UNAVAILABLE = "discovery_dependency_missing"
+    DISCOVERY_INVALID = "invalid_discovery_review"
+    DISCOVERY_STALE = "stale_discovery_review"
+    DISCOVERY_REJECTED = "discovery_approval_rejected"
 
 
 class AnonError(RuntimeError):

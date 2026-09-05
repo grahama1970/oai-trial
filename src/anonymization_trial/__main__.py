@@ -172,6 +172,21 @@ def _parser() -> argparse.ArgumentParser:
     ins = subparsers.add_parser("inspect", help="render a release's safe evidence summary")
     ins.add_argument("output", type=Path)
     subparsers.add_parser("explain", help="print the mechanism and guarantees")
+    for name, help_text in (
+        ("anonymize", "anonymize a file/folder with a separate policy"),
+        ("discover", "propose RapidFuzz name aliases; never release or replace data"),
+        ("approve-discovery", "approve explicit candidate IDs into a new exact policy"),
+    ):
+        command = subparsers.add_parser(name, help=help_text)
+        command.add_argument("--input", type=Path, required=True)
+        command.add_argument("--policy", type=Path, required=True)
+        command.add_argument("--output", type=Path, required=True)
+        if name == "discover":
+            command.add_argument("--threshold", type=float, default=90)
+            command.add_argument("--margin", type=float, default=5)
+        elif name == "approve-discovery":
+            command.add_argument("--review", type=Path, required=True)
+            command.add_argument("--approve", action="append", required=True)
     return parser
 
 
@@ -191,6 +206,26 @@ def main(argv: list[str] | None = None) -> int:
             return _verify_cmd(args.input, args.output)
         if args.command == "inspect":
             return _inspect_cmd(args.output)
+        if args.command in {"anonymize", "discover", "approve-discovery"}:
+            from .bundle import input_bundle
+
+            with input_bundle(args.input, args.policy, args.output) as bundle:
+                if args.command == "anonymize":
+                    report = run_pipeline(bundle, args.output)
+                    print(json.dumps(asdict(report), sort_keys=True))
+                elif args.command == "discover":
+                    from .discovery import discover, write_private
+
+                    review = discover(bundle, args.threshold, args.margin)
+                    write_private(args.output, asdict(review))
+                    print(json.dumps({"discovery": "review_required", "counts": review.counts,
+                                      "release_ready": False}, sort_keys=True))
+                else:
+                    from .discovery import approve
+
+                    print(json.dumps(approve(bundle, args.review, args.approve, args.output),
+                                     sort_keys=True))
+            return 0
         report = run_pipeline(args.input, args.output)
         print(json.dumps(asdict(report), sort_keys=True))
         return 0
