@@ -1,0 +1,436 @@
+{
+  "schema": "pitchdeck.claim_ledger.v1",
+  "project_name": "oai-trial",
+  "claims": [
+    {
+      "id": "brief",
+      "text": "The literal policy defines a bounded transformation promise across four formats.",
+      "kind": "thesis",
+      "visibility": "public",
+      "risk": "high",
+      "status": "candidate",
+      "required_qualifier": "Policy-bounded pseudonymization; not formal anonymity.",
+      "source_refs": [
+        {
+          "source_id": "walkthrough",
+          "section": "01-brief",
+          "locator": "WALKTHROUGH.md#01-brief"
+        },
+        {
+          "source_id": "brief",
+          "section": "Required behavior",
+          "locator": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/TRIAL_BRIEF.md"
+        },
+        {
+          "source_id": "policy-code",
+          "section": "compile_policy",
+          "locator": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/policy.py"
+        }
+      ],
+      "evidence_spans": [
+        {
+          "source_id": "walkthrough",
+          "section": "01-brief",
+          "text": "The guarantee this implementation can defend is narrower: policy-bounded, deterministic pseudonymization, with preservation checks before the output is marked ready."
+        },
+        {
+          "source_id": "walkthrough",
+          "section": "01-brief",
+          "text": "The policy tells the engine which literal values are sensitive, which aliases belong to a declared identity, and which values must remain protected."
+        },
+        {
+          "source_id": "walkthrough",
+          "section": "01-brief",
+          "text": "The assignment describes anonymizing customer exports across CSV, JSON, UTF-8 text, and SQLite."
+        }
+      ],
+      "notes": "Reuses the brief ID with revised candidate wording. Scope, not policy completeness or identity truth; no prior approval carried forward."
+    },
+    {
+      "id": "local",
+      "text": "Four adapters write private staged output; corpus rereading precedes report-last publication.",
+      "kind": "proof",
+      "visibility": "public",
+      "risk": "high",
+      "status": "candidate",
+      "required_qualifier": "Shared matcher; trusted single-writer staging.",
+      "source_refs": [
+        {
+          "source_id": "walkthrough",
+          "section": "02-architecture",
+          "locator": "WALKTHROUGH.md#02-architecture"
+        },
+        {
+          "source_id": "local",
+          "section": "run_pipeline",
+          "locator": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/pipeline.py"
+        },
+        {
+          "source_id": "verify-code",
+          "section": "verify_corpus",
+          "locator": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/verification.py"
+        }
+      ],
+      "evidence_spans": [
+        {
+          "source_id": "walkthrough",
+          "section": "02-architecture",
+          "text": "The adapters write into a private staging directory on the output filesystem. Only after all files have been transformed does the verifier reread source and output."
+        },
+        {
+          "source_id": "walkthrough",
+          "section": "02-architecture",
+          "text": "First, the verifier does not return a signed or independently sealed receipt; the pipeline computes the digest after verification."
+        },
+        {
+          "source_id": "local",
+          "section": "run_pipeline",
+          "text": "        verify_corpus(input_root / \"corpus\", staged_corpus, policy)"
+        },
+        {
+          "source_id": "walkthrough",
+          "section": "02-architecture",
+          "text": "Second, the local processing model materializes files and verification structures in memory. It is not the distributed petabyte engine."
+        }
+      ],
+      "notes": "Source-inspected mechanism; the seal is pipeline-computed after verification. Diagram aggregates source checking and sealing; it is not implementation-diverse verification."
+    },
+    {
+      "id": "semantics",
+      "text": "Meaning depends on policy-supplied identity, one-time span emission, and typed checks at the correct locations.",
+      "kind": "proof",
+      "visibility": "public",
+      "risk": "high",
+      "status": "candidate",
+      "required_qualifier": "Public namespace; fixed identity set; shared verifier primitives.",
+      "source_refs": [
+        {
+          "source_id": "walkthrough",
+          "section": "03-semantics",
+          "locator": "WALKTHROUGH.md#03-semantics"
+        },
+        {
+          "source_id": "policy-code",
+          "section": "Rule.identity; _check_overlap",
+          "locator": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/policy.py"
+        },
+        {
+          "source_id": "semantics",
+          "section": "build_replacements",
+          "locator": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/pseudonyms.py"
+        },
+        {
+          "source_id": "matcher-code",
+          "section": "Matcher.replace; _select",
+          "locator": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/matcher.py"
+        },
+        {
+          "source_id": "verify-code",
+          "section": "_typed_equal; _verify_sqlite_locations",
+          "locator": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/verification.py"
+        }
+      ],
+      "evidence_spans": [
+        {
+          "source_id": "walkthrough",
+          "section": "03-semantics",
+          "text": "The canonical identity is the pair of data type and subject ID. When `subject_id` is absent, the rule ID is the fallback."
+        },
+        {
+          "source_id": "walkthrough",
+          "section": "03-semantics",
+          "text": "The verifier therefore compares expected values at locations: ordered CSV cells, JSON nodes and array positions, text content, and SQLite rows. It also checks types."
+        },
+        {
+          "source_id": "semantics",
+          "section": "build_replacements",
+          "text": "    unique = sorted(set(identities))"
+        },
+        {
+          "source_id": "verify-code",
+          "section": "_typed_equal",
+          "text": "    if type(a) is not type(b):\n        return False"
+        }
+      ],
+      "notes": "Stability is not promised through arbitrary identity-set growth. Typed value checks are not physical-file byte identity. The three-part native visual is explanatory, not three independently implemented engines."
+    },
+    {
+      "id": "release",
+      "text": "A corpus directory alone is not ready; report.json is the final authorizing marker.",
+      "kind": "proof",
+      "visibility": "public",
+      "risk": "high",
+      "status": "candidate",
+      "required_qualifier": "Trusted single writer; report-last is not full rollback.",
+      "source_refs": [
+        {
+          "source_id": "walkthrough",
+          "section": "04-reliability",
+          "locator": "WALKTHROUGH.md#04-reliability"
+        },
+        {
+          "source_id": "release",
+          "section": "_publish",
+          "locator": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/pipeline.py"
+        }
+      ],
+      "evidence_spans": [
+        {
+          "source_id": "walkthrough",
+          "section": "04-reliability",
+          "text": "A failed publication can leave corpus bytes without an authorizing report. A consumer must not treat a directory\u2019s existence as readiness."
+        },
+        {
+          "source_id": "release",
+          "section": "_publish",
+          "text": "    os.replace(tmp, report_path)  # atomic readiness marker, written last"
+        }
+      ],
+      "notes": "A prior valid release can remain after preflight rejection. No exhaustive crash or power-loss claim. Candidate replaces historical approval."
+    },
+    {
+      "id": "private-boundary",
+      "text": "Resolved output destinations keep discovery reviews, approved policies, and approval receipts outside an existing release.",
+      "kind": "proof",
+      "visibility": "public",
+      "risk": "high",
+      "status": "candidate",
+      "required_qualifier": "Post-trial path fix; trusted single-writer assumption.",
+      "source_refs": [
+        {
+          "source_id": "walkthrough",
+          "section": "04-reliability",
+          "locator": "WALKTHROUGH.md#04-reliability"
+        },
+        {
+          "source_id": "path-code",
+          "section": "separate_output",
+          "locator": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/bundle.py"
+        },
+        {
+          "source_id": "cli-code",
+          "section": "main",
+          "locator": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/__main__.py"
+        },
+        {
+          "source_id": "discovery-code",
+          "section": "approve",
+          "locator": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/discovery.py"
+        }
+      ],
+      "evidence_spans": [
+        {
+          "source_id": "walkthrough",
+          "section": "04-reliability",
+          "text": "The CLI assigns that result to `args.output`, and approval separately validates its policy destination and its derived receipt destination before either write."
+        },
+        {
+          "source_id": "path-code",
+          "section": "separate_output",
+          "text": "    out = output.resolve()"
+        },
+        {
+          "source_id": "path-code",
+          "section": "separate_output",
+          "text": "        for parent in out.parents"
+        },
+        {
+          "source_id": "discovery-code",
+          "section": "approve",
+          "text": "    receipt_path = separate_output(\n        output.with_name(output.name + \".approval.json\"), bundle, review_path, output, *inputs\n    )"
+        }
+      ],
+      "notes": "Deterministic relative/symlink aliases; not protection against a hostile concurrent writer. Permissions do not replace placement validation."
+    },
+    {
+      "id": "evidence",
+      "text": "The retained path regression checks unchanged release files and successful private-work controls.",
+      "kind": "proof",
+      "visibility": "public",
+      "risk": "high",
+      "status": "candidate",
+      "required_qualifier": "Source-inspected tests; local runs reported or retained separately.",
+      "source_refs": [
+        {
+          "source_id": "walkthrough",
+          "section": "05-evidence",
+          "locator": "WALKTHROUGH.md#05-evidence"
+        },
+        {
+          "source_id": "path-regression",
+          "section": "test_work_artifacts_cannot_enter_release_via_relative_or_symlink_paths",
+          "locator": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/tests/test_discovery_boundaries.py"
+        }
+      ],
+      "evidence_spans": [
+        {
+          "source_id": "walkthrough",
+          "section": "05-evidence",
+          "text": "It records a mapping of every release file path to its bytes. That means its comparison covers file inventory, corpus content, and the readiness report\u2014not merely the return code."
+        },
+        {
+          "source_id": "walkthrough",
+          "section": "05-evidence",
+          "text": "Equivalent relative and symlinked paths in a normal private work directory must still allow discovery and approval, and the resulting review, policy, and receipt must have private permissions."
+        }
+      ],
+      "notes": "No new test or Docker execution. Old wrapper results and presenter-reported qualification remain separately attributed in notes; the slide claims the oracle contents, not a fresh PASS."
+    },
+    {
+      "id": "proposal-authority",
+      "text": "Discovery proposes; explicit approval compiles an exact policy; a later pipeline run owns release.",
+      "kind": "proof",
+      "visibility": "public",
+      "risk": "high",
+      "status": "candidate",
+      "required_qualifier": "Post-trial extension; score is not probability; approval is not release.",
+      "source_refs": [
+        {
+          "source_id": "walkthrough",
+          "section": "05-evidence",
+          "locator": "WALKTHROUGH.md#05-evidence"
+        },
+        {
+          "source_id": "discovery-code",
+          "section": "discover; approve",
+          "locator": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/discovery.py"
+        },
+        {
+          "source_id": "cli-code",
+          "section": "main",
+          "locator": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/__main__.py"
+        }
+      ],
+      "evidence_spans": [
+        {
+          "source_id": "walkthrough",
+          "section": "05-evidence",
+          "text": "Approval appends case-sensitive literal rules and runs the actual policy compiler before writing a new policy. Its receipt still says `release_ready: false`. Only a subsequent pipeline run transforms, verifies, and publishes a corpus."
+        },
+        {
+          "source_id": "discovery-code",
+          "section": "approve",
+          "text": "    compile_policy(payload)  # real consumer validator, including protected overlap rejection"
+        }
+      ],
+      "notes": "Whole-value discovery does not make approved rules row-scoped: the resulting literals use the ordinary substring matcher. No authentication or signature claim."
+    },
+    {
+      "id": "production",
+      "text": "The proposed AWS design scales work but retains one manifest-and-pointer release decision; the committed scenario models about $86 per TB and $85,734 per PB.",
+      "kind": "roadmap",
+      "visibility": "public",
+      "risk": "high",
+      "status": "candidate",
+      "required_qualifier": "Modeled, not deployed or measured; illustrative list-price assumptions.",
+      "source_refs": [
+        {
+          "source_id": "walkthrough",
+          "section": "06-production",
+          "locator": "WALKTHROUGH.md#06-production"
+        },
+        {
+          "source_id": "production",
+          "section": "Flow; SLA (stated assumptions, arithmetic shown)",
+          "locator": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/docs/production-architecture.md"
+        },
+        {
+          "source_id": "cost-model",
+          "section": "_one; _sensitivity",
+          "locator": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/scripts/estimate_aws_cost.py"
+        },
+        {
+          "source_id": "cost-inputs",
+          "section": "region; price_date; storage_months; workers",
+          "locator": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/costs/aws-us-east-1-inputs.json"
+        },
+        {
+          "source_id": "cost-output",
+          "section": "estimate_1TB; estimate_1PB",
+          "locator": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/costs/example-estimates.json"
+        }
+      ],
+      "evidence_spans": [
+        {
+          "source_id": "walkthrough",
+          "section": "06-production",
+          "text": "A coordinator must verify the expected corpus, write an immutable manifest of output keys and hashes, and switch an active-corpus pointer."
+        },
+        {
+          "source_id": "walkthrough",
+          "section": "06-production",
+          "text": "| 1 TB, defined as \\(10^{12}\\) bytes | $85.73, approximately $86 | 0.14 hours | Verified publication within 1 hour |"
+        },
+        {
+          "source_id": "walkthrough",
+          "section": "06-production",
+          "text": "| 1 PB, defined as \\(10^{15}\\) bytes | $85,733.90, approximately $85,734 | 141.67 hours | Verified publication within 7 days |"
+        }
+      ],
+      "notes": "Rounded committed outputs, not a fresh estimate or current AWS quote. Assumes 200 workers, 20 MB/s each, three copies for one month, average 1 MiB files; exclusions and simplified API accounting remain in notes. Shared identity-plan management is proposed, not shipped."
+    },
+    {
+      "id": "nonclaims",
+      "text": "A bounded technical review does not establish general anonymity, production-scale operation, or eight-hour compliance.",
+      "kind": "non_claim",
+      "visibility": "public",
+      "risk": "mandatory_non_claim",
+      "status": "candidate",
+      "required_qualifier": "Technical review is bounded; no general anonymity or production claim.",
+      "source_refs": [
+        {
+          "source_id": "walkthrough",
+          "section": "07-nonclaims",
+          "locator": "WALKTHROUGH.md#07-nonclaims"
+        },
+        {
+          "source_id": "submission",
+          "section": "Unfinished work and deliberate exclusions; Production hardening after the eight-hour trial",
+          "locator": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/SUBMISSION.md"
+        }
+      ],
+      "evidence_spans": [
+        {
+          "source_id": "walkthrough",
+          "section": "07-nonclaims",
+          "text": "The bounded follow-up review closed the canonical-path blocker at this submitted commit. That is a specific technical conclusion. It is not a claim of exhaustive security, guaranteed correctness, general anonymity, or approval of the presentation."
+        }
+      ],
+      "notes": "No new peer-review result or presentation approval is asserted by this deck draft. AI assistance and future hardening remain disclosed."
+    },
+    {
+      "id": "timebox-disclosure",
+      "text": "Post-timebox corrections and later operator-requested additions are disclosed; the retrospective estimate does not establish eight-hour compliance.",
+      "kind": "non_claim",
+      "visibility": "public",
+      "risk": "mandatory_non_claim",
+      "status": "candidate",
+      "required_qualifier": "Post-timebox work disclosed; not proof of eight-hour compliance.",
+      "source_refs": [
+        {
+          "source_id": "walkthrough",
+          "section": "07-nonclaims",
+          "locator": "WALKTHROUGH.md#07-nonclaims"
+        },
+        {
+          "source_id": "submission",
+          "section": "Time spent; Retrospective time estimate",
+          "locator": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/SUBMISSION.md"
+        }
+      ],
+      "evidence_spans": [
+        {
+          "source_id": "walkthrough",
+          "section": "07-nonclaims",
+          "text": "The submission records post-timebox corrections and later operator-requested additions. Active engineering time was not separately tracked."
+        },
+        {
+          "source_id": "walkthrough",
+          "section": "07-nonclaims",
+          "text": "The retrospective allocation totals eight hours, but it is an estimate, not proof that the instruction to stop after eight hours was satisfied."
+        }
+      ],
+      "notes": "Administrative timebox judgment remains with the evaluator. Do not invent active-time measurements or personal authorship percentages."
+    }
+  ]
+}

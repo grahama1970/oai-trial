@@ -1,0 +1,110 @@
+[
+  {
+    "slide_id": "01-brief",
+    "walkthrough_section_id": "01-brief",
+    "duration_minutes": 3,
+    "archetype": "cover",
+    "question_ids": ["Q01", "Q02", "Q03"],
+    "code_refs": [
+      {"path": "src/anonymization_trial/policy.py", "symbol": "compile_policy", "commit": "0375af56bf681e9441edcb7433cfe58951db77b2"},
+      {"path": "src/anonymization_trial/policy.py", "symbol": "Rule.identity", "commit": "0375af56bf681e9441edcb7433cfe58951db77b2"}
+    ],
+    "evidence_ids": ["E08"],
+    "visual_rationale": "A sparse native typographic contract: one policy across four formats. No stock art or extra sales cover."
+  },
+  {
+    "slide_id": "02-architecture",
+    "walkthrough_section_id": "02-architecture",
+    "duration_minutes": 4,
+    "archetype": "assertion+art",
+    "question_ids": ["Q04", "Q05", "Q06", "Q42", "Q43"],
+    "code_refs": [
+      {"path": "src/anonymization_trial/pipeline.py", "symbol": "run_pipeline", "commit": "0375af56bf681e9441edcb7433cfe58951db77b2"},
+      {"path": "src/anonymization_trial/formats.py", "symbol": "transform_file", "commit": "0375af56bf681e9441edcb7433cfe58951db77b2"},
+      {"path": "src/anonymization_trial/verification.py", "symbol": "verify_corpus", "commit": "0375af56bf681e9441edcb7433cfe58951db77b2"},
+      {"path": "src/anonymization_trial/bundle.py", "symbol": "input_bundle", "commit": "0375af56bf681e9441edcb7433cfe58951db77b2"},
+      {"path": "src/anonymization_trial/__main__.py", "symbol": "main", "commit": "0375af56bf681e9441edcb7433cfe58951db77b2"}
+    ],
+    "evidence_ids": ["E08"],
+    "visual_rationale": "Four grouped serial stages preserve the supplied local topology and its failure rail. A two-stage scene template would misrepresent this; use the external SVG candidate. Larger labels replace the source 21px labels across a 1400-unit canvas. Private staging and the trusted single-writer assumption remain visible."
+  },
+  {
+    "slide_id": "03-semantics",
+    "walkthrough_section_id": "03-semantics",
+    "duration_minutes": 6,
+    "archetype": "assertion+art",
+    "question_ids": ["Q07", "Q08", "Q09", "Q10", "Q11", "Q12", "Q31", "Q32", "Q33", "Q38", "Q39", "Q40", "Q41"],
+    "code_refs": [
+      {"path": "src/anonymization_trial/policy.py", "symbol": "Rule.identity", "commit": "0375af56bf681e9441edcb7433cfe58951db77b2"},
+      {"path": "src/anonymization_trial/policy.py", "symbol": "_check_overlap", "commit": "0375af56bf681e9441edcb7433cfe58951db77b2"},
+      {"path": "src/anonymization_trial/pseudonyms.py", "symbol": "build_replacements", "commit": "0375af56bf681e9441edcb7433cfe58951db77b2"},
+      {"path": "src/anonymization_trial/pseudonyms.py", "symbol": "_digest", "commit": "0375af56bf681e9441edcb7433cfe58951db77b2"},
+      {"path": "src/anonymization_trial/matcher.py", "symbol": "Matcher.replace", "commit": "0375af56bf681e9441edcb7433cfe58951db77b2"},
+      {"path": "src/anonymization_trial/matcher.py", "symbol": "_select", "commit": "0375af56bf681e9441edcb7433cfe58951db77b2"},
+      {"path": "src/anonymization_trial/verification.py", "symbol": "_typed_equal", "commit": "0375af56bf681e9441edcb7433cfe58951db77b2"},
+      {"path": "src/anonymization_trial/verification.py", "symbol": "_verify_sqlite_locations", "commit": "0375af56bf681e9441edcb7433cfe58951db77b2"}
+    ],
+    "evidence_ids": ["E06", "E08"],
+    "visual_rationale": "Three aligned native-text obligations show identity, original spans and located typed values. This is one preservation argument; code detail and synthetic mutation answers stay in notes/Q&A."
+  },
+  {
+    "slide_id": "04-reliability",
+    "walkthrough_section_id": "04-reliability",
+    "duration_minutes": 5,
+    "archetype": "assertion+art",
+    "question_ids": ["Q13", "Q14", "Q15", "Q16", "Q17", "Q37", "Q44"],
+    "code_refs": [
+      {"path": "src/anonymization_trial/pipeline.py", "symbol": "_publish", "commit": "0375af56bf681e9441edcb7433cfe58951db77b2"},
+      {"path": "src/anonymization_trial/bundle.py", "symbol": "separate_output", "commit": "0375af56bf681e9441edcb7433cfe58951db77b2"},
+      {"path": "src/anonymization_trial/__main__.py", "symbol": "main", "commit": "0375af56bf681e9441edcb7433cfe58951db77b2"},
+      {"path": "src/anonymization_trial/discovery.py", "symbol": "approve", "commit": "0375af56bf681e9441edcb7433cfe58951db77b2"},
+      {"path": "src/anonymization_trial/discovery.py", "symbol": "write_private", "commit": "0375af56bf681e9441edcb7433cfe58951db77b2"}
+    ],
+    "evidence_ids": ["E04", "E06", "E08"],
+    "visual_rationale": "Native-text private-work versus READY-release boundary with a red denied crossing. Reuses the supplied publication-state semantics without embedding a second tiny serial diagram. report.json last and canonical destination checking explain the same authorization boundary."
+  },
+  {
+    "slide_id": "05-evidence",
+    "walkthrough_section_id": "05-evidence",
+    "duration_minutes": 5,
+    "archetype": "mixed Q&A / demo",
+    "question_ids": ["Q18", "Q19", "Q20", "Q21", "Q22", "Q23", "Q34", "Q35", "Q36", "Q45", "Q46"],
+    "code_refs": [
+      {"path": "tests/test_discovery_boundaries.py", "symbol": "test_work_artifacts_cannot_enter_release_via_relative_or_symlink_paths", "commit": "0375af56bf681e9441edcb7433cfe58951db77b2"},
+      {"path": "src/anonymization_trial/discovery.py", "symbol": "discover", "commit": "0375af56bf681e9441edcb7433cfe58951db77b2"},
+      {"path": "src/anonymization_trial/discovery.py", "symbol": "approve", "commit": "0375af56bf681e9441edcb7433cfe58951db77b2"},
+      {"path": "scripts/qualify_submission.py", "symbol": "readback", "commit": "0375af56bf681e9441edcb7433cfe58951db77b2"},
+      {"path": "scripts/qualify_submission.py", "symbol": "qualify", "commit": "0375af56bf681e9441edcb7433cfe58951db77b2"}
+    ],
+    "evidence_ids": ["E01", "E02", "E03", "E04", "E06"],
+    "visual_rationale": "A native-text proposal→approval→release sequence, with a subordinate unchanged-release/positive-control oracle. No fabricated screenshot or test result badge; source inspection and reported/retained execution are explicitly separate."
+  },
+  {
+    "slide_id": "06-production",
+    "walkthrough_section_id": "06-production",
+    "duration_minutes": 4,
+    "archetype": "assertion+art",
+    "question_ids": ["Q24", "Q25", "Q26", "Q27", "Q47"],
+    "code_refs": [
+      {"path": "scripts/estimate_aws_cost.py", "symbol": "_one", "commit": "0375af56bf681e9441edcb7433cfe58951db77b2"},
+      {"path": "scripts/estimate_aws_cost.py", "symbol": "_sensitivity", "commit": "0375af56bf681e9441edcb7433cfe58951db77b2"},
+      {"path": "src/anonymization_trial/pseudonyms.py", "symbol": "build_replacements", "commit": "0375af56bf681e9441edcb7433cfe58951db77b2"}
+    ],
+    "evidence_ids": ["E07", "E08"],
+    "visual_rationale": "One AWS topology derived from the supplied production SVG: distribution, verification fan-in, manifest/pointer, retry and quarantine. The external candidate removes the redundant internal title and enlarges 10–15px source labels; modeled price/target callouts remain native slide text."
+  },
+  {
+    "slide_id": "07-nonclaims",
+    "walkthrough_section_id": "07-nonclaims",
+    "duration_minutes": 3,
+    "archetype": "close",
+    "question_ids": ["Q28", "Q29", "Q30", "Q48"],
+    "code_refs": [
+      {"path": "src/anonymization_trial/pipeline.py", "symbol": "_DOES_NOT_ESTABLISH", "commit": "0375af56bf681e9441edcb7433cfe58951db77b2"},
+      {"path": "src/anonymization_trial/pseudonyms.py", "symbol": "KEY_MODE", "commit": "0375af56bf681e9441edcb7433cfe58951db77b2"},
+      {"path": "src/anonymization_trial/verification.py", "symbol": "verify_corpus", "commit": "0375af56bf681e9441edcb7433cfe58951db77b2"}
+    ],
+    "evidence_ids": ["E04", "E08"],
+    "visual_rationale": "A bounded/not-established comparison closes the same engineering argument. The timebox disclosure is visible, not notes-only. Q&A starts after this slide; no new timeline, sales ask or future-feature slide."
+  }
+]

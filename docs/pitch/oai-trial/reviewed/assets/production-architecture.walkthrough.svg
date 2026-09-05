@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300" role="img" aria-labelledby="title desc" font-family="Arial, sans-serif">
+  <title id="title">Proposed AWS publication flow — external candidate</title>
+  <desc id="desc">Derived from the supplied production architecture. Intake, format-aware distribution and transformation lead to corpus verification fan-in. An immutable manifest and active pointer define publication. Retry/replay and quarantine remain outside the durable publication boundary. This is a modeled design, not a deployment.</desc>
+  <rect width="1200" height="300" fill="#0f172a" />
+  <defs>
+    <marker id="flow" markerWidth="10" markerHeight="8" refX="8" refY="4" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0 0 L8 4 L0 8 Z" fill="#22d3ee" />
+    </marker>
+    <marker id="fail" markerWidth="10" markerHeight="8" refX="8" refY="4" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0 0 L8 4 L0 8 Z" fill="#f87171" />
+    </marker>
+  </defs>
+  <g id="intake" data-component="intake">
+    <rect x="20" y="91" width="216" height="86" rx="8" fill="#1e293b" stroke="#22d3ee" stroke-width="2" />
+    <text x="128" y="144" font-size="34" font-weight="600" fill="#22d3ee" text-anchor="middle">Intake</text>
+  </g>
+  <g id="distribute" data-component="distribute">
+    <rect x="256" y="91" width="216" height="86" rx="8" fill="#1e293b" stroke="#22d3ee" stroke-width="2" />
+    <text x="364" y="144" font-size="34" font-weight="600" fill="#22d3ee" text-anchor="middle">Distribute</text>
+  </g>
+  <g id="transform" data-component="transform">
+    <rect x="492" y="91" width="216" height="86" rx="8" fill="#1e293b" stroke="#22d3ee" stroke-width="2" />
+    <text x="600" y="144" font-size="34" font-weight="600" fill="#22d3ee" text-anchor="middle">Transform</text>
+  </g>
+  <g id="verify" data-component="verify">
+    <rect x="728" y="91" width="216" height="86" rx="8" fill="#1e293b" stroke="#f59e0b" stroke-width="2" />
+    <text x="836" y="126" font-size="30" font-weight="600" fill="#f59e0b" text-anchor="middle">Verify</text>
+    <text x="836" y="160" font-size="30" font-weight="600" fill="#f59e0b" text-anchor="middle">all files</text>
+  </g>
+  <g id="publish" data-component="publish">
+    <rect x="964" y="91" width="216" height="86" rx="8" fill="#12372f" stroke="#34d399" stroke-width="2" />
+    <text x="1072" y="126" font-size="30" font-weight="600" fill="#34d399" text-anchor="middle">Manifest →</text>
+    <text x="1072" y="160" font-size="30" font-weight="600" fill="#34d399" text-anchor="middle">active pointer</text>
+  </g>
+  <path d="M236 134 H252" fill="none" stroke="#22d3ee" stroke-width="3" stroke-linejoin="round" marker-end="url(#flow)" />
+  <path d="M472 134 H488" fill="none" stroke="#22d3ee" stroke-width="3" stroke-linejoin="round" marker-end="url(#flow)" />
+  <path d="M708 134 H724" fill="none" stroke="#22d3ee" stroke-width="3" stroke-linejoin="round" marker-end="url(#flow)" />
+  <path d="M944 134 H960" fill="none" stroke="#22d3ee" stroke-width="3" stroke-linejoin="round" marker-end="url(#flow)" />
+  <path d="M600 89 C590 44 374 44 364 89" fill="none" stroke="#22d3ee" stroke-width="3" stroke-linejoin="round" stroke-dasharray="7 5" marker-end="url(#flow)" />
+  <text x="482" y="30" font-size="28" font-weight="600" fill="#22d3ee" text-anchor="middle">Retry / replay</text>
+  <path d="M953 72 V282" fill="none" stroke="#94a3b8" stroke-width="3" stroke-linejoin="round" stroke-dasharray="6 5" />
+  <text x="1072" y="226" font-size="28" font-weight="600" fill="#cbd5e1" text-anchor="middle">Durable</text>
+  <text x="1072" y="261" font-size="28" font-weight="600" fill="#cbd5e1" text-anchor="middle">publish boundary</text>
+  <path d="M836 179 V227" fill="none" stroke="#f87171" stroke-width="3" stroke-linejoin="round" marker-end="url(#fail)" />
+  <g id="quarantine" data-component="quarantine">
+    <rect x="724" y="232" width="220" height="54" rx="8" fill="#271923" stroke="#f87171" stroke-width="2" />
+    <text x="836" y="269" font-size="32" font-weight="600" fill="#f87171" text-anchor="middle">Quarantine</text>
+  </g>
+  <text x="360" y="257" font-size="30" font-weight="600" fill="#cbd5e1" text-anchor="middle">Format-aware work</text>
+</svg>

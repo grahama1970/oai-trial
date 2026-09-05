@@ -1,0 +1,259 @@
+{
+  "schema": "pitchdeck.source_manifest.v1",
+  "project_name": "oai-trial",
+  "deck_title": "Policy-bounded pseudonymization: technical walkthrough",
+  "audience": "OpenAI privacy-engineering trial reviewers",
+  "sources": [
+    {
+      "id": "walkthrough",
+      "title": "Reviewed packet narrative; post-submission presentation source",
+      "path": "../WALKTHROUGH.md",
+      "visibility": "public",
+      "role": "primary",
+      "required": true
+    },
+    {
+      "id": "brief",
+      "title": "Required behavior",
+      "path": "../../../../TRIAL_BRIEF.md",
+      "visibility": "public",
+      "role": "evidence",
+      "required": true,
+      "repo": "grahama1970/oai-trial",
+      "ref": "0375af56bf681e9441edcb7433cfe58951db77b2"
+    },
+    {
+      "id": "local",
+      "title": "Local orchestration",
+      "path": "../../../../src/anonymization_trial/pipeline.py",
+      "visibility": "public",
+      "role": "evidence",
+      "required": true,
+      "repo": "grahama1970/oai-trial",
+      "ref": "0375af56bf681e9441edcb7433cfe58951db77b2"
+    },
+    {
+      "id": "release",
+      "title": "Report-last publication",
+      "path": "../../../../src/anonymization_trial/pipeline.py",
+      "visibility": "public",
+      "role": "evidence",
+      "required": true,
+      "repo": "grahama1970/oai-trial",
+      "ref": "0375af56bf681e9441edcb7433cfe58951db77b2"
+    },
+    {
+      "id": "semantics",
+      "title": "Deterministic replacement allocation",
+      "path": "../../../../src/anonymization_trial/pseudonyms.py",
+      "visibility": "public",
+      "role": "evidence",
+      "required": true,
+      "repo": "grahama1970/oai-trial",
+      "ref": "0375af56bf681e9441edcb7433cfe58951db77b2"
+    },
+    {
+      "id": "policy-code",
+      "title": "Identity authority and policy validation",
+      "path": "../../../../src/anonymization_trial/policy.py",
+      "visibility": "public",
+      "role": "evidence",
+      "required": true,
+      "repo": "grahama1970/oai-trial",
+      "ref": "0375af56bf681e9441edcb7433cfe58951db77b2"
+    },
+    {
+      "id": "matcher-code",
+      "title": "Original-input span selection",
+      "path": "../../../../src/anonymization_trial/matcher.py",
+      "visibility": "public",
+      "role": "evidence",
+      "required": true,
+      "repo": "grahama1970/oai-trial",
+      "ref": "0375af56bf681e9441edcb7433cfe58951db77b2"
+    },
+    {
+      "id": "verify-code",
+      "title": "Typed and located re-derivation",
+      "path": "../../../../src/anonymization_trial/verification.py",
+      "visibility": "public",
+      "role": "evidence",
+      "required": true,
+      "repo": "grahama1970/oai-trial",
+      "ref": "0375af56bf681e9441edcb7433cfe58951db77b2"
+    },
+    {
+      "id": "format-code",
+      "title": "Four bounded adapters",
+      "path": "../../../../src/anonymization_trial/formats.py",
+      "visibility": "public",
+      "role": "evidence",
+      "required": true,
+      "repo": "grahama1970/oai-trial",
+      "ref": "0375af56bf681e9441edcb7433cfe58951db77b2"
+    },
+    {
+      "id": "path-code",
+      "title": "Canonical destination and input adapter",
+      "path": "../../../../src/anonymization_trial/bundle.py",
+      "visibility": "public",
+      "role": "evidence",
+      "required": true,
+      "repo": "grahama1970/oai-trial",
+      "ref": "0375af56bf681e9441edcb7433cfe58951db77b2"
+    },
+    {
+      "id": "discovery-code",
+      "title": "Proposal and approval boundaries",
+      "path": "../../../../src/anonymization_trial/discovery.py",
+      "visibility": "public",
+      "role": "evidence",
+      "required": true,
+      "repo": "grahama1970/oai-trial",
+      "ref": "0375af56bf681e9441edcb7433cfe58951db77b2"
+    },
+    {
+      "id": "cli-code",
+      "title": "Canonical CLI callers",
+      "path": "../../../../src/anonymization_trial/__main__.py",
+      "visibility": "public",
+      "role": "evidence",
+      "required": true,
+      "repo": "grahama1970/oai-trial",
+      "ref": "0375af56bf681e9441edcb7433cfe58951db77b2"
+    },
+    {
+      "id": "path-regression",
+      "title": "Canonical-path adversarial regression",
+      "path": "../../../../tests/test_discovery_boundaries.py",
+      "visibility": "public",
+      "role": "evidence",
+      "required": true,
+      "repo": "grahama1970/oai-trial",
+      "ref": "0375af56bf681e9441edcb7433cfe58951db77b2"
+    },
+    {
+      "id": "evidence",
+      "title": "Typed-scalar mutation tests",
+      "path": "../../../../security/tests/test_typed_scalar_verification.py",
+      "visibility": "public",
+      "role": "evidence",
+      "required": true,
+      "repo": "grahama1970/oai-trial",
+      "ref": "0375af56bf681e9441edcb7433cfe58951db77b2"
+    },
+    {
+      "id": "qualification",
+      "title": "Independent synthetic readback checker",
+      "path": "../../../../scripts/qualify_submission.py",
+      "visibility": "public",
+      "role": "evidence",
+      "required": true,
+      "repo": "grahama1970/oai-trial",
+      "ref": "0375af56bf681e9441edcb7433cfe58951db77b2"
+    },
+    {
+      "id": "wrapper-evals",
+      "title": "Retained wrapper execution, not editor execution",
+      "path": "../../../../artifacts/release-artifact-path-evals.json",
+      "visibility": "public",
+      "role": "evidence",
+      "required": true,
+      "repo": "grahama1970/oai-trial",
+      "ref": "0375af56bf681e9441edcb7433cfe58951db77b2"
+    },
+    {
+      "id": "production",
+      "title": "Proposed AWS architecture",
+      "path": "../../../production-architecture.md",
+      "visibility": "public",
+      "role": "supporting",
+      "required": true,
+      "repo": "grahama1970/oai-trial",
+      "ref": "0375af56bf681e9441edcb7433cfe58951db77b2"
+    },
+    {
+      "id": "cost-model",
+      "title": "Scenario arithmetic",
+      "path": "../../../../scripts/estimate_aws_cost.py",
+      "visibility": "public",
+      "role": "evidence",
+      "required": true,
+      "repo": "grahama1970/oai-trial",
+      "ref": "0375af56bf681e9441edcb7433cfe58951db77b2"
+    },
+    {
+      "id": "cost-inputs",
+      "title": "Dated illustrative model inputs",
+      "path": "../../../../costs/aws-us-east-1-inputs.json",
+      "visibility": "public",
+      "role": "evidence",
+      "required": true,
+      "repo": "grahama1970/oai-trial",
+      "ref": "0375af56bf681e9441edcb7433cfe58951db77b2"
+    },
+    {
+      "id": "cost-output",
+      "title": "Committed model output, not a new run",
+      "path": "../../../../costs/example-estimates.json",
+      "visibility": "public",
+      "role": "evidence",
+      "required": true,
+      "repo": "grahama1970/oai-trial",
+      "ref": "0375af56bf681e9441edcb7433cfe58951db77b2"
+    },
+    {
+      "id": "submission",
+      "title": "Timebox and implementation disclosures",
+      "path": "../../../../SUBMISSION.md",
+      "visibility": "public",
+      "role": "evidence",
+      "required": true,
+      "repo": "grahama1970/oai-trial",
+      "ref": "0375af56bf681e9441edcb7433cfe58951db77b2"
+    },
+    {
+      "id": "nonclaims",
+      "title": "Privacy limits",
+      "path": "../../../PRIVACY_CONTRACT.md",
+      "visibility": "public",
+      "role": "evidence",
+      "required": true,
+      "repo": "grahama1970/oai-trial",
+      "ref": "0375af56bf681e9441edcb7433cfe58951db77b2"
+    }
+  ],
+  "policy": {
+    "public_deck_source_ids": [
+      "walkthrough",
+      "brief",
+      "local",
+      "release",
+      "semantics",
+      "policy-code",
+      "matcher-code",
+      "verify-code",
+      "format-code",
+      "path-code",
+      "discovery-code",
+      "cli-code",
+      "path-regression",
+      "evidence",
+      "qualification",
+      "wrapper-evals",
+      "production",
+      "cost-model",
+      "cost-inputs",
+      "cost-output",
+      "submission",
+      "nonclaims"
+    ],
+    "forbidden_unqualified_claims": [
+      "provably anonymous",
+      "production-ready",
+      "race-proof",
+      "eight-hour compliant"
+    ],
+    "mandatory_non_claims": []
+  }
+}

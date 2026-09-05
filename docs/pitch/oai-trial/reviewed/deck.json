@@ -1,0 +1,1578 @@
+{
+  "schema": "pitchdeck.deck_manifest.v1",
+  "deck": {
+    "id": "oai-trial-technical-briefing-public",
+    "title": "Policy-bounded pseudonymization: technical walkthrough",
+    "subtitle": "30-minute prepared walkthrough; separate 15+ minute Q&A",
+    "audience": "OpenAI privacy-engineering trial reviewers",
+    "visibility": "public",
+    "target_editor": "google_slides",
+    "theme": "dark_cyan_evidence",
+    "theme_tokens": {
+      "accent": "#22d3ee",
+      "heading_font": "Arial",
+      "body_font": "Arial"
+    },
+    "source_policy": "public_only"
+  },
+  "slides": [
+    {
+      "id": "01-brief",
+      "order": 1,
+      "role": "brief",
+      "layout": "freeform",
+      "visibility": "public",
+      "title": "The policy defines the promise",
+      "message": "Replace declared literals. Preserve meaning. Verify before release.",
+      "body": [],
+      "source_refs": [
+        {
+          "source_id": "walkthrough",
+          "section": "01-brief",
+          "locator": "WALKTHROUGH.md#01-brief"
+        },
+        {
+          "source_id": "brief",
+          "section": "Required behavior; Policy contract",
+          "locator": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/TRIAL_BRIEF.md"
+        },
+        {
+          "source_id": "policy-code",
+          "section": "compile_policy; Rule.identity",
+          "locator": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/policy.py"
+        }
+      ],
+      "claim_ids": [
+        "brief"
+      ],
+      "visual": {
+        "type": "none",
+        "items": [],
+        "callouts": []
+      },
+      "claim_guard": {
+        "allowed_claim_ids": [
+          "brief"
+        ],
+        "requires_non_claim_ids": [],
+        "forbidden_unqualified": [
+          "provably anonymous",
+          "production-ready",
+          "race-proof",
+          "eight-hour compliant"
+        ]
+      },
+      "elements": [
+        {
+          "id": "title",
+          "type": "text",
+          "x": 0.055,
+          "y": 0.05,
+          "w": 0.89,
+          "h": 0.12,
+          "text": "The policy defines the promise",
+          "size_pt": 36,
+          "bold": true,
+          "color": "#e2e8f0"
+        },
+        {
+          "id": "thesis",
+          "type": "text",
+          "x": 0.055,
+          "y": 0.18,
+          "w": 0.89,
+          "h": 0.1,
+          "text": "Replace declared literals. Preserve meaning. Verify before release.",
+          "size_pt": 24,
+          "color": "#22d3ee"
+        },
+        {
+          "id": "hero",
+          "type": "text",
+          "x": 0.07,
+          "y": 0.33,
+          "w": 0.86,
+          "h": 0.13,
+          "text": "One literal policy",
+          "size_pt": 44,
+          "bold": true,
+          "color": "#e2e8f0"
+        },
+        {
+          "id": "formats",
+          "type": "text",
+          "x": 0.07,
+          "y": 0.48,
+          "w": 0.86,
+          "h": 0.075,
+          "text": "CSV  \u00b7  JSON  \u00b7  UTF-8 text  \u00b7  SQLite",
+          "size_pt": 28,
+          "color": "#22d3ee"
+        },
+        {
+          "id": "replace",
+          "type": "text",
+          "x": 0.07,
+          "y": 0.64,
+          "w": 0.26,
+          "h": 0.14,
+          "text": "REPLACE\ndeclared values",
+          "size_pt": 26,
+          "color": "#e2e8f0"
+        },
+        {
+          "id": "preserve",
+          "type": "text",
+          "x": 0.38,
+          "y": 0.64,
+          "w": 0.29,
+          "h": 0.14,
+          "text": "PRESERVE\nmeaning + identity",
+          "size_pt": 26,
+          "color": "#e2e8f0"
+        },
+        {
+          "id": "verify",
+          "type": "text",
+          "x": 0.71,
+          "y": 0.64,
+          "w": 0.24,
+          "h": 0.14,
+          "text": "VERIFY\nbefore readiness",
+          "size_pt": 26,
+          "color": "#e2e8f0"
+        },
+        {
+          "id": "qualifier",
+          "type": "text",
+          "x": 0.055,
+          "y": 0.86,
+          "w": 0.89,
+          "h": 0.07,
+          "text": "Policy-bounded pseudonymization; not formal anonymity.",
+          "size_pt": 21,
+          "color": "#cbd5e1"
+        }
+      ],
+      "bindings": [
+        {
+          "path": "title",
+          "kind": "claim_paraphrase",
+          "claim_id": "brief",
+          "transform_class": "generalization"
+        },
+        {
+          "path": "message",
+          "kind": "claim_paraphrase",
+          "claim_id": "brief",
+          "transform_class": "generalization"
+        },
+        {
+          "path": "element:title",
+          "kind": "claim_paraphrase",
+          "claim_id": "brief",
+          "transform_class": "generalization"
+        },
+        {
+          "path": "element:thesis",
+          "kind": "claim_paraphrase",
+          "claim_id": "brief",
+          "transform_class": "generalization"
+        },
+        {
+          "path": "element:hero",
+          "kind": "claim_paraphrase",
+          "claim_id": "brief",
+          "transform_class": "generalization"
+        },
+        {
+          "path": "element:formats",
+          "kind": "claim_paraphrase",
+          "claim_id": "brief",
+          "transform_class": "generalization"
+        },
+        {
+          "path": "element:replace",
+          "kind": "claim_paraphrase",
+          "claim_id": "brief",
+          "transform_class": "generalization"
+        },
+        {
+          "path": "element:preserve",
+          "kind": "claim_paraphrase",
+          "claim_id": "brief",
+          "transform_class": "generalization"
+        },
+        {
+          "path": "element:verify",
+          "kind": "claim_paraphrase",
+          "claim_id": "brief",
+          "transform_class": "generalization"
+        },
+        {
+          "path": "element:qualifier",
+          "kind": "qualifier",
+          "claim_id": "brief"
+        }
+      ],
+      "transition": "none",
+      "reveal": "none",
+      "hidden": false,
+      "notes": "TIME 00:00\u201303:00 (3 minutes, including navigation). Section/slide 01-brief. Questions Q01\u2013Q03; detailed answers remain in the separate 15+ minute Q&A appendix. Baseline 0375af56bf681e9441edcb7433cfe58951db77b2. Narrative: supplied WALKTHROUGH.md \u00a701-brief. E08 source inspection; no execution in this authoring pass.\n00:00\u201301:05 SAY: The policy defines the transformation obligation, not all the privacy risks in an export. The assignment spans CSV, JSON, UTF-8 text and SQLite. A useful output must preserve meaning and identity associations, not merely remove a string. The defensible local claim is policy-bounded pseudonymization. A missing identifier in the policy can remain a privacy risk even when all declared checks pass.\n01:05\u201302:10 SHOW: Open src/anonymization_trial/policy.py::compile_policy and Rule.identity, then examples/policy.json at the baseline. Point to sensitive_values, protected_values, version and subject_id. Literal matching and case sensitivity are defaults. The policy author supplies identity authority; the compiler enforces consistency rather than real-world identity truth. A sensitive/protected conflict is rejected rather than guessed away.\n02:10\u201302:45 SAY: Keeping detection authority explicit is an engineering tradeoff. A larger discovery platform would add adjudication questions; a different replacement algorithm would not solve them. Dependencies are allowed by the brief; the small default runtime is a choice. The file/folder and alias-review additions were requested after the trial and will be labeled as such.\n02:45\u201303:00 TRANSITION: Follow one run to the point at which output becomes a release. Stop for deeper questions only by shortening a later code jump, not by extending the prepared 30 minutes. Live Evidence is preparation only; no recording, Memory import, live assistance or assessment permission is implied."
+    },
+    {
+      "id": "02-architecture",
+      "order": 2,
+      "role": "architecture",
+      "layout": "freeform",
+      "visibility": "public",
+      "title": "Transforming files does not authorize release",
+      "message": "Adapters write a private stage; rereading precedes readiness.",
+      "body": [],
+      "source_refs": [
+        {
+          "source_id": "walkthrough",
+          "section": "02-architecture",
+          "locator": "WALKTHROUGH.md#02-architecture"
+        },
+        {
+          "source_id": "local",
+          "section": "run_pipeline",
+          "locator": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/pipeline.py"
+        },
+        {
+          "source_id": "verify-code",
+          "section": "verify_corpus",
+          "locator": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/verification.py"
+        },
+        {
+          "source_id": "format-code",
+          "section": "transform_file",
+          "locator": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/formats.py"
+        },
+        {
+          "source_id": "path-code",
+          "section": "input_bundle",
+          "locator": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/bundle.py"
+        },
+        {
+          "source_id": "cli-code",
+          "section": "main",
+          "locator": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/__main__.py"
+        }
+      ],
+      "claim_ids": [
+        "local"
+      ],
+      "visual": {
+        "type": "image",
+        "asset_id": "local-pipeline-walkthrough",
+        "position": "full",
+        "items": [],
+        "callouts": []
+      },
+      "claim_guard": {
+        "allowed_claim_ids": [
+          "local"
+        ],
+        "requires_non_claim_ids": [],
+        "forbidden_unqualified": [
+          "provably anonymous",
+          "production-ready",
+          "race-proof",
+          "eight-hour compliant"
+        ]
+      },
+      "elements": [
+        {
+          "id": "title",
+          "type": "text",
+          "x": 0.055,
+          "y": 0.05,
+          "w": 0.89,
+          "h": 0.12,
+          "text": "Transforming files does not authorize release",
+          "size_pt": 36,
+          "bold": true,
+          "color": "#e2e8f0"
+        },
+        {
+          "id": "thesis",
+          "type": "text",
+          "x": 0.055,
+          "y": 0.18,
+          "w": 0.89,
+          "h": 0.1,
+          "text": "Adapters write a private stage; rereading precedes readiness.",
+          "size_pt": 24,
+          "color": "#22d3ee"
+        },
+        {
+          "id": "pipeline",
+          "type": "asset",
+          "x": 0.05,
+          "y": 0.31,
+          "w": 0.9,
+          "h": 0.48,
+          "asset_id": "local-pipeline-walkthrough"
+        },
+        {
+          "id": "qualifier",
+          "type": "text",
+          "x": 0.055,
+          "y": 0.82,
+          "w": 0.89,
+          "h": 0.06,
+          "text": "Shared matcher; trusted single-writer staging.",
+          "size_pt": 22,
+          "color": "#cbd5e1"
+        },
+        {
+          "id": "memory-limit",
+          "type": "text",
+          "x": 0.055,
+          "y": 0.885,
+          "w": 0.89,
+          "h": 0.05,
+          "text": "Per-file materialization\u2014not production streaming.",
+          "size_pt": 20,
+          "color": "#cbd5e1"
+        }
+      ],
+      "bindings": [
+        {
+          "path": "title",
+          "kind": "claim_paraphrase",
+          "claim_id": "local",
+          "transform_class": "generalization"
+        },
+        {
+          "path": "message",
+          "kind": "claim_paraphrase",
+          "claim_id": "local",
+          "transform_class": "generalization"
+        },
+        {
+          "path": "element:title",
+          "kind": "claim_paraphrase",
+          "claim_id": "local",
+          "transform_class": "generalization"
+        },
+        {
+          "path": "element:thesis",
+          "kind": "claim_paraphrase",
+          "claim_id": "local",
+          "transform_class": "generalization"
+        },
+        {
+          "path": "element:qualifier",
+          "kind": "qualifier",
+          "claim_id": "local"
+        },
+        {
+          "path": "element:memory-limit",
+          "kind": "claim_paraphrase",
+          "claim_id": "local",
+          "transform_class": "generalization"
+        }
+      ],
+      "transition": "none",
+      "reveal": "none",
+      "hidden": false,
+      "notes": "TIME 03:00\u201307:00 (4 minutes, including navigation). Section/slide 02-architecture. Questions Q04\u2013Q06, Q42\u2013Q43. Baseline 0375af56bf681e9441edcb7433cfe58951db77b2. E08 source inspection. The external SVG is an unrendered authoring candidate derived from the supplied local serial diagram; its blocks aggregate calls rather than invent services.\n03:00\u201303:45 SAY: The evaluator builds one image. A bare run executes the demo; the mounted run consumes policy.json and corpus/ and writes corpus/ plus report.json. The shared skill is not needed by that image. Producing transformed files and authorizing their use are different steps.\n03:45\u201305:25 SHOW: src/anonymization_trial/pipeline.py::run_pipeline. Trace policy-path validation, load_policy, _preflight, _source_digests, creation of mode-0700 staging, transform_file, verify_corpus, the second source-digest comparison, _manifest_digest and _publish. Stage creation precedes adapter writes; 'Adapt into private stage' is a single explanatory block. The adapters parse logical formats rather than replacing arbitrary database or serialized JSON bytes.\n05:25\u201306:05 SHOW: bundle.py::input_bundle and __main__.py::main. The post-trial file/folder command validates original paths and copies a private temporary bundle, then delegates to the same engine. Copies and permissions are not encryption or hostile-host immutability.\n06:05\u201306:45 QUALIFY: Verification rereads and re-derives but shares replacement primitives. The pipeline computes the seal after verification; the verifier does not return an independent signed or sealed receipt. Trusted single-writer staging and read-only input bound this statement. Files, matches and verifier structures are materialized locally; this is not TB/PB streaming.\n06:45\u201307:00 TRANSITION: Verification needs a deterministic expected result; identity and matching supply it. The diagram's failure bar describes refusal before a new marker, not guaranteed empty output or rollback of an earlier release."
+    },
+    {
+      "id": "03-semantics",
+      "order": 3,
+      "role": "semantics",
+      "layout": "freeform",
+      "visibility": "public",
+      "title": "Meaning needs identity, spans and locations",
+      "message": "Disappearance alone cannot prove the right result.",
+      "body": [],
+      "source_refs": [
+        {
+          "source_id": "walkthrough",
+          "section": "03-semantics",
+          "locator": "WALKTHROUGH.md#03-semantics"
+        },
+        {
+          "source_id": "policy-code",
+          "section": "Rule.identity; _check_overlap",
+          "locator": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/policy.py"
+        },
+        {
+          "source_id": "semantics",
+          "section": "_digest; build_replacements",
+          "locator": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/pseudonyms.py"
+        },
+        {
+          "source_id": "matcher-code",
+          "section": "Matcher.replace; _select",
+          "locator": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/matcher.py"
+        },
+        {
+          "source_id": "verify-code",
+          "section": "_typed_equal; _verify_sqlite_locations",
+          "locator": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/verification.py"
+        },
+        {
+          "source_id": "evidence",
+          "section": "test_json_bool_number_and_sqlite_integer_real_mutations_rejected",
+          "locator": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/security/tests/test_typed_scalar_verification.py"
+        }
+      ],
+      "claim_ids": [
+        "semantics"
+      ],
+      "visual": {
+        "type": "none",
+        "items": [],
+        "callouts": []
+      },
+      "claim_guard": {
+        "allowed_claim_ids": [
+          "semantics"
+        ],
+        "requires_non_claim_ids": [],
+        "forbidden_unqualified": [
+          "provably anonymous",
+          "production-ready",
+          "race-proof",
+          "eight-hour compliant"
+        ]
+      },
+      "elements": [
+        {
+          "id": "title",
+          "type": "text",
+          "x": 0.055,
+          "y": 0.05,
+          "w": 0.89,
+          "h": 0.12,
+          "text": "Meaning needs identity, spans and locations",
+          "size_pt": 36,
+          "bold": true,
+          "color": "#e2e8f0"
+        },
+        {
+          "id": "thesis",
+          "type": "text",
+          "x": 0.055,
+          "y": 0.18,
+          "w": 0.89,
+          "h": 0.1,
+          "text": "Disappearance alone cannot prove the right result.",
+          "size_pt": 24,
+          "color": "#22d3ee"
+        },
+        {
+          "id": "identity-head",
+          "type": "text",
+          "x": 0.065,
+          "y": 0.34,
+          "w": 0.27,
+          "h": 0.065,
+          "text": "IDENTITY",
+          "size_pt": 27,
+          "bold": true,
+          "color": "#22d3ee"
+        },
+        {
+          "id": "identity",
+          "type": "text",
+          "x": 0.065,
+          "y": 0.445,
+          "w": 0.27,
+          "h": 0.14,
+          "text": "Policy-supplied\nalias groups",
+          "size_pt": 25,
+          "color": "#e2e8f0"
+        },
+        {
+          "id": "span-head",
+          "type": "text",
+          "x": 0.375,
+          "y": 0.34,
+          "w": 0.25,
+          "h": 0.065,
+          "text": "SPANS",
+          "size_pt": 27,
+          "bold": true,
+          "color": "#22d3ee"
+        },
+        {
+          "id": "span",
+          "type": "text",
+          "x": 0.375,
+          "y": 0.445,
+          "w": 0.25,
+          "h": 0.14,
+          "text": "Original input\nemitted once",
+          "size_pt": 25,
+          "color": "#e2e8f0"
+        },
+        {
+          "id": "location-head",
+          "type": "text",
+          "x": 0.685,
+          "y": 0.34,
+          "w": 0.25,
+          "h": 0.065,
+          "text": "LOCATIONS",
+          "size_pt": 27,
+          "bold": true,
+          "color": "#f59e0b"
+        },
+        {
+          "id": "location",
+          "type": "text",
+          "x": 0.685,
+          "y": 0.445,
+          "w": 0.25,
+          "h": 0.14,
+          "text": "Expected value\nand scalar type",
+          "size_pt": 25,
+          "color": "#e2e8f0"
+        },
+        {
+          "id": "constraint",
+          "type": "text",
+          "x": 0.065,
+          "y": 0.655,
+          "w": 0.87,
+          "h": 0.14,
+          "text": "Protected overlap \u2192 reject\nRight counts \u2260 right records",
+          "size_pt": 25,
+          "color": "#e2e8f0"
+        },
+        {
+          "id": "qualifier",
+          "type": "text",
+          "x": 0.055,
+          "y": 0.86,
+          "w": 0.89,
+          "h": 0.075,
+          "text": "Public namespace; fixed identity set; shared verifier primitives.",
+          "size_pt": 20,
+          "color": "#cbd5e1"
+        }
+      ],
+      "bindings": [
+        {
+          "path": "title",
+          "kind": "claim_paraphrase",
+          "claim_id": "semantics",
+          "transform_class": "generalization"
+        },
+        {
+          "path": "message",
+          "kind": "claim_paraphrase",
+          "claim_id": "semantics",
+          "transform_class": "generalization"
+        },
+        {
+          "path": "element:title",
+          "kind": "claim_paraphrase",
+          "claim_id": "semantics",
+          "transform_class": "generalization"
+        },
+        {
+          "path": "element:thesis",
+          "kind": "claim_paraphrase",
+          "claim_id": "semantics",
+          "transform_class": "generalization"
+        },
+        {
+          "path": "element:identity-head",
+          "kind": "claim_paraphrase",
+          "claim_id": "semantics",
+          "transform_class": "generalization"
+        },
+        {
+          "path": "element:identity",
+          "kind": "claim_paraphrase",
+          "claim_id": "semantics",
+          "transform_class": "generalization"
+        },
+        {
+          "path": "element:span-head",
+          "kind": "claim_paraphrase",
+          "claim_id": "semantics",
+          "transform_class": "generalization"
+        },
+        {
+          "path": "element:span",
+          "kind": "claim_paraphrase",
+          "claim_id": "semantics",
+          "transform_class": "generalization"
+        },
+        {
+          "path": "element:location-head",
+          "kind": "claim_paraphrase",
+          "claim_id": "semantics",
+          "transform_class": "generalization"
+        },
+        {
+          "path": "element:location",
+          "kind": "claim_paraphrase",
+          "claim_id": "semantics",
+          "transform_class": "generalization"
+        },
+        {
+          "path": "element:constraint",
+          "kind": "claim_paraphrase",
+          "claim_id": "semantics",
+          "transform_class": "generalization"
+        },
+        {
+          "path": "element:qualifier",
+          "kind": "qualifier",
+          "claim_id": "semantics"
+        }
+      ],
+      "transition": "none",
+      "reveal": "none",
+      "hidden": false,
+      "notes": "TIME 07:00\u201313:00 (6 minutes, including navigation). Section/slide 03-semantics. Questions Q07\u2013Q12, Q31\u2013Q33, Q38\u2013Q41. Baseline 0375af56bf681e9441edcb7433cfe58951db77b2. E06 named regression source and E08 implementation source; no new run.\n07:00\u201308:40 SHOW: policy.py::Rule.identity and pseudonyms.py::build_replacements. Canonical identity is (data_type, subject_id), falling back to rule_id when subject_id is absent. Aliases share a type-specific token because the policy assigns them one identity, not because their spellings are similar. Two different people with the same literal cannot be distinguished by this context-free rule; conflicting match domains reject. The sorted identity set determines collision allocation. Distinct same-type identities receive distinct tokens or the allocator rejects bounded exhaustion.\n08:40\u201309:30 SHOW: pseudonyms.py::_digest. policy_version is schema version one, not a counter for edits. The policy hash is provenance, not the seed. Alias-only additions preserving the canonical set leave allocation inputs unchanged; adding distinct identities can change salted collision assignments. The public unkeyed namespace and salt do not supply secrecy. These are limits of the stability claim, not a new key-management feature.\n09:30\u201311:00 SHOW: matcher.py::_select and Matcher.replace. Earliest start wins; longest wins at that start; rule_id breaks ties. Explain out.append(text[cursor:span.start]) and out.append(span.replacement): emitted output is never fed back to the matcher. Protected equality, containment and boundary overlaps are conservatively rejected by policy.py::_check_overlap. A generated token containing another sensitive literal can still fail the residual scan; no-cascade does not mean every policy publishes.\n11:00\u201312:35 SHOW: verification.py::_typed_equal and _verify_sqlite_locations. Swapping valid pseudonyms preserves absence/counts but changes associations. The oracle compares locations plus types: True is not 1, and SQLite INTEGER is not REAL. SQLite also compares logical DDL and column/FK metadata. Do not describe this as physical-page byte identity, exact JSON formatting, or key-order checking. The small native visual is three preservation obligations, not three isolated verifier implementations.\n12:35\u201313:00 QUALIFY AND TRANSITION: Fresh reread and mutation tests are useful, but replace_text/build_replacements remain shared. Correlated primitive defects are possible. Correct content is necessary; next explain permission to consume it. The appendix holds finite-float, Unicode and generated-column details; do not add those answers to this six-minute slot."
+    },
+    {
+      "id": "04-reliability",
+      "order": 4,
+      "role": "reliability",
+      "layout": "freeform",
+      "visibility": "public",
+      "title": "Private work must stay outside READY",
+      "message": "Report-last is the boundary\u2014not directory existence.",
+      "body": [],
+      "source_refs": [
+        {
+          "source_id": "walkthrough",
+          "section": "04-reliability",
+          "locator": "WALKTHROUGH.md#04-reliability"
+        },
+        {
+          "source_id": "release",
+          "section": "_publish",
+          "locator": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/pipeline.py"
+        },
+        {
+          "source_id": "path-code",
+          "section": "separate_output",
+          "locator": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/bundle.py"
+        },
+        {
+          "source_id": "cli-code",
+          "section": "main",
+          "locator": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/__main__.py"
+        },
+        {
+          "source_id": "discovery-code",
+          "section": "approve; write_private",
+          "locator": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/discovery.py"
+        }
+      ],
+      "claim_ids": [
+        "private-boundary",
+        "release"
+      ],
+      "visual": {
+        "type": "none",
+        "items": [],
+        "callouts": []
+      },
+      "claim_guard": {
+        "allowed_claim_ids": [
+          "private-boundary",
+          "release"
+        ],
+        "requires_non_claim_ids": [],
+        "forbidden_unqualified": [
+          "provably anonymous",
+          "production-ready",
+          "race-proof",
+          "eight-hour compliant"
+        ]
+      },
+      "elements": [
+        {
+          "id": "title",
+          "type": "text",
+          "x": 0.055,
+          "y": 0.05,
+          "w": 0.89,
+          "h": 0.12,
+          "text": "Private work must stay outside READY",
+          "size_pt": 36,
+          "bold": true,
+          "color": "#e2e8f0"
+        },
+        {
+          "id": "thesis",
+          "type": "text",
+          "x": 0.055,
+          "y": 0.18,
+          "w": 0.89,
+          "h": 0.1,
+          "text": "Report-last is the boundary\u2014not directory existence.",
+          "size_pt": 24,
+          "color": "#22d3ee"
+        },
+        {
+          "id": "private-head",
+          "type": "text",
+          "x": 0.075,
+          "y": 0.34,
+          "w": 0.34,
+          "h": 0.075,
+          "text": "PRIVATE WORK",
+          "size_pt": 28,
+          "bold": true,
+          "color": "#22d3ee"
+        },
+        {
+          "id": "private-files",
+          "type": "text",
+          "x": 0.075,
+          "y": 0.46,
+          "w": 0.34,
+          "h": 0.16,
+          "text": "Review\nPolicy + receipt",
+          "size_pt": 27,
+          "color": "#e2e8f0"
+        },
+        {
+          "id": "barrier",
+          "type": "text",
+          "x": 0.455,
+          "y": 0.44,
+          "w": 0.09,
+          "h": 0.16,
+          "text": "\u00d7",
+          "size_pt": 58,
+          "bold": true,
+          "color": "#f87171",
+          "align": "center"
+        },
+        {
+          "id": "release-head",
+          "type": "text",
+          "x": 0.59,
+          "y": 0.34,
+          "w": 0.34,
+          "h": 0.075,
+          "text": "READY RELEASE",
+          "size_pt": 28,
+          "bold": true,
+          "color": "#34d399"
+        },
+        {
+          "id": "release-files",
+          "type": "text",
+          "x": 0.59,
+          "y": 0.46,
+          "w": 0.34,
+          "h": 0.16,
+          "text": "corpus/\nreport.json last",
+          "size_pt": 27,
+          "color": "#e2e8f0"
+        },
+        {
+          "id": "canonical",
+          "type": "text",
+          "x": 0.075,
+          "y": 0.68,
+          "w": 0.85,
+          "h": 0.13,
+          "text": "Relative or symlinked destination\n\u2192 the same canonical-path check",
+          "size_pt": 24,
+          "color": "#e2e8f0"
+        },
+        {
+          "id": "posttrial",
+          "type": "text",
+          "x": 0.055,
+          "y": 0.835,
+          "w": 0.89,
+          "h": 0.05,
+          "text": "Post-trial path fix; trusted single-writer assumption.",
+          "size_pt": 20,
+          "color": "#cbd5e1"
+        },
+        {
+          "id": "qualifier",
+          "type": "text",
+          "x": 0.055,
+          "y": 0.893,
+          "w": 0.89,
+          "h": 0.05,
+          "text": "Trusted single writer; report-last is not full rollback.",
+          "size_pt": 19,
+          "color": "#cbd5e1"
+        }
+      ],
+      "bindings": [
+        {
+          "path": "title",
+          "kind": "claim_paraphrase",
+          "claim_id": "private-boundary",
+          "transform_class": "generalization"
+        },
+        {
+          "path": "message",
+          "kind": "claim_paraphrase",
+          "claim_id": "release",
+          "transform_class": "generalization"
+        },
+        {
+          "path": "element:title",
+          "kind": "claim_paraphrase",
+          "claim_id": "private-boundary",
+          "transform_class": "generalization"
+        },
+        {
+          "path": "element:thesis",
+          "kind": "claim_paraphrase",
+          "claim_id": "release",
+          "transform_class": "generalization"
+        },
+        {
+          "path": "element:private-head",
+          "kind": "claim_paraphrase",
+          "claim_id": "private-boundary",
+          "transform_class": "generalization"
+        },
+        {
+          "path": "element:private-files",
+          "kind": "claim_paraphrase",
+          "claim_id": "private-boundary",
+          "transform_class": "generalization"
+        },
+        {
+          "path": "element:barrier",
+          "kind": "claim_paraphrase",
+          "claim_id": "private-boundary",
+          "transform_class": "generalization"
+        },
+        {
+          "path": "element:release-head",
+          "kind": "claim_paraphrase",
+          "claim_id": "release",
+          "transform_class": "generalization"
+        },
+        {
+          "path": "element:release-files",
+          "kind": "claim_paraphrase",
+          "claim_id": "release",
+          "transform_class": "generalization"
+        },
+        {
+          "path": "element:canonical",
+          "kind": "claim_paraphrase",
+          "claim_id": "private-boundary",
+          "transform_class": "generalization"
+        },
+        {
+          "path": "element:posttrial",
+          "kind": "qualifier",
+          "claim_id": "private-boundary"
+        },
+        {
+          "path": "element:qualifier",
+          "kind": "qualifier",
+          "claim_id": "release"
+        }
+      ],
+      "transition": "none",
+      "reveal": "none",
+      "hidden": false,
+      "notes": "TIME 13:00\u201318:00 (5 minutes, including navigation). Section/slide 04-reliability. Questions Q13\u2013Q17, Q37, Q44. Baseline 0375af56bf681e9441edcb7433cfe58951db77b2. E04 is the prior bounded source-review closure; E08 is source inspection. This slide translates the supplied publication-state diagram into a larger native-text boundary composition rather than adding another small serial image.\n13:00\u201314:40 SHOW: pipeline.py::_publish. Invalidate an old report before changing corpus bytes, compare the staged digest, rename the corpus, complete the temporary report write, fsync it and rename report.json last. Explain the write-all loop and zero-progress refusal. Individual renames are atomic; the entire operation is not a multi-file transaction. Failure before a new marker can leave uncommitted bytes. Preflight rejection can leave an earlier valid release untouched; publication does not promise rollback.\n14:40\u201316:30 SHOW: bundle.py::separate_output, __main__.py::main, discovery.py::approve. The post-trial review leak was a mismatch between canonical validation and lexical-parent inspection. From release/corpus, relative review.json and a symlink alias could land inside a READY corpus. Now out.parents is used and the validated Path is returned, assigned to args.output and carried to writes. Approval validates the derived sibling receipt as well as the policy before either is created. The existing-release guard conservatively recognizes an ancestor with report.json and corpus/; it does not authenticate that report.\n16:30\u201317:25 SHOW: discovery.py::write_private. O_EXCL prevents overwrite, mode 0600 restricts access, and report.json is reserved. Those controls do not replace destination validation. The writer is a writer of an already validated canonical path, not a stand-alone release guard. Directory symlinks to permitted private work paths can remain usable; output-file symlinks are rejected.\n17:25\u201318:00 QUALIFY: This closes deterministic aliases under a trusted single writer, not concurrent hostile path mutation. verification_sha256 is the corpus digest again, not a signed verifier receipt. TRANSITION: Open the regression next: its positive control must prove that useful work still succeeds while the release remains unchanged."
+    },
+    {
+      "id": "05-evidence",
+      "order": 5,
+      "role": "evidence",
+      "layout": "freeform",
+      "visibility": "public",
+      "title": "A proposal is not permission",
+      "message": "Discovery, approval and release have different authority.",
+      "body": [],
+      "source_refs": [
+        {
+          "source_id": "walkthrough",
+          "section": "05-evidence",
+          "locator": "WALKTHROUGH.md#05-evidence"
+        },
+        {
+          "source_id": "discovery-code",
+          "section": "discover; approve",
+          "locator": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/discovery.py"
+        },
+        {
+          "source_id": "path-regression",
+          "section": "test_work_artifacts_cannot_enter_release_via_relative_or_symlink_paths",
+          "locator": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/tests/test_discovery_boundaries.py"
+        },
+        {
+          "source_id": "qualification",
+          "section": "readback; qualify",
+          "locator": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/scripts/qualify_submission.py"
+        },
+        {
+          "source_id": "wrapper-evals",
+          "section": "release-artifact-relative-and-symlink-boundary",
+          "locator": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/artifacts/release-artifact-path-evals.json"
+        }
+      ],
+      "claim_ids": [
+        "proposal-authority",
+        "evidence"
+      ],
+      "visual": {
+        "type": "none",
+        "items": [],
+        "callouts": []
+      },
+      "claim_guard": {
+        "allowed_claim_ids": [
+          "proposal-authority",
+          "evidence"
+        ],
+        "requires_non_claim_ids": [],
+        "forbidden_unqualified": [
+          "provably anonymous",
+          "production-ready",
+          "race-proof",
+          "eight-hour compliant"
+        ]
+      },
+      "elements": [
+        {
+          "id": "title",
+          "type": "text",
+          "x": 0.055,
+          "y": 0.05,
+          "w": 0.89,
+          "h": 0.12,
+          "text": "A proposal is not permission",
+          "size_pt": 36,
+          "bold": true,
+          "color": "#e2e8f0"
+        },
+        {
+          "id": "thesis",
+          "type": "text",
+          "x": 0.055,
+          "y": 0.18,
+          "w": 0.89,
+          "h": 0.1,
+          "text": "Discovery, approval and release have different authority.",
+          "size_pt": 24,
+          "color": "#22d3ee"
+        },
+        {
+          "id": "propose-head",
+          "type": "text",
+          "x": 0.06,
+          "y": 0.34,
+          "w": 0.24,
+          "h": 0.065,
+          "text": "PROPOSE",
+          "size_pt": 28,
+          "bold": true,
+          "color": "#22d3ee"
+        },
+        {
+          "id": "propose",
+          "type": "text",
+          "x": 0.06,
+          "y": 0.445,
+          "w": 0.24,
+          "h": 0.15,
+          "text": "Whole values\nPrivate review",
+          "size_pt": 25,
+          "color": "#e2e8f0"
+        },
+        {
+          "id": "arrow1",
+          "type": "text",
+          "x": 0.31,
+          "y": 0.405,
+          "w": 0.05,
+          "h": 0.1,
+          "text": "\u2192",
+          "size_pt": 32,
+          "color": "#22d3ee"
+        },
+        {
+          "id": "approve-head",
+          "type": "text",
+          "x": 0.39,
+          "y": 0.34,
+          "w": 0.24,
+          "h": 0.065,
+          "text": "APPROVE",
+          "size_pt": 28,
+          "bold": true,
+          "color": "#f59e0b"
+        },
+        {
+          "id": "approve",
+          "type": "text",
+          "x": 0.39,
+          "y": 0.445,
+          "w": 0.24,
+          "h": 0.15,
+          "text": "Explicit IDs\nExact policy",
+          "size_pt": 25,
+          "color": "#e2e8f0"
+        },
+        {
+          "id": "arrow2",
+          "type": "text",
+          "x": 0.645,
+          "y": 0.405,
+          "w": 0.05,
+          "h": 0.1,
+          "text": "\u2192",
+          "size_pt": 32,
+          "color": "#22d3ee"
+        },
+        {
+          "id": "release-head",
+          "type": "text",
+          "x": 0.72,
+          "y": 0.34,
+          "w": 0.23,
+          "h": 0.065,
+          "text": "RELEASE",
+          "size_pt": 28,
+          "bold": true,
+          "color": "#34d399"
+        },
+        {
+          "id": "release",
+          "type": "text",
+          "x": 0.72,
+          "y": 0.445,
+          "w": 0.23,
+          "h": 0.15,
+          "text": "Transform + verify\nreport.json last",
+          "size_pt": 23,
+          "color": "#e2e8f0"
+        },
+        {
+          "id": "oracle",
+          "type": "text",
+          "x": 0.06,
+          "y": 0.665,
+          "w": 0.88,
+          "h": 0.07,
+          "text": "Regression: unchanged release + valid private work",
+          "size_pt": 23,
+          "color": "#e2e8f0"
+        },
+        {
+          "id": "qualifier",
+          "type": "text",
+          "x": 0.055,
+          "y": 0.785,
+          "w": 0.89,
+          "h": 0.08,
+          "text": "Post-trial extension; score is not probability; approval is not release.",
+          "size_pt": 20,
+          "color": "#cbd5e1"
+        },
+        {
+          "id": "evidence-qualifier",
+          "type": "text",
+          "x": 0.055,
+          "y": 0.875,
+          "w": 0.89,
+          "h": 0.06,
+          "text": "Source-inspected tests; local runs reported or retained separately.",
+          "size_pt": 19,
+          "color": "#cbd5e1"
+        }
+      ],
+      "bindings": [
+        {
+          "path": "title",
+          "kind": "claim_paraphrase",
+          "claim_id": "proposal-authority",
+          "transform_class": "generalization"
+        },
+        {
+          "path": "message",
+          "kind": "claim_paraphrase",
+          "claim_id": "proposal-authority",
+          "transform_class": "generalization"
+        },
+        {
+          "path": "element:title",
+          "kind": "claim_paraphrase",
+          "claim_id": "proposal-authority",
+          "transform_class": "generalization"
+        },
+        {
+          "path": "element:thesis",
+          "kind": "claim_paraphrase",
+          "claim_id": "proposal-authority",
+          "transform_class": "generalization"
+        },
+        {
+          "path": "element:propose-head",
+          "kind": "claim_paraphrase",
+          "claim_id": "proposal-authority",
+          "transform_class": "generalization"
+        },
+        {
+          "path": "element:propose",
+          "kind": "claim_paraphrase",
+          "claim_id": "proposal-authority",
+          "transform_class": "generalization"
+        },
+        {
+          "path": "element:arrow1",
+          "kind": "claim_paraphrase",
+          "claim_id": "proposal-authority",
+          "transform_class": "generalization"
+        },
+        {
+          "path": "element:approve-head",
+          "kind": "claim_paraphrase",
+          "claim_id": "proposal-authority",
+          "transform_class": "generalization"
+        },
+        {
+          "path": "element:approve",
+          "kind": "claim_paraphrase",
+          "claim_id": "proposal-authority",
+          "transform_class": "generalization"
+        },
+        {
+          "path": "element:arrow2",
+          "kind": "claim_paraphrase",
+          "claim_id": "proposal-authority",
+          "transform_class": "generalization"
+        },
+        {
+          "path": "element:release-head",
+          "kind": "claim_paraphrase",
+          "claim_id": "proposal-authority",
+          "transform_class": "generalization"
+        },
+        {
+          "path": "element:release",
+          "kind": "claim_paraphrase",
+          "claim_id": "proposal-authority",
+          "transform_class": "generalization"
+        },
+        {
+          "path": "element:oracle",
+          "kind": "claim_paraphrase",
+          "claim_id": "evidence",
+          "transform_class": "generalization"
+        },
+        {
+          "path": "element:qualifier",
+          "kind": "qualifier",
+          "claim_id": "proposal-authority"
+        },
+        {
+          "path": "element:evidence-qualifier",
+          "kind": "qualifier",
+          "claim_id": "evidence"
+        }
+      ],
+      "transition": "none",
+      "reveal": "none",
+      "hidden": false,
+      "notes": "TIME 18:00\u201323:00 (5 minutes, including navigation). Section/slide 05-evidence. Questions Q18\u2013Q23, Q34\u2013Q36, Q45\u2013Q46. Baseline 0375af56bf681e9441edcb7433cfe58951db77b2. E06 source-inspected tests; E02 retained wrapper output; E01/E03 presenter-reported local runs; E04 prior reviewer source-only closure. None is a new execution or slide approval here.\n18:00\u201319:40 SHOW: tests/test_discovery_boundaries.py::test_work_artifacts_cannot_enter_release_via_relative_or_symlink_paths. It creates a real READY release and release_bytes() records every file path and byte sequence. Relative and symlinked discovery/policy destinations plus a receipt-only symlink must reject and preserve that snapshot. Equivalent private work paths succeed with 0600 review, policy and receipt files. Read the actual assertions, not just a green label or test count.\n19:40\u201321:40 SHOW: discovery.py::discover and approve. Whole CSV cells, JSON strings, SQLite text cells or text lines produce proposals against eligible name rules. Rank identities, not duplicate aliases; ties always refuse, insufficient separation refuses. Threshold 90 and margin 5 are score settings, not probabilities. Approval accepts explicit unique IDs only after re-deriving the complete report against current source bytes and supplied valid settings. compile_policy then checks the appended case-sensitive literal rules. This is not a signature or user-authentication mechanism. Reviews and approval receipts remain release_ready=false; a later run_pipeline owns corpus readiness.\n21:40\u201322:20 EXAMPLE: Alice can match as a literal substring inside Alicee before fuzzy approval, leaving a trailing e. Approval adds Alicee as a longer literal with the same identity. A proposal was observed as a whole value, but its approved policy rule is global substring matching, not a permission limited to that row. Protected-overlap rejection still applies.\n22:20\u201323:00 EVIDENCE BOUNDARY: scripts/qualify_submission.py::readback computes expected synthetic tokens without importing the runtime, parses formats and validates report/digests. This is a bounded qualification oracle, not a second production verifier. Local runs are reported by the presenter and some wrapper outputs are retained; WebGPT did not execute them. Default Docker qualification does not establish optional discovery-image execution. TRANSITION: These local checks support a bounded mechanism, not petabyte throughput. Rehearsal command, not a live promise: uv run --extra dev --extra discovery pytest -q tests/test_discovery_boundaries.py::test_work_artifacts_cannot_enter_release_via_relative_or_symlink_paths."
+    },
+    {
+      "id": "06-production",
+      "order": 6,
+      "role": "production",
+      "layout": "freeform",
+      "visibility": "public",
+      "title": "Scale work; keep one release decision",
+      "message": "AWS proposal: format-aware work and one shared identity plan.",
+      "body": [],
+      "source_refs": [
+        {
+          "source_id": "walkthrough",
+          "section": "06-production",
+          "locator": "WALKTHROUGH.md#06-production"
+        },
+        {
+          "source_id": "production",
+          "section": "Flow; Distribution; SLA; Cost",
+          "locator": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/docs/production-architecture.md"
+        },
+        {
+          "source_id": "cost-model",
+          "section": "_one; _sensitivity",
+          "locator": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/scripts/estimate_aws_cost.py"
+        },
+        {
+          "source_id": "cost-inputs",
+          "section": "workers; throughput; retention; price sources",
+          "locator": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/costs/aws-us-east-1-inputs.json"
+        },
+        {
+          "source_id": "cost-output",
+          "section": "estimate_1TB; estimate_1PB",
+          "locator": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/costs/example-estimates.json"
+        }
+      ],
+      "claim_ids": [
+        "production"
+      ],
+      "visual": {
+        "type": "image",
+        "asset_id": "aws-production-walkthrough",
+        "position": "full",
+        "items": [],
+        "callouts": []
+      },
+      "claim_guard": {
+        "allowed_claim_ids": [
+          "production"
+        ],
+        "requires_non_claim_ids": [],
+        "forbidden_unqualified": [
+          "provably anonymous",
+          "production-ready",
+          "race-proof",
+          "eight-hour compliant"
+        ]
+      },
+      "elements": [
+        {
+          "id": "title",
+          "type": "text",
+          "x": 0.055,
+          "y": 0.05,
+          "w": 0.89,
+          "h": 0.12,
+          "text": "Scale work; keep one release decision",
+          "size_pt": 36,
+          "bold": true,
+          "color": "#e2e8f0"
+        },
+        {
+          "id": "thesis",
+          "type": "text",
+          "x": 0.055,
+          "y": 0.18,
+          "w": 0.89,
+          "h": 0.1,
+          "text": "AWS proposal: format-aware work and one shared identity plan.",
+          "size_pt": 24,
+          "color": "#22d3ee"
+        },
+        {
+          "id": "aws",
+          "type": "asset",
+          "x": 0.05,
+          "y": 0.285,
+          "w": 0.9,
+          "h": 0.4,
+          "asset_id": "aws-production-walkthrough"
+        },
+        {
+          "id": "tb",
+          "type": "text",
+          "x": 0.065,
+          "y": 0.715,
+          "w": 0.405,
+          "h": 0.115,
+          "text": "1 TB  \u00b7  model $86\ntarget \u22641 hour",
+          "size_pt": 24,
+          "bold": true,
+          "color": "#22d3ee"
+        },
+        {
+          "id": "pb",
+          "type": "text",
+          "x": 0.525,
+          "y": 0.715,
+          "w": 0.42,
+          "h": 0.115,
+          "text": "1 PB  \u00b7  model $85,734\ntarget \u22647 days",
+          "size_pt": 24,
+          "bold": true,
+          "color": "#22d3ee"
+        },
+        {
+          "id": "qualifier",
+          "type": "text",
+          "x": 0.055,
+          "y": 0.875,
+          "w": 0.89,
+          "h": 0.07,
+          "text": "Modeled, not deployed or measured; illustrative list-price assumptions.",
+          "size_pt": 19,
+          "color": "#cbd5e1"
+        }
+      ],
+      "bindings": [
+        {
+          "path": "title",
+          "kind": "claim_paraphrase",
+          "claim_id": "production",
+          "transform_class": "generalization"
+        },
+        {
+          "path": "message",
+          "kind": "claim_paraphrase",
+          "claim_id": "production",
+          "transform_class": "generalization"
+        },
+        {
+          "path": "element:title",
+          "kind": "claim_paraphrase",
+          "claim_id": "production",
+          "transform_class": "generalization"
+        },
+        {
+          "path": "element:thesis",
+          "kind": "claim_paraphrase",
+          "claim_id": "production",
+          "transform_class": "generalization"
+        },
+        {
+          "path": "element:tb",
+          "kind": "claim_paraphrase",
+          "claim_id": "production",
+          "transform_class": "generalization"
+        },
+        {
+          "path": "element:pb",
+          "kind": "claim_paraphrase",
+          "claim_id": "production",
+          "transform_class": "generalization"
+        },
+        {
+          "path": "element:qualifier",
+          "kind": "qualifier",
+          "claim_id": "production"
+        }
+      ],
+      "transition": "none",
+      "reveal": "none",
+      "hidden": false,
+      "notes": "TIME 23:00\u201327:00 (4 minutes, including navigation). Section/slide 06-production. Questions Q24\u2013Q27, Q47. Baseline 0375af56bf681e9441edcb7433cfe58951db77b2. E07 is the inspected committed scenario model; no fresh estimator run, cloud price validation, deployment or scale measurement. The candidate SVG is a typography/topology adaptation of the supplied AWS source, not a implemented cloud service.\n23:00\u201324:15 SAY: AWS is the worked proposal. S3 separates intake, staging, release and quarantine; EventBridge/SQS dispatch and Fargate/Batch workers execute bounded work. Verification must fan in across the expected corpus before an immutable manifest and conditional active-pointer publication. Consumers follow the pointer and permissions prevent bypass; objects are not magically invisible while waiting for a pointer. Retries/replay are proposed orchestration, not exactly-once local code.\n24:15\u201325:00 SHOW: docs/production-architecture.md. Text needs UTF-8-safe match overlap/ownership; CSV needs parser-confirmed record boundaries, not raw newlines. Ordinary JSON and SQLite are whole-document/snapshot work. Every worker needs the same versioned canonical identity set and collision plan. A common HMAC key alone does not coordinate independently allocated subsets. The local allocator and matching semantics carry forward; orchestration, key lifecycle and bounded-memory work are not implemented here.\n25:00\u201326:15 SHOW: scripts/estimate_aws_cost.py::_one and costs/aws-us-east-1-inputs.json plus costs/example-estimates.json. Committed totals are $85.73 for 10^12 bytes and $85,733.90 for 10^15 bytes. The slide rounds these to $86 and $85,734. Inputs assume 200 workers at 20,000,000 bytes/s each, average 1 MiB files, three copies retained for one month, a 2x compute factor and 2% retry fraction. Model wall time is 0.14 and 141.67 hours; targets are <=1 hour and <=7 days, not observations. First-tier list prices and a raised vCPU quota are assumptions. Output expansion, transfer charges, key rental, retained logs, tier discounts and complete API accounting are not all priced.\n26:15\u201327:00 SAY: Smaller objects matter: the committed tenth-file-size sensitivity raises PB cost to $223,749.65. Validate workload shape and throughput rather than extrapolate the tiny local demo. No cloud deployment or ripgrep cross-check is claimed. TRANSITION: Close with what this evidence cannot establish, including the timebox."
+    },
+    {
+      "id": "07-nonclaims",
+      "order": 7,
+      "role": "nonclaims",
+      "layout": "freeform",
+      "visibility": "public",
+      "title": "A technical PASS is not anonymity",
+      "message": "Post-timebox corrections and later additions are disclosed.",
+      "body": [],
+      "source_refs": [
+        {
+          "source_id": "walkthrough",
+          "section": "07-nonclaims; evidence-ledger",
+          "locator": "WALKTHROUGH.md#07-nonclaims"
+        },
+        {
+          "source_id": "submission",
+          "section": "Time spent; Retrospective time estimate; Unfinished work and deliberate exclusions",
+          "locator": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/SUBMISSION.md"
+        },
+        {
+          "source_id": "nonclaims",
+          "section": "Not established",
+          "locator": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/docs/PRIVACY_CONTRACT.md"
+        }
+      ],
+      "claim_ids": [
+        "nonclaims",
+        "timebox-disclosure"
+      ],
+      "visual": {
+        "type": "none",
+        "items": [],
+        "callouts": []
+      },
+      "claim_guard": {
+        "allowed_claim_ids": [
+          "nonclaims",
+          "timebox-disclosure"
+        ],
+        "requires_non_claim_ids": [
+          "nonclaims",
+          "timebox-disclosure"
+        ],
+        "forbidden_unqualified": [
+          "provably anonymous",
+          "production-ready",
+          "race-proof",
+          "eight-hour compliant"
+        ]
+      },
+      "elements": [
+        {
+          "id": "title",
+          "type": "text",
+          "x": 0.055,
+          "y": 0.05,
+          "w": 0.89,
+          "h": 0.12,
+          "text": "A technical PASS is not anonymity",
+          "size_pt": 36,
+          "bold": true,
+          "color": "#e2e8f0"
+        },
+        {
+          "id": "thesis",
+          "type": "text",
+          "x": 0.055,
+          "y": 0.18,
+          "w": 0.89,
+          "h": 0.1,
+          "text": "Post-timebox corrections and later additions are disclosed.",
+          "size_pt": 24,
+          "color": "#22d3ee"
+        },
+        {
+          "id": "bounded-head",
+          "type": "text",
+          "x": 0.07,
+          "y": 0.34,
+          "w": 0.41,
+          "h": 0.075,
+          "text": "BOUNDED MECHANISM",
+          "size_pt": 25,
+          "bold": true,
+          "color": "#22d3ee"
+        },
+        {
+          "id": "bounded",
+          "type": "text",
+          "x": 0.07,
+          "y": 0.445,
+          "w": 0.41,
+          "h": 0.22,
+          "text": "Exact policy\nTyped/location checks\nReport-last readiness",
+          "size_pt": 25,
+          "color": "#e2e8f0"
+        },
+        {
+          "id": "not-head",
+          "type": "text",
+          "x": 0.555,
+          "y": 0.34,
+          "w": 0.38,
+          "h": 0.075,
+          "text": "NOT ESTABLISHED",
+          "size_pt": 25,
+          "bold": true,
+          "color": "#f59e0b"
+        },
+        {
+          "id": "not",
+          "type": "text",
+          "x": 0.555,
+          "y": 0.445,
+          "w": 0.39,
+          "h": 0.22,
+          "text": "General anonymity\nProduction-scale operation\nEight-hour compliance",
+          "size_pt": 24,
+          "color": "#e2e8f0"
+        },
+        {
+          "id": "timebox",
+          "type": "text",
+          "x": 0.055,
+          "y": 0.755,
+          "w": 0.89,
+          "h": 0.09,
+          "text": "Post-timebox work disclosed; not proof of eight-hour compliance.",
+          "size_pt": 21,
+          "color": "#f59e0b"
+        },
+        {
+          "id": "qualifier",
+          "type": "text",
+          "x": 0.055,
+          "y": 0.865,
+          "w": 0.89,
+          "h": 0.07,
+          "text": "Technical review is bounded; no general anonymity or production claim.",
+          "size_pt": 19,
+          "color": "#cbd5e1"
+        }
+      ],
+      "bindings": [
+        {
+          "path": "title",
+          "kind": "claim_paraphrase",
+          "claim_id": "nonclaims",
+          "transform_class": "generalization"
+        },
+        {
+          "path": "message",
+          "kind": "claim_paraphrase",
+          "claim_id": "timebox-disclosure",
+          "transform_class": "generalization"
+        },
+        {
+          "path": "element:title",
+          "kind": "claim_paraphrase",
+          "claim_id": "nonclaims",
+          "transform_class": "generalization"
+        },
+        {
+          "path": "element:thesis",
+          "kind": "claim_paraphrase",
+          "claim_id": "timebox-disclosure",
+          "transform_class": "generalization"
+        },
+        {
+          "path": "element:bounded-head",
+          "kind": "claim_paraphrase",
+          "claim_id": "nonclaims",
+          "transform_class": "generalization"
+        },
+        {
+          "path": "element:bounded",
+          "kind": "claim_paraphrase",
+          "claim_id": "nonclaims",
+          "transform_class": "generalization"
+        },
+        {
+          "path": "element:not-head",
+          "kind": "claim_paraphrase",
+          "claim_id": "nonclaims",
+          "transform_class": "generalization"
+        },
+        {
+          "path": "element:not",
+          "kind": "claim_paraphrase",
+          "claim_id": "nonclaims",
+          "transform_class": "generalization"
+        },
+        {
+          "path": "element:timebox",
+          "kind": "qualifier",
+          "claim_id": "timebox-disclosure"
+        },
+        {
+          "path": "element:qualifier",
+          "kind": "qualifier",
+          "claim_id": "nonclaims"
+        }
+      ],
+      "transition": "none",
+      "reveal": "none",
+      "hidden": false,
+      "notes": "TIME 27:00\u201330:00 (3 minutes, including navigation); Q&A begins at 30:00 and has a separate 15+ minute reserve. Section/slide 07-nonclaims. Questions Q28\u2013Q30, Q48. Baseline 0375af56bf681e9441edcb7433cfe58951db77b2. E04 is the prior bounded technical review; E08 is source-inspected disclosure. This authoring draft grants no new technical, presentation or human approval.\n27:00\u201328:00 SAY: The prior reviewer closed the canonical-path blocker at this commit. That conclusion does not establish exhaustive security, general anonymity or guaranteed correctness. The explicit policy may omit identifiers; contextual linkage remains possible. Pseudonyms use a public namespace, verification shares replacement primitives, and local processing materializes data. The local guarantee and its limits should be explained together rather than putting qualifications in an appendix only.\n28:00\u201329:00 SHOW: SUBMISSION.md::Time spent, Retrospective time estimate, Unfinished work and deliberate exclusions. Post-timebox corrections and later operator-requested additions are disclosed. Active engineering time was not tracked separately. The retrospective allocation totals eight hours but is not proof that the stop-after-eight-hours instruction was met. Technical PASS does not waive that administrative question. The pinned submission said the follow-up review was pending when committed; the subsequent bounded PASS is conversation evidence, not text retroactively present in that file.\n29:00\u201329:40 SAY: AI coding assistance and browser-backed review are disclosed; do not invent an authorship split or personal motives. Representative workload measurement, more diverse verification and tenant/purpose key plus identity-plan lifecycle are future objectives. No feature expansion or new security review is part of this presentation work. Export refresh, GUI checks and optional debugger captures are not represented as completed.\n29:40\u201330:00 CLOSE: Which boundary would be useful to inspect: identity mapping, verification, publication or discovery approval? Stop prepared content here. Q01\u2013Q48 answers remain in WALKTHROUGH.md and the preparation map; do not add appendix slides. Live Evidence is preparation only: no Memory import, schema-validation claim, active recording or live candidate-answer assistance. Formal-assessment restrictions and explicit recording/assistance permission remain separate from permission to use AI coding tools."
+    }
+  ]
+}

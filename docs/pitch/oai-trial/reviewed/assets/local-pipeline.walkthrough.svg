@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 340" role="img" aria-labelledby="title desc" font-family="Arial, sans-serif">
+  <title id="title">Local report-last pipeline — external candidate</title>
+  <desc id="desc">A condensed view of the supplied serial pipeline. Adaptation writes private staging; reread and re-derivation, source checking and pipeline sealing precede publication. Failure before a new readiness marker remains uncommitted. Shared primitives and trusted filesystem limits are explained on the slide.</desc>
+  <rect width="1200" height="340" fill="#0f172a" />
+  <defs>
+    <marker id="flow" markerWidth="10" markerHeight="8" refX="8" refY="4" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0 0 L8 4 L0 8 Z" fill="#22d3ee" />
+    </marker>
+    <marker id="fail" markerWidth="10" markerHeight="8" refX="8" refY="4" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0 0 L8 4 L0 8 Z" fill="#f87171" />
+    </marker>
+  </defs>
+  <g id="trusted-stage" data-component="trusted-stage">
+    <rect x="305" y="12" width="580" height="205" rx="8" fill="#0f172a" stroke="#94a3b8" stroke-width="2" stroke-dasharray="8 6" />
+    <text x="595" y="48" font-size="28" font-weight="600" fill="#cbd5e1" text-anchor="middle">TRUSTED SINGLE WRITER</text>
+  </g>
+  <g id="compile" data-component="compile">
+    <rect x="20" y="76" width="250" height="110" rx="8" fill="#1e293b" stroke="#22d3ee" stroke-width="2" />
+    <text x="145" y="119" font-size="34" font-weight="600" fill="#22d3ee" text-anchor="middle">Compile</text>
+    <text x="145" y="161" font-size="34" font-weight="600" fill="#22d3ee" text-anchor="middle">policy</text>
+  </g>
+  <g id="stage" data-component="stage">
+    <rect x="320" y="76" width="250" height="110" rx="8" fill="#1e293b" stroke="#22d3ee" stroke-width="2" />
+    <text x="445" y="119" font-size="34" font-weight="600" fill="#22d3ee" text-anchor="middle">Adapt into</text>
+    <text x="445" y="161" font-size="34" font-weight="600" fill="#22d3ee" text-anchor="middle">private stage</text>
+  </g>
+  <g id="check" data-component="check">
+    <rect x="620" y="76" width="250" height="110" rx="8" fill="#1e293b" stroke="#f59e0b" stroke-width="2" />
+    <text x="745" y="119" font-size="34" font-weight="600" fill="#f59e0b" text-anchor="middle">Reread +</text>
+    <text x="745" y="161" font-size="34" font-weight="600" fill="#f59e0b" text-anchor="middle">check + seal</text>
+  </g>
+  <g id="publish" data-component="publish">
+    <rect x="920" y="76" width="250" height="110" rx="8" fill="#1e293b" stroke="#34d399" stroke-width="2" />
+    <text x="1045" y="119" font-size="34" font-weight="600" fill="#34d399" text-anchor="middle">report.json</text>
+    <text x="1045" y="161" font-size="34" font-weight="600" fill="#34d399" text-anchor="middle">last → READY</text>
+  </g>
+  <path d="M270 131 H314" fill="none" stroke="#22d3ee" stroke-width="3" stroke-linejoin="round" marker-end="url(#flow)" />
+  <path d="M570 131 H614" fill="none" stroke="#22d3ee" stroke-width="3" stroke-linejoin="round" marker-end="url(#flow)" />
+  <path d="M870 131 H914" fill="none" stroke="#22d3ee" stroke-width="3" stroke-linejoin="round" marker-end="url(#flow)" />
+  <path d="M145 188 V239" fill="none" stroke="#f87171" stroke-width="3" stroke-linejoin="round" />
+  <path d="M445 188 V239" fill="none" stroke="#f87171" stroke-width="3" stroke-linejoin="round" />
+  <path d="M745 188 V239" fill="none" stroke="#f87171" stroke-width="3" stroke-linejoin="round" />
+  <path d="M1045 188 V239" fill="none" stroke="#f87171" stroke-width="3" stroke-linejoin="round" />
+  <path d="M145 239 H1045 M595 239 V268" fill="none" stroke="#f87171" stroke-width="3" stroke-linejoin="round" marker-end="url(#fail)" />
+  <g id="uncommitted" data-component="failure">
+    <rect x="190" y="272" width="810" height="52" rx="8" fill="#271923" stroke="#f87171" stroke-width="2" />
+    <text x="595" y="308" font-size="30" font-weight="600" fill="#f87171" text-anchor="middle">FAILURE BEFORE MARKER → UNCOMMITTED</text>
+  </g>
+</svg>

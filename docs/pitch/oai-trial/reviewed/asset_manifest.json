@@ -1,0 +1,38 @@
+{
+  "schema": "pitchdeck.asset_manifest.v1",
+  "project_name": "oai-trial",
+  "assets": [
+    {
+      "id": "local-pipeline-walkthrough",
+      "kind": "diagram",
+      "visibility": "public",
+      "local_path": "assets/local-pipeline.walkthrough.svg",
+      "required": true,
+      "alt_text": "Condensed serial local pipeline: compile policy, adapt into private stage, reread/check/seal, then publish report last. A failure before the marker remains uncommitted. Trusted single-writer staging is labeled.",
+      "target_aspect": "60:17",
+      "status": "planned",
+      "generation_brief": "External static SVG candidate derived from supplied local-pipeline.svg and publication-state.svg. Serial semantics do not fit the supplied fanout-anatomy or positive-negative template; no new renderer is requested. Keep originals unchanged. Labels enlarged for the assigned slide slot. Await project-agent SVG checks, real preview and human acceptance. Embedded SVG is an image asset, not native editable PowerPoint internals.",
+      "source_ref": {
+        "source_id": "walkthrough",
+        "section": "02-architecture; 04-reliability",
+        "locator": "WALKTHROUGH.md#02-architecture"
+      }
+    },
+    {
+      "id": "aws-production-walkthrough",
+      "kind": "diagram",
+      "visibility": "public",
+      "local_path": "assets/production-architecture.walkthrough.svg",
+      "required": true,
+      "alt_text": "Proposed AWS flow: intake, format-aware distribution, staged transformation, verification fan-in, immutable manifest and active pointer; retry/replay returns to distribution and failure goes to quarantine, outside publication.",
+      "target_aspect": "4:1",
+      "status": "planned",
+      "generation_brief": "External static SVG candidate derived from supplied production-architecture.svg. Retains serial topology, retry, quarantine and durable publication boundary; removes duplicate title and enlarges tiny labels. No unsupported create-svg template keys or new renderer. Await local checks, actual preview and acceptance. The slide must visibly say modeled/not deployed; SVG internals remain an image on export.",
+      "source_ref": {
+        "source_id": "production",
+        "section": "Flow; Reliability",
+        "locator": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/docs/production-architecture.md"
+      }
+    }
+  ]
+}
