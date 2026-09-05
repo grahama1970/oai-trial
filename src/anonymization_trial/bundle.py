@@ -19,19 +19,22 @@ from .pipeline import _manifest_digest
 from .policy import _no_duplicate_keys, compile_policy
 
 
-def separate_output(output: Path, *inputs: Path) -> None:
+def separate_output(output: Path, *inputs: Path) -> Path:
+    if output.is_symlink() and not output.is_dir():
+        raise AnonError(AnonErrorCode.UNSAFE_INPUT, "output artifact is a symlink")
     out = output.resolve()
     for source in inputs:
         path = source.resolve()
         if out == path or out.is_relative_to(path) or path.is_relative_to(out):
             raise AnonError(AnonErrorCode.UNSAFE_INPUT, "output overlaps an input")
-    if output.is_dir() and any(output.iterdir()):
+    if out.is_dir() and any(out.iterdir()):
         raise AnonError(AnonErrorCode.UNSAFE_INPUT, "use an empty output directory")
     if any(
         (parent / "report.json").is_file() and (parent / "corpus").is_dir()
-        for parent in output.parents
+        for parent in out.parents
     ):
         raise AnonError(AnonErrorCode.UNSAFE_INPUT, "work artifacts must stay outside a release")
+    return out
 
 
 @contextmanager

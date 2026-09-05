@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import json
 import os
+import stat
+from pathlib import Path
 
 import pytest
 
@@ -149,6 +151,11 @@ def test_work_artifacts_cannot_overwrite_inputs_existing_files_or_releases(tmp_p
     occupied.write_text("KEEP EXISTING")
     assert cli("discover", *common, "--output", occupied).returncode != 0
     assert occupied.read_text() == "KEEP EXISTING"
+    dangling = tmp_path / "dangling.json"
+    target = tmp_path / "missing.json"
+    dangling.symlink_to(target)
+    assert cli("discover", *common, "--output", dangling).returncode != 0
+    assert dangling.is_symlink() and not target.exists()
     assert cli("discover", *common, "--output", source / "review.json").returncode != 0
     assert cli("discover", *common, "--output", policy).returncode != 0
     release = tmp_path / "release"
@@ -168,6 +175,73 @@ def test_customer_file_named_report_json_is_not_a_release_marker(tmp_path):
     result = cli("anonymize", "--input", customer_report, "--policy", policy, "--output", out)
     assert result.returncode == 0, result.stderr
     assert (out / "corpus/report.json").is_file()
+
+
+def test_work_artifacts_cannot_enter_release_via_relative_or_symlink_paths(tmp_path):
+    source, policy = make_input(tmp_path)
+    common = ["--input", source, "--policy", policy]
+    release = tmp_path / "release"
+    result = cli("anonymize", *common, "--output", release)
+    assert result.returncode == 0, result.stderr
+    report = json.loads((release / "report.json").read_text())
+    assert report["status"] == "ready" and report["verification_passed"] is True
+
+    def release_bytes():
+        return {str(p.relative_to(release)): p.read_bytes()
+                for p in release.rglob("*") if p.is_file()}
+
+    before = release_bytes()
+    alias = tmp_path / "alias"
+    alias.symlink_to(release / "corpus", target_is_directory=True)
+    work = tmp_path / "work"
+    work.mkdir()
+    work_alias = tmp_path / "work-alias"
+    work_alias.symlink_to(work, target_is_directory=True)
+    for index, (cwd, destination) in enumerate([
+        (release / "corpus", Path("review-relative.json")),
+        (tmp_path, Path("alias/review-symlink.json")),
+    ]):
+        result = cli("discover", *common, "--output", destination, cwd=cwd)
+        assert result.returncode != 0 and "unsafe_input" in result.stderr
+        assert not (cwd / destination).exists()
+        assert release_bytes() == before
+
+        # Equivalent relative and symlink work paths remain private and usable.
+        outside_cwd = work if index == 0 else tmp_path
+        review_arg = Path("review.json") if index == 0 else Path("work-alias/review2.json")
+        review = outside_cwd / review_arg
+        result = cli("discover", *common, "--output", review_arg, cwd=outside_cwd)
+        assert result.returncode == 0, result.stderr
+        data = json.loads(review.read_text())
+        assert data["release_ready"] is False and data["candidates"]
+        approval = ["approve-discovery", *common, "--review", review,
+                    "--approve", data["candidates"][0]["id"]]
+        policy_arg = destination.with_name(f"approved-{index}.json")
+        result = cli(*approval, "--output", policy_arg, cwd=cwd)
+        assert result.returncode != 0 and "unsafe_input" in result.stderr
+        assert not (cwd / policy_arg).exists()
+        assert not (cwd / policy_arg.with_name(policy_arg.name + ".approval.json")).exists()
+        assert release_bytes() == before
+
+        approved_arg = review_arg.with_name(f"approved-{index}.json")
+        approved = outside_cwd / approved_arg
+        receipt = approved.with_name(approved.name + ".approval.json")
+        # A receipt-only symlink into a release must fail before writing the policy.
+        receipt_target = release / "corpus" / f"receipt-{index}.json"
+        receipt.symlink_to(receipt_target)
+        result = cli(*approval, "--output", approved_arg, cwd=outside_cwd)
+        assert result.returncode != 0 and "unsafe_input" in result.stderr
+        assert not approved.exists() and not receipt_target.exists()
+        assert release_bytes() == before
+        receipt.unlink()
+
+        result = cli(*approval, "--output", approved_arg, cwd=outside_cwd)
+        assert result.returncode == 0, result.stderr
+        assert json.loads(approved.read_text())["sensitive_values"][-1]["value"] == "Alicee"
+        assert json.loads(receipt.read_text())["release_ready"] is False
+        for artifact in (review, approved, receipt):
+            assert stat.S_IMODE(artifact.stat().st_mode) == 0o600
+        assert release_bytes() == before
 
 
 def test_text_value_budget_fails_closed_without_partial_proposals(tmp_path):

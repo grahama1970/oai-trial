@@ -1,0 +1,355 @@
+{
+  "schema": "agentic_evals.report.v2",
+  "source": "/home/graham/workspace/experiments/agent-skills/skills/anonymize-data/fixtures/agentic_eval.json",
+  "run_id": "709a3cc9a0d9",
+  "fixture_sha256": "sha256:48730a866b2e0e408c9adbfdf18aa5cf5372a2ac6e06d6769900631fb407c6f4",
+  "repo": {
+    "sha": "4fb9af1dd5ea2fc7fd54c82c87cf91aa984f078d",
+    "ref": "main"
+  },
+  "mocked": false,
+  "fixture_backed": true,
+  "live": true,
+  "proof_scope": "Real thin skill wrapper delegating to the canonical project CLI. Synthetic inputs, real file effects; no copied implementation or mocked services.",
+  "claims": {
+    "proves": "The wrapper executes four-format anonymization and explicit fuzzy-policy review while preserving input, approval, privacy, installation and filesystem boundaries.",
+    "does_not_prove": "Human identity adjudication, general PII discovery, production scale, old trial qualification covering the extension, or Google Meet/screen sharing."
+  },
+  "what_was_exercised": "local commands declared in the fixture manifest",
+  "what_remains_unverified": "semantic correctness, live services, LLM judge behavior, and release readiness",
+  "readiness": "READY",
+  "case_readiness": "READY",
+  "capability_readiness": null,
+  "claims_coverage": "manifest-spanning",
+  "focused_cases": [],
+  "generated_at": "2026-09-05T14:45:46.156545+00:00",
+  "case_count": 5,
+  "required_case_count": 5,
+  "outcome_counts": {
+    "PASS": 5,
+    "FAIL": 0,
+    "BLOCKED": 0,
+    "NOT_TESTED": 0
+  },
+  "trial_count": 15,
+  "cases": [
+    {
+      "infra_blocked_trials": 0,
+      "flaky": false,
+      "name": "release-artifact-relative-and-symlink-boundary",
+      "type": "adversarial",
+      "case_id": "709a3cc9a0d9-c000",
+      "required": true,
+      "outcome": "PASS",
+      "problems": [],
+      "argv": [
+        "bash",
+        "../run.sh",
+        "sanity",
+        "-k",
+        "test_work_artifacts_cannot_enter_release_via_relative_or_symlink_paths"
+      ],
+      "declared_evidence_class": "live_e2e",
+      "effective_evidence_class": "live_e2e",
+      "live_qualified": true,
+      "evidence_disqualifiers": [],
+      "supports_claims": [],
+      "seams": [],
+      "passed_trials": 3,
+      "total_trials": 3,
+      "pass_rate": 1.0,
+      "avg_latency_ms": 2017.567,
+      "trials": [
+        {
+          "exit_code": 0,
+          "stdout": ".                                                                        [100%]\n1 passed, 34 deselected in 1.67s\nWRAPPER_BOUNDARY_PASS\n",
+          "stderr": "",
+          "duration_ms": 1943.585,
+          "timed_out": false,
+          "orphan_pids_after_teardown": [],
+          "trial_id": "709a3cc9a0d9-c000-t00",
+          "outcome": "PASS",
+          "problems": []
+        },
+        {
+          "exit_code": 0,
+          "stdout": ".                                                                        [100%]\n1 passed, 34 deselected in 1.78s\nWRAPPER_BOUNDARY_PASS\n",
+          "stderr": "",
+          "duration_ms": 2069.685,
+          "timed_out": false,
+          "orphan_pids_after_teardown": [],
+          "trial_id": "709a3cc9a0d9-c000-t01",
+          "outcome": "PASS",
+          "problems": []
+        },
+        {
+          "exit_code": 0,
+          "stdout": ".                                                                        [100%]\n1 passed, 34 deselected in 1.76s\nWRAPPER_BOUNDARY_PASS\n",
+          "stderr": "",
+          "duration_ms": 2039.43,
+          "timed_out": false,
+          "orphan_pids_after_teardown": [],
+          "trial_id": "709a3cc9a0d9-c000-t02",
+          "outcome": "PASS",
+          "problems": []
+        }
+      ]
+    },
+    {
+      "infra_blocked_trials": 0,
+      "flaky": false,
+      "name": "four-format-and-relative-path-controls",
+      "type": "positive",
+      "case_id": "709a3cc9a0d9-c001",
+      "required": true,
+      "outcome": "PASS",
+      "problems": [],
+      "argv": [
+        "bash",
+        "../run.sh",
+        "sanity",
+        "-k",
+        "all_four_formats or single_file_relative_paths or customer_file_named"
+      ],
+      "declared_evidence_class": "live_e2e",
+      "effective_evidence_class": "fault_injected_deterministic",
+      "live_qualified": false,
+      "evidence_disqualifiers": [
+        "no independent readback oracle (exit code / self-reported success only)"
+      ],
+      "supports_claims": [],
+      "seams": [],
+      "passed_trials": 3,
+      "total_trials": 3,
+      "pass_rate": 1.0,
+      "avg_latency_ms": 2224.202,
+      "trials": [
+        {
+          "exit_code": 0,
+          "stdout": "...                                                                      [100%]\n3 passed, 32 deselected in 1.87s\nWRAPPER_BOUNDARY_PASS\n",
+          "stderr": "",
+          "duration_ms": 2148.044,
+          "timed_out": false,
+          "orphan_pids_after_teardown": [],
+          "trial_id": "709a3cc9a0d9-c001-t00",
+          "outcome": "PASS",
+          "problems": []
+        },
+        {
+          "exit_code": 0,
+          "stdout": "...                                                                      [100%]\n3 passed, 32 deselected in 2.05s\nWRAPPER_BOUNDARY_PASS\n",
+          "stderr": "",
+          "duration_ms": 2322.208,
+          "timed_out": false,
+          "orphan_pids_after_teardown": [],
+          "trial_id": "709a3cc9a0d9-c001-t01",
+          "outcome": "PASS",
+          "problems": []
+        },
+        {
+          "exit_code": 0,
+          "stdout": "...                                                                      [100%]\n3 passed, 32 deselected in 1.92s\nWRAPPER_BOUNDARY_PASS\n",
+          "stderr": "",
+          "duration_ms": 2202.355,
+          "timed_out": false,
+          "orphan_pids_after_teardown": [],
+          "trial_id": "709a3cc9a0d9-c001-t02",
+          "outcome": "PASS",
+          "problems": []
+        }
+      ]
+    },
+    {
+      "infra_blocked_trials": 0,
+      "flaky": false,
+      "name": "forged-stale-and-unauthorized-approvals",
+      "type": "adversarial",
+      "case_id": "709a3cc9a0d9-c002",
+      "required": true,
+      "outcome": "PASS",
+      "problems": [],
+      "argv": [
+        "bash",
+        "../run.sh",
+        "sanity",
+        "-k",
+        "forged or stale_or_edited or approval_requires or approval_rechecks"
+      ],
+      "declared_evidence_class": "live_e2e",
+      "effective_evidence_class": "fault_injected_deterministic",
+      "live_qualified": false,
+      "evidence_disqualifiers": [
+        "no independent readback oracle (exit code / self-reported success only)"
+      ],
+      "supports_claims": [],
+      "seams": [],
+      "passed_trials": 3,
+      "total_trials": 3,
+      "pass_rate": 1.0,
+      "avg_latency_ms": 3471.794,
+      "trials": [
+        {
+          "exit_code": 0,
+          "stdout": "...........                                                              [100%]\n11 passed, 24 deselected in 3.21s\nWRAPPER_BOUNDARY_PASS\n",
+          "stderr": "",
+          "duration_ms": 3474.509,
+          "timed_out": false,
+          "orphan_pids_after_teardown": [],
+          "trial_id": "709a3cc9a0d9-c002-t00",
+          "outcome": "PASS",
+          "problems": []
+        },
+        {
+          "exit_code": 0,
+          "stdout": "...........                                                              [100%]\n11 passed, 24 deselected in 3.17s\nWRAPPER_BOUNDARY_PASS\n",
+          "stderr": "",
+          "duration_ms": 3444.282,
+          "timed_out": false,
+          "orphan_pids_after_teardown": [],
+          "trial_id": "709a3cc9a0d9-c002-t01",
+          "outcome": "PASS",
+          "problems": []
+        },
+        {
+          "exit_code": 0,
+          "stdout": "...........                                                              [100%]\n11 passed, 24 deselected in 3.21s\nWRAPPER_BOUNDARY_PASS\n",
+          "stderr": "",
+          "duration_ms": 3496.59,
+          "timed_out": false,
+          "orphan_pids_after_teardown": [],
+          "trial_id": "709a3cc9a0d9-c002-t02",
+          "outcome": "PASS",
+          "problems": []
+        }
+      ]
+    },
+    {
+      "infra_blocked_trials": 0,
+      "flaky": false,
+      "name": "identity-scope-protected-and-ambiguity-boundaries",
+      "type": "adversarial",
+      "case_id": "709a3cc9a0d9-c003",
+      "required": true,
+      "outcome": "PASS",
+      "problems": [],
+      "argv": [
+        "bash",
+        "../run.sh",
+        "sanity",
+        "-k",
+        "noise or near_ties or aliases_of_one or policy_without or deterministic_and"
+      ],
+      "declared_evidence_class": "live_e2e",
+      "effective_evidence_class": "fault_injected_deterministic",
+      "live_qualified": false,
+      "evidence_disqualifiers": [
+        "no independent readback oracle (exit code / self-reported success only)"
+      ],
+      "supports_claims": [],
+      "seams": [],
+      "passed_trials": 3,
+      "total_trials": 3,
+      "pass_rate": 1.0,
+      "avg_latency_ms": 1662.261,
+      "trials": [
+        {
+          "exit_code": 0,
+          "stdout": ".....                                                                    [100%]\n5 passed, 30 deselected in 1.41s\nWRAPPER_BOUNDARY_PASS\n",
+          "stderr": "",
+          "duration_ms": 1691.204,
+          "timed_out": false,
+          "orphan_pids_after_teardown": [],
+          "trial_id": "709a3cc9a0d9-c003-t00",
+          "outcome": "PASS",
+          "problems": []
+        },
+        {
+          "exit_code": 0,
+          "stdout": ".....                                                                    [100%]\n5 passed, 30 deselected in 1.37s\nWRAPPER_BOUNDARY_PASS\n",
+          "stderr": "",
+          "duration_ms": 1654.457,
+          "timed_out": false,
+          "orphan_pids_after_teardown": [],
+          "trial_id": "709a3cc9a0d9-c003-t01",
+          "outcome": "PASS",
+          "problems": []
+        },
+        {
+          "exit_code": 0,
+          "stdout": ".....                                                                    [100%]\n5 passed, 30 deselected in 1.36s\nWRAPPER_BOUNDARY_PASS\n",
+          "stderr": "",
+          "duration_ms": 1641.123,
+          "timed_out": false,
+          "orphan_pids_after_teardown": [],
+          "trial_id": "709a3cc9a0d9-c003-t02",
+          "outcome": "PASS",
+          "problems": []
+        }
+      ]
+    },
+    {
+      "infra_blocked_trials": 0,
+      "flaky": false,
+      "name": "malformed-settings-resources-and-forbidden-writes",
+      "type": "negative",
+      "case_id": "709a3cc9a0d9-c004",
+      "required": true,
+      "outcome": "PASS",
+      "problems": [],
+      "argv": [
+        "bash",
+        "../run.sh",
+        "sanity",
+        "-k",
+        "invalid or malformed or budget or special_file or work_artifacts"
+      ],
+      "declared_evidence_class": "live_e2e",
+      "effective_evidence_class": "fault_injected_deterministic",
+      "live_qualified": false,
+      "evidence_disqualifiers": [
+        "no independent readback oracle (exit code / self-reported success only)"
+      ],
+      "supports_claims": [],
+      "seams": [],
+      "passed_trials": 3,
+      "total_trials": 3,
+      "pass_rate": 1.0,
+      "avg_latency_ms": 4588.0,
+      "trials": [
+        {
+          "exit_code": 0,
+          "stdout": "................                                                         [100%]\n16 passed, 19 deselected in 4.28s\nWRAPPER_BOUNDARY_PASS\n",
+          "stderr": "",
+          "duration_ms": 4564.134,
+          "timed_out": false,
+          "orphan_pids_after_teardown": [],
+          "trial_id": "709a3cc9a0d9-c004-t00",
+          "outcome": "PASS",
+          "problems": []
+        },
+        {
+          "exit_code": 0,
+          "stdout": "................                                                         [100%]\n16 passed, 19 deselected in 4.31s\nWRAPPER_BOUNDARY_PASS\n",
+          "stderr": "",
+          "duration_ms": 4587.851,
+          "timed_out": false,
+          "orphan_pids_after_teardown": [],
+          "trial_id": "709a3cc9a0d9-c004-t01",
+          "outcome": "PASS",
+          "problems": []
+        },
+        {
+          "exit_code": 0,
+          "stdout": "................                                                         [100%]\n16 passed, 19 deselected in 4.33s\nWRAPPER_BOUNDARY_PASS\n",
+          "stderr": "",
+          "duration_ms": 4612.016,
+          "timed_out": false,
+          "orphan_pids_after_teardown": [],
+          "trial_id": "709a3cc9a0d9-c004-t02",
+          "outcome": "PASS",
+          "problems": []
+        }
+      ]
+    }
+  ]
+}

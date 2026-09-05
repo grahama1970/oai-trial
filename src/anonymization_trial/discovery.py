@@ -310,7 +310,7 @@ def discover(bundle: Path, threshold: float = 90, margin: float = 5) -> Discover
 
 
 def write_private(path: Path, payload: dict) -> None:
-    """Create a new private work artifact; never overwrite an existing file."""
+    """Create a new artifact at a validated canonical path; never overwrite."""
     if path.name == "report.json":
         _reject(AnonErrorCode.DISCOVERY_INVALID, "report.json is reserved for release readiness")
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -326,8 +326,11 @@ def write_private(path: Path, payload: dict) -> None:
         raise
 
 
-def approve(bundle: Path, review_path: Path, ids: list[str], output: Path) -> dict:
-    separate_output(output, bundle, review_path)
+def approve(bundle: Path, review_path: Path, ids: list[str], output: Path, *inputs: Path) -> dict:
+    output = separate_output(output, bundle, review_path, *inputs)
+    receipt_path = separate_output(
+        output.with_name(output.name + ".approval.json"), bundle, review_path, output, *inputs
+    )
     try:
         raw = json.loads(review_path.read_text(), object_pairs_hook=policy_keys)
         supplied = DiscoveryReport(
@@ -356,7 +359,6 @@ def approve(bundle: Path, review_path: Path, ids: list[str], output: Path) -> di
             }
         )
     compile_policy(payload)  # real consumer validator, including protected overlap rejection
-    receipt_path = output.with_name(output.name + ".approval.json")
     if receipt_path.exists():
         _reject(AnonErrorCode.DISCOVERY_REJECTED, "approval receipt already exists")
     write_private(output, payload)

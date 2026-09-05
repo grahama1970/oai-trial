@@ -207,8 +207,9 @@ def main(argv: list[str] | None = None) -> int:
         if args.command == "inspect":
             return _inspect_cmd(args.output)
         if args.command in {"anonymize", "discover", "approve-discovery"}:
-            from .bundle import input_bundle
+            from .bundle import input_bundle, separate_output
 
+            args.output = separate_output(args.output, args.input, args.policy)
             with input_bundle(args.input, args.policy, args.output) as bundle:
                 if args.command == "anonymize":
                     report = run_pipeline(bundle, args.output)
@@ -223,7 +224,8 @@ def main(argv: list[str] | None = None) -> int:
                 else:
                     from .discovery import approve
 
-                    print(json.dumps(approve(bundle, args.review, args.approve, args.output),
+                    print(json.dumps(approve(bundle, args.review, args.approve, args.output,
+                                             args.input, args.policy),
                                      sort_keys=True))
             return 0
         report = run_pipeline(args.input, args.output)
