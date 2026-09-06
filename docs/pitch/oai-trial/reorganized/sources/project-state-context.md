@@ -173,7 +173,7 @@ prepared budget and clearly distinguish live output from recorded fallback.
 
 ## Phase 6: Gap Analysis (4 gaps)
 
-1. **[LOW]** The report collected 84 tests under tests/; it did not execute them and this count does not cover the separate security/tests suite.
+1. **[LOW]** The report collected tests under tests/; it did not execute them and this count does not cover the separate security/tests suite.
    Action: Do not present collection as a passing test run; use the dated qualification and regression receipts for execution claims.
 2. **[LOW]** The automatic critical keyword flag is in the synthetic corpus generator. Source readback identifies the intentionally seeded sk_synthetic_7CWQ0JY5i2 test value; this report does not establish a real credential exposure.
    Action: Retain the synthetic fixture and original heuristic finding; do not launch unrelated security repairs from this keyword flag.
@@ -470,7 +470,7 @@ prepared budget and clearly distinguish live output from recorded fallback.
       {
         "category": "report_scope",
         "severity": "low",
-        "gap": "The report collected 84 tests under tests/; it did not execute them and this count does not cover the separate security/tests suite.",
+        "gap": "The report collected tests under tests/; it did not execute them and this count does not cover the separate security/tests suite.",
         "action": "Do not present collection as a passing test run; use the dated qualification and regression receipts for execution claims."
       },
       {
