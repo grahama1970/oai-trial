@@ -121,3 +121,12 @@ Preserve intended animation in the browser and separate it from fixed PPTX/PDF
 geometry. Reading beside VS Code must not be confused with shrinking a full slide.
 Do not edit shared agent-skills/pitchdeck implementation files concurrently with
 its owner. Keep all narrative and source mappings in the oai-trial project.
+
+## Demo entrypoint decision
+
+Use only this sentence before running the demo: “I’m using a thin skill wrapper around the project’s CLI; the same engine runs independently in Docker.”
+
+Do not insert a skill introduction slide before the demo. Explain the wrapper,
+reuse rationale, and best-practices-skills structure in Extra Credit. Use the
+existing tested wrapper; no live setup or skill creation. Preserve the 30-minute
+prepared budget and clearly distinguish live output from recorded fallback.

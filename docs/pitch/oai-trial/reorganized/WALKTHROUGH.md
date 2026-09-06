@@ -75,11 +75,21 @@ Point down the hierarchy without reading every subtopic. No cover slide precedes
 
 ### Say
 
+I’m using a thin skill wrapper around the project’s CLI; the same engine runs independently in Docker.
+
 Start with this concrete result. The qualification fixture links Alice and A.L to person-a, and Bob to person-b. The source-side checker expects one name pseudonym for Alice’s aliases and another for Bob. KEEP, the Boolean flags, and the integer values remain unchanged.
 The supplied receipt records successful readback of CSV, JSON, UTF-8 text and SQLite, including the legal sqliteX table. It also records that the original input remained unchanged. The before-and-after illustration is drawn from those checker assertions; it is not a screenshot of a newly executed terminal or a raw output file supplied with the packet.
 That distinction is deliberate. You can inspect the receipt fields and the checker that produced them. We are evaluating whether the output remained useful and correctly associated—not whether a process printed PASS. The mechanism is policy-bounded pseudonymization, not evidence that every possible identifier was discovered.
 
 ### Show / navigate
+
+Before displaying the result, run the prepared synthetic bundle through the existing skill after local preflight. This is a presenter action, not a run performed by this document. Use a dedicated empty output outside the inputs; inspect the actual output. If using the historical fallback instead, say that explicitly.
+
+```bash
+ANONYMIZE="$HOME/workspace/experiments/agent-skills/skills/anonymize-data/run.sh"
+"$ANONYMIZE" run --input "$INPUT" --output "$OUTPUT"
+"$ANONYMIZE" verify --input "$INPUT" --output "$OUTPUT"
+```
 
 Open sources/qualification.json at readbacks and source_unchanged; then scripts/qualify_submission.py::readback only if needed.
 
@@ -741,7 +751,7 @@ security/battle/run-receipt.json: claim_scope and execution; no target campaign 
 
 ### Say
 
-The thin anonymize-data skill makes the canonical project easier to invoke. It accepts a supported file or folder plus a separate policy and output location, then uses the project’s installed CLI. Matching, adapters, verification, and errors remain owned by the project.
+The thin anonymize-data skill makes the canonical project easier to invoke. For workflows we expect to reuse, the pattern is a concise SKILL.md contract, thin delegation in run.sh, and retained behavioral checks following best-practices-skills. We do not duplicate the engine or build/install the wrapper during the presentation. It accepts a supported file or folder plus a separate policy and output location, then uses the project’s installed CLI. Matching, adapters, verification, and errors remain owned by the project.
 The wrapper clears conflicting environment variables and checks the imported package location against the selected checkout. Its retained sanity workflow includes a wrong-install refusal and runs the same project tests through the wrapper. That is a focused installation boundary, not another engine or service platform.
 This was requested after the original qualified trial candidate. The older archive and PASS were not relabeled as proof of the extension. The Docker interface remains self-contained, while the skill is an operator convenience with its own scoped evidence.
 

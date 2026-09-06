@@ -1,0 +1,332 @@
+{
+  "schema": "project_state.report.v1",
+  "project": "oai-trial",
+  "project_root": "/home/graham/workspace/experiments/oai-trial",
+  "project_profile": "generic",
+  "timestamp": "2026-09-06T17:17:45.186921+00:00",
+  "mode": "standard",
+  "phase_1_infrastructure": {
+    "daemons": {
+      "applicable": false,
+      "reason": "target root is not an Embry-style project",
+      "daemons": {},
+      "up": 0,
+      "total": 0
+    },
+    "tests": {
+      "total": 84,
+      "collected": true,
+      "path": "/home/graham/workspace/experiments/oai-trial/tests"
+    },
+    "cascade": {
+      "applicable": false,
+      "reason": "target root is not an Embry-style project",
+      "registry": {
+        "validators": 0,
+        "classifiers": 0,
+        "regressors": 0,
+        "gpts": 0
+      },
+      "shadow": {
+        "total": 0,
+        "usable": 0
+      },
+      "training_data": {},
+      "classifiers_on_disk": [],
+      "tier_status": {
+        "tier_2_teacher": "NOT_APPLICABLE",
+        "tier_1_5_gpt": "NOT_APPLICABLE",
+        "tier_0_5_classifier": "NOT_APPLICABLE"
+      }
+    },
+    "daemon_cascade_wiring": {
+      "applicable": false,
+      "reason": "target root is not an Embry-style project",
+      "wired": {}
+    },
+    "skills": {
+      "total": 0,
+      "applicable": false,
+      "reason": "target root owns no skills/ tree (not a skills workspace)",
+      "path": null,
+      "missing_skill_md": [],
+      "missing_sanity": []
+    },
+    "frontend": {
+      "exists": false
+    },
+    "deploy": {
+      "systemd_units": 0,
+      "containerfile": false,
+      "docker_compose": true
+    },
+    "components": {
+      "registered": 0,
+      "projects": {},
+      "note": "No component registry found"
+    }
+  },
+  "phase_2_memory": {
+    "available": true,
+    "successful_recalls": 3,
+    "attempted_recalls": 3,
+    "recalls": [
+      {
+        "query": "oai-trial features architecture deployment",
+        "found": false,
+        "confidence": 0.0,
+        "count": 0,
+        "top_items": []
+      },
+      {
+        "query": "oai-trial competitive advantages unique capabilities",
+        "found": false,
+        "confidence": 0.0,
+        "count": 0,
+        "top_items": []
+      },
+      {
+        "query": "oai-trial known issues gaps missing features",
+        "found": false,
+        "confidence": 0.0,
+        "count": 0,
+        "top_items": []
+      }
+    ]
+  },
+  "phase_3_doc_drift": {
+    "docs_checked": 7,
+    "docs_found": 1,
+    "drift_items": [
+      {
+        "file": "README.md",
+        "issue": "future",
+        "severity": "low",
+        "line": "### Future optimizations (designed, not built)"
+      },
+      {
+        "file": "README.md",
+        "issue": "not_yet",
+        "severity": "low",
+        "line": "scale; cloud prices are list prices not yet confirmed against a dated source;"
+      },
+      {
+        "file": "README.md",
+        "issue": "stale_reference",
+        "severity": "medium",
+        "line": "References `formats.py` but file not found"
+      },
+      {
+        "file": "README.md",
+        "issue": "stale_reference",
+        "severity": "medium",
+        "line": "References `matcher.py` but file not found"
+      },
+      {
+        "file": "README.md",
+        "issue": "stale_reference",
+        "severity": "medium",
+        "line": "References `policy.py` but file not found"
+      },
+      {
+        "file": "README.md",
+        "issue": "stale_reference",
+        "severity": "medium",
+        "line": "References `pseudonyms.py` but file not found"
+      },
+      {
+        "file": "README.md",
+        "issue": "stale_reference",
+        "severity": "medium",
+        "line": "References `policy.py` but file not found"
+      },
+      {
+        "file": "README.md",
+        "issue": "stale_reference",
+        "severity": "medium",
+        "line": "References `formats.py` but file not found"
+      },
+      {
+        "file": "README.md",
+        "issue": "stale_reference",
+        "severity": "medium",
+        "line": "References `verification.py` but file not found"
+      },
+      {
+        "file": "README.md",
+        "issue": "stale_reference",
+        "severity": "medium",
+        "line": "References `pipeline.py` but file not found"
+      },
+      {
+        "file": "README.md",
+        "issue": "stale_reference",
+        "severity": "medium",
+        "line": "References `pipeline.py` but file not found"
+      },
+      {
+        "file": "README.md",
+        "issue": "stale_reference",
+        "severity": "medium",
+        "line": "References `errors.py` but file not found"
+      },
+      {
+        "file": "README.md",
+        "issue": "stale_reference",
+        "severity": "medium",
+        "line": "References `policy.py` but file not found"
+      },
+      {
+        "file": "README.md",
+        "issue": "stale_reference",
+        "severity": "medium",
+        "line": "References `matcher.py` but file not found"
+      },
+      {
+        "file": "README.md",
+        "issue": "stale_reference",
+        "severity": "medium",
+        "line": "References `policy.py` but file not found"
+      },
+      {
+        "file": "README.md",
+        "issue": "stale_reference",
+        "severity": "medium",
+        "line": "References `formats.py` but file not found"
+      },
+      {
+        "file": "README.md",
+        "issue": "stale_reference",
+        "severity": "medium",
+        "line": "References `formats.py` but file not found"
+      },
+      {
+        "file": "README.md",
+        "issue": "stale_reference",
+        "severity": "medium",
+        "line": "References `errors.py` but file not found"
+      },
+      {
+        "file": "README.md",
+        "issue": "stale_reference",
+        "severity": "medium",
+        "line": "References `pseudonyms.py` but file not found"
+      },
+      {
+        "file": "README.md",
+        "issue": "stale_reference",
+        "severity": "medium",
+        "line": "References `pipeline.py` but file not found"
+      },
+      {
+        "file": "README.md",
+        "issue": "stale_reference",
+        "severity": "medium",
+        "line": "References `verification.py` but file not found"
+      },
+      {
+        "file": "README.md",
+        "issue": "stale_reference",
+        "severity": "medium",
+        "line": "References `pseudonyms.py` but file not found"
+      },
+      {
+        "file": "README.md",
+        "issue": "stale_reference",
+        "severity": "medium",
+        "line": "References `__main__.py` but file not found"
+      },
+      {
+        "file": "README.md",
+        "issue": "stale_reference",
+        "severity": "medium",
+        "line": "References `bundle.py` but file not found"
+      },
+      {
+        "file": "README.md",
+        "issue": "stale_reference",
+        "severity": "medium",
+        "line": "References `discovery.py` but file not found"
+      }
+    ],
+    "drift_count": 25
+  },
+  "phase_4_best_practices": {
+    "findings": [
+      {
+        "file": "src/anonymization_trial/fixture.py",
+        "issue": "hardcoded_secret",
+        "severity": "critical"
+      }
+    ],
+    "total_findings": 1,
+    "by_severity": {
+      "critical": 1,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    "best_practice_skills_available": [
+      "best-practices-python",
+      "best-practices-react",
+      "best-practices-skills",
+      "best-practices-kde"
+    ]
+  },
+  "phase_5_research": {
+    "skipped": true,
+    "reason": "Use standard or --full mode"
+  },
+  "phase_6_gaps": {
+    "gaps": [
+      {
+        "category": "report_scope",
+        "severity": "low",
+        "gap": "The report collected 84 tests under tests/; it did not execute them and this count does not cover the separate security/tests suite.",
+        "action": "Do not present collection as a passing test run; use the dated qualification and regression receipts for execution claims."
+      },
+      {
+        "category": "security_review",
+        "severity": "low",
+        "gap": "The automatic critical keyword flag is in the synthetic corpus generator. Source readback identifies the intentionally seeded sk_synthetic_7CWQ0JY5i2 test value; this report does not establish a real credential exposure.",
+        "action": "Retain the synthetic fixture and original heuristic finding; do not launch unrelated security repairs from this keyword flag."
+      },
+      {
+        "category": "documentation_review",
+        "severity": "low",
+        "gap": "The reported missing module basenames exist under src/anonymization_trial/. Future optimization language is explicitly labeled as unimplemented; it is not an instruction to expand runtime scope.",
+        "action": "Treat these as detector limitations/context, not missing runtime modules. Preserve the raw report for comparison."
+      },
+      {
+        "category": "presentation",
+        "severity": "medium",
+        "gap": "The coordinated presentation remains a candidate. Final visual approval, Google Slides import, live-demo rehearsal, verified VS Code interactions and Live Evidence wiring are not established. Latest speaker-note edits have not been rerendered.",
+        "action": "Keep the pre-demo wrapper mention to one sentence; explain reuse and best-practices-skills only in Extra Credit. Next request is a source-grounded interview/transcript and focused-slide update, with a downloadable authoring ZIP."
+      }
+    ],
+    "improvements": [],
+    "automated_gaps": [
+      {
+        "category": "security",
+        "severity": "critical",
+        "gap": "1 critical best-practice violations (possible hardcoded secrets)",
+        "action": "Run /security-scan and fix immediately"
+      },
+      {
+        "category": "documentation",
+        "severity": "low",
+        "gap": "1 aspirational/TODO items in docs",
+        "action": "Implement or remove aspirational claims"
+      }
+    ],
+    "project_agent_review": {
+      "source_report_sha256": "49b7075c6549c6a4c457f5dd50a528da089c5f2d65a3329bc9e609a72677001a",
+      "note": "Automated phases are retained unchanged. The following gap synthesis includes explicitly identified source readback, not a new test or security run.",
+      "evidence": [
+        "src/anonymization_trial/fixture.py",
+        "src/anonymization_trial/",
+        "docs/pitch/oai-trial/reorganized/validation/local-checks.json"
+      ]
+    }
+  }
+}

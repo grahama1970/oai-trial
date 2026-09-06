@@ -20,8 +20,8 @@
     },
     {
       "path": "WALKTHROUGH.md",
-      "bytes": 97209,
-      "sha256": "9f238409b1858fbbaf1c7a9294851206fe9cac93f0dcd201a90ee68d3d781cb0"
+      "bytes": 98095,
+      "sha256": "89b85e643240305a52c05ec34b9957e675da257b5413cc904fece6fca5f3512d"
     },
     {
       "path": "asset_manifest.json",
@@ -235,8 +235,8 @@
     },
     {
       "path": "deck.json",
-      "bytes": 199524,
-      "sha256": "db050f966b3935770462378b677f6af62dc6fd02c3f4c7ccd3810c25683e9b3c"
+      "bytes": 200030,
+      "sha256": "6c2b2ec8bc402ad52d836453f1f2ff961e06be4cfd6b8c0eb323ce7d26aae78f"
     },
     {
       "path": "question-map.json",
