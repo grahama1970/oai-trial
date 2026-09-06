@@ -1,40 +1,119 @@
-# OAI trial deck: revised wording and slide order
+# OAI trial: proposed presentation organization
 
-Status: PROPOSED slide copy, implementing Graham's requested presentation structure. Not a claim that the deck has already changed or that any project capability passed. The oai-trial project agent must ground the final copy, commands and results in its current source and artifacts.
+Status: human-review proposal. The deck has not yet been reorganized and no new
+WebGPT reorganization request has been submitted. This revision preserves the
+prepared adversarial-question block explicitly rather than folding it into
+technical detail or audience discussion.
 
-## Main playback
+## Fixed instructions
 
-| Order | Proposed on-slide heading | What belongs on the slide |
+- First slide: **Table of Contents**. No cover or demo precedes it.
+- Then show the working demo and the actual result before explaining internals.
+- Prepared narrative: **30 minutes**, including code navigation; reserve another
+  **15+ minutes** for audience discussion.
+- One concept per detail slide. Four concepts is a ceiling, not a target.
+- Prepared adversarial questions explain and defend the choices **before Extra Credit**.
+- Extra Credit is the last substantive prepared block.
+- Audience slide: **Discussion**. Final slide: **Thank you.**
+- Preserve evidence qualifiers, code references, and Q01–Q48. No runtime changes.
+
+## Proposed Table of Contents
+
+1. **Demo and Results**
+   - Let's run it
+   - Here is the result: changed values and preserved meaning
+2. **Reproduce and Verify**
+   - Exact CLI invocation and input/output locations
+   - Supported setup and Docker environment
+   - Verification command, output evidence, and limitations
+3. **How the Solution Works**
+   - Compact pipeline orientation
+   - Code walkthrough: one concept per slide
+     - Validate policy and input boundaries
+     - Assign identity-coherent pseudonyms
+     - Resolve original-input spans without cascades
+     - Transform the supported formats
+     - Verify values, types, structure, and location
+     - Seal and publish the verified corpus
+   - Production design, capacity, SLA, and cost assumptions
+4. **Why These Choices? — Prepared Adversarial Questions**
+   - Why exact-policy matching rather than automatic PII detection?
+   - How independent is a verifier that shares replacement primitives?
+   - What changes at petabyte scale, and what does the cost model actually prove?
+5. **Extra Credit**
+   - **Security Evals (White, Grey, Black, and Adaptive Lineage)**
+   - Thin `anonymize-data` skill wrapper
+   - Explicitly reviewed name-alias discovery
+6. **Discussion**
+   - Audience questions and follow-ups
+7. **Thank you.**
+
+The explicit prepared-question section renumbers the later TOC entries; the
+requested audience label remains Discussion. This is a proposal for human review,
+not permission to silently remove the prepared questions to retain old numbering.
+
+## Prepared-question block: one question per slide
+
+Use a visible question, a short answer/decision, and one concrete piece of code
+or evidence. Do not read the whole 48-question appendix aloud.
+
+| Proposed slide | Decision and qualification to explain | Existing question/evidence handles |
 |---|---|---|
-| 1 | Let's run it. | Open with the actual working demo, not an agenda, credentials or architecture lecture. Show the real input and action. If it cannot run, disclose that instead of implying it worked. |
-| 2 | Here is the result. | Show the produced artifact and the one observable result the audience should notice. Keep relevant limitations visible. |
-| 3 | Run the same command. | The exact verified CLI invocation, its real input and output location. Do not invent a command or use a decorative terminal screenshot. |
-| 4 | Reproduce the environment. | Actual setup/container invocation. Show Docker only if it exists and has been exercised; otherwise show the real supported environment. |
-| 5 | Check the result. | Exact verification command and fresh result, including failures/skips and what the check does not prove. Never infer 'all tests pass' from collection or a narrow fixture. |
-| 6 | Follow the pipeline. | A small, readable input-to-output map. This is an orientation slide, not every implementation detail on one canvas. |
-| 7 onward | One source-grounded assertion per pipeline stage. | Derive the number and names of these slides from the real code. Each slide follows one transformation: relevant input, operation, output/handoff. Use the same running example. Split a long pipeline across connected slides, rather than shrinking it. |
-| After the walkthrough | Up to three anticipated hard questions. | Give each question its own slide and bounded answer. Candidate headings: 'Why this design?', 'What can go wrong?', 'What is not proven yet?' Choose the questions that actually matter to this project; do not force all three. |
-| Last substantive block | Extra credit: [actual capability]. | One demonstrated extra per slide. Security, Terraform, deployment or other extras belong here only when supported by actual project evidence. Do not invent an extra-credit feature merely to fill the section. |
-| Penultimate | Questions? | Audience Q&A, distinct from the prepared objections above. |
-| Final | Thank you. | Short close; Graham/contact/project link as appropriate to the deck's visibility. No new technical content after extra credit. |
+| Why exact-policy matching? | Explicit policy supplies authority; broad detection is a separate problem. Optional discovery does not silently authorize replacement. | Q01–Q03, Q19–Q21; `policy.py::compile_policy`, `discovery.py::approve` |
+| Can the verifier share code? | Rereading and location/type checks catch output faults, but shared primitives leave common-mode risk. Independent qualification checks have a bounded fixture scope. | Q04, Q12, Q22–Q23, Q37; `verification.py::verify_corpus`, `_typed_equal`, `qualify_submission.py::readback` |
+| What changes at petabyte scale? | Local per-file processing is not a production benchmark. Distribution must preserve a common identity plan; costs depend on workload and quota assumptions. | Q24–Q27, Q47; `pseudonyms.py::build_replacements`, `estimate_aws_cost.py::_one`, production design |
 
-The headings above are suggested text, not a fixed slide-count template. Replace generic pipeline headings with concrete, supported assertions. Existing project content—not these examples—determines the actual steps and extras. Keep appendices/backup slides outside normal playback.
+The last prepared-question slide must lead into Extra Credit. No new substantive
+prepared block follows Extra Credit; backup material is outside normal playback.
 
-## Pacing and text
+## Graham reference study
 
-- ONE concept per slide is the default. Advance briskly rather than accumulating dense bullets.
-- Four bullets/concepts is a ceiling, not a target. Split overloaded slides.
-- Prefer a short assertion headline plus the artifact, diagram or code that supports it. Put explanation in speaker notes, but never hide a claim's required qualifier there.
-- Preserve claim IDs, sources, visibility, qualifications and stable slide links while reorganizing. An edited sentence does not approve a claim.
+The actual supplied PPTX packages were inspected in
+`/mnt/storage12tb/skills/pitchdeck/sources/style-corpus/`. Layout discovery used
+`pitchdeck/run.sh find-layout`. Selected existing renders were viewed through
+live Surf pages; source text was checked against the PPTX presentation order.
 
-## Code accompaniment
+- **ACERT_Darpa_PI_Meeting_FtWorth, slide 1:** hierarchical Table of Contents,
+  including indented subtopics and separate questions/deeper-dive entries.
+- **SpartaAI_CyberSummitv_v3, slide 12:** an orientation page headed
+  “How ACERT Works,” rather than all implementation detail on one canvas.
+- **SpartaAI_CyberSummitv_v3, slides 52–53:** a distinct question page followed by
+  a distinct answer/assertion page. This is the useful pattern for defending a
+  choice; it is not merely another generic topic bullet.
+- **SpartaAI_CyberSummitv_v3, slides 58–59:** separate Open Discussion and Thank You.
 
-For pipeline detail slides, map to the actual file/function/line range in VS Code. Slide navigation may reveal code; Run, Inspect, Step, Continue and Stop remain explicit actions. Do not call code highlighting a breakpoint or a paused frame. Derive mappings from current files instead of inventing line numbers.
+These are presentation-structure references, not evidence for oai-trial technical
+claims. Historical product claims, sponsorship/distribution labels, and images
+must not be transplanted into this public deck. The reference images remain
+presenter-local, not in the public repository. The current grahama.co theme
+request remains separate from the historical teal/white references.
 
-## Visual direction already requested
+Reference-study artifacts:
+`/mnt/storage12tb/oai-trial/deck-authoring/house-study/`
 
-Use the grahama.co brand direction from agent-skills/site/BRAND.md, site/DESIGN.md and site/app/globals.css. Display/argument type and prose have distinct roles. Graham requested highly transparent header BACKGROUNDS, potentially brown, while retaining readable text contrast. A chosen opacity is a design choice, not a measured historical value. Preserve intended slide/element animation; use the retained Graham deck examples rather than inventing a new animation system. Browser reading must reflow beside VS Code; fixed PPTX/design geometry is separate.
+## Detail-slide and evidence rules
 
-## Handoff boundary
+Map each pipeline-detail slide to the actual file, function, and checked line
+range. Source navigation/highlighting is not a breakpoint or a paused frame.
+Run, Inspect, Step, Continue, and Stop remain explicit actions.
 
-The pitchdeck Theme dropdown is being handled separately by the pitchdeck worker; this message does not establish that feature's completion. Do not edit shared agent-skills/pitchdeck files concurrently. This handoff carries the requested presentation direction to the existing oai-trial session. Acknowledge receipt and use it when revising the project deck; retain the exact project-specific wording and evidence in that project's normal artifacts.
+Core correctness checks belong in Reproduce and Verify. The additional security
+methodology belongs in Extra Credit. Its detail slides must distinguish the
+retained white/gray/black-box evidence from the fixture-backed Judge demonstration;
+a live adaptive campaign against this project is not established.
+
+Production architecture and cost modeling were required by the brief, so they
+are not extra credit. Additional capability claims require their own evidence.
+
+## Visual and ownership boundaries
+
+Use the requested grahama.co brand direction and the supported pitchdeck theme
+interface. The header requirement is an actual low-opacity image overlay, not
+just translucent fill; the theme worker reports the supplied house-band image at
+10% opacity over a separately controlled fill. Check that behavior when applied
+rather than treating this instruction as a visual proof.
+
+Preserve intended animation in the browser and separate it from fixed PPTX/PDF
+geometry. Reading beside VS Code must not be confused with shrinking a full slide.
+Do not edit shared agent-skills/pitchdeck implementation files concurrently with
+its owner. Keep all narrative and source mappings in the oai-trial project.
