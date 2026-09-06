@@ -2,7 +2,7 @@
   "schema": "pitchdeck.deck_manifest.v1",
   "deck": {
     "id": "oai-trial-reorganized-public",
-    "title": "Anonymization trial — results, choices, and evidence",
+    "title": "Anonymization trial \u2014 results, choices, and evidence",
     "subtitle": "30 minutes prepared, including navigation; separate 15+ minute audience discussion",
     "audience": "OpenAI privacy-engineering interviewers and technical reviewers",
     "visibility": "public",
@@ -30,7 +30,7 @@
       "layout": "freeform",
       "visibility": "public",
       "title": "Table of Contents",
-      "message": "30 minutes prepared · 15+ minutes audience discussion",
+      "message": "30 minutes prepared \u00b7 15+ minutes audience discussion",
       "body": [],
       "source_refs": [
         {
@@ -75,13 +75,13 @@
           "align": "left"
         },
         {
-          "id": "lead",
+          "id": "message",
           "type": "text",
           "x": 0.065,
           "y": 0.14,
           "w": 0.87,
           "h": 0.12,
-          "text": "30 minutes prepared · 15+ minutes audience discussion",
+          "text": "30 minutes prepared \u00b7 15+ minutes audience discussion",
           "size_pt": 23,
           "bold": false,
           "color": "#e2ac62",
@@ -107,7 +107,7 @@
           "y": 0.36,
           "w": 0.378,
           "h": 0.07,
-          "text": "Run + inspect · labeled fallback",
+          "text": "Run + inspect \u00b7 labeled fallback",
           "size_pt": 17.5,
           "bold": false,
           "color": "#a99787",
@@ -133,7 +133,7 @@
           "y": 0.5,
           "w": 0.378,
           "h": 0.07,
-          "text": "Setup / Docker · CLI · output checks",
+          "text": "Setup / Docker \u00b7 CLI \u00b7 output checks",
           "size_pt": 17.5,
           "bold": false,
           "color": "#a99787",
@@ -159,7 +159,7 @@
           "y": 0.6399999999999999,
           "w": 0.378,
           "h": 0.095,
-          "text": "Pipeline → one-concept code stops\nRequired cloud design · capacity · cost",
+          "text": "Pipeline \u2192 one-concept code stops\nRequired cloud design \u00b7 capacity \u00b7 cost",
           "size_pt": 17.5,
           "bold": false,
           "color": "#a99787",
@@ -211,7 +211,7 @@
           "y": 0.52,
           "w": 0.378,
           "h": 0.125,
-          "text": "Security Evals (White, Grey, Black, and Adaptive Lineage)\nThin skill wrapper · reviewed name aliases",
+          "text": "Security Evals (White, Grey, Black, and Adaptive Lineage)\nThin skill wrapper \u00b7 reviewed name aliases",
           "size_pt": 17.5,
           "bold": false,
           "color": "#a99787",
@@ -271,7 +271,7 @@
           "kind": "decorative"
         },
         {
-          "path": "element:lead",
+          "path": "element:message",
           "kind": "decorative"
         },
         {
@@ -330,7 +330,7 @@
       "transition": "none",
       "reveal": "none",
       "hidden": false,
-      "notes": "PREPARED REHEARSAL GUIDE — not a record of an interview.\nPresentation source commit: ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78. Frozen implementation: 0375af56bf681e9441edcb7433cfe58951db77b2.\nTIME 00:00–00:45; 0.75 minute(s); timing kind: prepared.\nLegacy sections: 01-brief. Primary question IDs: paired lead-in/navigation only.\n## r01-toc — Table of Contents\n\n**Time:** 00:00–00:45. **Block:** Contents. **Primary questions:** None; navigation or paired lead-in.\n\n### Say\n\nWe’ll start with the prepared example and inspect its result before discussing the internals. When a live run is unavailable, I’ll identify the recorded fallback explicitly. The same synthetic Alice, A.L, Bob and KEEP example will carry through the code.\nThen we’ll cover reproduction, output evidence, the core decisions, and the required cloud design and cost assumptions. Three prepared objections come before Extra Credit. Your questions have a separate discussion reserve after the prepared thirty minutes.\n\n### Show / navigate\n\nPoint down the hierarchy without reading every subtopic. No cover slide precedes this page.\n\n\n**Presenter boundary:** Demo/result first; identify the branch actually used. Source navigation is not a live breakpoint.\n\n**Evidence IDs:** E08\n\nAuthoring only: no application/test/Docker, local pitchdeck compiler, owning SVG validator, analytics/create-figure, recording or Live Evidence execution. Follow the stated assessment permission boundary.\n"
+      "notes": "PREPARED REHEARSAL GUIDE \u2014 not a record of an interview.\nPresentation source commit: ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78. Frozen implementation: 0375af56bf681e9441edcb7433cfe58951db77b2.\nTIME 00:00\u201300:45; 0.75 minute(s); timing kind: prepared.\nLegacy sections: 01-brief. Primary question IDs: paired lead-in/navigation only.\n## r01-toc \u2014 Table of Contents\n\n**Time:** 00:00\u201300:45. **Block:** Contents. **Primary questions:** None; navigation or paired lead-in.\n\n### Say\n\nWe\u2019ll start with the prepared example and inspect its result before discussing the internals. When a live run is unavailable, I\u2019ll identify the recorded fallback explicitly. The same synthetic Alice, A.L, Bob and KEEP example will carry through the code.\nThen we\u2019ll cover reproduction, output evidence, the core decisions, and the required cloud design and cost assumptions. Three prepared objections come before Extra Credit. Your questions have a separate discussion reserve after the prepared thirty minutes.\n\n### Show / navigate\n\nPoint down the hierarchy without reading every subtopic. No cover slide precedes this page.\n\n\n**Presenter boundary:** Demo/result first; identify the branch actually used. Source navigation is not a live breakpoint.\n\n**Evidence IDs:** E08\n\nAuthoring only: no application/test/Docker, local pitchdeck compiler, owning SVG validator, analytics/create-figure, recording or Live Evidence execution. Follow the stated assessment permission boundary.\n"
     },
     {
       "id": "r02-demo-result",
@@ -338,7 +338,7 @@
       "role": "detail",
       "layout": "freeform",
       "visibility": "public",
-      "title": "Here is the result—not just a success flag",
+      "title": "Here is the result\u2014not just a success flag",
       "message": "The four-format qualification fixture keeps one declared identity.",
       "body": [],
       "source_refs": [
@@ -397,14 +397,14 @@
           "y": 0.022,
           "w": 0.885,
           "h": 0.07,
-          "text": "Here is the result—not just a success flag",
+          "text": "Here is the result\u2014not just a success flag",
           "size_pt": 29,
           "bold": true,
           "color": "#f2eadc",
           "align": "left"
         },
         {
-          "id": "lead",
+          "id": "message",
           "type": "text",
           "x": 0.065,
           "y": 0.14,
@@ -432,7 +432,7 @@
           "y": 0.735,
           "w": 0.87,
           "h": 0.075,
-          "text": "Source: qualify_submission.py:39–77",
+          "text": "Source: qualify_submission.py:39\u201377",
           "size_pt": 17.5,
           "bold": false,
           "color": "#a99787",
@@ -472,7 +472,7 @@
           "transform_class": "generalization"
         },
         {
-          "path": "element:lead",
+          "path": "element:message",
           "kind": "claim_paraphrase",
           "claim_id": "demo-fixture",
           "transform_class": "generalization"
@@ -490,7 +490,7 @@
       "transition": "none",
       "reveal": "none",
       "hidden": false,
-      "notes": "PREPARED REHEARSAL GUIDE — not a record of an interview.\nPresentation source commit: ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78. Frozen implementation: 0375af56bf681e9441edcb7433cfe58951db77b2.\nTIME 00:45–02:15; 1.5 minute(s); timing kind: prepared.\nLegacy sections: 01-brief, 05-evidence. Primary question IDs: paired lead-in/navigation only.\n## r02-demo-result — Here is the result—not just a success flag\n\n**Time:** 00:45–02:15. **Block:** Demo and Results. **Primary questions:** None; navigation or paired lead-in.\n\n### Presenter precondition — not spoken\n\nPreflight is completed before playback: the existing wrapper is bound to the frozen project checkout, the synthetic INPUT matches the Alice/A.L/person-a and Bob/person-b qualification fixture, and OUTPUT is a dedicated empty directory outside inputs. ANONYMIZE, INPUT and OUTPUT are presenter-resolved paths, not files furnished by this document. No introductory skill slide or live installation is added.\n\nKeep this within the existing 90-second slot: roughly 8 seconds for the sentence, 20 for the prepared action, 30 for output inspection, and the remainder for explanation and transition. These are rehearsal allocations, not observed execution times. If the run is not available or cannot complete in the slot, use the labeled fallback without troubleshooting or implying success.\n\n### Live branch — say exactly, immediately before the command\n\nI’m using a thin skill wrapper around the project’s CLI; the same engine runs independently in Docker.\n\n### Presenter action — not spoken; run only after preflight\n\n```bash\n\"$ANONYMIZE\" run --input \"$INPUT\" --output \"$OUTPUT\" &&\n  \"$ANONYMIZE\" verify --input \"$INPUT\" --output \"$OUTPUT\"\n```\n\nOn any nonzero exit, do not claim a successful release or continue with a success script. Observe the error and move to the recorded fallback. After success, open the **actual** `$OUTPUT/report.json` and generated corpus. The runtime `verify` command is not a substitute for opening those files.\n\nInspect the real file inventory and the Alice/A.L/Bob associations, KEEP, the JSON Boolean and integer values, and SQLite `sqliteX`. Use the fixture-specific independent readback prepared before the talk when available; do not improvise a new checker here. Do not claim every check ran if only a few rows were displayed. `inspect` is a report summary, not authentication or an independent digest gate.\n\n### Say after the live output is actually inspected\n\nHere is the output from that run. Alice and A.L share person-a; Bob has a different declared identity. The point is to check those associations and the protected content, not just the exit code. What we opened now is current output. The reference diagram on this slide comes from the historical qualification checker; it is not a capture of this run.\n\n### Recorded fallback — alternative branch, not additional talk time\n\nSay: “I’m using the recorded qualification fallback, not a live result.” If a live attempt failed or was stopped, state that before this sentence. Do not deliver the live-success lines above.\n\nOpen `sources/qualification.json` at `readbacks` and `source_unchanged`. Say: “This retained receipt records four-format readback, including sqliteX. The diagram shows the checker’s expected alias and protected-value associations. It is historical evidence, not a terminal screenshot or fresh output.”\n\n### Code / evidence navigation\n\n- [`scripts/qualify_submission.py::fixture` — L39–L77](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/scripts/qualify_submission.py#L39-L77)\n- [`scripts/qualify_submission.py::readback` — L80–L134](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/scripts/qualify_submission.py#L80-L134)\n- [Fixture-derived illustration provenance](assets/figures/fixture-result.source.json)\n\n**Visible qualification:** Recorded qualification + checker-asserted values; not a new output capture.\n\n**Evidence IDs:** E01, E06. The conditional presenter action is not an additional execution receipt.\n\n**Transition:** The next timing and memory figures are historical observations from the supplied receipt, regardless of which demo branch we just used.\n\nAuthoring only: no application/test/Docker, local pitchdeck compiler, owning SVG validator, analytics/create-figure, recording or Live Evidence execution. Follow the stated assessment permission boundary.\n"
+      "notes": "PREPARED REHEARSAL GUIDE \u2014 not a record of an interview.\nPresentation source commit: ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78. Frozen implementation: 0375af56bf681e9441edcb7433cfe58951db77b2.\nTIME 00:45\u201302:15; 1.5 minute(s); timing kind: prepared.\nLegacy sections: 01-brief, 05-evidence. Primary question IDs: paired lead-in/navigation only.\n## r02-demo-result \u2014 Here is the result\u2014not just a success flag\n\n**Time:** 00:45\u201302:15. **Block:** Demo and Results. **Primary questions:** None; navigation or paired lead-in.\n\n### Presenter precondition \u2014 not spoken\n\nPreflight is completed before playback: the existing wrapper is bound to the frozen project checkout, the synthetic INPUT matches the Alice/A.L/person-a and Bob/person-b qualification fixture, and OUTPUT is a dedicated empty directory outside inputs. ANONYMIZE, INPUT and OUTPUT are presenter-resolved paths, not files furnished by this document. No introductory skill slide or live installation is added.\n\nKeep this within the existing 90-second slot: roughly 8 seconds for the sentence, 20 for the prepared action, 30 for output inspection, and the remainder for explanation and transition. These are rehearsal allocations, not observed execution times. If the run is not available or cannot complete in the slot, use the labeled fallback without troubleshooting or implying success.\n\n### Live branch \u2014 say exactly, immediately before the command\n\nI\u2019m using a thin skill wrapper around the project\u2019s CLI; the same engine runs independently in Docker.\n\n### Presenter action \u2014 not spoken; run only after preflight\n\n```bash\n\"$ANONYMIZE\" run --input \"$INPUT\" --output \"$OUTPUT\" &&\n  \"$ANONYMIZE\" verify --input \"$INPUT\" --output \"$OUTPUT\"\n```\n\nOn any nonzero exit, do not claim a successful release or continue with a success script. Observe the error and move to the recorded fallback. After success, open the **actual** `$OUTPUT/report.json` and generated corpus. The runtime `verify` command is not a substitute for opening those files.\n\nInspect the real file inventory and the Alice/A.L/Bob associations, KEEP, the JSON Boolean and integer values, and SQLite `sqliteX`. Use the fixture-specific independent readback prepared before the talk when available; do not improvise a new checker here. Do not claim every check ran if only a few rows were displayed. `inspect` is a report summary, not authentication or an independent digest gate.\n\n### Say after the live output is actually inspected\n\nHere is the output from that run. Alice and A.L share person-a; Bob has a different declared identity. The point is to check those associations and the protected content, not just the exit code. What we opened now is current output. The reference diagram on this slide comes from the historical qualification checker; it is not a capture of this run.\n\n### Recorded fallback \u2014 alternative branch, not additional talk time\n\nSay: \u201cI\u2019m using the recorded qualification fallback, not a live result.\u201d If a live attempt failed or was stopped, state that before this sentence. Do not deliver the live-success lines above.\n\nOpen `sources/qualification.json` at `readbacks` and `source_unchanged`. Say: \u201cThis retained receipt records four-format readback, including sqliteX. The diagram shows the checker\u2019s expected alias and protected-value associations. It is historical evidence, not a terminal screenshot or fresh output.\u201d\n\n### Code / evidence navigation\n\n- [`scripts/qualify_submission.py::fixture` \u2014 L39\u2013L77](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/scripts/qualify_submission.py#L39-L77)\n- [`scripts/qualify_submission.py::readback` \u2014 L80\u2013L134](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/scripts/qualify_submission.py#L80-L134)\n- [Fixture-derived illustration provenance](assets/figures/fixture-result.source.json)\n\n**Visible qualification:** Recorded qualification + checker-asserted values; not a new output capture.\n\n**Evidence IDs:** E01, E06. The conditional presenter action is not an additional execution receipt.\n\n**Transition:** The next timing and memory figures are historical observations from the supplied receipt, regardless of which demo branch we just used.\n\nAuthoring only: no application/test/Docker, local pitchdeck compiler, owning SVG validator, analytics/create-figure, recording or Live Evidence execution. Follow the stated assessment permission boundary.\n"
     },
     {
       "id": "r03-demo-observations",
@@ -499,7 +499,7 @@
       "layout": "freeform",
       "visibility": "public",
       "title": "Small workloads were measured; petabytes were not",
-      "message": "Two recorded demo sizes, with a 10× logical-workload step.",
+      "message": "Two recorded demo sizes, with a 10\u00d7 logical-workload step.",
       "body": [],
       "source_refs": [
         {
@@ -554,13 +554,13 @@
           "align": "left"
         },
         {
-          "id": "lead",
+          "id": "message",
           "type": "text",
           "x": 0.065,
           "y": 0.14,
           "w": 0.87,
           "h": 0.12,
-          "text": "Two recorded demo sizes, with a 10× logical-workload step.",
+          "text": "Two recorded demo sizes, with a 10\u00d7 logical-workload step.",
           "size_pt": 23,
           "bold": false,
           "color": "#e2ac62",
@@ -582,7 +582,7 @@
           "y": 0.735,
           "w": 0.87,
           "h": 0.075,
-          "text": "Source: __main__.py:41–58",
+          "text": "Source: __main__.py:41\u201358",
           "size_pt": 17.5,
           "bold": false,
           "color": "#a99787",
@@ -622,7 +622,7 @@
           "transform_class": "generalization"
         },
         {
-          "path": "element:lead",
+          "path": "element:message",
           "kind": "claim_paraphrase",
           "claim_id": "recorded-demo",
           "transform_class": "generalization"
@@ -640,7 +640,7 @@
       "transition": "none",
       "reveal": "none",
       "hidden": false,
-      "notes": "PREPARED REHEARSAL GUIDE — not a record of an interview.\nPresentation source commit: ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78. Frozen implementation: 0375af56bf681e9441edcb7433cfe58951db77b2.\nTIME 02:15–03:15; 1 minute(s); timing kind: prepared.\nLegacy sections: 02-architecture, 05-evidence. Primary question IDs: paired lead-in/navigation only.\n## r03-demo-observations — Small workloads were measured; petabytes were not\n\n**Time:** 02:15–03:15. **Block:** Demo and Results. **Primary questions:** None; navigation or paired lead-in.\n\n### Say\n\nThese are the two demo runs recorded in the supplied qualification receipt. The logical fixture sizes are 100 and 1,000: 1000 / 100 = 10, a tenfold logical-workload step. This ratio is derived from the recorded values, not a new measurement. Each run processed four files and reported verification success. The elapsed observations are 0.050762 and 0.386924 seconds, and peak memory is reported as 26.83 and 29.83 MB.\nThe rates are also shown so the result is reproducible as evidence, not reduced to a speed claim. Records processed are not the same field as logical fixture size: the generated formats contribute multiple records to the run counters.\nThis is a small synthetic demonstration. It is not an estimate of what one production worker will sustain on arbitrary customer exports. Later I will label the cloud throughput separately as an assumption. Nothing on this page was remeasured while this authoring revision was prepared.\n\n### Show / navigate\n\nKeep this slide labeled historical even after a live r02 run. Read the exact values from sources/qualification.json#/demo/runs. Do not extrapolate a linear memory bound.\n\n- [`src/anonymization_trial/__main__.py::_run_once` — L41–L58](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/__main__.py#L41-L58)\n\n**Visible qualification:** Historical observations from the supplied receipt. Not current measurement.\n\n**Evidence IDs:** E01\n\nAuthoring only: no application/test/Docker, local pitchdeck compiler, owning SVG validator, analytics/create-figure, recording or Live Evidence execution. Follow the stated assessment permission boundary.\n"
+      "notes": "PREPARED REHEARSAL GUIDE \u2014 not a record of an interview.\nPresentation source commit: ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78. Frozen implementation: 0375af56bf681e9441edcb7433cfe58951db77b2.\nTIME 02:15\u201303:15; 1 minute(s); timing kind: prepared.\nLegacy sections: 02-architecture, 05-evidence. Primary question IDs: paired lead-in/navigation only.\n## r03-demo-observations \u2014 Small workloads were measured; petabytes were not\n\n**Time:** 02:15\u201303:15. **Block:** Demo and Results. **Primary questions:** None; navigation or paired lead-in.\n\n### Say\n\nThese are the two demo runs recorded in the supplied qualification receipt. The logical fixture sizes are 100 and 1,000: 1000 / 100 = 10, a tenfold logical-workload step. This ratio is derived from the recorded values, not a new measurement. Each run processed four files and reported verification success. The elapsed observations are 0.050762 and 0.386924 seconds, and peak memory is reported as 26.83 and 29.83 MB.\nThe rates are also shown so the result is reproducible as evidence, not reduced to a speed claim. Records processed are not the same field as logical fixture size: the generated formats contribute multiple records to the run counters.\nThis is a small synthetic demonstration. It is not an estimate of what one production worker will sustain on arbitrary customer exports. Later I will label the cloud throughput separately as an assumption. Nothing on this page was remeasured while this authoring revision was prepared.\n\n### Show / navigate\n\nKeep this slide labeled historical even after a live r02 run. Read the exact values from sources/qualification.json#/demo/runs. Do not extrapolate a linear memory bound.\n\n- [`src/anonymization_trial/__main__.py::_run_once` \u2014 L41\u2013L58](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/__main__.py#L41-L58)\n\n**Visible qualification:** Historical observations from the supplied receipt. Not current measurement.\n\n**Evidence IDs:** E01\n\nAuthoring only: no application/test/Docker, local pitchdeck compiler, owning SVG validator, analytics/create-figure, recording or Live Evidence execution. Follow the stated assessment permission boundary.\n"
     },
     {
       "id": "r04-docker",
@@ -704,7 +704,7 @@
           "align": "left"
         },
         {
-          "id": "lead",
+          "id": "message",
           "type": "text",
           "x": 0.065,
           "y": 0.14,
@@ -732,7 +732,7 @@
           "y": 0.735,
           "w": 0.87,
           "h": 0.075,
-          "text": "Source: __main__.py:207–233",
+          "text": "Source: __main__.py:207\u2013233",
           "size_pt": 17.5,
           "bold": false,
           "color": "#a99787",
@@ -772,7 +772,7 @@
           "transform_class": "generalization"
         },
         {
-          "path": "element:lead",
+          "path": "element:message",
           "kind": "claim_paraphrase",
           "claim_id": "docker-interface",
           "transform_class": "generalization"
@@ -790,7 +790,7 @@
       "transition": "none",
       "reveal": "none",
       "hidden": false,
-      "notes": "PREPARED REHEARSAL GUIDE — not a record of an interview.\nPresentation source commit: ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78. Frozen implementation: 0375af56bf681e9441edcb7433cfe58951db77b2.\nTIME 03:15–04:15; 1 minute(s); timing kind: prepared.\nLegacy sections: 02-architecture. Primary question IDs: Q46.\n## r04-docker — The evaluator needs one self-contained image\n\n**Time:** 03:15–04:15. **Block:** Reproduce and Verify. **Primary questions:** Q46\n\n### Say\n\nHere is the supported reproduction environment rather than a new service stack. From the frozen checkout, the required Docker build creates anonymization-trial, and a bare run executes the self-contained demo. The image supplies the application; the evaluator does not need the shared skill or a running database service.\nFor local development the project uses Python 3.12 or newer and declared extras. Dependencies are permitted by the brief. The default runtime’s small dependency set is an implementation choice, not a restriction I invented from the assignment.\nThe supplied qualification records the default image build and execution. The later discovery-enabled build has an explicit INCLUDE_DISCOVERY argument; do not treat this default-image receipt as proof that the optional image was exercised. We are displaying supported commands, not executing or installing anything during these slides.\n\n### Show / navigate\n\nDockerfile at the pinned commit; commands in the transcript. Local setup is documented there, not a live install.\n\n- [`src/anonymization_trial/__main__.py::main` — L207–L233](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/__main__.py#L207-L233)\n\n**Supported commands; not executed during authoring:**\n\n```bash\ndocker build -t anonymization-trial .\ndocker run --rm anonymization-trial\n```\n\n**Local development alternative, from the frozen checkout with uv installed:**\n\n```bash\nuv sync --locked --extra dev --extra discovery\nuv run anonymization-trial --help\n```\n\nThe discovery extra is optional functionality; these setup commands are not additional execution claims.\n\n**Visible qualification:** Default image: exact engine. Optional discovery-image execution is separate.\n\n**Evidence IDs:** E01, E08\n\nAuthoring only: no application/test/Docker, local pitchdeck compiler, owning SVG validator, analytics/create-figure, recording or Live Evidence execution. Follow the stated assessment permission boundary.\n"
+      "notes": "PREPARED REHEARSAL GUIDE \u2014 not a record of an interview.\nPresentation source commit: ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78. Frozen implementation: 0375af56bf681e9441edcb7433cfe58951db77b2.\nTIME 03:15\u201304:15; 1 minute(s); timing kind: prepared.\nLegacy sections: 02-architecture. Primary question IDs: Q46.\n## r04-docker \u2014 The evaluator needs one self-contained image\n\n**Time:** 03:15\u201304:15. **Block:** Reproduce and Verify. **Primary questions:** Q46\n\n### Say\n\nHere is the supported reproduction environment rather than a new service stack. From the frozen checkout, the required Docker build creates anonymization-trial, and a bare run executes the self-contained demo. The image supplies the application; the evaluator does not need the shared skill or a running database service.\nFor local development the project uses Python 3.12 or newer and declared extras. Dependencies are permitted by the brief. The default runtime\u2019s small dependency set is an implementation choice, not a restriction I invented from the assignment.\nThe supplied qualification records the default image build and execution. The later discovery-enabled build has an explicit INCLUDE_DISCOVERY argument; do not treat this default-image receipt as proof that the optional image was exercised. We are displaying supported commands, not executing or installing anything during these slides.\n\n### Show / navigate\n\nDockerfile at the pinned commit; commands in the transcript. Local setup is documented there, not a live install.\n\n- [`src/anonymization_trial/__main__.py::main` \u2014 L207\u2013L233](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/__main__.py#L207-L233)\n\n**Supported commands; not executed during authoring:**\n\n```bash\ndocker build -t anonymization-trial .\ndocker run --rm anonymization-trial\n```\n\n**Local development alternative, from the frozen checkout with uv installed:**\n\n```bash\nuv sync --locked --extra dev --extra discovery\nuv run anonymization-trial --help\n```\n\nThe discovery extra is optional functionality; these setup commands are not additional execution claims.\n\n**Visible qualification:** Default image: exact engine. Optional discovery-image execution is separate.\n\n**Evidence IDs:** E01, E08\n\nAuthoring only: no application/test/Docker, local pitchdeck compiler, owning SVG validator, analytics/create-figure, recording or Live Evidence execution. Follow the stated assessment permission boundary.\n"
     },
     {
       "id": "r05-mounted-cli",
@@ -864,7 +864,7 @@
           "align": "left"
         },
         {
-          "id": "lead",
+          "id": "message",
           "type": "text",
           "x": 0.065,
           "y": 0.14,
@@ -892,7 +892,7 @@
           "y": 0.735,
           "w": 0.87,
           "h": 0.075,
-          "text": "Source: __main__.py:139–157",
+          "text": "Source: __main__.py:139\u2013157",
           "size_pt": 17.5,
           "bold": false,
           "color": "#a99787",
@@ -932,7 +932,7 @@
           "transform_class": "generalization"
         },
         {
-          "path": "element:lead",
+          "path": "element:message",
           "kind": "claim_paraphrase",
           "claim_id": "reproduce",
           "transform_class": "generalization"
@@ -950,7 +950,7 @@
       "transition": "none",
       "reveal": "none",
       "hidden": false,
-      "notes": "PREPARED REHEARSAL GUIDE — not a record of an interview.\nPresentation source commit: ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78. Frozen implementation: 0375af56bf681e9441edcb7433cfe58951db77b2.\nTIME 04:15–05:30; 1.25 minute(s); timing kind: prepared.\nLegacy sections: 02-architecture. Primary question IDs: Q42, Q43.\n## r05-mounted-cli — One bundle in; one dedicated release directory out\n\n**Time:** 04:15–05:30. **Block:** Reproduce and Verify. **Primary questions:** Q42, Q43\n\n### Say\n\nThe original interface accepts an input bundle containing policy.json and corpus. The input is mounted read-only; the output mount is a dedicated empty directory. On success, the release root contains only corpus and report.json.\nThe later file-or-folder interface adapts separate input and policy paths into that same bundle. Here the point is the project’s input separation, not a second evaluator contract; the optional reusable workflow is reserved for Extra Credit.\nThe operational commands also have different jobs. Preflight checks admission; inspect summarizes selected report fields; verify rereads the corpus against the source policy. None should be described as authenticating a signed release. The stronger qualification readback checks report schema and digests as a separate operation. Here we use source navigation and a supported command string, not an invented terminal recording.\n\n### Show / navigate\n\nNavigate to __main__.py::_verify_cmd and _inspect_cmd; show the full mounted command from WALKTHROUGH.md.\n\n- [`src/anonymization_trial/__main__.py::_verify_cmd; _inspect_cmd` — L139–L157](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/__main__.py#L139-L157)\n- [`src/anonymization_trial/bundle.py::input_bundle` — L40–L71](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/bundle.py#L40-L71)\n- [`src/anonymization_trial/__main__.py::main` — L207–L233](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/__main__.py#L207-L233)\n\n```bash\ndocker run --rm \\\n  -v \"$INPUT\":/trial/input:ro \\\n  -v \"$OUTPUT\":/trial/output \\\n  anonymization-trial run\n```\n\n```text\nINPUT/                  OUTPUT/\n  policy.json             report.json\n  corpus/                 corpus/\n```\n\n**Installed project CLI, not an additional Docker qualification result:**\n\n```bash\nanonymization-trial verify --input \"$INPUT\" --output \"$OUTPUT\"\nanonymization-trial inspect \"$OUTPUT\"\n```\n\n**Visible qualification:** INPUT/OUTPUT are operator paths. inspect is not release authentication.\n\n**Evidence IDs:** E01, E08\n\nAuthoring only: no application/test/Docker, local pitchdeck compiler, owning SVG validator, analytics/create-figure, recording or Live Evidence execution. Follow the stated assessment permission boundary.\n"
+      "notes": "PREPARED REHEARSAL GUIDE \u2014 not a record of an interview.\nPresentation source commit: ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78. Frozen implementation: 0375af56bf681e9441edcb7433cfe58951db77b2.\nTIME 04:15\u201305:30; 1.25 minute(s); timing kind: prepared.\nLegacy sections: 02-architecture. Primary question IDs: Q42, Q43.\n## r05-mounted-cli \u2014 One bundle in; one dedicated release directory out\n\n**Time:** 04:15\u201305:30. **Block:** Reproduce and Verify. **Primary questions:** Q42, Q43\n\n### Say\n\nThe original interface accepts an input bundle containing policy.json and corpus. The input is mounted read-only; the output mount is a dedicated empty directory. On success, the release root contains only corpus and report.json.\nThe later file-or-folder interface adapts separate input and policy paths into that same bundle. Here the point is the project\u2019s input separation, not a second evaluator contract; the optional reusable workflow is reserved for Extra Credit.\nThe operational commands also have different jobs. Preflight checks admission; inspect summarizes selected report fields; verify rereads the corpus against the source policy. None should be described as authenticating a signed release. The stronger qualification readback checks report schema and digests as a separate operation. Here we use source navigation and a supported command string, not an invented terminal recording.\n\n### Show / navigate\n\nNavigate to __main__.py::_verify_cmd and _inspect_cmd; show the full mounted command from WALKTHROUGH.md.\n\n- [`src/anonymization_trial/__main__.py::_verify_cmd; _inspect_cmd` \u2014 L139\u2013L157](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/__main__.py#L139-L157)\n- [`src/anonymization_trial/bundle.py::input_bundle` \u2014 L40\u2013L71](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/bundle.py#L40-L71)\n- [`src/anonymization_trial/__main__.py::main` \u2014 L207\u2013L233](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/__main__.py#L207-L233)\n\n```bash\ndocker run --rm \\\n  -v \"$INPUT\":/trial/input:ro \\\n  -v \"$OUTPUT\":/trial/output \\\n  anonymization-trial run\n```\n\n```text\nINPUT/                  OUTPUT/\n  policy.json             report.json\n  corpus/                 corpus/\n```\n\n**Installed project CLI, not an additional Docker qualification result:**\n\n```bash\nanonymization-trial verify --input \"$INPUT\" --output \"$OUTPUT\"\nanonymization-trial inspect \"$OUTPUT\"\n```\n\n**Visible qualification:** INPUT/OUTPUT are operator paths. inspect is not release authentication.\n\n**Evidence IDs:** E01, E08\n\nAuthoring only: no application/test/Docker, local pitchdeck compiler, owning SVG validator, analytics/create-figure, recording or Live Evidence execution. Follow the stated assessment permission boundary.\n"
     },
     {
       "id": "r06-output-evidence",
@@ -1017,7 +1017,7 @@
           "align": "left"
         },
         {
-          "id": "lead",
+          "id": "message",
           "type": "text",
           "x": 0.065,
           "y": 0.14,
@@ -1075,7 +1075,7 @@
           "y": 0.735,
           "w": 0.87,
           "h": 0.075,
-          "text": "Source: qualify_submission.py:80–134",
+          "text": "Source: qualify_submission.py:80\u2013134",
           "size_pt": 17.5,
           "bold": false,
           "color": "#a99787",
@@ -1115,7 +1115,7 @@
           "transform_class": "generalization"
         },
         {
-          "path": "element:lead",
+          "path": "element:message",
           "kind": "claim_paraphrase",
           "claim_id": "qualification",
           "transform_class": "generalization"
@@ -1151,7 +1151,7 @@
       "transition": "none",
       "reveal": "none",
       "hidden": false,
-      "notes": "PREPARED REHEARSAL GUIDE — not a record of an interview.\nPresentation source commit: ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78. Frozen implementation: 0375af56bf681e9441edcb7433cfe58951db77b2.\nTIME 05:30–07:00; 1.5 minute(s); timing kind: prepared.\nLegacy sections: 05-evidence. Primary question IDs: Q22, Q23, Q44, Q45.\n## r06-output-evidence — Check the artifacts, not the exit code\n\n**Time:** 05:30–07:00. **Block:** Reproduce and Verify. **Primary questions:** Q22, Q23, Q44, Q45\n\n### Say\n\nThe recorded qualification is more than an exit-code wrapper. Its readback computes the expected synthetic pseudonyms with the documented SHA-256 input, parses CSV and JSON directly, queries SQLite, checks the fixture’s typed values and schema, validates the report against JSON Schema, and recomputes policy and corpus digests. It does not import the runtime transformer or verifier to decide the expected result.\nThe receipt also records an offline replay with the same corpus digest, unchanged input, and early and late refusal cases. Those are bounded checks against the demonstrated fixture and commands—not exhaustive security proof. The submitted archive identity is recorded separately from this presentation bundle.\nI have not rerun that qualification here. The script records its invoking HEAD, clones main, and requires equality; it does not accept an arbitrary historical ref. A later rerun must not silently be presented as the old qualification. For replay, compare the corpus digest, not complete reports containing run-specific time and identifiers.\n\n### Show / navigate\n\nOpen supplied sources/qualification.json: readbacks, early_and_late_rejection, archive_sha256. Inspect readback() and its actual assertions.\n\n- [`scripts/qualify_submission.py::readback` — L80–L134](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/scripts/qualify_submission.py#L80-L134)\n- [`scripts/qualify_submission.py::qualify` — L137–L314](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/scripts/qualify_submission.py#L137-L314)\n\n**Selected fields from the supplied historical receipt, not a raw runtime report:**\n\n```json\n{\n  \"source_commit\": \"0375af56bf681e9441edcb7433cfe58951db77b2\",\n  \"readbacks\": [\n    {\n      \"formats\": [\n        \"people.csv\",\n        \"people.json\",\n        \"people.sqlite\",\n        \"people.txt\"\n      ],\n      \"corpus_sha256\": \"15e98e6b6c85720a9e6a88f8b85a3239ac577a4392e89160b10bf7ed0a49414c\",\n      \"report_sha256\": \"1c247be72a32cc0a23979059ab77710733de508573897dc4b3814e5b060439dc\",\n      \"schema_validated\": true\n    },\n    {\n      \"formats\": [\n        \"people.csv\",\n        \"people.json\",\n        \"people.sqlite\",\n        \"people.txt\"\n      ],\n      \"corpus_sha256\": \"15e98e6b6c85720a9e6a88f8b85a3239ac577a4392e89160b10bf7ed0a49414c\",\n      \"report_sha256\": \"f557790f6f6a55f0adea08fd5cd0a2850dcf9216462072011cd92e145eb7d9ec\",\n      \"schema_validated\": true\n    }\n  ],\n  \"source_unchanged\": true,\n  \"early_and_late_rejection\": true\n}\n```\n\n**Visible qualification:** Supplied receipt inspected; the application, pytest and Docker were not rerun here.\n\n**Evidence IDs:** E01, E06\n\n**Transition:** Now the pipeline map explains where those checks fit.\n\nAuthoring only: no application/test/Docker, local pitchdeck compiler, owning SVG validator, analytics/create-figure, recording or Live Evidence execution. Follow the stated assessment permission boundary.\n"
+      "notes": "PREPARED REHEARSAL GUIDE \u2014 not a record of an interview.\nPresentation source commit: ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78. Frozen implementation: 0375af56bf681e9441edcb7433cfe58951db77b2.\nTIME 05:30\u201307:00; 1.5 minute(s); timing kind: prepared.\nLegacy sections: 05-evidence. Primary question IDs: Q22, Q23, Q44, Q45.\n## r06-output-evidence \u2014 Check the artifacts, not the exit code\n\n**Time:** 05:30\u201307:00. **Block:** Reproduce and Verify. **Primary questions:** Q22, Q23, Q44, Q45\n\n### Say\n\nThe recorded qualification is more than an exit-code wrapper. Its readback computes the expected synthetic pseudonyms with the documented SHA-256 input, parses CSV and JSON directly, queries SQLite, checks the fixture\u2019s typed values and schema, validates the report against JSON Schema, and recomputes policy and corpus digests. It does not import the runtime transformer or verifier to decide the expected result.\nThe receipt also records an offline replay with the same corpus digest, unchanged input, and early and late refusal cases. Those are bounded checks against the demonstrated fixture and commands\u2014not exhaustive security proof. The submitted archive identity is recorded separately from this presentation bundle.\nI have not rerun that qualification here. The script records its invoking HEAD, clones main, and requires equality; it does not accept an arbitrary historical ref. A later rerun must not silently be presented as the old qualification. For replay, compare the corpus digest, not complete reports containing run-specific time and identifiers.\n\n### Show / navigate\n\nOpen supplied sources/qualification.json: readbacks, early_and_late_rejection, archive_sha256. Inspect readback() and its actual assertions.\n\n- [`scripts/qualify_submission.py::readback` \u2014 L80\u2013L134](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/scripts/qualify_submission.py#L80-L134)\n- [`scripts/qualify_submission.py::qualify` \u2014 L137\u2013L314](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/scripts/qualify_submission.py#L137-L314)\n\n**Selected fields from the supplied historical receipt, not a raw runtime report:**\n\n```json\n{\n  \"source_commit\": \"0375af56bf681e9441edcb7433cfe58951db77b2\",\n  \"readbacks\": [\n    {\n      \"formats\": [\n        \"people.csv\",\n        \"people.json\",\n        \"people.sqlite\",\n        \"people.txt\"\n      ],\n      \"corpus_sha256\": \"15e98e6b6c85720a9e6a88f8b85a3239ac577a4392e89160b10bf7ed0a49414c\",\n      \"report_sha256\": \"1c247be72a32cc0a23979059ab77710733de508573897dc4b3814e5b060439dc\",\n      \"schema_validated\": true\n    },\n    {\n      \"formats\": [\n        \"people.csv\",\n        \"people.json\",\n        \"people.sqlite\",\n        \"people.txt\"\n      ],\n      \"corpus_sha256\": \"15e98e6b6c85720a9e6a88f8b85a3239ac577a4392e89160b10bf7ed0a49414c\",\n      \"report_sha256\": \"f557790f6f6a55f0adea08fd5cd0a2850dcf9216462072011cd92e145eb7d9ec\",\n      \"schema_validated\": true\n    }\n  ],\n  \"source_unchanged\": true,\n  \"early_and_late_rejection\": true\n}\n```\n\n**Visible qualification:** Supplied receipt inspected; the application, pytest and Docker were not rerun here.\n\n**Evidence IDs:** E01, E06\n\n**Transition:** Now the pipeline map explains where those checks fit.\n\nAuthoring only: no application/test/Docker, local pitchdeck compiler, owning SVG validator, analytics/create-figure, recording or Live Evidence execution. Follow the stated assessment permission boundary.\n"
     },
     {
       "id": "r07-pipeline-map",
@@ -1230,7 +1230,7 @@
           "align": "left"
         },
         {
-          "id": "lead",
+          "id": "message",
           "type": "text",
           "x": 0.065,
           "y": 0.14,
@@ -1258,7 +1258,7 @@
           "y": 0.735,
           "w": 0.87,
           "h": 0.075,
-          "text": "Source: pipeline.py:214–258",
+          "text": "Source: pipeline.py:214\u2013258",
           "size_pt": 17.5,
           "bold": false,
           "color": "#a99787",
@@ -1298,7 +1298,7 @@
           "transform_class": "generalization"
         },
         {
-          "path": "element:lead",
+          "path": "element:message",
           "kind": "claim_paraphrase",
           "claim_id": "local",
           "transform_class": "generalization"
@@ -1316,7 +1316,7 @@
       "transition": "none",
       "reveal": "none",
       "hidden": false,
-      "notes": "PREPARED REHEARSAL GUIDE — not a record of an interview.\nPresentation source commit: ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78. Frozen implementation: 0375af56bf681e9441edcb7433cfe58951db77b2.\nTIME 07:00–07:45; 0.75 minute(s); timing kind: prepared.\nLegacy sections: 02-architecture. Primary question IDs: paired lead-in/navigation only.\n## r07-pipeline-map — Transformation and release are separate steps\n\n**Time:** 07:00–07:45. **Block:** How the Solution Works. **Primary questions:** None; navigation or paired lead-in.\n\n### Say\n\nThis is the whole local path. Validate the policy and inventory, transform each supported format into private staging, reread and verify the corpus, then publish the report last.\nThe stage is on the output filesystem so publication can use a same-filesystem rename. Permissions restrict access, but they do not turn the filesystem into an encrypted or hostile-host-proof store. The pipeline checks source digests again and computes the output seal after verification.\nKeep this map as orientation. The next pages each explain one decision rather than turning this into a single dense architecture slide. The cloud design will use different execution machinery; it must retain the same meaning of identity and readiness.\n\n### Show / navigate\n\nTrace run_pipeline() calls without opening every branch.\n\n- [`src/anonymization_trial/pipeline.py::run_pipeline` — L214–L258](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/pipeline.py#L214-L258)\n- [`src/anonymization_trial/formats.py::transform_file` — L39–L49](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/formats.py#L39-L49)\n- [`src/anonymization_trial/verification.py::verify_corpus` — L205–L249](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/verification.py#L205-L249)\n- [`src/anonymization_trial/pipeline.py::_publish` — L166–L211](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/pipeline.py#L166-L211)\n\n**Visible qualification:** Shared primitives and trusted single-writer staging; no production streaming.\n\n**Evidence IDs:** E08\n\nAuthoring only: no application/test/Docker, local pitchdeck compiler, owning SVG validator, analytics/create-figure, recording or Live Evidence execution. Follow the stated assessment permission boundary.\n"
+      "notes": "PREPARED REHEARSAL GUIDE \u2014 not a record of an interview.\nPresentation source commit: ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78. Frozen implementation: 0375af56bf681e9441edcb7433cfe58951db77b2.\nTIME 07:00\u201307:45; 0.75 minute(s); timing kind: prepared.\nLegacy sections: 02-architecture. Primary question IDs: paired lead-in/navigation only.\n## r07-pipeline-map \u2014 Transformation and release are separate steps\n\n**Time:** 07:00\u201307:45. **Block:** How the Solution Works. **Primary questions:** None; navigation or paired lead-in.\n\n### Say\n\nThis is the whole local path. Validate the policy and inventory, transform each supported format into private staging, reread and verify the corpus, then publish the report last.\nThe stage is on the output filesystem so publication can use a same-filesystem rename. Permissions restrict access, but they do not turn the filesystem into an encrypted or hostile-host-proof store. The pipeline checks source digests again and computes the output seal after verification.\nKeep this map as orientation. The next pages each explain one decision rather than turning this into a single dense architecture slide. The cloud design will use different execution machinery; it must retain the same meaning of identity and readiness.\n\n### Show / navigate\n\nTrace run_pipeline() calls without opening every branch.\n\n- [`src/anonymization_trial/pipeline.py::run_pipeline` \u2014 L214\u2013L258](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/pipeline.py#L214-L258)\n- [`src/anonymization_trial/formats.py::transform_file` \u2014 L39\u2013L49](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/formats.py#L39-L49)\n- [`src/anonymization_trial/verification.py::verify_corpus` \u2014 L205\u2013L249](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/verification.py#L205-L249)\n- [`src/anonymization_trial/pipeline.py::_publish` \u2014 L166\u2013L211](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/pipeline.py#L166-L211)\n\n**Visible qualification:** Shared primitives and trusted single-writer staging; no production streaming.\n\n**Evidence IDs:** E08\n\nAuthoring only: no application/test/Docker, local pitchdeck compiler, owning SVG validator, analytics/create-figure, recording or Live Evidence execution. Follow the stated assessment permission boundary.\n"
     },
     {
       "id": "r08-policy",
@@ -1324,7 +1324,7 @@
       "role": "detail",
       "layout": "freeform",
       "visibility": "public",
-      "title": "The policy supplies authority—not a guess",
+      "title": "The policy supplies authority\u2014not a guess",
       "message": "Contradictory sensitive and protected obligations reject.",
       "body": [],
       "source_refs": [
@@ -1381,14 +1381,14 @@
           "y": 0.022,
           "w": 0.885,
           "h": 0.07,
-          "text": "The policy supplies authority—not a guess",
+          "text": "The policy supplies authority\u2014not a guess",
           "size_pt": 29,
           "bold": true,
           "color": "#f2eadc",
           "align": "left"
         },
         {
-          "id": "lead",
+          "id": "message",
           "type": "text",
           "x": 0.065,
           "y": 0.14,
@@ -1420,7 +1420,7 @@
           "y": 0.44,
           "w": 0.83,
           "h": 0.095,
-          "text": "Known subject links—not inferred identity",
+          "text": "Known subject links\u2014not inferred identity",
           "size_pt": 27,
           "bold": false,
           "color": "#ece2d3",
@@ -1433,7 +1433,7 @@
           "y": 0.56,
           "w": 0.83,
           "h": 0.095,
-          "text": "Ambiguous obligations → refuse",
+          "text": "Ambiguous obligations \u2192 refuse",
           "size_pt": 27,
           "bold": false,
           "color": "#ece2d3",
@@ -1446,7 +1446,7 @@
           "y": 0.735,
           "w": 0.87,
           "h": 0.075,
-          "text": "Source: policy.py:129–164",
+          "text": "Source: policy.py:129\u2013164",
           "size_pt": 17.5,
           "bold": false,
           "color": "#a99787",
@@ -1486,7 +1486,7 @@
           "transform_class": "generalization"
         },
         {
-          "path": "element:lead",
+          "path": "element:message",
           "kind": "claim_paraphrase",
           "claim_id": "policy",
           "transform_class": "generalization"
@@ -1522,7 +1522,7 @@
       "transition": "none",
       "reveal": "none",
       "hidden": false,
-      "notes": "PREPARED REHEARSAL GUIDE — not a record of an interview.\nPresentation source commit: ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78. Frozen implementation: 0375af56bf681e9441edcb7433cfe58951db77b2.\nTIME 07:45–09:00; 1.25 minute(s); timing kind: prepared.\nLegacy sections: 01-brief, 03-semantics. Primary question IDs: Q05, Q11, Q33.\n## r08-policy — The policy supplies authority—not a guess\n\n**Time:** 07:45–09:00. **Block:** How the Solution Works. **Primary questions:** Q05, Q11, Q33\n\n### Say\n\nFor the running example, the policy explicitly states that Alice and A.L belong to one subject. The compiler can validate that declaration and reject contradictory match domains; it cannot determine whether the author has correctly identified the people.\nIt also requires both sensitive_values and protected_values. A missing sensitive list must not silently become a successful no-op. For protected text such as KEEP, the preservation promise is unconditional. When a sensitive literal equals, contains, or can partially intersect a protected literal, compilation rejects rather than selecting a convenient winner.\nThat overlap rule is deliberately conservative and can reject a policy even before a conflicting occurrence is encountered. A more context-sensitive exception would require a different explicit contract. The filesystem admission checks similarly reject unsafe inputs before transformation. None of those checks expands the engine into automatic detection.\n\n### Show / navigate\n\ncompile_policy() L129–164, then _check_overlap() L110–126. Explain required arrays and one overlap decision.\n\n- [`src/anonymization_trial/policy.py::compile_policy` — L129–L164](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/policy.py#L129-L164)\n- [`src/anonymization_trial/policy.py::_check_overlap` — L110–L126](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/policy.py#L110-L126)\n- [`src/anonymization_trial/pipeline.py::_preflight` — L80–L116](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/pipeline.py#L80-L116)\n\n**Exact source excerpt (context shown in the pinned link):**\n\n```python\ndef compile_policy(payload: object) -> Policy:\n    \"\"\"Validate a policy payload strictly and compile its matcher.\"\"\"\n    _require(isinstance(payload, dict), AnonErrorCode.INVALID_POLICY, \"policy is not an object\")\n    version = payload.get(\"version\")\n```\n\n**Visible qualification:** A valid policy is not proof that its identity assignments are true.\n\n**Evidence IDs:** E08\n\nAuthoring only: no application/test/Docker, local pitchdeck compiler, owning SVG validator, analytics/create-figure, recording or Live Evidence execution. Follow the stated assessment permission boundary.\n"
+      "notes": "PREPARED REHEARSAL GUIDE \u2014 not a record of an interview.\nPresentation source commit: ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78. Frozen implementation: 0375af56bf681e9441edcb7433cfe58951db77b2.\nTIME 07:45\u201309:00; 1.25 minute(s); timing kind: prepared.\nLegacy sections: 01-brief, 03-semantics. Primary question IDs: Q05, Q11, Q33.\n## r08-policy \u2014 The policy supplies authority\u2014not a guess\n\n**Time:** 07:45\u201309:00. **Block:** How the Solution Works. **Primary questions:** Q05, Q11, Q33\n\n### Say\n\nFor the running example, the policy explicitly states that Alice and A.L belong to one subject. The compiler can validate that declaration and reject contradictory match domains; it cannot determine whether the author has correctly identified the people.\nIt also requires both sensitive_values and protected_values. A missing sensitive list must not silently become a successful no-op. For protected text such as KEEP, the preservation promise is unconditional. When a sensitive literal equals, contains, or can partially intersect a protected literal, compilation rejects rather than selecting a convenient winner.\nThat overlap rule is deliberately conservative and can reject a policy even before a conflicting occurrence is encountered. A more context-sensitive exception would require a different explicit contract. The filesystem admission checks similarly reject unsafe inputs before transformation. None of those checks expands the engine into automatic detection.\n\n### Show / navigate\n\ncompile_policy() L129\u2013164, then _check_overlap() L110\u2013126. Explain required arrays and one overlap decision.\n\n- [`src/anonymization_trial/policy.py::compile_policy` \u2014 L129\u2013L164](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/policy.py#L129-L164)\n- [`src/anonymization_trial/policy.py::_check_overlap` \u2014 L110\u2013L126](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/policy.py#L110-L126)\n- [`src/anonymization_trial/pipeline.py::_preflight` \u2014 L80\u2013L116](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/pipeline.py#L80-L116)\n\n**Exact source excerpt (context shown in the pinned link):**\n\n```python\ndef compile_policy(payload: object) -> Policy:\n    \"\"\"Validate a policy payload strictly and compile its matcher.\"\"\"\n    _require(isinstance(payload, dict), AnonErrorCode.INVALID_POLICY, \"policy is not an object\")\n    version = payload.get(\"version\")\n```\n\n**Visible qualification:** A valid policy is not proof that its identity assignments are true.\n\n**Evidence IDs:** E08\n\nAuthoring only: no application/test/Docker, local pitchdeck compiler, owning SVG validator, analytics/create-figure, recording or Live Evidence execution. Follow the stated assessment permission boundary.\n"
     },
     {
       "id": "r09-identity",
@@ -1596,7 +1596,7 @@
           "align": "left"
         },
         {
-          "id": "lead",
+          "id": "message",
           "type": "text",
           "x": 0.065,
           "y": 0.14,
@@ -1624,7 +1624,7 @@
           "y": 0.735,
           "w": 0.87,
           "h": 0.075,
-          "text": "Source: policy.py:38–40",
+          "text": "Source: policy.py:38\u201340",
           "size_pt": 17.5,
           "bold": false,
           "color": "#a99787",
@@ -1664,7 +1664,7 @@
           "transform_class": "generalization"
         },
         {
-          "path": "element:lead",
+          "path": "element:message",
           "kind": "claim_paraphrase",
           "claim_id": "identity",
           "transform_class": "generalization"
@@ -1682,7 +1682,7 @@
       "transition": "none",
       "reveal": "none",
       "hidden": false,
-      "notes": "PREPARED REHEARSAL GUIDE — not a record of an interview.\nPresentation source commit: ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78. Frozen implementation: 0375af56bf681e9441edcb7433cfe58951db77b2.\nTIME 09:00–10:45; 1.75 minute(s); timing kind: prepared.\nLegacy sections: 03-semantics. Primary question IDs: Q07, Q08, Q09, Q31, Q32.\n## r09-identity — Aliases converge because identity is declared\n\n**Time:** 09:00–10:45. **Block:** How the Solution Works. **Primary questions:** Q07, Q08, Q09, Q31, Q32\n\n### Say\n\nAlice and A.L converge because Rule.identity returns the same pair: name and person-a. Bob belongs to a different canonical identity and receives a distinct replacement within that type. A name and an email for one subject need not display the same token; the type is part of the derivation.\nWhen subject_id is absent, rule_id is the fallback. Renaming that fallback can therefore change the identity input. policy_version is schema version one, not an incrementing revision counter for every policy edit. The full policy digest is recorded for provenance, not used as the pseudonym seed.\nThe allocator sorts the identity set, detects per-type collisions, and changes the salt or rejects exhaustion. This is deterministic for the same plan. Adding distinct identities can alter collision assignments, so arbitrary policy growth is not promised to preserve all old values. The public salt resolves allocation; it is not a secret. These distinctions matter before we propose distributing work over independent workers.\n\n### Show / navigate\n\nRule.identity L38–40 → _digest L41–43 → build_replacements L62–104. Code navigation, not a breakpoint.\n\n- [`src/anonymization_trial/policy.py::Rule.identity` — L38–L40](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/policy.py#L38-L40)\n- [`src/anonymization_trial/pseudonyms.py::_digest` — L41–L43](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/pseudonyms.py#L41-L43)\n- [`src/anonymization_trial/pseudonyms.py::build_replacements` — L62–L104](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/pseudonyms.py#L62-L104)\n\n**Exact source excerpt (context shown in the pinned link):**\n\n```python\n    @property\n    def identity(self) -> CanonicalIdentity:\n        return (self.data_type, self.subject_id or self.rule_id)\n```\n\n**Visible qualification:** Public unkeyed namespace; stable allocation assumes the same identity set.\n\n**Evidence IDs:** E08\n\nAuthoring only: no application/test/Docker, local pitchdeck compiler, owning SVG validator, analytics/create-figure, recording or Live Evidence execution. Follow the stated assessment permission boundary.\n"
+      "notes": "PREPARED REHEARSAL GUIDE \u2014 not a record of an interview.\nPresentation source commit: ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78. Frozen implementation: 0375af56bf681e9441edcb7433cfe58951db77b2.\nTIME 09:00\u201310:45; 1.75 minute(s); timing kind: prepared.\nLegacy sections: 03-semantics. Primary question IDs: Q07, Q08, Q09, Q31, Q32.\n## r09-identity \u2014 Aliases converge because identity is declared\n\n**Time:** 09:00\u201310:45. **Block:** How the Solution Works. **Primary questions:** Q07, Q08, Q09, Q31, Q32\n\n### Say\n\nAlice and A.L converge because Rule.identity returns the same pair: name and person-a. Bob belongs to a different canonical identity and receives a distinct replacement within that type. A name and an email for one subject need not display the same token; the type is part of the derivation.\nWhen subject_id is absent, rule_id is the fallback. Renaming that fallback can therefore change the identity input. policy_version is schema version one, not an incrementing revision counter for every policy edit. The full policy digest is recorded for provenance, not used as the pseudonym seed.\nThe allocator sorts the identity set, detects per-type collisions, and changes the salt or rejects exhaustion. This is deterministic for the same plan. Adding distinct identities can alter collision assignments, so arbitrary policy growth is not promised to preserve all old values. The public salt resolves allocation; it is not a secret. These distinctions matter before we propose distributing work over independent workers.\n\n### Show / navigate\n\nRule.identity L38\u201340 \u2192 _digest L41\u201343 \u2192 build_replacements L62\u2013104. Code navigation, not a breakpoint.\n\n- [`src/anonymization_trial/policy.py::Rule.identity` \u2014 L38\u2013L40](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/policy.py#L38-L40)\n- [`src/anonymization_trial/pseudonyms.py::_digest` \u2014 L41\u2013L43](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/pseudonyms.py#L41-L43)\n- [`src/anonymization_trial/pseudonyms.py::build_replacements` \u2014 L62\u2013L104](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/pseudonyms.py#L62-L104)\n\n**Exact source excerpt (context shown in the pinned link):**\n\n```python\n    @property\n    def identity(self) -> CanonicalIdentity:\n        return (self.data_type, self.subject_id or self.rule_id)\n```\n\n**Visible qualification:** Public unkeyed namespace; stable allocation assumes the same identity set.\n\n**Evidence IDs:** E08\n\nAuthoring only: no application/test/Docker, local pitchdeck compiler, owning SVG validator, analytics/create-figure, recording or Live Evidence execution. Follow the stated assessment permission boundary.\n"
     },
     {
       "id": "r10-spans",
@@ -1751,7 +1751,7 @@
           "align": "left"
         },
         {
-          "id": "lead",
+          "id": "message",
           "type": "text",
           "x": 0.065,
           "y": 0.14,
@@ -1779,7 +1779,7 @@
           "y": 0.735,
           "w": 0.87,
           "h": 0.075,
-          "text": "Source: matcher.py:120–131",
+          "text": "Source: matcher.py:120\u2013131",
           "size_pt": 17.5,
           "bold": false,
           "color": "#a99787",
@@ -1819,7 +1819,7 @@
           "transform_class": "generalization"
         },
         {
-          "path": "element:lead",
+          "path": "element:message",
           "kind": "claim_paraphrase",
           "claim_id": "spans",
           "transform_class": "generalization"
@@ -1837,7 +1837,7 @@
       "transition": "none",
       "reveal": "none",
       "hidden": false,
-      "notes": "PREPARED REHEARSAL GUIDE — not a record of an interview.\nPresentation source commit: ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78. Frozen implementation: 0375af56bf681e9441edcb7433cfe58951db77b2.\nTIME 10:45–12:15; 1.5 minute(s); timing kind: prepared.\nLegacy sections: 03-semantics. Primary question IDs: Q10, Q41.\n## r10-spans — Select original spans; emit only once\n\n**Time:** 10:45–12:15. **Block:** How the Solution Works. **Primary questions:** Q10, Q41\n\n### Say\n\nUse the same original sentence: Alice and A.L met Bob, followed by KEEP. The matcher collects spans over that original decoded text, chooses non-overlapping spans, and emits each replacement once.\nThe precedence is earliest start, then the longest match at that start, then stable rule ID. It is not a rule that the globally longest name always wins. The selected replacement is appended to a separate output list. It is never fed back into a chain of text.replace calls that could rewrite newly generated text.\nThis mechanism is separate from the final residual check. A generated token that contains a sensitive literal can still cause refusal; no-cascade is not a promise to publish every possible policy. Case-sensitive matching uses exact code points, and accepted insensitive rules use ASCII lowering without Unicode normalization. Deeper Unicode distinctions stay in the appendix rather than changing the matching promise on this slide.\n\n### Show / navigate\n\nMatcher.replace L120–131; point to source slices and replacement append. _select L134–145 defines precedence.\n\n- [`src/anonymization_trial/matcher.py::Matcher.replace` — L120–L131](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/matcher.py#L120-L131)\n- [`src/anonymization_trial/matcher.py::_select` — L134–L145](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/matcher.py#L134-L145)\n\n**Exact source excerpt (context shown in the pinned link):**\n\n```python\n        cursor = 0\n        for span in spans:\n            out.append(text[cursor:span.start])\n            out.append(span.replacement)\n            cursor = span.end\n        out.append(text[cursor:])\n        return \"\".join(out), len(spans)\n```\n\n**Visible qualification:** No cascade does not guarantee every policy can publish; residuals may reject.\n\n**Evidence IDs:** E08\n\nAuthoring only: no application/test/Docker, local pitchdeck compiler, owning SVG validator, analytics/create-figure, recording or Live Evidence execution. Follow the stated assessment permission boundary.\n"
+      "notes": "PREPARED REHEARSAL GUIDE \u2014 not a record of an interview.\nPresentation source commit: ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78. Frozen implementation: 0375af56bf681e9441edcb7433cfe58951db77b2.\nTIME 10:45\u201312:15; 1.5 minute(s); timing kind: prepared.\nLegacy sections: 03-semantics. Primary question IDs: Q10, Q41.\n## r10-spans \u2014 Select original spans; emit only once\n\n**Time:** 10:45\u201312:15. **Block:** How the Solution Works. **Primary questions:** Q10, Q41\n\n### Say\n\nUse the same original sentence: Alice and A.L met Bob, followed by KEEP. The matcher collects spans over that original decoded text, chooses non-overlapping spans, and emits each replacement once.\nThe precedence is earliest start, then the longest match at that start, then stable rule ID. It is not a rule that the globally longest name always wins. The selected replacement is appended to a separate output list. It is never fed back into a chain of text.replace calls that could rewrite newly generated text.\nThis mechanism is separate from the final residual check. A generated token that contains a sensitive literal can still cause refusal; no-cascade is not a promise to publish every possible policy. Case-sensitive matching uses exact code points, and accepted insensitive rules use ASCII lowering without Unicode normalization. Deeper Unicode distinctions stay in the appendix rather than changing the matching promise on this slide.\n\n### Show / navigate\n\nMatcher.replace L120\u2013131; point to source slices and replacement append. _select L134\u2013145 defines precedence.\n\n- [`src/anonymization_trial/matcher.py::Matcher.replace` \u2014 L120\u2013L131](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/matcher.py#L120-L131)\n- [`src/anonymization_trial/matcher.py::_select` \u2014 L134\u2013L145](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/matcher.py#L134-L145)\n\n**Exact source excerpt (context shown in the pinned link):**\n\n```python\n        cursor = 0\n        for span in spans:\n            out.append(text[cursor:span.start])\n            out.append(span.replacement)\n            cursor = span.end\n        out.append(text[cursor:])\n        return \"\".join(out), len(spans)\n```\n\n**Visible qualification:** No cascade does not guarantee every policy can publish; residuals may reject.\n\n**Evidence IDs:** E08\n\nAuthoring only: no application/test/Docker, local pitchdeck compiler, owning SVG validator, analytics/create-figure, recording or Live Evidence execution. Follow the stated assessment permission boundary.\n"
     },
     {
       "id": "r11-formats",
@@ -1845,7 +1845,7 @@
       "role": "detail",
       "layout": "freeform",
       "visibility": "public",
-      "title": "Preserve logical meaning—not identical serialization",
+      "title": "Preserve logical meaning\u2014not identical serialization",
       "message": "Adapters own the supported format boundaries.",
       "body": [],
       "source_refs": [
@@ -1897,14 +1897,14 @@
           "y": 0.022,
           "w": 0.885,
           "h": 0.07,
-          "text": "Preserve logical meaning—not identical serialization",
+          "text": "Preserve logical meaning\u2014not identical serialization",
           "size_pt": 29,
           "bold": true,
           "color": "#f2eadc",
           "align": "left"
         },
         {
-          "id": "lead",
+          "id": "message",
           "type": "text",
           "x": 0.065,
           "y": 0.14,
@@ -1962,7 +1962,7 @@
           "y": 0.735,
           "w": 0.87,
           "h": 0.075,
-          "text": "Source: formats.py:39–49",
+          "text": "Source: formats.py:39\u201349",
           "size_pt": 17.5,
           "bold": false,
           "color": "#a99787",
@@ -2002,7 +2002,7 @@
           "transform_class": "generalization"
         },
         {
-          "path": "element:lead",
+          "path": "element:message",
           "kind": "claim_paraphrase",
           "claim_id": "formats",
           "transform_class": "generalization"
@@ -2038,7 +2038,7 @@
       "transition": "none",
       "reveal": "none",
       "hidden": false,
-      "notes": "PREPARED REHEARSAL GUIDE — not a record of an interview.\nPresentation source commit: ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78. Frozen implementation: 0375af56bf681e9441edcb7433cfe58951db77b2.\nTIME 12:15–13:30; 1.25 minute(s); timing kind: prepared.\nLegacy sections: 03-semantics. Primary question IDs: Q38, Q39, Q40.\n## r11-formats — Preserve logical meaning—not identical serialization\n\n**Time:** 12:15–13:30. **Block:** How the Solution Works. **Primary questions:** Q38, Q39, Q40\n\n### Say\n\nEach format needs a definition of preservation. CSV headers and ordered cells are logical data; quoting may be normalized. JSON keys and structure are preserved while string values are transformed; formatting and original numeric spelling are not the promise. Text is decoded strictly as UTF-8, and the adapter preserves its BOM handling.\nSQLite is not edited as a bag of bytes. The adapter works on a snapshot, updates supported text cells, and checks relationships, counts and integrity. The later verifier compares logical schema and row values. Unsupported constructs are rejected rather than given a best-effort rewrite.\nThat distinction also prevents an overclaim about generated columns: the writer skips them, while the oracle still checks the resulting values. For all four formats, the running example is the same—change the declared name value, preserve its association and KEEP, and refuse when the supported contract cannot be maintained.\n\n### Show / navigate\n\ntransform_file L39–49 dispatch; _verify_sqlite_locations L64–126 for logical rather than physical preservation.\n\n- [`src/anonymization_trial/formats.py::transform_file` — L39–L49](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/formats.py#L39-L49)\n- [`src/anonymization_trial/verification.py::_verify_sqlite_locations` — L64–L126](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/verification.py#L64-L126)\n\n**Exact source excerpt (context shown in the pinned link):**\n\n```python\ndef transform_file(source: Path, destination: Path, policy: Policy) -> tuple[int, int]:\n    destination.parent.mkdir(parents=True, exist_ok=True)\n    if source.suffix == \".csv\":\n        return _transform_csv(source, destination, policy)\n```\n\n**Visible qualification:** Bounded subsets; JSON formatting, CSV quoting and SQLite pages need not match bytes.\n\n**Evidence IDs:** E08\n\nAuthoring only: no application/test/Docker, local pitchdeck compiler, owning SVG validator, analytics/create-figure, recording or Live Evidence execution. Follow the stated assessment permission boundary.\n"
+      "notes": "PREPARED REHEARSAL GUIDE \u2014 not a record of an interview.\nPresentation source commit: ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78. Frozen implementation: 0375af56bf681e9441edcb7433cfe58951db77b2.\nTIME 12:15\u201313:30; 1.25 minute(s); timing kind: prepared.\nLegacy sections: 03-semantics. Primary question IDs: Q38, Q39, Q40.\n## r11-formats \u2014 Preserve logical meaning\u2014not identical serialization\n\n**Time:** 12:15\u201313:30. **Block:** How the Solution Works. **Primary questions:** Q38, Q39, Q40\n\n### Say\n\nEach format needs a definition of preservation. CSV headers and ordered cells are logical data; quoting may be normalized. JSON keys and structure are preserved while string values are transformed; formatting and original numeric spelling are not the promise. Text is decoded strictly as UTF-8, and the adapter preserves its BOM handling.\nSQLite is not edited as a bag of bytes. The adapter works on a snapshot, updates supported text cells, and checks relationships, counts and integrity. The later verifier compares logical schema and row values. Unsupported constructs are rejected rather than given a best-effort rewrite.\nThat distinction also prevents an overclaim about generated columns: the writer skips them, while the oracle still checks the resulting values. For all four formats, the running example is the same\u2014change the declared name value, preserve its association and KEEP, and refuse when the supported contract cannot be maintained.\n\n### Show / navigate\n\ntransform_file L39\u201349 dispatch; _verify_sqlite_locations L64\u2013126 for logical rather than physical preservation.\n\n- [`src/anonymization_trial/formats.py::transform_file` \u2014 L39\u2013L49](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/formats.py#L39-L49)\n- [`src/anonymization_trial/verification.py::_verify_sqlite_locations` \u2014 L64\u2013L126](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/verification.py#L64-L126)\n\n**Exact source excerpt (context shown in the pinned link):**\n\n```python\ndef transform_file(source: Path, destination: Path, policy: Policy) -> tuple[int, int]:\n    destination.parent.mkdir(parents=True, exist_ok=True)\n    if source.suffix == \".csv\":\n        return _transform_csv(source, destination, policy)\n```\n\n**Visible qualification:** Bounded subsets; JSON formatting, CSV quoting and SQLite pages need not match bytes.\n\n**Evidence IDs:** E08\n\nAuthoring only: no application/test/Docker, local pitchdeck compiler, owning SVG validator, analytics/create-figure, recording or Live Evidence execution. Follow the stated assessment permission boundary.\n"
     },
     {
       "id": "r12-typed-locations",
@@ -2117,7 +2117,7 @@
           "align": "left"
         },
         {
-          "id": "lead",
+          "id": "message",
           "type": "text",
           "x": 0.065,
           "y": 0.14,
@@ -2145,7 +2145,7 @@
           "y": 0.735,
           "w": 0.87,
           "h": 0.075,
-          "text": "Source: verification.py:129–143",
+          "text": "Source: verification.py:129\u2013143",
           "size_pt": 17.5,
           "bold": false,
           "color": "#a99787",
@@ -2185,7 +2185,7 @@
           "transform_class": "generalization"
         },
         {
-          "path": "element:lead",
+          "path": "element:message",
           "kind": "claim_paraphrase",
           "claim_id": "typed-location",
           "transform_class": "generalization"
@@ -2203,7 +2203,7 @@
       "transition": "none",
       "reveal": "none",
       "hidden": false,
-      "notes": "PREPARED REHEARSAL GUIDE — not a record of an interview.\nPresentation source commit: ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78. Frozen implementation: 0375af56bf681e9441edcb7433cfe58951db77b2.\nTIME 13:30–15:00; 1.5 minute(s); timing kind: prepared.\nLegacy sections: 03-semantics. Primary question IDs: Q12.\n## r12-typed-locations — A correct value on the wrong row is still wrong\n\n**Time:** 13:30–15:00. **Block:** How the Solution Works. **Primary questions:** Q12\n\n### Say\n\nRemoving Alice and Bob is not enough. Swap their valid pseudonyms between rows and the names still disappear, counts still match, and the files still parse. The output now associates the wrong person with each record.\nThe verifier reconstructs expected values at corresponding locations. It compares CSV rows and cells, JSON nodes and list positions, text content, and SQLite rows with logical schema checks. It also distinguishes types. Python considers True equal to 1 and 1 equal to 1.0; the preservation contract cannot accept those substitutions automatically.\nThe exact type check is small, but the test must construct the mutation correctly. The SQLite type regression avoids affinity coercing the real value back to an integer before the checker sees it. That is useful evidence about the oracle, not just a test name. Rereading catches output faults; it does not remove common-mode defects in the shared matcher and replacement allocator. I’ll defend that tradeoff explicitly in the prepared question block.\n\n### Show / navigate\n\nShow _typed_equal L129–143 and one corresponding location comparison. Optional appendix: the real mutation test, not a new test run.\n\n- [`src/anonymization_trial/verification.py::_typed_equal` — L129–L143](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/verification.py#L129-L143)\n- [`src/anonymization_trial/verification.py::_verify_locations` — L151–L184](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/verification.py#L151-L184)\n- [`src/anonymization_trial/verification.py::_verify_sqlite_locations` — L64–L126](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/verification.py#L64-L126)\n- [`security/tests/test_typed_scalar_verification.py::test_json_bool_number_and_sqlite_integer_real_mutations_rejected` — L21–L48](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/security/tests/test_typed_scalar_verification.py#L21-L48)\n\n**Exact source excerpt (context shown in the pinned link):**\n\n```python\n    if type(a) is not type(b):\n        return False\n    if isinstance(a, dict):\n        return a.keys() == b.keys() and all(_typed_equal(a[k], b[k]) for k in a)\n```\n\n**Visible qualification:** Independent reread / re-derivation; replacement primitives remain shared.\n\n**Evidence IDs:** E06, E08\n\nAuthoring only: no application/test/Docker, local pitchdeck compiler, owning SVG validator, analytics/create-figure, recording or Live Evidence execution. Follow the stated assessment permission boundary.\n"
+      "notes": "PREPARED REHEARSAL GUIDE \u2014 not a record of an interview.\nPresentation source commit: ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78. Frozen implementation: 0375af56bf681e9441edcb7433cfe58951db77b2.\nTIME 13:30\u201315:00; 1.5 minute(s); timing kind: prepared.\nLegacy sections: 03-semantics. Primary question IDs: Q12.\n## r12-typed-locations \u2014 A correct value on the wrong row is still wrong\n\n**Time:** 13:30\u201315:00. **Block:** How the Solution Works. **Primary questions:** Q12\n\n### Say\n\nRemoving Alice and Bob is not enough. Swap their valid pseudonyms between rows and the names still disappear, counts still match, and the files still parse. The output now associates the wrong person with each record.\nThe verifier reconstructs expected values at corresponding locations. It compares CSV rows and cells, JSON nodes and list positions, text content, and SQLite rows with logical schema checks. It also distinguishes types. Python considers True equal to 1 and 1 equal to 1.0; the preservation contract cannot accept those substitutions automatically.\nThe exact type check is small, but the test must construct the mutation correctly. The SQLite type regression avoids affinity coercing the real value back to an integer before the checker sees it. That is useful evidence about the oracle, not just a test name. Rereading catches output faults; it does not remove common-mode defects in the shared matcher and replacement allocator. I\u2019ll defend that tradeoff explicitly in the prepared question block.\n\n### Show / navigate\n\nShow _typed_equal L129\u2013143 and one corresponding location comparison. Optional appendix: the real mutation test, not a new test run.\n\n- [`src/anonymization_trial/verification.py::_typed_equal` \u2014 L129\u2013L143](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/verification.py#L129-L143)\n- [`src/anonymization_trial/verification.py::_verify_locations` \u2014 L151\u2013L184](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/verification.py#L151-L184)\n- [`src/anonymization_trial/verification.py::_verify_sqlite_locations` \u2014 L64\u2013L126](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/verification.py#L64-L126)\n- [`security/tests/test_typed_scalar_verification.py::test_json_bool_number_and_sqlite_integer_real_mutations_rejected` \u2014 L21\u2013L48](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/security/tests/test_typed_scalar_verification.py#L21-L48)\n\n**Exact source excerpt (context shown in the pinned link):**\n\n```python\n    if type(a) is not type(b):\n        return False\n    if isinstance(a, dict):\n        return a.keys() == b.keys() and all(_typed_equal(a[k], b[k]) for k in a)\n```\n\n**Visible qualification:** Independent reread / re-derivation; replacement primitives remain shared.\n\n**Evidence IDs:** E06, E08\n\nAuthoring only: no application/test/Docker, local pitchdeck compiler, owning SVG validator, analytics/create-figure, recording or Live Evidence execution. Follow the stated assessment permission boundary.\n"
     },
     {
       "id": "r13-publication",
@@ -2211,7 +2211,7 @@
       "role": "detail",
       "layout": "freeform",
       "visibility": "public",
-      "title": "The marker—not the directory—authorizes use",
+      "title": "The marker\u2014not the directory\u2014authorizes use",
       "message": "Write the complete report, then rename it last.",
       "body": [],
       "source_refs": [
@@ -2265,14 +2265,14 @@
           "y": 0.022,
           "w": 0.885,
           "h": 0.07,
-          "text": "The marker—not the directory—authorizes use",
+          "text": "The marker\u2014not the directory\u2014authorizes use",
           "size_pt": 29,
           "bold": true,
           "color": "#f2eadc",
           "align": "left"
         },
         {
-          "id": "lead",
+          "id": "message",
           "type": "text",
           "x": 0.065,
           "y": 0.14,
@@ -2300,7 +2300,7 @@
           "y": 0.735,
           "w": 0.87,
           "h": 0.075,
-          "text": "Source: pipeline.py:166–211",
+          "text": "Source: pipeline.py:166\u2013211",
           "size_pt": 17.5,
           "bold": false,
           "color": "#a99787",
@@ -2340,7 +2340,7 @@
           "transform_class": "generalization"
         },
         {
-          "path": "element:lead",
+          "path": "element:message",
           "kind": "claim_paraphrase",
           "claim_id": "publication",
           "transform_class": "generalization"
@@ -2358,7 +2358,7 @@
       "transition": "none",
       "reveal": "none",
       "hidden": false,
-      "notes": "PREPARED REHEARSAL GUIDE — not a record of an interview.\nPresentation source commit: ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78. Frozen implementation: 0375af56bf681e9441edcb7433cfe58951db77b2.\nTIME 15:00–16:30; 1.5 minute(s); timing kind: prepared.\nLegacy sections: 04-reliability. Primary question IDs: Q13, Q14, Q37.\n## r13-publication — The marker—not the directory—authorizes use\n\n**Time:** 15:00–16:30. **Block:** How the Solution Works. **Primary questions:** Q13, Q14, Q37\n\n### Say\n\nPublication begins by invalidating an old readiness marker before changing the corpus. It compares the staged digest, moves the staged corpus, writes the report through a temporary file, and renames report.json last.\nThe report writer advances by the number of bytes os.write actually returns. It completes partial progress and rejects zero progress before a new marker is committed. Sync operations support the intended ordering; they do not establish that every device and power-loss sequence has been tested.\nThis is a readiness protocol, not one atomic transaction over every file. Corpus bytes can exist without a marker after a failure, and a preflight rejection can leave an earlier valid release alone. Once publication begins there is no unconditional rollback promise. The pipeline also computes the seal after verification: verification_sha256 is not a separately signed verifier receipt. A consumer that ignores the marker and trusted digest reference is outside the intended usage.\n\n### Show / navigate\n\nWalk _publish L166–211 from marker removal to final rename; do not run fault injection during the talk.\n\n- [`src/anonymization_trial/pipeline.py::_publish` — L166–L211](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/pipeline.py#L166-L211)\n- [`src/anonymization_trial/pipeline.py::run_pipeline` — L214–L258](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/pipeline.py#L214-L258)\n\n**Exact source excerpt from `_publish`:**\n\n```python\n        remaining = memoryview(data)\n        while remaining:\n            written = os.write(fd, remaining)\n            if written <= 0:\n                raise OSError(\"report write made no progress\")\n            remaining = remaining[written:]\n        os.fsync(fd)\n```\n\n**Visible qualification:** Report-last is not full rollback, a signed attestation, or exhaustive crash proof.\n\n**Evidence IDs:** E08\n\nAuthoring only: no application/test/Docker, local pitchdeck compiler, owning SVG validator, analytics/create-figure, recording or Live Evidence execution. Follow the stated assessment permission boundary.\n"
+      "notes": "PREPARED REHEARSAL GUIDE \u2014 not a record of an interview.\nPresentation source commit: ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78. Frozen implementation: 0375af56bf681e9441edcb7433cfe58951db77b2.\nTIME 15:00\u201316:30; 1.5 minute(s); timing kind: prepared.\nLegacy sections: 04-reliability. Primary question IDs: Q13, Q14, Q37.\n## r13-publication \u2014 The marker\u2014not the directory\u2014authorizes use\n\n**Time:** 15:00\u201316:30. **Block:** How the Solution Works. **Primary questions:** Q13, Q14, Q37\n\n### Say\n\nPublication begins by invalidating an old readiness marker before changing the corpus. It compares the staged digest, moves the staged corpus, writes the report through a temporary file, and renames report.json last.\nThe report writer advances by the number of bytes os.write actually returns. It completes partial progress and rejects zero progress before a new marker is committed. Sync operations support the intended ordering; they do not establish that every device and power-loss sequence has been tested.\nThis is a readiness protocol, not one atomic transaction over every file. Corpus bytes can exist without a marker after a failure, and a preflight rejection can leave an earlier valid release alone. Once publication begins there is no unconditional rollback promise. The pipeline also computes the seal after verification: verification_sha256 is not a separately signed verifier receipt. A consumer that ignores the marker and trusted digest reference is outside the intended usage.\n\n### Show / navigate\n\nWalk _publish L166\u2013211 from marker removal to final rename; do not run fault injection during the talk.\n\n- [`src/anonymization_trial/pipeline.py::_publish` \u2014 L166\u2013L211](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/pipeline.py#L166-L211)\n- [`src/anonymization_trial/pipeline.py::run_pipeline` \u2014 L214\u2013L258](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/pipeline.py#L214-L258)\n\n**Exact source excerpt from `_publish`:**\n\n```python\n        remaining = memoryview(data)\n        while remaining:\n            written = os.write(fd, remaining)\n            if written <= 0:\n                raise OSError(\"report write made no progress\")\n            remaining = remaining[written:]\n        os.fsync(fd)\n```\n\n**Visible qualification:** Report-last is not full rollback, a signed attestation, or exhaustive crash proof.\n\n**Evidence IDs:** E08\n\nAuthoring only: no application/test/Docker, local pitchdeck compiler, owning SVG validator, analytics/create-figure, recording or Live Evidence execution. Follow the stated assessment permission boundary.\n"
     },
     {
       "id": "r14-cloud",
@@ -2422,7 +2422,7 @@
           "align": "left"
         },
         {
-          "id": "lead",
+          "id": "message",
           "type": "text",
           "x": 0.065,
           "y": 0.14,
@@ -2450,7 +2450,7 @@
           "y": 0.735,
           "w": 0.87,
           "h": 0.075,
-          "text": "Source: pseudonyms.py:62–104",
+          "text": "Source: pseudonyms.py:62\u2013104",
           "size_pt": 17.5,
           "bold": false,
           "color": "#a99787",
@@ -2490,7 +2490,7 @@
           "transform_class": "generalization"
         },
         {
-          "path": "element:lead",
+          "path": "element:message",
           "kind": "claim_paraphrase",
           "claim_id": "cloud",
           "transform_class": "generalization"
@@ -2508,7 +2508,7 @@
       "transition": "none",
       "reveal": "none",
       "hidden": false,
-      "notes": "PREPARED REHEARSAL GUIDE — not a record of an interview.\nPresentation source commit: ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78. Frozen implementation: 0375af56bf681e9441edcb7433cfe58951db77b2.\nTIME 16:30–18:00; 1.5 minute(s); timing kind: prepared.\nLegacy sections: 06-production. Primary question IDs: Q24, Q25, Q27.\n## r14-cloud — Distribute the work; retain one corpus decision\n\n**Time:** 16:30–18:00. **Block:** How the Solution Works. **Primary questions:** Q24, Q25, Q27\n\n### Say\n\nThe assignment required a terabyte and petabyte design; it is not Extra Credit. The worked proposal uses S3 boundaries for intake, work, release and quarantine; queue-driven dispatch; and a bounded Fargate or Batch worker pool.\nWorkers may finish at different times. Their individual success must not expose a partial corpus as a finished release. The proposed coordinator waits for verification of the expected object set, writes an immutable manifest, then switches an active pointer. Consumer permissions and the pointer protocol matter; objects are not magically invisible because the diagram says staging.\nPartition boundaries must respect formats. CSV records can span newlines, and text needs safe encoding and match-overlap ownership. Ordinary JSON and SQLite are whole-document or snapshot work in the design. Every worker also needs the same versioned identity and collision plan. A common HMAC key alone does not coordinate allocations over different identity subsets. Deterministic content helps retries, but it is not an exactly-once distributed commit protocol.\n\n### Show / navigate\n\nPinned docs/production-architecture.md; connect local build_replacements to common-plan requirement. No Archify/React Flow/GSN integration claim.\n\n- [`src/anonymization_trial/pseudonyms.py::build_replacements` — L62–L104](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/pseudonyms.py#L62-L104)\n\n**Visible qualification:** PROPOSED cloud behavior. The local code does not implement this orchestration.\n\n**Evidence IDs:** E07, E08\n\nAuthoring only: no application/test/Docker, local pitchdeck compiler, owning SVG validator, analytics/create-figure, recording or Live Evidence execution. Follow the stated assessment permission boundary.\n"
+      "notes": "PREPARED REHEARSAL GUIDE \u2014 not a record of an interview.\nPresentation source commit: ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78. Frozen implementation: 0375af56bf681e9441edcb7433cfe58951db77b2.\nTIME 16:30\u201318:00; 1.5 minute(s); timing kind: prepared.\nLegacy sections: 06-production. Primary question IDs: Q24, Q25, Q27.\n## r14-cloud \u2014 Distribute the work; retain one corpus decision\n\n**Time:** 16:30\u201318:00. **Block:** How the Solution Works. **Primary questions:** Q24, Q25, Q27\n\n### Say\n\nThe assignment required a terabyte and petabyte design; it is not Extra Credit. The worked proposal uses S3 boundaries for intake, work, release and quarantine; queue-driven dispatch; and a bounded Fargate or Batch worker pool.\nWorkers may finish at different times. Their individual success must not expose a partial corpus as a finished release. The proposed coordinator waits for verification of the expected object set, writes an immutable manifest, then switches an active pointer. Consumer permissions and the pointer protocol matter; objects are not magically invisible because the diagram says staging.\nPartition boundaries must respect formats. CSV records can span newlines, and text needs safe encoding and match-overlap ownership. Ordinary JSON and SQLite are whole-document or snapshot work in the design. Every worker also needs the same versioned identity and collision plan. A common HMAC key alone does not coordinate allocations over different identity subsets. Deterministic content helps retries, but it is not an exactly-once distributed commit protocol.\n\n### Show / navigate\n\nPinned docs/production-architecture.md; connect local build_replacements to common-plan requirement. No Archify/React Flow/GSN integration claim.\n\n- [`src/anonymization_trial/pseudonyms.py::build_replacements` \u2014 L62\u2013L104](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/pseudonyms.py#L62-L104)\n\n**Visible qualification:** PROPOSED cloud behavior. The local code does not implement this orchestration.\n\n**Evidence IDs:** E07, E08\n\nAuthoring only: no application/test/Docker, local pitchdeck compiler, owning SVG validator, analytics/create-figure, recording or Live Evidence execution. Follow the stated assessment permission boundary.\n"
     },
     {
       "id": "r15-capacity",
@@ -2516,8 +2516,8 @@
       "role": "detail",
       "layout": "freeform",
       "visibility": "public",
-      "title": "The SLA is a scenario—not a benchmark",
-      "message": "200 workers × 20 MB/s is an assumed capacity model.",
+      "title": "The SLA is a scenario\u2014not a benchmark",
+      "message": "200 workers \u00d7 20 MB/s is an assumed capacity model.",
       "body": [],
       "source_refs": [
         {
@@ -2563,20 +2563,20 @@
           "y": 0.022,
           "w": 0.885,
           "h": 0.07,
-          "text": "The SLA is a scenario—not a benchmark",
+          "text": "The SLA is a scenario\u2014not a benchmark",
           "size_pt": 29,
           "bold": true,
           "color": "#f2eadc",
           "align": "left"
         },
         {
-          "id": "lead",
+          "id": "message",
           "type": "text",
           "x": 0.065,
           "y": 0.14,
           "w": 0.87,
           "h": 0.12,
-          "text": "200 workers × 20 MB/s is an assumed capacity model.",
+          "text": "200 workers \u00d7 20 MB/s is an assumed capacity model.",
           "size_pt": 23,
           "bold": false,
           "color": "#e2ac62",
@@ -2589,7 +2589,7 @@
           "y": 0.32,
           "w": 0.83,
           "h": 0.095,
-          "text": "1 TB: modeled 0.14 h · target ≤1 h",
+          "text": "1 TB: modeled 0.14 h \u00b7 target \u22641 h",
           "size_pt": 27,
           "bold": false,
           "color": "#ece2d3",
@@ -2602,7 +2602,7 @@
           "y": 0.44,
           "w": 0.83,
           "h": 0.095,
-          "text": "1 PB: modeled 141.67 h · target ≤7 days",
+          "text": "1 PB: modeled 141.67 h \u00b7 target \u22647 days",
           "size_pt": 27,
           "bold": false,
           "color": "#ece2d3",
@@ -2628,7 +2628,7 @@
           "y": 0.735,
           "w": 0.87,
           "h": 0.075,
-          "text": "Source: estimate_aws_cost.py:23–75",
+          "text": "Source: estimate_aws_cost.py:23\u201375",
           "size_pt": 17.5,
           "bold": false,
           "color": "#a99787",
@@ -2668,7 +2668,7 @@
           "transform_class": "generalization"
         },
         {
-          "path": "element:lead",
+          "path": "element:message",
           "kind": "claim_paraphrase",
           "claim_id": "capacity",
           "transform_class": "generalization"
@@ -2704,7 +2704,7 @@
       "transition": "none",
       "reveal": "none",
       "hidden": false,
-      "notes": "PREPARED REHEARSAL GUIDE — not a record of an interview.\nPresentation source commit: ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78. Frozen implementation: 0375af56bf681e9441edcb7433cfe58951db77b2.\nTIME 18:00–19:00; 1 minute(s); timing kind: prepared.\nLegacy sections: 06-production. Primary question IDs: paired lead-in/navigation only.\n## r15-capacity — The SLA is a scenario—not a benchmark\n\n**Time:** 18:00–19:00. **Block:** How the Solution Works. **Primary questions:** None; navigation or paired lead-in.\n\n### Say\n\nThe capacity arithmetic uses 200 workers, each assumed to sustain 20 million bytes per second. That gives four billion bytes per second of ideal transform capacity, before verification, retries and scheduling overhead.\nThe committed estimator includes its two-pass compute factor and retry fraction. Its modeled wall times are 0.14 hours for one TB and 141.67 hours for one PB at this pool. The design targets verified publication within one hour and seven days respectively. Those are design targets under workload assumptions, not observed service levels.\nThe first measurement exercise would replace the assumed throughput, file-size distribution, memory, stragglers and quota availability with representative data. The small recorded demo shown earlier is not the basis for claiming petabyte throughput. We keep the two evidence types visibly separate.\n\n### Show / navigate\n\ncosts/example-estimates.json and _one(); source formula is in the appendix.\n\n- [`scripts/estimate_aws_cost.py::_one` — L23–L75](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/scripts/estimate_aws_cost.py#L23-L75)\n\n**Committed modeled output:**\n\n| Scenario | Modeled wall hours | Design target |\n|---|---:|---|\n| 1 TB (10^12 bytes) | 0.14 | ≤1 hour |\n| 1 PB (10^15 bytes) | 141.67 | ≤7 days |\n\n**Visible qualification:** MODELED: 1 TB / 1 PB targets. No TB/PB execution was performed.\n\n**Evidence IDs:** E07\n\nAuthoring only: no application/test/Docker, local pitchdeck compiler, owning SVG validator, analytics/create-figure, recording or Live Evidence execution. Follow the stated assessment permission boundary.\n"
+      "notes": "PREPARED REHEARSAL GUIDE \u2014 not a record of an interview.\nPresentation source commit: ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78. Frozen implementation: 0375af56bf681e9441edcb7433cfe58951db77b2.\nTIME 18:00\u201319:00; 1 minute(s); timing kind: prepared.\nLegacy sections: 06-production. Primary question IDs: paired lead-in/navigation only.\n## r15-capacity \u2014 The SLA is a scenario\u2014not a benchmark\n\n**Time:** 18:00\u201319:00. **Block:** How the Solution Works. **Primary questions:** None; navigation or paired lead-in.\n\n### Say\n\nThe capacity arithmetic uses 200 workers, each assumed to sustain 20 million bytes per second. That gives four billion bytes per second of ideal transform capacity, before verification, retries and scheduling overhead.\nThe committed estimator includes its two-pass compute factor and retry fraction. Its modeled wall times are 0.14 hours for one TB and 141.67 hours for one PB at this pool. The design targets verified publication within one hour and seven days respectively. Those are design targets under workload assumptions, not observed service levels.\nThe first measurement exercise would replace the assumed throughput, file-size distribution, memory, stragglers and quota availability with representative data. The small recorded demo shown earlier is not the basis for claiming petabyte throughput. We keep the two evidence types visibly separate.\n\n### Show / navigate\n\ncosts/example-estimates.json and _one(); source formula is in the appendix.\n\n- [`scripts/estimate_aws_cost.py::_one` \u2014 L23\u2013L75](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/scripts/estimate_aws_cost.py#L23-L75)\n\n**Committed modeled output:**\n\n| Scenario | Modeled wall hours | Design target |\n|---|---:|---|\n| 1 TB (10^12 bytes) | 0.14 | \u22641 hour |\n| 1 PB (10^15 bytes) | 141.67 | \u22647 days |\n\n**Visible qualification:** MODELED: 1 TB / 1 PB targets. No TB/PB execution was performed.\n\n**Evidence IDs:** E07\n\nAuthoring only: no application/test/Docker, local pitchdeck compiler, owning SVG validator, analytics/create-figure, recording or Live Evidence execution. Follow the stated assessment permission boundary.\n"
     },
     {
       "id": "r16-cost",
@@ -2713,7 +2713,7 @@
       "layout": "freeform",
       "visibility": "public",
       "title": "Retention dominates this 1 PB cost scenario",
-      "message": "Compare components within a scenario—not across incomparable rows.",
+      "message": "Compare components within a scenario\u2014not across incomparable rows.",
       "body": [],
       "source_refs": [
         {
@@ -2773,13 +2773,13 @@
           "align": "left"
         },
         {
-          "id": "lead",
+          "id": "message",
           "type": "text",
           "x": 0.065,
           "y": 0.14,
           "w": 0.87,
           "h": 0.12,
-          "text": "Compare components within a scenario—not across incomparable rows.",
+          "text": "Compare components within a scenario\u2014not across incomparable rows.",
           "size_pt": 23,
           "bold": false,
           "color": "#e2ac62",
@@ -2801,7 +2801,7 @@
           "y": 0.735,
           "w": 0.87,
           "h": 0.075,
-          "text": "Source: estimate_aws_cost.py:23–75",
+          "text": "Source: estimate_aws_cost.py:23\u201375",
           "size_pt": 17.5,
           "bold": false,
           "color": "#a99787",
@@ -2841,7 +2841,7 @@
           "transform_class": "generalization"
         },
         {
-          "path": "element:lead",
+          "path": "element:message",
           "kind": "claim_paraphrase",
           "claim_id": "cost",
           "transform_class": "generalization"
@@ -2859,7 +2859,7 @@
       "transition": "none",
       "reveal": "none",
       "hidden": false,
-      "notes": "PREPARED REHEARSAL GUIDE — not a record of an interview.\nPresentation source commit: ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78. Frozen implementation: 0375af56bf681e9441edcb7433cfe58951db77b2.\nTIME 19:00–20:15; 1.25 minute(s); timing kind: prepared.\nLegacy sections: 06-production. Primary question IDs: Q47.\n## r16-cost — Retention dominates this 1 PB cost scenario\n\n**Time:** 19:00–20:15. **Block:** How the Solution Works. **Primary questions:** Q47\n\n### Say\n\nThe supplied analytics description saw eight component rows: four for one TB and four for one PB. A pooled histogram or mean would not answer a useful engineering question. This chart selects the one-PB scenario and compares its four components on a zero-based dollar axis.\nStorage is sixty-nine thousand dollars because the model retains three copies for one month at the stated first-tier rate. The committed total is $85,733.90; the one-TB total is $85.73. Individual displayed components are rounded, so summing them can differ by one cent from the unrounded total.\nObject count is a major sensitivity. The committed one-tenth-file-size case rises to $223,749.65 for one PB. Output expansion, transfer charges, key rental, log retention, discounts and a complete API operation trace are not all priced. The figure includes its actual rows, filter and reproduction spec. It was authored from the supplied model—not generated by a newly successful analytics or create-figure run.\n\n### Show / navigate\n\nOpen assets/figures/cost-components-1pb.spec.json; inspect _one and the normalized rows only if challenged.\n\n- [`scripts/estimate_aws_cost.py::_one` — L23–L75](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/scripts/estimate_aws_cost.py#L23-L75)\n- [`scripts/estimate_aws_cost.py::_sensitivity` — L78–L86](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/scripts/estimate_aws_cost.py#L78-L86)\n\n**Figure provenance:** [row data](sources/cost-rows.json), [spec](assets/figures/cost-components-1pb.spec.json), [create-figure metrics input](assets/figures/cost-components-1pb.metrics.json), [supplied describe](sources/analytics-describe.txt).\n\nThe optional local create-figure command in the spec has **NOT_RUN** status. Its interface comes from supplied guidance; it was not used to claim a rendered compiler result.\n\n**Visible qualification:** MODELED USD, price date 2026-09-04. Illustrative, not a billing quote.\n\n**Evidence IDs:** E07\n\nAuthoring only: no application/test/Docker, local pitchdeck compiler, owning SVG validator, analytics/create-figure, recording or Live Evidence execution. Follow the stated assessment permission boundary.\n"
+      "notes": "PREPARED REHEARSAL GUIDE \u2014 not a record of an interview.\nPresentation source commit: ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78. Frozen implementation: 0375af56bf681e9441edcb7433cfe58951db77b2.\nTIME 19:00\u201320:15; 1.25 minute(s); timing kind: prepared.\nLegacy sections: 06-production. Primary question IDs: Q47.\n## r16-cost \u2014 Retention dominates this 1 PB cost scenario\n\n**Time:** 19:00\u201320:15. **Block:** How the Solution Works. **Primary questions:** Q47\n\n### Say\n\nThe supplied analytics description saw eight component rows: four for one TB and four for one PB. A pooled histogram or mean would not answer a useful engineering question. This chart selects the one-PB scenario and compares its four components on a zero-based dollar axis.\nStorage is sixty-nine thousand dollars because the model retains three copies for one month at the stated first-tier rate. The committed total is $85,733.90; the one-TB total is $85.73. Individual displayed components are rounded, so summing them can differ by one cent from the unrounded total.\nObject count is a major sensitivity. The committed one-tenth-file-size case rises to $223,749.65 for one PB. Output expansion, transfer charges, key rental, log retention, discounts and a complete API operation trace are not all priced. The figure includes its actual rows, filter and reproduction spec. It was authored from the supplied model\u2014not generated by a newly successful analytics or create-figure run.\n\n### Show / navigate\n\nOpen assets/figures/cost-components-1pb.spec.json; inspect _one and the normalized rows only if challenged.\n\n- [`scripts/estimate_aws_cost.py::_one` \u2014 L23\u2013L75](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/scripts/estimate_aws_cost.py#L23-L75)\n- [`scripts/estimate_aws_cost.py::_sensitivity` \u2014 L78\u2013L86](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/scripts/estimate_aws_cost.py#L78-L86)\n\n**Figure provenance:** [row data](sources/cost-rows.json), [spec](assets/figures/cost-components-1pb.spec.json), [create-figure metrics input](assets/figures/cost-components-1pb.metrics.json), [supplied describe](sources/analytics-describe.txt).\n\nThe optional local create-figure command in the spec has **NOT_RUN** status. Its interface comes from supplied guidance; it was not used to claim a rendered compiler result.\n\n**Visible qualification:** MODELED USD, price date 2026-09-04. Illustrative, not a billing quote.\n\n**Evidence IDs:** E07\n\nAuthoring only: no application/test/Docker, local pitchdeck compiler, owning SVG validator, analytics/create-figure, recording or Live Evidence execution. Follow the stated assessment permission boundary.\n"
     },
     {
       "id": "r17-disclosure",
@@ -2918,7 +2918,7 @@
           "align": "left"
         },
         {
-          "id": "lead",
+          "id": "message",
           "type": "text",
           "x": 0.065,
           "y": 0.14,
@@ -3003,7 +3003,7 @@
           "transform_class": "generalization"
         },
         {
-          "path": "element:lead",
+          "path": "element:message",
           "kind": "claim_paraphrase",
           "claim_id": "disclosure",
           "transform_class": "generalization"
@@ -3035,7 +3035,7 @@
       "transition": "none",
       "reveal": "none",
       "hidden": false,
-      "notes": "PREPARED REHEARSAL GUIDE — not a record of an interview.\nPresentation source commit: ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78. Frozen implementation: 0375af56bf681e9441edcb7433cfe58951db77b2.\nTIME 20:15–21:00; 0.75 minute(s); timing kind: prepared.\nLegacy sections: 07-nonclaims. Primary question IDs: Q28, Q29, Q30.\n## r17-disclosure — Technical readiness does not waive the timebox\n\n**Time:** 20:15–21:00. **Block:** How the Solution Works. **Primary questions:** Q28, Q29, Q30\n\n### Say\n\nBefore defending the choices, I want the administrative boundary explicit. SUBMISSION.md records post-timebox corrections and later requested additions. Active engineering time was not separately tracked. The retrospective allocation totals eight hours, but it is not an instrumented proof that the stop instruction was satisfied.\nThe work was AI-assisted and externally reviewed; I will not invent an authorship percentage. The technical conclusion concerns a bounded mechanism and its evidence. It does not establish general anonymity, production deployment, or complete resistance to linkage. The next three prepared questions explain why these boundaries are deliberate, rather than quietly treating every future hardening idea as a missing local feature.\n\n### Show / navigate\n\nSUBMISSION.md: Time spent, Retrospective time estimate, Unfinished work.\n\n\n**Visible qualification:** Post-timebox corrections and operator-requested additions remain separate.\n\n**Evidence IDs:** E04, E08\n\nAuthoring only: no application/test/Docker, local pitchdeck compiler, owning SVG validator, analytics/create-figure, recording or Live Evidence execution. Follow the stated assessment permission boundary.\n"
+      "notes": "PREPARED REHEARSAL GUIDE \u2014 not a record of an interview.\nPresentation source commit: ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78. Frozen implementation: 0375af56bf681e9441edcb7433cfe58951db77b2.\nTIME 20:15\u201321:00; 0.75 minute(s); timing kind: prepared.\nLegacy sections: 07-nonclaims. Primary question IDs: Q28, Q29, Q30.\n## r17-disclosure \u2014 Technical readiness does not waive the timebox\n\n**Time:** 20:15\u201321:00. **Block:** How the Solution Works. **Primary questions:** Q28, Q29, Q30\n\n### Say\n\nBefore defending the choices, I want the administrative boundary explicit. SUBMISSION.md records post-timebox corrections and later requested additions. Active engineering time was not separately tracked. The retrospective allocation totals eight hours, but it is not an instrumented proof that the stop instruction was satisfied.\nThe work was AI-assisted and externally reviewed; I will not invent an authorship percentage. The technical conclusion concerns a bounded mechanism and its evidence. It does not establish general anonymity, production deployment, or complete resistance to linkage. The next three prepared questions explain why these boundaries are deliberate, rather than quietly treating every future hardening idea as a missing local feature.\n\n### Show / navigate\n\nSUBMISSION.md: Time spent, Retrospective time estimate, Unfinished work.\n\n\n**Visible qualification:** Post-timebox corrections and operator-requested additions remain separate.\n\n**Evidence IDs:** E04, E08\n\nAuthoring only: no application/test/Docker, local pitchdeck compiler, owning SVG validator, analytics/create-figure, recording or Live Evidence execution. Follow the stated assessment permission boundary.\n"
     },
     {
       "id": "r18-question-exact",
@@ -3097,7 +3097,7 @@
           "align": "left"
         },
         {
-          "id": "main-visual",
+          "id": "message",
           "type": "text",
           "x": 0.06,
           "y": 0.24,
@@ -3142,14 +3142,14 @@
           "claim_id": "exact-answer"
         },
         {
-          "path": "element:main-visual",
+          "path": "element:message",
           "kind": "non_claim"
         }
       ],
       "transition": "none",
       "reveal": "none",
       "hidden": false,
-      "notes": "PREPARED REHEARSAL GUIDE — not a record of an interview.\nPresentation source commit: ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78. Frozen implementation: 0375af56bf681e9441edcb7433cfe58951db77b2.\nTIME 21:00–21:15; 0.25 minute(s); timing kind: prepared.\nLegacy sections: 01-brief. Primary question IDs: paired lead-in/navigation only.\n## r18-question-exact — Question 1\n\n**Time:** 21:00–21:15. **Block:** Prepared Adversarial Questions. **Primary questions:** None; navigation or paired lead-in.\n\n### Say\n\nThe first skeptical question is whether an explicit policy is avoiding the hard detection problem. Why choose exact policy rather than automatic identification of every sensitive value?\n\n- [`src/anonymization_trial/policy.py::compile_policy` — L129–L164](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/policy.py#L129-L164)\n\n**Visible qualification:** An accepted policy is not proof of completeness or real-world identity truth.\n\n**Evidence IDs:** E08\n\nAuthoring only: no application/test/Docker, local pitchdeck compiler, owning SVG validator, analytics/create-figure, recording or Live Evidence execution. Follow the stated assessment permission boundary.\n"
+      "notes": "PREPARED REHEARSAL GUIDE \u2014 not a record of an interview.\nPresentation source commit: ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78. Frozen implementation: 0375af56bf681e9441edcb7433cfe58951db77b2.\nTIME 21:00\u201321:15; 0.25 minute(s); timing kind: prepared.\nLegacy sections: 01-brief. Primary question IDs: paired lead-in/navigation only.\n## r18-question-exact \u2014 Question 1\n\n**Time:** 21:00\u201321:15. **Block:** Prepared Adversarial Questions. **Primary questions:** None; navigation or paired lead-in.\n\n### Say\n\nThe first skeptical question is whether an explicit policy is avoiding the hard detection problem. Why choose exact policy rather than automatic identification of every sensitive value?\n\n- [`src/anonymization_trial/policy.py::compile_policy` \u2014 L129\u2013L164](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/policy.py#L129-L164)\n\n**Visible qualification:** An accepted policy is not proof of completeness or real-world identity truth.\n\n**Evidence IDs:** E08\n\nAuthoring only: no application/test/Docker, local pitchdeck compiler, owning SVG validator, analytics/create-figure, recording or Live Evidence execution. Follow the stated assessment permission boundary.\n"
     },
     {
       "id": "r19-answer-exact",
@@ -3216,7 +3216,7 @@
           "align": "left"
         },
         {
-          "id": "lead",
+          "id": "message",
           "type": "text",
           "x": 0.065,
           "y": 0.14,
@@ -3301,7 +3301,7 @@
           "transform_class": "generalization"
         },
         {
-          "path": "element:lead",
+          "path": "element:message",
           "kind": "claim_paraphrase",
           "claim_id": "exact-answer",
           "transform_class": "generalization"
@@ -3333,7 +3333,7 @@
       "transition": "none",
       "reveal": "none",
       "hidden": false,
-      "notes": "PREPARED REHEARSAL GUIDE — not a record of an interview.\nPresentation source commit: ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78. Frozen implementation: 0375af56bf681e9441edcb7433cfe58951db77b2.\nTIME 21:15–22:00; 0.75 minute(s); timing kind: prepared.\nLegacy sections: 01-brief. Primary question IDs: Q01, Q02, Q03.\n## r19-answer-exact — Explicit policy separates authority from guessing\n\n**Time:** 21:15–22:00. **Block:** Prepared Adversarial Questions. **Primary questions:** Q01, Q02, Q03\n\n### Say\n\nThe bounded answer is that the policy defines a falsifiable transformation obligation. The compiler rejects ambiguity and the output checker can reconstruct expected values. A detection model would add another uncertainty: what it failed to identify, and whether a proposed alias really belongs to that person.\nThat does not make custom matching universally better or a PII platform unnecessary. It makes the submitted guarantee explicit. The later discovery workflow proposes aliases without silently authorizing a change; operator approval creates an exact policy and the normal release path still verifies. It is a constrained convenience, not a retroactive claim of complete detection.\n\n### Show / navigate\n\ncompile_policy() and approve() are the evidence; no generic platform comparison claim.\n\n- [`src/anonymization_trial/policy.py::compile_policy` — L129–L164](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/policy.py#L129-L164)\n- [`src/anonymization_trial/discovery.py::approve` — L329–L378](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/discovery.py#L329-L378)\n\n**Visible qualification:** An accepted policy is not proof of completeness or real-world identity truth.\n\n**Evidence IDs:** E08\n\nAuthoring only: no application/test/Docker, local pitchdeck compiler, owning SVG validator, analytics/create-figure, recording or Live Evidence execution. Follow the stated assessment permission boundary.\n"
+      "notes": "PREPARED REHEARSAL GUIDE \u2014 not a record of an interview.\nPresentation source commit: ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78. Frozen implementation: 0375af56bf681e9441edcb7433cfe58951db77b2.\nTIME 21:15\u201322:00; 0.75 minute(s); timing kind: prepared.\nLegacy sections: 01-brief. Primary question IDs: Q01, Q02, Q03.\n## r19-answer-exact \u2014 Explicit policy separates authority from guessing\n\n**Time:** 21:15\u201322:00. **Block:** Prepared Adversarial Questions. **Primary questions:** Q01, Q02, Q03\n\n### Say\n\nThe bounded answer is that the policy defines a falsifiable transformation obligation. The compiler rejects ambiguity and the output checker can reconstruct expected values. A detection model would add another uncertainty: what it failed to identify, and whether a proposed alias really belongs to that person.\nThat does not make custom matching universally better or a PII platform unnecessary. It makes the submitted guarantee explicit. The later discovery workflow proposes aliases without silently authorizing a change; operator approval creates an exact policy and the normal release path still verifies. It is a constrained convenience, not a retroactive claim of complete detection.\n\n### Show / navigate\n\ncompile_policy() and approve() are the evidence; no generic platform comparison claim.\n\n- [`src/anonymization_trial/policy.py::compile_policy` \u2014 L129\u2013L164](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/policy.py#L129-L164)\n- [`src/anonymization_trial/discovery.py::approve` \u2014 L329\u2013L378](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/discovery.py#L329-L378)\n\n**Visible qualification:** An accepted policy is not proof of completeness or real-world identity truth.\n\n**Evidence IDs:** E08\n\nAuthoring only: no application/test/Docker, local pitchdeck compiler, owning SVG validator, analytics/create-figure, recording or Live Evidence execution. Follow the stated assessment permission boundary.\n"
     },
     {
       "id": "r20-question-verifier",
@@ -3395,7 +3395,7 @@
           "align": "left"
         },
         {
-          "id": "main-visual",
+          "id": "message",
           "type": "text",
           "x": 0.06,
           "y": 0.24,
@@ -3414,7 +3414,7 @@
           "y": 0.85,
           "w": 0.87,
           "h": 0.08,
-          "text": "Independent reread / re-derivation—not a separately implemented engine.",
+          "text": "Independent reread / re-derivation\u2014not a separately implemented engine.",
           "size_pt": 17.5,
           "bold": false,
           "color": "#a99787",
@@ -3440,14 +3440,14 @@
           "claim_id": "verifier-answer"
         },
         {
-          "path": "element:main-visual",
+          "path": "element:message",
           "kind": "non_claim"
         }
       ],
       "transition": "none",
       "reveal": "none",
       "hidden": false,
-      "notes": "PREPARED REHEARSAL GUIDE — not a record of an interview.\nPresentation source commit: ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78. Frozen implementation: 0375af56bf681e9441edcb7433cfe58951db77b2.\nTIME 22:00–22:15; 0.25 minute(s); timing kind: prepared.\nLegacy sections: 02-architecture, 03-semantics. Primary question IDs: paired lead-in/navigation only.\n## r20-question-verifier — Question 2\n\n**Time:** 22:00–22:15. **Block:** Prepared Adversarial Questions. **Primary questions:** None; navigation or paired lead-in.\n\n### Say\n\nThe second question challenges the checker itself. If the verifier calls the same replacement primitives, aren’t we asking the transformer to certify its own mistake?\n\n- [`src/anonymization_trial/verification.py::verify_corpus` — L205–L249](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/verification.py#L205-L249)\n\n**Visible qualification:** Independent reread / re-derivation—not a separately implemented engine.\n\n**Evidence IDs:** E08\n\nAuthoring only: no application/test/Docker, local pitchdeck compiler, owning SVG validator, analytics/create-figure, recording or Live Evidence execution. Follow the stated assessment permission boundary.\n"
+      "notes": "PREPARED REHEARSAL GUIDE \u2014 not a record of an interview.\nPresentation source commit: ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78. Frozen implementation: 0375af56bf681e9441edcb7433cfe58951db77b2.\nTIME 22:00\u201322:15; 0.25 minute(s); timing kind: prepared.\nLegacy sections: 02-architecture, 03-semantics. Primary question IDs: paired lead-in/navigation only.\n## r20-question-verifier \u2014 Question 2\n\n**Time:** 22:00\u201322:15. **Block:** Prepared Adversarial Questions. **Primary questions:** None; navigation or paired lead-in.\n\n### Say\n\nThe second question challenges the checker itself. If the verifier calls the same replacement primitives, aren\u2019t we asking the transformer to certify its own mistake?\n\n- [`src/anonymization_trial/verification.py::verify_corpus` \u2014 L205\u2013L249](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/verification.py#L205-L249)\n\n**Visible qualification:** Independent reread / re-derivation\u2014not a separately implemented engine.\n\n**Evidence IDs:** E08\n\nAuthoring only: no application/test/Docker, local pitchdeck compiler, owning SVG validator, analytics/create-figure, recording or Live Evidence execution. Follow the stated assessment permission boundary.\n"
     },
     {
       "id": "r21-answer-verifier",
@@ -3519,7 +3519,7 @@
           "align": "left"
         },
         {
-          "id": "lead",
+          "id": "message",
           "type": "text",
           "x": 0.065,
           "y": 0.14,
@@ -3577,7 +3577,7 @@
           "y": 0.85,
           "w": 0.87,
           "h": 0.08,
-          "text": "Independent reread / re-derivation—not a separately implemented engine.",
+          "text": "Independent reread / re-derivation\u2014not a separately implemented engine.",
           "size_pt": 17.5,
           "bold": false,
           "color": "#a99787",
@@ -3604,7 +3604,7 @@
           "transform_class": "generalization"
         },
         {
-          "path": "element:lead",
+          "path": "element:message",
           "kind": "claim_paraphrase",
           "claim_id": "verifier-answer",
           "transform_class": "generalization"
@@ -3636,7 +3636,7 @@
       "transition": "none",
       "reveal": "none",
       "hidden": false,
-      "notes": "PREPARED REHEARSAL GUIDE — not a record of an interview.\nPresentation source commit: ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78. Frozen implementation: 0375af56bf681e9441edcb7433cfe58951db77b2.\nTIME 22:15–23:00; 0.75 minute(s); timing kind: prepared.\nLegacy sections: 02-architecture, 03-semantics. Primary question IDs: Q04.\n## r21-answer-verifier — Rereading helps; common-mode risk remains\n\n**Time:** 22:15–23:00. **Block:** Prepared Adversarial Questions. **Primary questions:** Q04\n\n### Say\n\nThe verifier rereads both corpora and does not trust transformation counters or a success Boolean. It detects wrong output locations, scalar types, file sets and supported schema changes. Those are meaningful distinctions demonstrated by deliberate output mutations.\nBut the expected replacement path shares matcher and pseudonym primitives. A common defect can affect both sides. The qualification checker adds an independent expectation for a small synthetic fixture, not universal reference verification. A diverse implementation could increase assurance, but it is disclosed production hardening rather than a capability we pretend was built. The answer is qualified independence, not a slogan that the transformer can never certify itself.\n\n### Show / navigate\n\nverify_corpus imports replace_text/build_replacements; readback() has its own synthetic expectation.\n\n- [`src/anonymization_trial/verification.py::verify_corpus` — L205–L249](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/verification.py#L205-L249)\n- [`scripts/qualify_submission.py::readback` — L80–L134](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/scripts/qualify_submission.py#L80-L134)\n- [`src/anonymization_trial/verification.py::_typed_equal` — L129–L143](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/verification.py#L129-L143)\n\n**Visible qualification:** Independent reread / re-derivation—not a separately implemented engine.\n\n**Evidence IDs:** E06, E08\n\nAuthoring only: no application/test/Docker, local pitchdeck compiler, owning SVG validator, analytics/create-figure, recording or Live Evidence execution. Follow the stated assessment permission boundary.\n"
+      "notes": "PREPARED REHEARSAL GUIDE \u2014 not a record of an interview.\nPresentation source commit: ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78. Frozen implementation: 0375af56bf681e9441edcb7433cfe58951db77b2.\nTIME 22:15\u201323:00; 0.75 minute(s); timing kind: prepared.\nLegacy sections: 02-architecture, 03-semantics. Primary question IDs: Q04.\n## r21-answer-verifier \u2014 Rereading helps; common-mode risk remains\n\n**Time:** 22:15\u201323:00. **Block:** Prepared Adversarial Questions. **Primary questions:** Q04\n\n### Say\n\nThe verifier rereads both corpora and does not trust transformation counters or a success Boolean. It detects wrong output locations, scalar types, file sets and supported schema changes. Those are meaningful distinctions demonstrated by deliberate output mutations.\nBut the expected replacement path shares matcher and pseudonym primitives. A common defect can affect both sides. The qualification checker adds an independent expectation for a small synthetic fixture, not universal reference verification. A diverse implementation could increase assurance, but it is disclosed production hardening rather than a capability we pretend was built. The answer is qualified independence, not a slogan that the transformer can never certify itself.\n\n### Show / navigate\n\nverify_corpus imports replace_text/build_replacements; readback() has its own synthetic expectation.\n\n- [`src/anonymization_trial/verification.py::verify_corpus` \u2014 L205\u2013L249](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/verification.py#L205-L249)\n- [`scripts/qualify_submission.py::readback` \u2014 L80\u2013L134](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/scripts/qualify_submission.py#L80-L134)\n- [`src/anonymization_trial/verification.py::_typed_equal` \u2014 L129\u2013L143](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/verification.py#L129-L143)\n\n**Visible qualification:** Independent reread / re-derivation\u2014not a separately implemented engine.\n\n**Evidence IDs:** E06, E08\n\nAuthoring only: no application/test/Docker, local pitchdeck compiler, owning SVG validator, analytics/create-figure, recording or Live Evidence execution. Follow the stated assessment permission boundary.\n"
     },
     {
       "id": "r22-question-scale",
@@ -3645,7 +3645,7 @@
       "layout": "freeform",
       "visibility": "public",
       "title": "Question 3",
-      "message": "What changes at petabyte scale—and what does the model prove?",
+      "message": "What changes at petabyte scale\u2014and what does the model prove?",
       "body": [],
       "source_refs": [
         {
@@ -3698,13 +3698,13 @@
           "align": "left"
         },
         {
-          "id": "main-visual",
+          "id": "message",
           "type": "text",
           "x": 0.06,
           "y": 0.24,
           "w": 0.88,
           "h": 0.51,
-          "text": "What changes at petabyte scale—and what does the model prove?",
+          "text": "What changes at petabyte scale\u2014and what does the model prove?",
           "size_pt": 38,
           "bold": true,
           "color": "#f2eadc",
@@ -3743,14 +3743,14 @@
           "claim_id": "scale-answer"
         },
         {
-          "path": "element:main-visual",
+          "path": "element:message",
           "kind": "non_claim"
         }
       ],
       "transition": "none",
       "reveal": "none",
       "hidden": false,
-      "notes": "PREPARED REHEARSAL GUIDE — not a record of an interview.\nPresentation source commit: ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78. Frozen implementation: 0375af56bf681e9441edcb7433cfe58951db77b2.\nTIME 23:00–23:15; 0.25 minute(s); timing kind: prepared.\nLegacy sections: 06-production. Primary question IDs: paired lead-in/navigation only.\n## r22-question-scale — Question 3\n\n**Time:** 23:00–23:15. **Block:** Prepared Adversarial Questions. **Primary questions:** None; navigation or paired lead-in.\n\n### Say\n\nThe third question is whether the cloud slide is measured engineering or just multiplication. What must change at petabyte scale, and what do these cost and capacity numbers actually establish?\n\n- [`scripts/estimate_aws_cost.py::_one` — L23–L75](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/scripts/estimate_aws_cost.py#L23-L75)\n\n**Visible qualification:** No deployment, measured SLA, or complete invoice-level cost accounting.\n\n**Evidence IDs:** E07\n\nAuthoring only: no application/test/Docker, local pitchdeck compiler, owning SVG validator, analytics/create-figure, recording or Live Evidence execution. Follow the stated assessment permission boundary.\n"
+      "notes": "PREPARED REHEARSAL GUIDE \u2014 not a record of an interview.\nPresentation source commit: ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78. Frozen implementation: 0375af56bf681e9441edcb7433cfe58951db77b2.\nTIME 23:00\u201323:15; 0.25 minute(s); timing kind: prepared.\nLegacy sections: 06-production. Primary question IDs: paired lead-in/navigation only.\n## r22-question-scale \u2014 Question 3\n\n**Time:** 23:00\u201323:15. **Block:** Prepared Adversarial Questions. **Primary questions:** None; navigation or paired lead-in.\n\n### Say\n\nThe third question is whether the cloud slide is measured engineering or just multiplication. What must change at petabyte scale, and what do these cost and capacity numbers actually establish?\n\n- [`scripts/estimate_aws_cost.py::_one` \u2014 L23\u2013L75](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/scripts/estimate_aws_cost.py#L23-L75)\n\n**Visible qualification:** No deployment, measured SLA, or complete invoice-level cost accounting.\n\n**Evidence IDs:** E07\n\nAuthoring only: no application/test/Docker, local pitchdeck compiler, owning SVG validator, analytics/create-figure, recording or Live Evidence execution. Follow the stated assessment permission boundary.\n"
     },
     {
       "id": "r23-answer-scale",
@@ -3817,7 +3817,7 @@
           "align": "left"
         },
         {
-          "id": "lead",
+          "id": "message",
           "type": "text",
           "x": 0.065,
           "y": 0.14,
@@ -3902,7 +3902,7 @@
           "transform_class": "generalization"
         },
         {
-          "path": "element:lead",
+          "path": "element:message",
           "kind": "claim_paraphrase",
           "claim_id": "scale-answer",
           "transform_class": "generalization"
@@ -3934,7 +3934,7 @@
       "transition": "none",
       "reveal": "none",
       "hidden": false,
-      "notes": "PREPARED REHEARSAL GUIDE — not a record of an interview.\nPresentation source commit: ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78. Frozen implementation: 0375af56bf681e9441edcb7433cfe58951db77b2.\nTIME 23:15–24:00; 0.75 minute(s); timing kind: prepared.\nLegacy sections: 06-production. Primary question IDs: Q26.\n## r23-answer-scale — The model exposes assumptions; it does not validate them\n\n**Time:** 23:15–24:00. **Block:** Prepared Adversarial Questions. **Primary questions:** Q26\n\n### Say\n\nThe model establishes reproducible arithmetic for a stated workload, not operational delivery. The execution topology must change: bounded workers, format-aware partitions, replay and one corpus-level manifest/pointer commit.\nThe retained semantics are the important part. Workers cannot allocate collision plans over inconsistent identity sets, and per-file success cannot authorize a partial corpus. Measurements must replace assumptions about throughput, skew, memory, requests and quotas before offering an SLA.\nThat finishes the three prepared objections. The remaining substantive material is explicitly Extra Credit: the additional security evidence and post-trial operator interfaces. Audience discussion remains a separate block after those additions.\n\n### Show / navigate\n\nPoint to the model inputs and shared plan, then advance directly into Extra Credit.\n\n- [`scripts/estimate_aws_cost.py::_one` — L23–L75](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/scripts/estimate_aws_cost.py#L23-L75)\n- [`src/anonymization_trial/pseudonyms.py::build_replacements` — L62–L104](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/pseudonyms.py#L62-L104)\n\n**Visible qualification:** No deployment, measured SLA, or complete invoice-level cost accounting.\n\n**Evidence IDs:** E07, E08\n\nAuthoring only: no application/test/Docker, local pitchdeck compiler, owning SVG validator, analytics/create-figure, recording or Live Evidence execution. Follow the stated assessment permission boundary.\n"
+      "notes": "PREPARED REHEARSAL GUIDE \u2014 not a record of an interview.\nPresentation source commit: ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78. Frozen implementation: 0375af56bf681e9441edcb7433cfe58951db77b2.\nTIME 23:15\u201324:00; 0.75 minute(s); timing kind: prepared.\nLegacy sections: 06-production. Primary question IDs: Q26.\n## r23-answer-scale \u2014 The model exposes assumptions; it does not validate them\n\n**Time:** 23:15\u201324:00. **Block:** Prepared Adversarial Questions. **Primary questions:** Q26\n\n### Say\n\nThe model establishes reproducible arithmetic for a stated workload, not operational delivery. The execution topology must change: bounded workers, format-aware partitions, replay and one corpus-level manifest/pointer commit.\nThe retained semantics are the important part. Workers cannot allocate collision plans over inconsistent identity sets, and per-file success cannot authorize a partial corpus. Measurements must replace assumptions about throughput, skew, memory, requests and quotas before offering an SLA.\nThat finishes the three prepared objections. The remaining substantive material is explicitly Extra Credit: the additional security evidence and post-trial operator interfaces. Audience discussion remains a separate block after those additions.\n\n### Show / navigate\n\nPoint to the model inputs and shared plan, then advance directly into Extra Credit.\n\n- [`scripts/estimate_aws_cost.py::_one` \u2014 L23\u2013L75](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/scripts/estimate_aws_cost.py#L23-L75)\n- [`src/anonymization_trial/pseudonyms.py::build_replacements` \u2014 L62\u2013L104](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/pseudonyms.py#L62-L104)\n\n**Visible qualification:** No deployment, measured SLA, or complete invoice-level cost accounting.\n\n**Evidence IDs:** E07, E08\n\nAuthoring only: no application/test/Docker, local pitchdeck compiler, owning SVG validator, analytics/create-figure, recording or Live Evidence execution. Follow the stated assessment permission boundary.\n"
     },
     {
       "id": "r24-security-evals",
@@ -3943,7 +3943,7 @@
       "layout": "freeform",
       "visibility": "public",
       "title": "Security evals test different failure surfaces",
-      "message": "Extra Credit · white/gray/black-box methodology",
+      "message": "Extra Credit \u00b7 white/gray/black-box methodology",
       "body": [],
       "source_refs": [
         {
@@ -4001,13 +4001,13 @@
           "align": "left"
         },
         {
-          "id": "lead",
+          "id": "message",
           "type": "text",
           "x": 0.065,
           "y": 0.14,
           "w": 0.87,
           "h": 0.12,
-          "text": "Extra Credit · white/gray/black-box methodology",
+          "text": "Extra Credit \u00b7 white/gray/black-box methodology",
           "size_pt": 23,
           "bold": false,
           "color": "#e2ac62",
@@ -4059,7 +4059,7 @@
           "y": 0.735,
           "w": 0.87,
           "h": 0.075,
-          "text": "Source: test_typed_scalar_verification.py:21–48",
+          "text": "Source: test_typed_scalar_verification.py:21\u201348",
           "size_pt": 17.5,
           "bold": false,
           "color": "#a99787",
@@ -4099,7 +4099,7 @@
           "transform_class": "generalization"
         },
         {
-          "path": "element:lead",
+          "path": "element:message",
           "kind": "claim_paraphrase",
           "claim_id": "security-evals",
           "transform_class": "generalization"
@@ -4135,7 +4135,7 @@
       "transition": "none",
       "reveal": "none",
       "hidden": false,
-      "notes": "PREPARED REHEARSAL GUIDE — not a record of an interview.\nPresentation source commit: ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78. Frozen implementation: 0375af56bf681e9441edcb7433cfe58951db77b2.\nTIME 24:00–25:15; 1.25 minute(s); timing kind: prepared.\nLegacy sections: 05-evidence. Primary question IDs: paired lead-in/navigation only.\n## r24-security-evals — Security evals test different failure surfaces\n\n**Time:** 24:00–25:15. **Block:** Extra Credit. **Primary questions:** None; navigation or paired lead-in.\n\n### Say\n\nExtra Credit begins with the security methodology—not a larger feature surface. White-box means source-aware inspection and static analysis. Gray-box means knowledge of the contracts and deliberately chosen inputs or mutations. Black-box means exercising the CLI and observing external effects. These are test perspectives, not attacker identities or a guarantee of coverage.\nThe static receipt supports Bandit evidence with findings and their disposition; it must not be marketed as an all-scanner clean bill. Semgrep scanned zero target files, and no dependency-SCA receipt is committed. The retained source and CLI tests are more directly relevant to the anonymization contract than a scanner count.\nThe important question is what an oracle catches: a swapped value, a forbidden write, a stale proposal, or an invalid readiness artifact. We have already inspected concrete examples. This slide groups the evidence without upgrading any fixture or count into exhaustive security.\n\n### Show / navigate\n\nSecurity/SECURITY.md and retained scanner receipt; no new scans. The exact TOC label is Security Evals (White, Grey, Black, and Adaptive Lineage).\n\n- [`security/tests/test_typed_scalar_verification.py::test_json_bool_number_and_sqlite_integer_real_mutations_rejected` — L21–L48](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/security/tests/test_typed_scalar_verification.py#L21-L48)\n- [`tests/test_discovery_boundaries.py::test_work_artifacts_cannot_enter_release_via_relative_or_symlink_paths` — L180–L244](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/tests/test_discovery_boundaries.py#L180-L244)\n\n**Visible qualification:** Bandit evidence only. Semgrep: zero target files. No SCA receipt.\n\n**Evidence IDs:** E06, E09\n\nAuthoring only: no application/test/Docker, local pitchdeck compiler, owning SVG validator, analytics/create-figure, recording or Live Evidence execution. Follow the stated assessment permission boundary.\n"
+      "notes": "PREPARED REHEARSAL GUIDE \u2014 not a record of an interview.\nPresentation source commit: ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78. Frozen implementation: 0375af56bf681e9441edcb7433cfe58951db77b2.\nTIME 24:00\u201325:15; 1.25 minute(s); timing kind: prepared.\nLegacy sections: 05-evidence. Primary question IDs: paired lead-in/navigation only.\n## r24-security-evals \u2014 Security evals test different failure surfaces\n\n**Time:** 24:00\u201325:15. **Block:** Extra Credit. **Primary questions:** None; navigation or paired lead-in.\n\n### Say\n\nExtra Credit begins with the security methodology\u2014not a larger feature surface. White-box means source-aware inspection and static analysis. Gray-box means knowledge of the contracts and deliberately chosen inputs or mutations. Black-box means exercising the CLI and observing external effects. These are test perspectives, not attacker identities or a guarantee of coverage.\nThe static receipt supports Bandit evidence with findings and their disposition; it must not be marketed as an all-scanner clean bill. Semgrep scanned zero target files, and no dependency-SCA receipt is committed. The retained source and CLI tests are more directly relevant to the anonymization contract than a scanner count.\nThe important question is what an oracle catches: a swapped value, a forbidden write, a stale proposal, or an invalid readiness artifact. We have already inspected concrete examples. This slide groups the evidence without upgrading any fixture or count into exhaustive security.\n\n### Show / navigate\n\nSecurity/SECURITY.md and retained scanner receipt; no new scans. The exact TOC label is Security Evals (White, Grey, Black, and Adaptive Lineage).\n\n- [`security/tests/test_typed_scalar_verification.py::test_json_bool_number_and_sqlite_integer_real_mutations_rejected` \u2014 L21\u2013L48](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/security/tests/test_typed_scalar_verification.py#L21-L48)\n- [`tests/test_discovery_boundaries.py::test_work_artifacts_cannot_enter_release_via_relative_or_symlink_paths` \u2014 L180\u2013L244](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/tests/test_discovery_boundaries.py#L180-L244)\n\n**Visible qualification:** Bandit evidence only. Semgrep: zero target files. No SCA receipt.\n\n**Evidence IDs:** E06, E09\n\nAuthoring only: no application/test/Docker, local pitchdeck compiler, owning SVG validator, analytics/create-figure, recording or Live Evidence execution. Follow the stated assessment permission boundary.\n"
     },
     {
       "id": "r25-lineage",
@@ -4194,7 +4194,7 @@
           "align": "left"
         },
         {
-          "id": "lead",
+          "id": "message",
           "type": "text",
           "x": 0.065,
           "y": 0.14,
@@ -4226,7 +4226,7 @@
           "y": 0.44,
           "w": 0.83,
           "h": 0.095,
-          "text": "agentic: false · models_used: []",
+          "text": "agentic: false \u00b7 models_used: []",
           "size_pt": 27,
           "bold": false,
           "color": "#ece2d3",
@@ -4252,7 +4252,7 @@
           "y": 0.85,
           "w": 0.87,
           "h": 0.08,
-          "text": "Fixture contract proof—not an adaptive live campaign against this target.",
+          "text": "Fixture contract proof\u2014not an adaptive live campaign against this target.",
           "size_pt": 17.5,
           "bold": false,
           "color": "#a99787",
@@ -4279,7 +4279,7 @@
           "transform_class": "generalization"
         },
         {
-          "path": "element:lead",
+          "path": "element:message",
           "kind": "claim_paraphrase",
           "claim_id": "battle-fixture",
           "transform_class": "generalization"
@@ -4311,7 +4311,7 @@
       "transition": "none",
       "reveal": "none",
       "hidden": false,
-      "notes": "PREPARED REHEARSAL GUIDE — not a record of an interview.\nPresentation source commit: ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78. Frozen implementation: 0375af56bf681e9441edcb7433cfe58951db77b2.\nTIME 25:15–26:00; 0.75 minute(s); timing kind: prepared.\nLegacy sections: 05-evidence, 07-nonclaims. Primary question IDs: paired lead-in/navigation only.\n## r25-lineage — The retained Judge result is fixture-backed\n\n**Time:** 25:15–26:00. **Block:** Extra Credit. **Primary questions:** None; navigation or paired lead-in.\n\n### Say\n\nThe Adaptive Lineage part of the contents needs a precise qualification. The retained Battle receipt describes local deterministic fixture execution. It records agentic false, no models used, and a fixture_contract_proof scope.\nThat is useful as a demonstration of the judge-and-receipt contract, but not evidence that adaptive red and blue agents attacked this repository, learned over rounds, or established security. The non-claims explicitly say those things were not proved. A future useful finding should become a small deterministic regression; this deck does not reopen that future campaign or claim that it has already happened.\n\n### Show / navigate\n\nsecurity/battle/run-receipt.json: claim_scope and execution; no target campaign inference.\n\n\n**Exact selected fields of the retained receipt:**\n\n```json\n{\n  \"claim_scope\": \"fixture_contract_proof\",\n  \"execution\": {\n    \"agentic\": false,\n    \"live\": \"local_deterministic_fixture\",\n    \"mocked\": false,\n    \"models_used\": []\n  },\n  \"schema\": \"battle.run_receipt.v1\",\n  \"status\": \"PASS\",\n  \"verdict\": \"BLUE_SUCCESS\"\n}\n```\n\n[Complete pinned receipt](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/security/battle/run-receipt.json). No live adaptive target campaign is inferred.\n\n**Visible qualification:** Fixture contract proof—not an adaptive live campaign against this target.\n\n**Evidence IDs:** E10\n\nAuthoring only: no application/test/Docker, local pitchdeck compiler, owning SVG validator, analytics/create-figure, recording or Live Evidence execution. Follow the stated assessment permission boundary.\n"
+      "notes": "PREPARED REHEARSAL GUIDE \u2014 not a record of an interview.\nPresentation source commit: ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78. Frozen implementation: 0375af56bf681e9441edcb7433cfe58951db77b2.\nTIME 25:15\u201326:00; 0.75 minute(s); timing kind: prepared.\nLegacy sections: 05-evidence, 07-nonclaims. Primary question IDs: paired lead-in/navigation only.\n## r25-lineage \u2014 The retained Judge result is fixture-backed\n\n**Time:** 25:15\u201326:00. **Block:** Extra Credit. **Primary questions:** None; navigation or paired lead-in.\n\n### Say\n\nThe Adaptive Lineage part of the contents needs a precise qualification. The retained Battle receipt describes local deterministic fixture execution. It records agentic false, no models used, and a fixture_contract_proof scope.\nThat is useful as a demonstration of the judge-and-receipt contract, but not evidence that adaptive red and blue agents attacked this repository, learned over rounds, or established security. The non-claims explicitly say those things were not proved. A future useful finding should become a small deterministic regression; this deck does not reopen that future campaign or claim that it has already happened.\n\n### Show / navigate\n\nsecurity/battle/run-receipt.json: claim_scope and execution; no target campaign inference.\n\n\n**Exact selected fields of the retained receipt:**\n\n```json\n{\n  \"claim_scope\": \"fixture_contract_proof\",\n  \"execution\": {\n    \"agentic\": false,\n    \"live\": \"local_deterministic_fixture\",\n    \"mocked\": false,\n    \"models_used\": []\n  },\n  \"schema\": \"battle.run_receipt.v1\",\n  \"status\": \"PASS\",\n  \"verdict\": \"BLUE_SUCCESS\"\n}\n```\n\n[Complete pinned receipt](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/security/battle/run-receipt.json). No live adaptive target campaign is inferred.\n\n**Visible qualification:** Fixture contract proof\u2014not an adaptive live campaign against this target.\n\n**Evidence IDs:** E10\n\nAuthoring only: no application/test/Docker, local pitchdeck compiler, owning SVG validator, analytics/create-figure, recording or Live Evidence execution. Follow the stated assessment permission boundary.\n"
     },
     {
       "id": "r26-wrapper",
@@ -4320,7 +4320,7 @@
       "layout": "freeform",
       "visibility": "public",
       "title": "The skill delegates; it does not fork the engine",
-      "message": "Extra Credit · package a workflow worth reusing",
+      "message": "Extra Credit \u00b7 package a workflow worth reusing",
       "body": [],
       "source_refs": [
         {
@@ -4383,13 +4383,13 @@
           "align": "left"
         },
         {
-          "id": "lead",
+          "id": "message",
           "type": "text",
           "x": 0.065,
           "y": 0.14,
           "w": 0.87,
           "h": 0.12,
-          "text": "Extra Credit · package a workflow worth reusing",
+          "text": "Extra Credit \u00b7 package a workflow worth reusing",
           "size_pt": 23,
           "bold": false,
           "color": "#e2ac62",
@@ -4441,7 +4441,7 @@
           "y": 0.735,
           "w": 0.87,
           "h": 0.075,
-          "text": "Source: bundle.py:40–71",
+          "text": "Source: bundle.py:40\u201371",
           "size_pt": 17.5,
           "bold": false,
           "color": "#a99787",
@@ -4481,7 +4481,7 @@
           "transform_class": "generalization"
         },
         {
-          "path": "element:lead",
+          "path": "element:message",
           "kind": "claim_paraphrase",
           "claim_id": "wrapper",
           "transform_class": "generalization"
@@ -4517,7 +4517,7 @@
       "transition": "none",
       "reveal": "none",
       "hidden": false,
-      "notes": "PREPARED REHEARSAL GUIDE — not a record of an interview.\nPresentation source commit: ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78. Frozen implementation: 0375af56bf681e9441edcb7433cfe58951db77b2.\nTIME 26:00–27:00; 1 minute(s); timing kind: prepared.\nLegacy sections: 02-architecture. Primary question IDs: Q06.\n## r26-wrapper — The skill delegates; it does not fork the engine\n\n**Time:** 26:00–27:00. **Block:** Extra Credit. **Primary questions:** Q06\n\n### Say\n\nThis is a workflow worth reusing: the same input contract, safe invocation, and proof obligation recur. The skill packages that procedure without owning a second engine.\nSKILL.md states when to use it, the inputs, expected outputs, failure limits and permission boundaries. Keep that contract concise. run.sh delegates to the project CLI; matching and verification stay in the project. Retained behavioral checks exercise useful results and refusals, including wrong installation and unsafe output paths.\nThat is the best-practices-skills pattern being discussed—not a claim that a frontmatter label proves compliance. Use the existing wrapper; do not build or install it live. This is post-trial convenience, and Docker remains independent.\n\n### Show / navigate\n\nUse at most one short navigation jump in this minute. The slide’s three rows are **native editable text**: concise contract, thin delegation, retained behavior. They are not text-only SVG replacements or proof of a new test run.\n\n- [Source-only reuse reference: SKILL.md contract, run.sh delegation and sanity checks](sources/skill-reuse-reference.md)\n- [`src/anonymization_trial/bundle.py::input_bundle` — L40–L71](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/bundle.py#L40-L71)\n- [`src/anonymization_trial/__main__.py::main` — L207–L233](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/__main__.py#L207-L233)\n\nThe reference excerpts are from an explicitly pinned, previously reviewed skill snapshot. They explain the pattern; they are not the byte authority for a later wrapper execution receipt. The project behavior stays pinned to `0375af56bf681e9441edcb7433cfe58951db77b2`.\n\n**Exact source excerpt from the wrapper; display only, not execution:**\n\n```bash\n# The installed entrypoint preserves the caller's cwd for relative data paths.\nexec \"$ENTRY\" \"$@\"\n```\n\n**Visible qualification:** Post-trial integration. The evaluator image does not require the shared skill.\n\n**Evidence IDs:** E02, E08, E11. Best-practices guidance and source inspection do not establish fresh validation or blanket compliance.\n\n**Transition:** That same workflow also supports reviewed aliases; the next slide separates a proposal, an approved exact policy, and a released corpus.\n\nAuthoring only: no application/test/Docker, local pitchdeck compiler, owning SVG validator, analytics/create-figure, recording or Live Evidence execution. Follow the stated assessment permission boundary.\n"
+      "notes": "PREPARED REHEARSAL GUIDE \u2014 not a record of an interview.\nPresentation source commit: ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78. Frozen implementation: 0375af56bf681e9441edcb7433cfe58951db77b2.\nTIME 26:00\u201327:00; 1 minute(s); timing kind: prepared.\nLegacy sections: 02-architecture. Primary question IDs: Q06.\n## r26-wrapper \u2014 The skill delegates; it does not fork the engine\n\n**Time:** 26:00\u201327:00. **Block:** Extra Credit. **Primary questions:** Q06\n\n### Say\n\nThis is a workflow worth reusing: the same input contract, safe invocation, and proof obligation recur. The skill packages that procedure without owning a second engine.\nSKILL.md states when to use it, the inputs, expected outputs, failure limits and permission boundaries. Keep that contract concise. run.sh delegates to the project CLI; matching and verification stay in the project. Retained behavioral checks exercise useful results and refusals, including wrong installation and unsafe output paths.\nThat is the best-practices-skills pattern being discussed\u2014not a claim that a frontmatter label proves compliance. Use the existing wrapper; do not build or install it live. This is post-trial convenience, and Docker remains independent.\n\n### Show / navigate\n\nUse at most one short navigation jump in this minute. The slide\u2019s three rows are **native editable text**: concise contract, thin delegation, retained behavior. They are not text-only SVG replacements or proof of a new test run.\n\n- [Source-only reuse reference: SKILL.md contract, run.sh delegation and sanity checks](sources/skill-reuse-reference.md)\n- [`src/anonymization_trial/bundle.py::input_bundle` \u2014 L40\u2013L71](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/bundle.py#L40-L71)\n- [`src/anonymization_trial/__main__.py::main` \u2014 L207\u2013L233](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/__main__.py#L207-L233)\n\nThe reference excerpts are from an explicitly pinned, previously reviewed skill snapshot. They explain the pattern; they are not the byte authority for a later wrapper execution receipt. The project behavior stays pinned to `0375af56bf681e9441edcb7433cfe58951db77b2`.\n\n**Exact source excerpt from the wrapper; display only, not execution:**\n\n```bash\n# The installed entrypoint preserves the caller's cwd for relative data paths.\nexec \"$ENTRY\" \"$@\"\n```\n\n**Visible qualification:** Post-trial integration. The evaluator image does not require the shared skill.\n\n**Evidence IDs:** E02, E08, E11. Best-practices guidance and source inspection do not establish fresh validation or blanket compliance.\n\n**Transition:** That same workflow also supports reviewed aliases; the next slide separates a proposal, an approved exact policy, and a released corpus.\n\nAuthoring only: no application/test/Docker, local pitchdeck compiler, owning SVG validator, analytics/create-figure, recording or Live Evidence execution. Follow the stated assessment permission boundary.\n"
     },
     {
       "id": "r27-discovery",
@@ -4526,7 +4526,7 @@
       "layout": "freeform",
       "visibility": "public",
       "title": "A proposed alias does not authorize release",
-      "message": "Extra Credit · propose → approve IDs → exact policy → verify",
+      "message": "Extra Credit \u00b7 propose \u2192 approve IDs \u2192 exact policy \u2192 verify",
       "body": [],
       "source_refs": [
         {
@@ -4594,13 +4594,13 @@
           "align": "left"
         },
         {
-          "id": "lead",
+          "id": "message",
           "type": "text",
           "x": 0.065,
           "y": 0.14,
           "w": 0.87,
           "h": 0.12,
-          "text": "Extra Credit · propose → approve IDs → exact policy → verify",
+          "text": "Extra Credit \u00b7 propose \u2192 approve IDs \u2192 exact policy \u2192 verify",
           "size_pt": 23,
           "bold": false,
           "color": "#e2ac62",
@@ -4652,7 +4652,7 @@
           "y": 0.735,
           "w": 0.87,
           "h": 0.075,
-          "text": "Source: discovery.py:222–309",
+          "text": "Source: discovery.py:222\u2013309",
           "size_pt": 17.5,
           "bold": false,
           "color": "#a99787",
@@ -4665,7 +4665,7 @@
           "y": 0.85,
           "w": 0.87,
           "h": 0.08,
-          "text": "Whole-value proposals; score ≠ probability. Approval adds a global literal rule.",
+          "text": "Whole-value proposals; score \u2260 probability. Approval adds a global literal rule.",
           "size_pt": 17.5,
           "bold": false,
           "color": "#a99787",
@@ -4692,7 +4692,7 @@
           "transform_class": "generalization"
         },
         {
-          "path": "element:lead",
+          "path": "element:message",
           "kind": "claim_paraphrase",
           "claim_id": "discovery",
           "transform_class": "generalization"
@@ -4728,7 +4728,7 @@
       "transition": "none",
       "reveal": "none",
       "hidden": false,
-      "notes": "PREPARED REHEARSAL GUIDE — not a record of an interview.\nPresentation source commit: ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78. Frozen implementation: 0375af56bf681e9441edcb7433cfe58951db77b2.\nTIME 27:00–28:30; 1.5 minute(s); timing kind: prepared.\nLegacy sections: 05-evidence. Primary question IDs: Q19, Q20, Q21, Q34, Q35, Q36.\n## r27-discovery — A proposed alias does not authorize release\n\n**Time:** 27:00–28:30. **Block:** Extra Credit. **Primary questions:** Q19, Q20, Q21, Q34, Q35, Q36\n\n### Say\n\nContinue the same person-a example with the observed spelling Alicee. Discovery compares whole structured string values or text lines against eligible name rules. It ranks distinct identities, refuses ties and insufficient separation, and emits private proposals. The default score threshold and margin are not probabilities of identity.\nWithout approval, the exact Alice substring can already match inside Alicee and leave a trailing e. Approval adds the longer literal Alicee for the same canonical subject. It does not switch default anonymization into fuzzy replacement.\nApproval requires explicit unique candidate IDs, re-derives the supplied report against the current source and valid supplied settings, and invokes the real policy compiler before writing. A self-consistent report is not a cryptographic signature or authenticated human consent. The operator owns that decision.\nThe resulting rule is global literal matching, not a row-only permission. Protected overlaps still reject, and a subsequent pipeline run must transform and verify before release. Discovery and approval receipts stay release_ready false. The private artifact boundary on the next page is what prevents those raw aliases entering a READY release.\n\n### Show / navigate\n\napprove() L329–378 and the all-four-format alias test. No live fuzzy scoring or probability claim.\n\n- [`src/anonymization_trial/discovery.py::discover` — L222–L309](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/discovery.py#L222-L309)\n- [`src/anonymization_trial/discovery.py::approve` — L329–L378](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/discovery.py#L329-L378)\n- [`src/anonymization_trial/discovery.py::write_private` — L312–L326](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/discovery.py#L312-L326)\n- [`tests/test_discovery.py::test_discover_approve_and_anonymize_all_four_formats` — L64–L137](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/tests/test_discovery.py#L64-L137)\n\n**Exact source excerpt (context shown in the pinned link):**\n\n```python\ndef approve(bundle: Path, review_path: Path, ids: list[str], output: Path, *inputs: Path) -> dict:\n    output = separate_output(output, bundle, review_path, *inputs)\n    receipt_path = separate_output(\n        output.with_name(output.name + \".approval.json\"), bundle, review_path, output, *inputs\n    )\n```\n\n**Visible qualification:** Whole-value proposals; score ≠ probability. Approval adds a global literal rule.\n\n**Evidence IDs:** E02, E06, E08\n\nAuthoring only: no application/test/Docker, local pitchdeck compiler, owning SVG validator, analytics/create-figure, recording or Live Evidence execution. Follow the stated assessment permission boundary.\n"
+      "notes": "PREPARED REHEARSAL GUIDE \u2014 not a record of an interview.\nPresentation source commit: ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78. Frozen implementation: 0375af56bf681e9441edcb7433cfe58951db77b2.\nTIME 27:00\u201328:30; 1.5 minute(s); timing kind: prepared.\nLegacy sections: 05-evidence. Primary question IDs: Q19, Q20, Q21, Q34, Q35, Q36.\n## r27-discovery \u2014 A proposed alias does not authorize release\n\n**Time:** 27:00\u201328:30. **Block:** Extra Credit. **Primary questions:** Q19, Q20, Q21, Q34, Q35, Q36\n\n### Say\n\nContinue the same person-a example with the observed spelling Alicee. Discovery compares whole structured string values or text lines against eligible name rules. It ranks distinct identities, refuses ties and insufficient separation, and emits private proposals. The default score threshold and margin are not probabilities of identity.\nWithout approval, the exact Alice substring can already match inside Alicee and leave a trailing e. Approval adds the longer literal Alicee for the same canonical subject. It does not switch default anonymization into fuzzy replacement.\nApproval requires explicit unique candidate IDs, re-derives the supplied report against the current source and valid supplied settings, and invokes the real policy compiler before writing. A self-consistent report is not a cryptographic signature or authenticated human consent. The operator owns that decision.\nThe resulting rule is global literal matching, not a row-only permission. Protected overlaps still reject, and a subsequent pipeline run must transform and verify before release. Discovery and approval receipts stay release_ready false. The private artifact boundary on the next page is what prevents those raw aliases entering a READY release.\n\n### Show / navigate\n\napprove() L329\u2013378 and the all-four-format alias test. No live fuzzy scoring or probability claim.\n\n- [`src/anonymization_trial/discovery.py::discover` \u2014 L222\u2013L309](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/discovery.py#L222-L309)\n- [`src/anonymization_trial/discovery.py::approve` \u2014 L329\u2013L378](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/discovery.py#L329-L378)\n- [`src/anonymization_trial/discovery.py::write_private` \u2014 L312\u2013L326](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/discovery.py#L312-L326)\n- [`tests/test_discovery.py::test_discover_approve_and_anonymize_all_four_formats` \u2014 L64\u2013L137](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/tests/test_discovery.py#L64-L137)\n\n**Exact source excerpt (context shown in the pinned link):**\n\n```python\ndef approve(bundle: Path, review_path: Path, ids: list[str], output: Path, *inputs: Path) -> dict:\n    output = separate_output(output, bundle, review_path, *inputs)\n    receipt_path = separate_output(\n        output.with_name(output.name + \".approval.json\"), bundle, review_path, output, *inputs\n    )\n```\n\n**Visible qualification:** Whole-value proposals; score \u2260 probability. Approval adds a global literal rule.\n\n**Evidence IDs:** E02, E06, E08\n\nAuthoring only: no application/test/Docker, local pitchdeck compiler, owning SVG validator, analytics/create-figure, recording or Live Evidence execution. Follow the stated assessment permission boundary.\n"
     },
     {
       "id": "r28-canonical-path",
@@ -4807,7 +4807,7 @@
           "align": "left"
         },
         {
-          "id": "lead",
+          "id": "message",
           "type": "text",
           "x": 0.065,
           "y": 0.14,
@@ -4835,7 +4835,7 @@
           "y": 0.735,
           "w": 0.87,
           "h": 0.075,
-          "text": "Source: bundle.py:22–37",
+          "text": "Source: bundle.py:22\u201337",
           "size_pt": 17.5,
           "bold": false,
           "color": "#a99787",
@@ -4875,7 +4875,7 @@
           "transform_class": "generalization"
         },
         {
-          "path": "element:lead",
+          "path": "element:message",
           "kind": "claim_paraphrase",
           "claim_id": "canonical-path",
           "transform_class": "generalization"
@@ -4893,7 +4893,7 @@
       "transition": "none",
       "reveal": "none",
       "hidden": false,
-      "notes": "PREPARED REHEARSAL GUIDE — not a record of an interview.\nPresentation source commit: ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78. Frozen implementation: 0375af56bf681e9441edcb7433cfe58951db77b2.\nTIME 28:30–30:00; 1.5 minute(s); timing kind: prepared.\nLegacy sections: 04-reliability, 05-evidence. Primary question IDs: Q15, Q16, Q17, Q18.\n## r28-canonical-path — Validate the destination that will actually be written\n\n**Time:** 28:30–30:00. **Block:** Extra Credit. **Primary questions:** Q15, Q16, Q17, Q18\n\n### Say\n\nThe concrete extension defect was not in the similarity scorer. A relative review path from inside release/corpus, or a symlink alias to it, could evade a check that walked lexical parents even though another check had resolved the destination. The write and validation disagreed about location.\nThe fix returns a validated canonical path and carries it into writing. The CLI assigns that path to its output argument. Approval validates both the new policy and the sibling receipt before either is created. Exclusive creation and mode 0600 remain useful, but neither can substitute for keeping raw-name work outside a release.\nThe retained regression creates a real READY release, compares its complete file-path-to-bytes snapshot after denied writes, and includes successful equivalent private-work controls. It also checks a receipt-only symlink. The previous bounded reviewer closed that demonstrated blocker by inspecting the source and regression, not by personally running Docker.\nThis is the last substantive prepared page. The restriction remains trusted single-writer operation, not protection against a hostile concurrent filesystem mutator. We now move to your questions, not another prepared feature or recap.\n\n### Show / navigate\n\nseparate_output L22–37 → main caller → approve receipt path → path regression L180–244. Use 25–30 seconds for navigation inside this slot.\n\n- [`src/anonymization_trial/bundle.py::separate_output` — L22–L37](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/bundle.py#L22-L37)\n- [`src/anonymization_trial/discovery.py::approve` — L329–L378](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/discovery.py#L329-L378)\n- [`src/anonymization_trial/discovery.py::write_private` — L312–L326](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/discovery.py#L312-L326)\n- [`tests/test_discovery_boundaries.py::test_work_artifacts_cannot_enter_release_via_relative_or_symlink_paths` — L180–L244](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/tests/test_discovery_boundaries.py#L180-L244)\n\n**Exact source excerpt (context shown in the pinned link):**\n\n```python\n    if any(\n        (parent / \"report.json\").is_file() and (parent / \"corpus\").is_dir()\n        for parent in out.parents\n    ):\n        raise AnonError(AnonErrorCode.UNSAFE_INPUT, \"work artifacts must stay outside a release\")\n    return out\n```\n\n**Visible qualification:** Bounded source-review closure; trusted single writer. Not race-proof traversal.\n\n**Evidence IDs:** E02, E04, E06, E08\n\nAuthoring only: no application/test/Docker, local pitchdeck compiler, owning SVG validator, analytics/create-figure, recording or Live Evidence execution. Follow the stated assessment permission boundary.\n"
+      "notes": "PREPARED REHEARSAL GUIDE \u2014 not a record of an interview.\nPresentation source commit: ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78. Frozen implementation: 0375af56bf681e9441edcb7433cfe58951db77b2.\nTIME 28:30\u201330:00; 1.5 minute(s); timing kind: prepared.\nLegacy sections: 04-reliability, 05-evidence. Primary question IDs: Q15, Q16, Q17, Q18.\n## r28-canonical-path \u2014 Validate the destination that will actually be written\n\n**Time:** 28:30\u201330:00. **Block:** Extra Credit. **Primary questions:** Q15, Q16, Q17, Q18\n\n### Say\n\nThe concrete extension defect was not in the similarity scorer. A relative review path from inside release/corpus, or a symlink alias to it, could evade a check that walked lexical parents even though another check had resolved the destination. The write and validation disagreed about location.\nThe fix returns a validated canonical path and carries it into writing. The CLI assigns that path to its output argument. Approval validates both the new policy and the sibling receipt before either is created. Exclusive creation and mode 0600 remain useful, but neither can substitute for keeping raw-name work outside a release.\nThe retained regression creates a real READY release, compares its complete file-path-to-bytes snapshot after denied writes, and includes successful equivalent private-work controls. It also checks a receipt-only symlink. The previous bounded reviewer closed that demonstrated blocker by inspecting the source and regression, not by personally running Docker.\nThis is the last substantive prepared page. The restriction remains trusted single-writer operation, not protection against a hostile concurrent filesystem mutator. We now move to your questions, not another prepared feature or recap.\n\n### Show / navigate\n\nseparate_output L22\u201337 \u2192 main caller \u2192 approve receipt path \u2192 path regression L180\u2013244. Use 25\u201330 seconds for navigation inside this slot.\n\n- [`src/anonymization_trial/bundle.py::separate_output` \u2014 L22\u2013L37](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/bundle.py#L22-L37)\n- [`src/anonymization_trial/discovery.py::approve` \u2014 L329\u2013L378](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/discovery.py#L329-L378)\n- [`src/anonymization_trial/discovery.py::write_private` \u2014 L312\u2013L326](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/discovery.py#L312-L326)\n- [`tests/test_discovery_boundaries.py::test_work_artifacts_cannot_enter_release_via_relative_or_symlink_paths` \u2014 L180\u2013L244](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/tests/test_discovery_boundaries.py#L180-L244)\n\n**Exact source excerpt (context shown in the pinned link):**\n\n```python\n    if any(\n        (parent / \"report.json\").is_file() and (parent / \"corpus\").is_dir()\n        for parent in out.parents\n    ):\n        raise AnonError(AnonErrorCode.UNSAFE_INPUT, \"work artifacts must stay outside a release\")\n    return out\n```\n\n**Visible qualification:** Bounded source-review closure; trusted single writer. Not race-proof traversal.\n\n**Evidence IDs:** E02, E04, E06, E08\n\nAuthoring only: no application/test/Docker, local pitchdeck compiler, owning SVG validator, analytics/create-figure, recording or Live Evidence execution. Follow the stated assessment permission boundary.\n"
     },
     {
       "id": "r29-discussion",
@@ -4902,7 +4902,7 @@
       "layout": "freeform",
       "visibility": "public",
       "title": "Discussion",
-      "message": "Your questions—not more prepared objections.",
+      "message": "Your questions\u2014not more prepared objections.",
       "body": [],
       "source_refs": [
         {
@@ -4942,13 +4942,13 @@
           "align": "left"
         },
         {
-          "id": "lead",
+          "id": "message",
           "type": "text",
           "x": 0.065,
           "y": 0.14,
           "w": 0.87,
           "h": 0.12,
-          "text": "Your questions—not more prepared objections.",
+          "text": "Your questions\u2014not more prepared objections.",
           "size_pt": 23,
           "bold": false,
           "color": "#e2ac62",
@@ -4974,7 +4974,7 @@
           "y": 0.6,
           "w": 0.82,
           "h": 0.1,
-          "text": "Identity · Verification · Publication · Approval",
+          "text": "Identity \u00b7 Verification \u00b7 Publication \u00b7 Approval",
           "size_pt": 24,
           "bold": false,
           "color": "#e2ac62",
@@ -5008,7 +5008,7 @@
           "kind": "decorative"
         },
         {
-          "path": "element:lead",
+          "path": "element:message",
           "kind": "decorative"
         },
         {
@@ -5027,7 +5027,7 @@
       "transition": "none",
       "reveal": "none",
       "hidden": false,
-      "notes": "PREPARED REHEARSAL GUIDE — not a record of an interview.\nPresentation source commit: ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78. Frozen implementation: 0375af56bf681e9441edcb7433cfe58951db77b2.\nTIME 30:00–45:00+ audience reserve; 15 minute(s); timing kind: audience_reserve.\nLegacy sections: 01-brief, 02-architecture, 03-semantics, 04-reliability, 05-evidence, 06-production, 07-nonclaims. Primary question IDs: Q48.\n## r29-discussion — Discussion\n\n**Time:** 30:00–45:00+ audience reserve. **Block:** Discussion. **Primary questions:** Q48\n\n### Say\n\nThe prepared walkthrough is complete. Which decision or boundary would you like to inspect? I’ll follow the question to the pinned code, the corresponding evidence, or the explicit limit, rather than repeat the whole presentation.\n\n### Show / navigate\n\nUse the 48-question appendix as permitted preparation/reference only. No automatic candidate-answer assistance or recording. Follow formal-assessment rules and obtain explicit consent.\n\n\n**Visible qualification:** Audience reserve: 15+ minutes, separate from the prepared 30.\n\n**Evidence IDs:** E08\n\nAuthoring only: no application/test/Docker, local pitchdeck compiler, owning SVG validator, analytics/create-figure, recording or Live Evidence execution. Follow the stated assessment permission boundary.\n"
+      "notes": "PREPARED REHEARSAL GUIDE \u2014 not a record of an interview.\nPresentation source commit: ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78. Frozen implementation: 0375af56bf681e9441edcb7433cfe58951db77b2.\nTIME 30:00\u201345:00+ audience reserve; 15 minute(s); timing kind: audience_reserve.\nLegacy sections: 01-brief, 02-architecture, 03-semantics, 04-reliability, 05-evidence, 06-production, 07-nonclaims. Primary question IDs: Q48.\n## r29-discussion \u2014 Discussion\n\n**Time:** 30:00\u201345:00+ audience reserve. **Block:** Discussion. **Primary questions:** Q48\n\n### Say\n\nThe prepared walkthrough is complete. Which decision or boundary would you like to inspect? I\u2019ll follow the question to the pinned code, the corresponding evidence, or the explicit limit, rather than repeat the whole presentation.\n\n### Show / navigate\n\nUse the 48-question appendix as permitted preparation/reference only. No automatic candidate-answer assistance or recording. Follow formal-assessment rules and obtain explicit consent.\n\n\n**Visible qualification:** Audience reserve: 15+ minutes, separate from the prepared 30.\n\n**Evidence IDs:** E08\n\nAuthoring only: no application/test/Docker, local pitchdeck compiler, owning SVG validator, analytics/create-figure, recording or Live Evidence execution. Follow the stated assessment permission boundary.\n"
     },
     {
       "id": "r30-thank-you",
@@ -5036,7 +5036,7 @@
       "layout": "freeform",
       "visibility": "public",
       "title": "Thank you",
-      "message": "Thank you.",
+      "message": "grahama.co",
       "body": [],
       "source_refs": [
         {
@@ -5074,6 +5074,18 @@
           "bold": false,
           "color": "#ece2d3",
           "align": "center"
+        },
+        {
+          "id": "message",
+          "type": "text",
+          "x": 0.2,
+          "y": 0.65,
+          "w": 0.6,
+          "h": 0.08,
+          "text": "grahama.co",
+          "size_pt": 20,
+          "color": "#a99787",
+          "align": "center"
         }
       ],
       "bindings": [
@@ -5083,17 +5095,21 @@
         },
         {
           "path": "message",
-          "kind": "decorative"
+          "kind": "non_claim"
         },
         {
           "path": "element:title",
           "kind": "decorative"
+        },
+        {
+          "path": "element:message",
+          "kind": "non_claim"
         }
       ],
       "transition": "none",
       "reveal": "none",
       "hidden": false,
-      "notes": "PREPARED REHEARSAL GUIDE — not a record of an interview.\nPresentation source commit: ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78. Frozen implementation: 0375af56bf681e9441edcb7433cfe58951db77b2.\nTIME After discussion; end playback; 0 minute(s); timing kind: closing.\nLegacy sections: . Primary question IDs: paired lead-in/navigation only.\n## r30-thank-you — Thank you\n\n**Time:** After discussion; end playback. **Block:** Thank you. **Primary questions:** None; navigation or paired lead-in.\n\n### Say\n\nThank you for the discussion.\n\n### Show / navigate\n\nEnd normal playback. No substantive slide follows. Backup questions are Markdown appendix material, not appended playback slides.\n\n\n**Evidence IDs:** Procedural close only.\n\nAuthoring only: no application/test/Docker, local pitchdeck compiler, owning SVG validator, analytics/create-figure, recording or Live Evidence execution. Follow the stated assessment permission boundary.\n"
+      "notes": "PREPARED REHEARSAL GUIDE \u2014 not a record of an interview.\nPresentation source commit: ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78. Frozen implementation: 0375af56bf681e9441edcb7433cfe58951db77b2.\nTIME After discussion; end playback; 0 minute(s); timing kind: closing.\nLegacy sections: . Primary question IDs: paired lead-in/navigation only.\n## r30-thank-you \u2014 Thank you\n\n**Time:** After discussion; end playback. **Block:** Thank you. **Primary questions:** None; navigation or paired lead-in.\n\n### Say\n\nThank you for the discussion.\n\n### Show / navigate\n\nEnd normal playback. No substantive slide follows. Backup questions are Markdown appendix material, not appended playback slides.\n\n\n**Evidence IDs:** Procedural close only.\n\nAuthoring only: no application/test/Docker, local pitchdeck compiler, owning SVG validator, analytics/create-figure, recording or Live Evidence execution. Follow the stated assessment permission boundary.\n"
     }
   ]
 }

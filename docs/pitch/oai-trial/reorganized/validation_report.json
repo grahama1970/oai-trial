@@ -1,0 +1,201 @@
+{
+  "schema": "pitchdeck.validation_report.v1",
+  "readiness": "USABLE_WITH_GAPS",
+  "errors": 0,
+  "warnings": 27,
+  "issues": [
+    {
+      "severity": "warning",
+      "code": "SLIDE_CANDIDATE_CLAIM",
+      "message": "Slide uses candidate claim 'demo-fixture'; human review remains open.",
+      "slide_id": "r02-demo-result",
+      "claim_id": "demo-fixture"
+    },
+    {
+      "severity": "warning",
+      "code": "SLIDE_CANDIDATE_CLAIM",
+      "message": "Slide uses candidate claim 'recorded-demo'; human review remains open.",
+      "slide_id": "r03-demo-observations",
+      "claim_id": "recorded-demo"
+    },
+    {
+      "severity": "warning",
+      "code": "SLIDE_CANDIDATE_CLAIM",
+      "message": "Slide uses candidate claim 'docker-interface'; human review remains open.",
+      "slide_id": "r04-docker",
+      "claim_id": "docker-interface"
+    },
+    {
+      "severity": "warning",
+      "code": "SLIDE_CANDIDATE_CLAIM",
+      "message": "Slide uses candidate claim 'reproduce'; human review remains open.",
+      "slide_id": "r05-mounted-cli",
+      "claim_id": "reproduce"
+    },
+    {
+      "severity": "warning",
+      "code": "SLIDE_CANDIDATE_CLAIM",
+      "message": "Slide uses candidate claim 'qualification'; human review remains open.",
+      "slide_id": "r06-output-evidence",
+      "claim_id": "qualification"
+    },
+    {
+      "severity": "warning",
+      "code": "SLIDE_CANDIDATE_CLAIM",
+      "message": "Slide uses candidate claim 'local'; human review remains open.",
+      "slide_id": "r07-pipeline-map",
+      "claim_id": "local"
+    },
+    {
+      "severity": "warning",
+      "code": "SLIDE_CANDIDATE_CLAIM",
+      "message": "Slide uses candidate claim 'policy'; human review remains open.",
+      "slide_id": "r08-policy",
+      "claim_id": "policy"
+    },
+    {
+      "severity": "warning",
+      "code": "SLIDE_CANDIDATE_CLAIM",
+      "message": "Slide uses candidate claim 'identity'; human review remains open.",
+      "slide_id": "r09-identity",
+      "claim_id": "identity"
+    },
+    {
+      "severity": "warning",
+      "code": "SLIDE_CANDIDATE_CLAIM",
+      "message": "Slide uses candidate claim 'spans'; human review remains open.",
+      "slide_id": "r10-spans",
+      "claim_id": "spans"
+    },
+    {
+      "severity": "warning",
+      "code": "SLIDE_CANDIDATE_CLAIM",
+      "message": "Slide uses candidate claim 'formats'; human review remains open.",
+      "slide_id": "r11-formats",
+      "claim_id": "formats"
+    },
+    {
+      "severity": "warning",
+      "code": "SLIDE_CANDIDATE_CLAIM",
+      "message": "Slide uses candidate claim 'typed-location'; human review remains open.",
+      "slide_id": "r12-typed-locations",
+      "claim_id": "typed-location"
+    },
+    {
+      "severity": "warning",
+      "code": "SLIDE_CANDIDATE_CLAIM",
+      "message": "Slide uses candidate claim 'publication'; human review remains open.",
+      "slide_id": "r13-publication",
+      "claim_id": "publication"
+    },
+    {
+      "severity": "warning",
+      "code": "SLIDE_CANDIDATE_CLAIM",
+      "message": "Slide uses candidate claim 'cloud'; human review remains open.",
+      "slide_id": "r14-cloud",
+      "claim_id": "cloud"
+    },
+    {
+      "severity": "warning",
+      "code": "SLIDE_CANDIDATE_CLAIM",
+      "message": "Slide uses candidate claim 'capacity'; human review remains open.",
+      "slide_id": "r15-capacity",
+      "claim_id": "capacity"
+    },
+    {
+      "severity": "warning",
+      "code": "SLIDE_CANDIDATE_CLAIM",
+      "message": "Slide uses candidate claim 'cost'; human review remains open.",
+      "slide_id": "r16-cost",
+      "claim_id": "cost"
+    },
+    {
+      "severity": "warning",
+      "code": "SLIDE_CANDIDATE_CLAIM",
+      "message": "Slide uses candidate claim 'disclosure'; human review remains open.",
+      "slide_id": "r17-disclosure",
+      "claim_id": "disclosure"
+    },
+    {
+      "severity": "warning",
+      "code": "SLIDE_CANDIDATE_CLAIM",
+      "message": "Slide uses candidate claim 'exact-answer'; human review remains open.",
+      "slide_id": "r18-question-exact",
+      "claim_id": "exact-answer"
+    },
+    {
+      "severity": "warning",
+      "code": "SLIDE_CANDIDATE_CLAIM",
+      "message": "Slide uses candidate claim 'exact-answer'; human review remains open.",
+      "slide_id": "r19-answer-exact",
+      "claim_id": "exact-answer"
+    },
+    {
+      "severity": "warning",
+      "code": "SLIDE_CANDIDATE_CLAIM",
+      "message": "Slide uses candidate claim 'verifier-answer'; human review remains open.",
+      "slide_id": "r20-question-verifier",
+      "claim_id": "verifier-answer"
+    },
+    {
+      "severity": "warning",
+      "code": "SLIDE_CANDIDATE_CLAIM",
+      "message": "Slide uses candidate claim 'verifier-answer'; human review remains open.",
+      "slide_id": "r21-answer-verifier",
+      "claim_id": "verifier-answer"
+    },
+    {
+      "severity": "warning",
+      "code": "SLIDE_CANDIDATE_CLAIM",
+      "message": "Slide uses candidate claim 'scale-answer'; human review remains open.",
+      "slide_id": "r22-question-scale",
+      "claim_id": "scale-answer"
+    },
+    {
+      "severity": "warning",
+      "code": "SLIDE_CANDIDATE_CLAIM",
+      "message": "Slide uses candidate claim 'scale-answer'; human review remains open.",
+      "slide_id": "r23-answer-scale",
+      "claim_id": "scale-answer"
+    },
+    {
+      "severity": "warning",
+      "code": "SLIDE_CANDIDATE_CLAIM",
+      "message": "Slide uses candidate claim 'security-evals'; human review remains open.",
+      "slide_id": "r24-security-evals",
+      "claim_id": "security-evals"
+    },
+    {
+      "severity": "warning",
+      "code": "SLIDE_CANDIDATE_CLAIM",
+      "message": "Slide uses candidate claim 'battle-fixture'; human review remains open.",
+      "slide_id": "r25-lineage",
+      "claim_id": "battle-fixture"
+    },
+    {
+      "severity": "warning",
+      "code": "SLIDE_CANDIDATE_CLAIM",
+      "message": "Slide uses candidate claim 'wrapper'; human review remains open.",
+      "slide_id": "r26-wrapper",
+      "claim_id": "wrapper"
+    },
+    {
+      "severity": "warning",
+      "code": "SLIDE_CANDIDATE_CLAIM",
+      "message": "Slide uses candidate claim 'discovery'; human review remains open.",
+      "slide_id": "r27-discovery",
+      "claim_id": "discovery"
+    },
+    {
+      "severity": "warning",
+      "code": "SLIDE_CANDIDATE_CLAIM",
+      "message": "Slide uses candidate claim 'canonical-path'; human review remains open.",
+      "slide_id": "r28-canonical-path",
+      "claim_id": "canonical-path"
+    }
+  ],
+  "seam_validation": {
+    "kind": "validation_report",
+    "status": "PASS"
+  }
+}

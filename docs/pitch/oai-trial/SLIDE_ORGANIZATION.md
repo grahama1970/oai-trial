@@ -7,7 +7,7 @@ technical detail or audience discussion.
 
 Current coordinated **candidate**, still requiring human review:
 [TOC](reorganized/TOC.md) · [transcript](reorganized/WALKTHROUGH.md) ·
-[slide JSON](reorganized/deck.json) · [integration notes](reorganized/README.md).
+[slide JSON](reorganized/deck.public.yaml) · [integration notes](reorganized/README.md).
 
 ## Fixed instructions
 

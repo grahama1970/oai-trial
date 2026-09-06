@@ -2,11 +2,11 @@
 
 This is a coordinated **candidate authoring bundle**, not the submitted anonymizer archive, a fresh technical qualification, or an approved slide export.
 
-Start with `INTERVIEW_GUIDE.md`, then `TOC.md` and `WALKTHROUGH.md`. `deck.json` contains 30 normal-playback slides: 28 prepared slides totaling 30 minutes, then a separate 15+ minute Discussion reserve and a final Thank you. The entire 48-question bank remains outside playback, preserved in the transcript and `question-map.json`.
+Start with `INTERVIEW_GUIDE.md`, then `TOC.md` and `WALKTHROUGH.md`. `deck.public.yaml` contains 30 normal-playback slides: 28 prepared slides totaling 30 minutes, then a separate 15+ minute Discussion reserve and a final Thank you. The entire 48-question bank remains outside playback, preserved in the transcript and `question-map.json`.
 
 ## Contents
 
-- `deck.json`, `claim_ledger.json`, `source_manifest.json`, `asset_manifest.json`: schema-bound current-consumer draft; all claims candidate.
+- `deck.public.yaml`, `claim_ledger.yaml`, `source_manifest.yaml`, `asset_manifest.yaml`: schema-bound current-consumer draft; all claims candidate.
 - `slide-map.json`: stable new slide IDs, primary Q mappings, legacy sections, durations, code path/symbol/line ranges/commit and diagram/figure links.
 - `TOC.md`, `WALKTHROUGH.md`: one coordinated hierarchy and full spoken transcript with code citations and the preserved question appendix.
 - `assets/`: actual supplied header PNG and authored self-contained static SVGs. SVG internals are image content in the current PowerPoint exporter, not native editable shapes. Prose and slide headings remain native text.
@@ -48,3 +48,22 @@ This copy updates the committed authoring sources at `ecfaaaac2cc7844bd0e52fd7d2
 All payload hashes in the incoming `current-package.json` were checked against their own decoded content. No older inventory is used as byte authority for normalized evidence. Current authoring checks are in `validation/authoring-checks.json` and their limits in `validation/SCOPE.md`. The prior local draft build reported by the project agent does not establish that this edited deck has been rendered.
 
 The actual supplied preview is retained under `reference/` for context only. No font files, application changes, renderer patches, new runtime tests or execution receipts are added. Old question/navigation SVGs remain reference files but are not bound to normal playback.
+
+## Native pitchdeck import
+
+The four current manifests use the standard pitchdeck filenames ending in
+`.yaml` (their JSON syntax is valid YAML). These are the single editable sources;
+the original WebGPT JSON files remain in the downloaded ZIP. Native UI emission
+uses this project-owned bundle; generated browser assets stay on the artifact
+drive. No shared pitchdeck implementation files are changed.
+
+Native presentation URL (local workstation):
+`http://127.0.0.1:3006/?deck=./oai-trial-current/deck.data.json`
+
+The import preserves title/message claim bindings by using matching freeform
+element IDs. The closing slide adds the grahama.co caption. Candidate claim
+warnings remain intentional. Next-slide navigation was exercised; recording and
+VS Code sync were not activated. The narrow native view currently duplicates
+authored header-positioned titles below its automatic header; this observed
+shared-renderer issue was sent to the pitchdeck owner. It is not final visual
+approval or a reason to alter the anonymizer.

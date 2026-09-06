@@ -1,0 +1,65 @@
+{
+  "schema": "pitchdeck.verify_receipt.v1",
+  "operation": "verify",
+  "readiness": "USABLE_WITH_GAPS",
+  "mocked": false,
+  "live": false,
+  "inputs": {
+    "bundle_dir": "/home/graham/workspace/experiments/oai-trial/docs/pitch/oai-trial/reorganized",
+    "deck": "/home/graham/workspace/experiments/oai-trial/docs/pitch/oai-trial/reorganized/deck.public.yaml",
+    "pptx": "/mnt/storage12tb/oai-trial/native-pitchdeck/oai-trial-current.pptx"
+  },
+  "outputs": {
+    "validation_report": "/home/graham/workspace/experiments/oai-trial/docs/pitch/oai-trial/reorganized/validation_report.json"
+  },
+  "counts": {
+    "slides": 30,
+    "claims": 24,
+    "assets": 36,
+    "errors": 0,
+    "warnings": 27
+  },
+  "gaps": [
+    "SLIDE_CANDIDATE_CLAIM: Slide uses candidate claim 'demo-fixture'; human review remains open.",
+    "SLIDE_CANDIDATE_CLAIM: Slide uses candidate claim 'recorded-demo'; human review remains open.",
+    "SLIDE_CANDIDATE_CLAIM: Slide uses candidate claim 'docker-interface'; human review remains open.",
+    "SLIDE_CANDIDATE_CLAIM: Slide uses candidate claim 'reproduce'; human review remains open.",
+    "SLIDE_CANDIDATE_CLAIM: Slide uses candidate claim 'qualification'; human review remains open.",
+    "SLIDE_CANDIDATE_CLAIM: Slide uses candidate claim 'local'; human review remains open.",
+    "SLIDE_CANDIDATE_CLAIM: Slide uses candidate claim 'policy'; human review remains open.",
+    "SLIDE_CANDIDATE_CLAIM: Slide uses candidate claim 'identity'; human review remains open.",
+    "SLIDE_CANDIDATE_CLAIM: Slide uses candidate claim 'spans'; human review remains open.",
+    "SLIDE_CANDIDATE_CLAIM: Slide uses candidate claim 'formats'; human review remains open.",
+    "SLIDE_CANDIDATE_CLAIM: Slide uses candidate claim 'typed-location'; human review remains open.",
+    "SLIDE_CANDIDATE_CLAIM: Slide uses candidate claim 'publication'; human review remains open.",
+    "SLIDE_CANDIDATE_CLAIM: Slide uses candidate claim 'cloud'; human review remains open.",
+    "SLIDE_CANDIDATE_CLAIM: Slide uses candidate claim 'capacity'; human review remains open.",
+    "SLIDE_CANDIDATE_CLAIM: Slide uses candidate claim 'cost'; human review remains open.",
+    "SLIDE_CANDIDATE_CLAIM: Slide uses candidate claim 'disclosure'; human review remains open.",
+    "SLIDE_CANDIDATE_CLAIM: Slide uses candidate claim 'exact-answer'; human review remains open.",
+    "SLIDE_CANDIDATE_CLAIM: Slide uses candidate claim 'exact-answer'; human review remains open.",
+    "SLIDE_CANDIDATE_CLAIM: Slide uses candidate claim 'verifier-answer'; human review remains open.",
+    "SLIDE_CANDIDATE_CLAIM: Slide uses candidate claim 'verifier-answer'; human review remains open.",
+    "SLIDE_CANDIDATE_CLAIM: Slide uses candidate claim 'scale-answer'; human review remains open.",
+    "SLIDE_CANDIDATE_CLAIM: Slide uses candidate claim 'scale-answer'; human review remains open.",
+    "SLIDE_CANDIDATE_CLAIM: Slide uses candidate claim 'security-evals'; human review remains open.",
+    "SLIDE_CANDIDATE_CLAIM: Slide uses candidate claim 'battle-fixture'; human review remains open.",
+    "SLIDE_CANDIDATE_CLAIM: Slide uses candidate claim 'wrapper'; human review remains open.",
+    "SLIDE_CANDIDATE_CLAIM: Slide uses candidate claim 'discovery'; human review remains open.",
+    "SLIDE_CANDIDATE_CLAIM: Slide uses candidate claim 'canonical-path'; human review remains open."
+  ],
+  "claims": {
+    "proves": [
+      "Typed bundle manifests passed or failed according to the emitted validation issues.",
+      "The PPTX was reopened and structurally checked."
+    ],
+    "does_not_prove": [
+      "The deck is factually or visually approved.",
+      "Source claims match the current codebase or live runtime."
+    ]
+  },
+  "seam_validation": {
+    "kind": "verify_receipt",
+    "status": "PASS"
+  }
+}

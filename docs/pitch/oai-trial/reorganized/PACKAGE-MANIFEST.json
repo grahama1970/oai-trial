@@ -15,13 +15,13 @@
     },
     {
       "path": "README.md",
-      "bytes": 5607,
-      "sha256": "12369622c31035ca00209e14f46abc7382fdc14a7c279a5658a6ab59ca3f5d0f"
+      "bytes": 6647,
+      "sha256": "2d48e0ef3f01a073c88ddc1876c2d8b95d1a52ceb13ee6aa0546c815d98d6c43"
     },
     {
       "path": "TOC.md",
-      "bytes": 6230,
-      "sha256": "ec054769d3117ef1fd1d68b18ea3c3893f820b1d1a620b9a21c5cc948c8ac991"
+      "bytes": 6237,
+      "sha256": "2efa8fbd8af6a36179ae21bbe25132f0c6046392432ee0683e245f79e8176226"
     },
     {
       "path": "WALKTHROUGH.md",
@@ -29,7 +29,7 @@
       "sha256": "7d54cba5670839d39a3717edea26953d5cc0055a136a5d55ff010b5ef6ec603f"
     },
     {
-      "path": "asset_manifest.json",
+      "path": "asset_manifest.yaml",
       "bytes": 32732,
       "sha256": "d93dd56d0143b6ac6a2e883fe516b26f1d773c1a0987f20b1c9dbbf587e83845"
     },
@@ -234,14 +234,14 @@
       "sha256": "53f34cd602f9dce827a7cfc8373384c5d215c2fdb11a93414ed0f55138bdbefc"
     },
     {
-      "path": "claim_ledger.json",
+      "path": "claim_ledger.yaml",
       "bytes": 42027,
       "sha256": "37efc257578ce669fc00e50081fff09c9051ebe8ba97f2a2678eda1cebe4b859"
     },
     {
-      "path": "deck.json",
-      "bytes": 215108,
-      "sha256": "9c451207284decf524debcc86fb20e585ad71c1ef24e63a7f708db33b6a5fef4"
+      "path": "deck.public.yaml",
+      "bytes": 216714,
+      "sha256": "fb24b4d9d01ec39458a2b663eef19e4e98037ca61c19a0389d487afe9453eda8"
     },
     {
       "path": "question-map.json",
@@ -284,7 +284,7 @@
       "sha256": "bc66050d51ca4f1b0ddf91ee1dc02780db81615e508a82107a73773356299f8c"
     },
     {
-      "path": "source_manifest.json",
+      "path": "source_manifest.yaml",
       "bytes": 5048,
       "sha256": "3c63044059ef38766ef12d720e057626cf728947c7963523ddcd2e9ca8bef7db"
     },

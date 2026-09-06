@@ -26,7 +26,7 @@
    - Audience questions and follow-ups; not prepared objection handling
 7. **Thank you**
 
-The first playback slide is Table of Contents. The wrapper receives only the prescribed one-sentence mention immediately before a live demo; features and reuse rationale stay in Extra Credit. Extra Credit is the last substantive prepared block. Thank you is the final playback slide. The question bank is not appended to deck.json.
+The first playback slide is Table of Contents. The wrapper receives only the prescribed one-sentence mention immediately before a live demo; features and reuse rationale stay in Extra Credit. Extra Credit is the last substantive prepared block. Thank you is the final playback slide. The question bank is not appended to deck.public.yaml.
 
 ## Expanded hierarchy for human review
 
