@@ -1,0 +1,27 @@
+{
+  "kind": "illustrative_fixture_expectation",
+  "status": "candidate",
+  "evidence_boundary": "Expected values derived from the pinned independent qualification checker; not a new actual-output capture",
+  "implementation_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+  "source_url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/scripts/qualify_submission.py#L39-L134",
+  "identity_aliases": {
+    "person-a": [
+      "Alice",
+      "A.L"
+    ],
+    "person-b": [
+      "Bob"
+    ]
+  },
+  "derivation": "Person- + SHA256(pseudonym-v1:trial-v1:1:name:person-X:0)[:10]",
+  "expected_tokens": {
+    "person-a": "Person-390cb11ced",
+    "person-b": "Person-7583e1fc7d"
+  },
+  "preservation_controls": [
+    "KEEP",
+    "Boolean flags",
+    "integer fields"
+  ],
+  "recorded_readback": "sources/qualification.json#/readbacks"
+}

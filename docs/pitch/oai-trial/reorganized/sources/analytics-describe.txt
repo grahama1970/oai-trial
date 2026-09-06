@@ -1,0 +1,23 @@
+
+Dataset: ARTIFACT_ROOT/oai-trial/coordinated-revision/cost-rows.json
+Rows: 8  |  Columns: 7
+
+                                Schema Discovery                                
+┏━━━━━━━━━━━━━━━┳━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Column        ┃ Type    ┃ Semantic  ┃ Nulls ┃ Unique ┃ Sample/Stats          ┃
+┡━━━━━━━━━━━━━━━╇━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━┩
+│ scenario      │ str     │ text      │  0.0% │      2 │                       │
+│ component     │ str     │ text      │  0.0% │      4 │                       │
+│ usd           │ float64 │ numerical │  0.0% │      8 │ mean=10727.45,        │
+│               │         │           │       │        │ std=23846.98          │
+│ evidence_kind │ str     │ text      │  0.0% │      1 │                       │
+│ price_date    │ str     │ text      │  0.0% │      1 │                       │
+│ source        │ str     │ text      │  0.0% │      1 │                       │
+│ source_commit │ str     │ text      │  0.0% │      1 │                       │
+└───────────────┴─────────┴───────────┴───────┴────────┴───────────────────────┘
+
+Recommended Charts:
+  1. histogram_usd - Histogram of usd
+     ./run.sh chart 
+ARTIFACT_ROOT/oai-trial/coordinated-revision/cost-rows.json --name 
+histogram_usd

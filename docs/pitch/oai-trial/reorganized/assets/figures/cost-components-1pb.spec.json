@@ -1,0 +1,73 @@
+{
+  "kind": "authoring_figure_spec",
+  "status": "candidate",
+  "figure_id": "cost-components-1pb",
+  "evidence_kind": "modeled",
+  "source": "sources/cost-rows.json",
+  "source_pointer": "evidence.json#/cost_rows",
+  "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+  "selection": {
+    "scenario": "1PB"
+  },
+  "dimensions": {
+    "category": "component",
+    "value": "usd"
+  },
+  "transform": "filter scenario==1PB; no pooled aggregation; descending usd",
+  "chart": {
+    "type": "horizontal_bar",
+    "zero_baseline": true,
+    "axis_unit": "USD",
+    "axis_max": 70000,
+    "labels": "USD with two decimals"
+  },
+  "data": [
+    {
+      "scenario": "1PB",
+      "component": "storage",
+      "usd": 69000.0,
+      "evidence_kind": "modeled",
+      "price_date": "2026-09-04",
+      "source": "costs/example-estimates.json",
+      "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2"
+    },
+    {
+      "scenario": "1PB",
+      "component": "requests",
+      "usd": 10894.78,
+      "evidence_kind": "modeled",
+      "price_date": "2026-09-04",
+      "source": "costs/example-estimates.json",
+      "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2"
+    },
+    {
+      "scenario": "1PB",
+      "component": "orchestration",
+      "usd": 4440.31,
+      "evidence_kind": "modeled",
+      "price_date": "2026-09-04",
+      "source": "costs/example-estimates.json",
+      "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2"
+    },
+    {
+      "scenario": "1PB",
+      "component": "compute",
+      "usd": 1398.82,
+      "evidence_kind": "modeled",
+      "price_date": "2026-09-04",
+      "source": "costs/example-estimates.json",
+      "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2"
+    }
+  ],
+  "original_analytics_output": "sources/analytics-describe.txt",
+  "analytics_decision": "Use scenario components as explicitly requested; reject pooled histogram/mean across TB/PB. Supplied describe was read, not rerun.",
+  "create_figure_input": "assets/figures/cost-components-1pb.metrics.json",
+  "proposed_command": "skills/create-figure/run.sh metrics --input assets/figures/cost-components-1pb.metrics.json --output cost-components-1pb.svg --type hbar --title \"Modeled 1 PB cost components (USD)\"",
+  "command_status": "NOT_RUN; command shape taken from supplied skill guidance; local appearance check still required",
+  "authored_svg": "assets/cost-components-1pb.svg",
+  "limitations": [
+    "List-price model, not measured cost",
+    "Displayed rounded components sum to $85,733.91; committed total is $85,733.90 from unrounded terms",
+    "No changed price inputs, service execution, analytics run, or create-figure validation is claimed"
+  ]
+}

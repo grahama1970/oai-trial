@@ -1,0 +1,482 @@
+[
+  {
+    "id": "Q01",
+    "legacy_slide_id": "01-brief",
+    "question": "Is this actually anonymization?",
+    "short_answer": "It is deterministic, policy-bounded pseudonymization with preservation and release checks.",
+    "follow_up_answer": "**“Then why is publication safe?”** The technical release decision is relative to the declared policy and supported formats. It does not replace an assessment of policy completeness or residual privacy risk.",
+    "code_evidence": "[`compile_policy`][C01]; [scope disclosures][D01]",
+    "primary_slide_id": "r19-answer-exact",
+    "implementation_commit": "0375af56bf681e9441edcb7433cfe58951db77b2"
+  },
+  {
+    "id": "Q02",
+    "legacy_slide_id": "01-brief",
+    "question": "What happens to a name absent from the policy?",
+    "short_answer": "There is no general discovery promise. An existing literal may still match a substring.",
+    "follow_up_answer": "**“Will discovery find a name in a paragraph?”** It compares the whole line, not extracted name spans. Most narrative lines will not qualify as name-shaped candidates; no general entity detector is implemented.",
+    "code_evidence": "[`Matcher.replace`][C04]; [`_strings`, `_name`, `discover`][C12]",
+    "primary_slide_id": "r19-answer-exact",
+    "implementation_commit": "0375af56bf681e9441edcb7433cfe58951db77b2"
+  },
+  {
+    "id": "Q03",
+    "legacy_slide_id": "01-brief",
+    "question": "Why not use an existing PII platform?",
+    "short_answer": "This implementation makes a narrow transformation contract easy to inspect; that is a tradeoff, not proof that custom code is superior.",
+    "follow_up_answer": "**“Did stdlib-only increase your risk?”** It leaves ownership of the matcher here and requires strong tests. The brief permits packaged dependencies. I am not claiming a comparative platform evaluation that was not performed.",
+    "code_evidence": "[Brief][D00]; [`Matcher`, `_Aho`][C04]; [implementation choices][D01]",
+    "primary_slide_id": "r19-answer-exact",
+    "implementation_commit": "0375af56bf681e9441edcb7433cfe58951db77b2"
+  },
+  {
+    "id": "Q04",
+    "legacy_slide_id": "02-architecture",
+    "question": "Why isn’t a successful transform enough?",
+    "short_answer": "Parsing and transformation can succeed while values or associations are wrong. Verification precedes publication.",
+    "follow_up_answer": "**“Is the verifier independent?”** It rereads and reconstructs, but shares matcher and pseudonym primitives. It can catch injected output faults without eliminating common-mode implementation errors.",
+    "code_evidence": "[`run_pipeline`][C02]; [`verify_corpus`][C13]",
+    "primary_slide_id": "r21-answer-verifier",
+    "implementation_commit": "0375af56bf681e9441edcb7433cfe58951db77b2"
+  },
+  {
+    "id": "Q05",
+    "legacy_slide_id": "02-architecture",
+    "question": "Are inputs protected only by Docker’s read-only mount?",
+    "short_answer": "That mount is one assumption. Preflight checks paths, and the pipeline compares source digests before publication.",
+    "follow_up_answer": "**“Can a hostile host swap bytes and restore them?”** That is outside the local threat model. The post-trial interface also checks copies against originals, but neither mechanism is a hostile-host immutable snapshot service.",
+    "code_evidence": "[`_preflight`][C14]; [`run_pipeline`][C02]; [`input_bundle`][C25]",
+    "primary_slide_id": "r08-policy",
+    "implementation_commit": "0375af56bf681e9441edcb7433cfe58951db77b2"
+  },
+  {
+    "id": "Q06",
+    "legacy_slide_id": "02-architecture",
+    "question": "Why create another skill?",
+    "short_answer": "It exposes the project CLI; it is not another matching or verification engine.",
+    "follow_up_answer": "**“What prevents a wrong installation?”** The wrapper workflow includes package-location checking and a retained wrong-install control. That evidence is separate from the default Docker interface, which does not require the skill.",
+    "code_evidence": "[Interface documentation][D06]; [`main`][C15]; [retained wrapper evidence][E02]",
+    "primary_slide_id": "r26-wrapper",
+    "implementation_commit": "0375af56bf681e9441edcb7433cfe58951db77b2"
+  },
+  {
+    "id": "Q07",
+    "legacy_slide_id": "03-semantics",
+    "question": "Why do aliases share a pseudonym?",
+    "short_answer": "They share the policy’s canonical type/identity key.",
+    "follow_up_answer": "**“What makes that identity assignment true?”** The policy author or approving operator supplies that authority. The compiler enforces consistency, not real-world identity truth. Similarity alone is insufficient.",
+    "code_evidence": "[`Rule.identity`, `compile_policy`][C01]; [`build_replacements`][C03]",
+    "primary_slide_id": "r09-identity",
+    "implementation_commit": "0375af56bf681e9441edcb7433cfe58951db77b2"
+  },
+  {
+    "id": "Q08",
+    "legacy_slide_id": "03-semantics",
+    "question": "Can two identities collide?",
+    "short_answer": "Candidate replacements can collide; allocation checks per-type distinctness and searches again or rejects.",
+    "follow_up_answer": "**“Will adding identities preserve existing values?”** Not unconditionally. Sorted allocation can assign a different salt when the identity set changes. Stable retries require the same plan; evolving policies need explicit lifecycle decisions.",
+    "code_evidence": "[`build_replacements`][C03]",
+    "primary_slide_id": "r09-identity",
+    "implementation_commit": "0375af56bf681e9441edcb7433cfe58951db77b2"
+  },
+  {
+    "id": "Q09",
+    "legacy_slide_id": "03-semantics",
+    "question": "Is the SHA-256 pseudonym secret?",
+    "short_answer": "No. The namespace is public and derivation inputs may be guessable.",
+    "follow_up_answer": "**“What would a key change?”** A keyed construction changes an attacker’s ability to recompute guesses without the key. It does not remove contextual linkage, prove anonymity, or coordinate collision allocation by itself.",
+    "code_evidence": "[`_digest`, `KEY_MODE`][C03]; [privacy posture][D01]",
+    "primary_slide_id": "r09-identity",
+    "implementation_commit": "0375af56bf681e9441edcb7433cfe58951db77b2"
+  },
+  {
+    "id": "Q10",
+    "legacy_slide_id": "03-semantics",
+    "question": "What happens when literals overlap?",
+    "short_answer": "Selection is earliest start, longest at that start, then stable rule ID. Emission uses original-input spans.",
+    "follow_up_answer": "**“Can replacement text trigger another rule?”** Not during emission. The residual verifier can still refuse generated text containing a sensitive literal. No-cascade semantics and successful publishability are different conditions.",
+    "code_evidence": "[`_select`, `Matcher.replace`][C04]; [`verify_corpus`][C13]",
+    "primary_slide_id": "r10-spans",
+    "implementation_commit": "0375af56bf681e9441edcb7433cfe58951db77b2"
+  },
+  {
+    "id": "Q11",
+    "legacy_slide_id": "03-semantics",
+    "question": "What if a protected phrase contains a sensitive name?",
+    "short_answer": "The policy is rejected rather than silently weakening either obligation.",
+    "follow_up_answer": "**“Even when those strings never meet in this corpus?”** Yes, the compile-time overlap test is conservative. A context-sensitive exception would require a different explicit contract, not a hidden precedence rule.",
+    "code_evidence": "[`_boundary_overlap`, `_check_overlap`][C16]",
+    "primary_slide_id": "r08-policy",
+    "implementation_commit": "0375af56bf681e9441edcb7433cfe58951db77b2"
+  },
+  {
+    "id": "Q12",
+    "legacy_slide_id": "03-semantics",
+    "question": "Why require strict type equality?",
+    "short_answer": "Ordinary Python equality can equate Boolean/integer and integer/float values.",
+    "follow_up_answer": "**“What about correct values on the wrong rows?”** Type checks alone do not catch that. Location reconstruction checks the expected value at the corresponding cell or row. The typed regression covers both JSON and SQLite type mutations.",
+    "code_evidence": "[`_typed_equal`][C05]; [`_verify_sqlite_locations`][C17]; [typed regression][C20]",
+    "primary_slide_id": "r12-typed-locations",
+    "implementation_commit": "0375af56bf681e9441edcb7433cfe58951db77b2"
+  },
+  {
+    "id": "Q13",
+    "legacy_slide_id": "04-reliability",
+    "question": "Is report-last an atomic transaction?",
+    "short_answer": "No. Individual rename operations are atomic; the whole workflow is a readiness protocol.",
+    "follow_up_answer": "**“What can a failed run leave?”** Uncommitted corpus bytes or temporary artifacts can remain after some failures. A preflight failure on a rerun can preserve a prior release. Do not promise empty output or rollback in every failure state.",
+    "code_evidence": "[`_publish`, `run_pipeline`][C06]",
+    "primary_slide_id": "r13-publication",
+    "implementation_commit": "0375af56bf681e9441edcb7433cfe58951db77b2"
+  },
+  {
+    "id": "Q14",
+    "legacy_slide_id": "04-reliability",
+    "question": "What if writing the report makes partial progress?",
+    "short_answer": "The loop advances by the returned byte count and refuses zero progress before marker publication.",
+    "follow_up_answer": "**“Does fsync prove every crash case?”** No. The code uses file and directory sync operations, but this review does not establish every filesystem, storage-device, or power-loss outcome.",
+    "code_evidence": "[`_publish`][C06]",
+    "primary_slide_id": "r13-publication",
+    "implementation_commit": "0375af56bf681e9441edcb7433cfe58951db77b2"
+  },
+  {
+    "id": "Q15",
+    "legacy_slide_id": "04-reliability",
+    "question": "How did the relative-path leak happen?",
+    "short_answer": "Validation and writing used inconsistent representations of the same destination.",
+    "follow_up_answer": "**“Why not just change `output.parents`?”** The resolved result must also reach the writer. The CLI replaces `args.output`; approval canonicalizes both its policy path and derived receipt path before writing either.",
+    "code_evidence": "[`separate_output`][C07]; [`main`][C15]; [`approve`][C09]",
+    "primary_slide_id": "r28-canonical-path",
+    "implementation_commit": "0375af56bf681e9441edcb7433cfe58951db77b2"
+  },
+  {
+    "id": "Q16",
+    "legacy_slide_id": "04-reliability",
+    "question": "Why doesn’t mode `0600` solve the leak?",
+    "short_answer": "It restricts permissions, not placement. A raw-name artifact still does not belong inside a release.",
+    "follow_up_answer": "**“And exclusive creation?”** `O_EXCL` prevents replacing an existing file; it does not prevent adding a new inappropriate file. Both location validation and private exclusive creation are needed.",
+    "code_evidence": "[`write_private`][C18]; [path regression][C08]",
+    "primary_slide_id": "r28-canonical-path",
+    "implementation_commit": "0375af56bf681e9441edcb7433cfe58951db77b2"
+  },
+  {
+    "id": "Q17",
+    "legacy_slide_id": "04-reliability",
+    "question": "Can a symlink change after validation?",
+    "short_answer": "The closed blocker concerns deterministic aliases under the stated filesystem assumptions.",
+    "follow_up_answer": "**“Is traversal race-proof?”** No such claim is made. Canonicalization is not an immutable filesystem capability. A hostile concurrent writer is outside this bounded fix.",
+    "code_evidence": "[`separate_output`][C07]; [assurance boundary][D01]",
+    "primary_slide_id": "r28-canonical-path",
+    "implementation_commit": "0375af56bf681e9441edcb7433cfe58951db77b2"
+  },
+  {
+    "id": "Q18",
+    "legacy_slide_id": "05-evidence",
+    "question": "How do you know the fix didn’t disable all output?",
+    "short_answer": "The regression requires successful equivalent private-directory flows as positive controls.",
+    "follow_up_answer": "**“What survives a denied operation?”** It compares the full file-path-to-bytes snapshot, including `report.json`, and checks that no requested policy or receipt appeared. It also checks `0600` on successful artifacts.",
+    "code_evidence": "[Path regression][C08]; E06; [wrapper result][E02]",
+    "primary_slide_id": "r28-canonical-path",
+    "implementation_commit": "0375af56bf681e9441edcb7433cfe58951db77b2"
+  },
+  {
+    "id": "Q19",
+    "legacy_slide_id": "05-evidence",
+    "question": "Does a similarity score of 95 mean 95% probability?",
+    "short_answer": "No. It is a string-comparison score, not calibrated identity confidence.",
+    "follow_up_answer": "**“What prevents two close people being merged?”** Candidates are ranked by distinct identity, ties and insufficient margins are refused, and explicit operator approval is required. Those mechanisms still do not prove the approved personhood judgment is correct.",
+    "code_evidence": "[`discover`][C12]; [`approve`][C09]",
+    "primary_slide_id": "r27-discovery",
+    "implementation_commit": "0375af56bf681e9441edcb7433cfe58951db77b2"
+  },
+  {
+    "id": "Q20",
+    "legacy_slide_id": "05-evidence",
+    "question": "Can I edit the review to approve an invented alias?",
+    "short_answer": "Inconsistent candidate edits or stale source bindings are rejected by fresh recomputation and report comparison.",
+    "follow_up_answer": "**“Does that make the report authentic?”** No. A self-consistent report is not a signature or authenticated human approval. The trusted operator owns the invocation; see Q35 for the settings boundary.",
+    "code_evidence": "[`DiscoveryReport.validate`, `approve`][C09]; [workflow contract][D06]",
+    "primary_slide_id": "r27-discovery",
+    "implementation_commit": "0375af56bf681e9441edcb7433cfe58951db77b2"
+  },
+  {
+    "id": "Q21",
+    "legacy_slide_id": "05-evidence",
+    "question": "Does human approval authorize release?",
+    "short_answer": "It creates a compiled exact policy and a private receipt, not a released corpus.",
+    "follow_up_answer": "**“Could it introduce a protected overlap?”** The real compiler is invoked after adding the selected rules and before writing. A conflict rejects. A subsequent pipeline run still has to transform and verify before readiness.",
+    "code_evidence": "[`approve`][C09]; [`_check_overlap`][C16]; [`run_pipeline`][C02]",
+    "primary_slide_id": "r27-discovery",
+    "implementation_commit": "0375af56bf681e9441edcb7433cfe58951db77b2"
+  },
+  {
+    "id": "Q22",
+    "legacy_slide_id": "05-evidence",
+    "question": "Did WebGPT execute your Docker tests?",
+    "short_answer": "No. Its bounded follow-up PASS came from source, regression, and retained-evidence inspection.",
+    "follow_up_answer": "**“Then who verified execution?”** The presenter reports local qualification. The local receipt must identify the source commit and artifacts; this rewrite does not turn that report into an execution personally performed by the editor.",
+    "code_evidence": "[`qualify`, `readback`][C10]; E01–E04",
+    "primary_slide_id": "r06-output-evidence",
+    "implementation_commit": "0375af56bf681e9441edcb7433cfe58951db77b2"
+  },
+  {
+    "id": "Q23",
+    "legacy_slide_id": "05-evidence",
+    "question": "Does a large green test count prove safety?",
+    "short_answer": "No. The useful unit is an invariant, a concrete challenge, an oracle, and its boundary.",
+    "follow_up_answer": "**“What would falsify your claim?”** A reproducer that violates the required contract at this commit, or evidence that a claimed check did not run or does not check the claimed property. Positive controls prevent rejection-only tests from misleading us.",
+    "code_evidence": "[Path regression][C08]; [typed regression][C20]; [`verify_corpus`][C13]",
+    "primary_slide_id": "r06-output-evidence",
+    "implementation_commit": "0375af56bf681e9441edcb7433cfe58951db77b2"
+  },
+  {
+    "id": "Q24",
+    "legacy_slide_id": "06-production",
+    "question": "Why not split every file at newlines?",
+    "short_answer": "Newlines are not universal logical record boundaries.",
+    "follow_up_answer": "**“What is implemented today?”** Per-file local adapters. Parser-aware CSV splitting, UTF-8/match overlap ownership, and distributed scheduling belong to the proposed production design. JSONL framing is not a new supported local suffix in this baseline.",
+    "code_evidence": "[`transform_file` and adapters][C19]; [AWS design][D02]",
+    "primary_slide_id": "r14-cloud",
+    "implementation_commit": "0375af56bf681e9441edcb7433cfe58951db77b2"
+  },
+  {
+    "id": "Q25",
+    "legacy_slide_id": "06-production",
+    "question": "Where is the shared pseudonym state in production?",
+    "short_answer": "Workers must receive the same versioned policy, identity set, and replacement-allocation plan.",
+    "follow_up_answer": "**“Does using one HMAC key suffice?”** No. Different identity subsets can cause different collision assignments. The local allocator demonstrates semantics; shared distributed plan management is a production design obligation.",
+    "code_evidence": "[`build_replacements`][C03]; [AWS design][D02]",
+    "primary_slide_id": "r14-cloud",
+    "implementation_commit": "0375af56bf681e9441edcb7433cfe58951db77b2"
+  },
+  {
+    "id": "Q26",
+    "legacy_slide_id": "06-production",
+    "question": "What proves the petabyte SLA and price?",
+    "short_answer": "Nothing proves operational delivery yet. The repository contains a scenario model and design targets.",
+    "follow_up_answer": "**“What would you measure first?”** Representative transform/verify throughput, memory, object-size skew, request volume, retry rates, and attainable concurrency. The model’s compute factor is an assumption, not a benchmark-derived law.",
+    "code_evidence": "[`_one`, `_sensitivity`][C11]; [inputs][D04]; [example output][D05]",
+    "primary_slide_id": "r23-answer-scale",
+    "implementation_commit": "0375af56bf681e9441edcb7433cfe58951db77b2"
+  },
+  {
+    "id": "Q27",
+    "legacy_slide_id": "06-production",
+    "question": "What if two workers retry the same object?",
+    "short_answer": "Deterministic content helps, but the proposed orchestrator still needs idempotent attempt handling and conditional publication.",
+    "follow_up_answer": "**“Is this exactly-once processing?”** No. The design starts with at-least-once delivery. Duplicate work must not cause inconsistent manifests or premature pointer updates; no distributed commit implementation is claimed locally.",
+    "code_evidence": "[AWS reliability/publication design][D02]; [`_publish`][C06]",
+    "primary_slide_id": "r14-cloud",
+    "implementation_commit": "0375af56bf681e9441edcb7433cfe58951db77b2"
+  },
+  {
+    "id": "Q28",
+    "legacy_slide_id": "07-nonclaims",
+    "question": "Did you stay within eight hours?",
+    "short_answer": "I cannot substantiate compliance; post-timebox work is explicitly disclosed.",
+    "follow_up_answer": "**“But the retrospective estimate totals eight hours?”** It is an approximate allocation, not an instrumented log. It does not erase the recorded overrun or later requested extension. The evaluator decides how that affects the trial.",
+    "code_evidence": "[`SUBMISSION.md` time disclosure][D01]",
+    "primary_slide_id": "r17-disclosure",
+    "implementation_commit": "0375af56bf681e9441edcb7433cfe58951db77b2"
+  },
+  {
+    "id": "Q29",
+    "legacy_slide_id": "07-nonclaims",
+    "question": "How much did AI do, and do you understand the implementation?",
+    "short_answer": "AI coding assistance and browser-backed review are disclosed; no unsupported authorship percentage is claimed.",
+    "follow_up_answer": "**“Show your understanding.”** Trace one actual failure: the old lexical parent check, the canonical return value, both approval outputs, and the regression’s unchanged-release assertion. Explain the limit rather than reciting a PASS label.",
+    "code_evidence": "[AI disclosure][D01]; [`separate_output`][C07]; [regression][C08]",
+    "primary_slide_id": "r17-disclosure",
+    "implementation_commit": "0375af56bf681e9441edcb7433cfe58951db77b2"
+  },
+  {
+    "id": "Q30",
+    "legacy_slide_id": "07-nonclaims",
+    "question": "What would you do next, and what would you refuse to claim?",
+    "short_answer": "Measure representative workloads, increase checking independence where warranted, and define production key/identity-plan lifecycle.",
+    "follow_up_answer": "**“Why stop now?”** Those are separate objectives. The submission makes bounded claims and discloses unfinished work; technical PASS is not a reason to relabel future functionality as complete.",
+    "code_evidence": "[Unfinished work and stopping rule][D01]",
+    "primary_slide_id": "r17-disclosure",
+    "implementation_commit": "0375af56bf681e9441edcb7433cfe58951db77b2"
+  },
+  {
+    "id": "Q31",
+    "legacy_slide_id": "03-semantics",
+    "question": "Is `policy_version` a revision ID for each policy edit?",
+    "short_answer": "No. It is the schema version, currently fixed to one.",
+    "follow_up_answer": "**“How are edits identified?”** The report records the policy file’s digest. Derivation uses schema version and canonical identities, not that full digest. Provenance binding and pseudonym allocation are separate mechanisms.",
+    "code_evidence": "[`compile_policy`][C01]; [`_digest`][C03]; [`RunReport`, `run_pipeline`][C02]",
+    "primary_slide_id": "r09-identity",
+    "implementation_commit": "0375af56bf681e9441edcb7433cfe58951db77b2"
+  },
+  {
+    "id": "Q32",
+    "legacy_slide_id": "03-semantics",
+    "question": "Can renaming a rule change its pseudonym?",
+    "short_answer": "Yes when the rule has no `subject_id`, because `rule_id` is then the identity fallback.",
+    "follow_up_answer": "**“What if `subject_id` is explicit?”** Renaming the rule does not change that canonical identity. It can still affect rule metadata or tie-breaking; the guarantee should be stated in terms of actual identity and matching inputs.",
+    "code_evidence": "[`Rule.identity`][C01]; [`_select`][C04]",
+    "primary_slide_id": "r09-identity",
+    "implementation_commit": "0375af56bf681e9441edcb7433cfe58951db77b2"
+  },
+  {
+    "id": "Q33",
+    "legacy_slide_id": "03-semantics",
+    "question": "Can you distinguish two different people both called Alice?",
+    "short_answer": "Not from this literal alone. Contradictory identities over the same match domain are rejected.",
+    "follow_up_answer": "**“Could the column or surrounding sentence resolve it?”** The current policy does not provide context-scoped matching. That requires a different authority and schema, not silently treating every matching name as one person.",
+    "code_evidence": "[`compile_policy` match-domain validation][C01]; [`build_matcher`][C04]",
+    "primary_slide_id": "r08-policy",
+    "implementation_commit": "0375af56bf681e9441edcb7433cfe58951db77b2"
+  },
+  {
+    "id": "Q34",
+    "legacy_slide_id": "05-evidence",
+    "question": "Does approving one proposed cell authorize only that cell?",
+    "short_answer": "No. It adds a case-sensitive literal rule to the policy.",
+    "follow_up_answer": "**“Could it affect a longer value elsewhere?”** Yes. Discovery is whole-value, but the exact engine is substring-based across eligible strings. Approval must consider that broader effect. The subsequent compiler and verifier enforce the resulting policy; they do not infer the operator intended row-only scope.",
+    "code_evidence": "[`approve`][C09]; [`Matcher.replace`][C04]; [four-format workflow test][C21]",
+    "primary_slide_id": "r27-discovery",
+    "implementation_commit": "0375af56bf681e9441edcb7433cfe58951db77b2"
+  },
+  {
+    "id": "Q35",
+    "legacy_slide_id": "05-evidence",
+    "question": "Does review recomputation prove who approved it or freeze the original thresholds?",
+    "short_answer": "No. It proves consistency with fresh discovery using the supplied valid settings.",
+    "follow_up_answer": "**“Could someone create another coherent review?”** The review is not signed. Threshold and margin come from the supplied report and are validated and reused. This is a trusted-operator workflow, not an authentication or tamper-evident approval system.",
+    "code_evidence": "[`DiscoveryReport.validate`, `approve`][C09]; [`discover`][C12]",
+    "primary_slide_id": "r27-discovery",
+    "implementation_commit": "0375af56bf681e9441edcb7433cfe58951db77b2"
+  },
+  {
+    "id": "Q36",
+    "legacy_slide_id": "05-evidence",
+    "question": "Does `seam_validation: PASS` mean the aliases are correct or the policy is released?",
+    "short_answer": "Neither. It is a producer-side structural/contract check.",
+    "follow_up_answer": "**“Does runtime use JSON Schema here?”** The producers call their Python validation methods and approval calls `compile_policy`. The retained workflow test also validates artifact shapes with JSON Schema. That does not turn the validation stamp into identity truth or release permission.",
+    "code_evidence": "[`Candidate.validate`, `DiscoveryReport.validate`, `ApprovalReceipt.validate`][C12]; [workflow test][C21]",
+    "primary_slide_id": "r27-discovery",
+    "implementation_commit": "0375af56bf681e9441edcb7433cfe58951db77b2"
+  },
+  {
+    "id": "Q37",
+    "legacy_slide_id": "04-reliability",
+    "question": "Is `verification_sha256` the hash of a separate verifier receipt?",
+    "short_answer": "No. The pipeline assigns it the same sealed corpus digest as `corpus_manifest_sha256`.",
+    "follow_up_answer": "**“Is it proof against forgery?”** A digest binds bytes only when compared against a trusted reference. This report is not a signed attestation, and the seal is computed after verification under the declared staging assumption.",
+    "code_evidence": "[`RunReport`, `run_pipeline`][C02]; [`_publish`][C06]",
+    "primary_slide_id": "r13-publication",
+    "implementation_commit": "0375af56bf681e9441edcb7433cfe58951db77b2"
+  },
+  {
+    "id": "Q38",
+    "legacy_slide_id": "03-semantics",
+    "question": "What exactly is preserved: physical bytes or logical content?",
+    "short_answer": "The contract is format-aware; do not claim universal byte identity.",
+    "follow_up_answer": "**“Give a concrete distinction.”** JSON formatting and CSV quoting can change while values remain equivalent. SQLite checks logical DDL, metadata, and typed values, not physical pages. The JSON comparator checks key sets, not key insertion order.",
+    "code_evidence": "[Adapters][C19]; [`_typed_equal`, `_verify_locations`][C05]; [`_verify_sqlite_locations`][C17]",
+    "primary_slide_id": "r11-formats",
+    "implementation_commit": "0375af56bf681e9441edcb7433cfe58951db77b2"
+  },
+  {
+    "id": "Q39",
+    "legacy_slide_id": "03-semantics",
+    "question": "Do you reject every generated SQLite column?",
+    "short_answer": "No. The writer excludes generated/hidden columns from updates; verification still reads resulting row values.",
+    "follow_up_answer": "**“What happens if a generated value changes?”** The row oracle compares it against the expected contract and can reject. Do not describe this as full generated-column support, or falsely claim every generated-column schema is rejected before processing.",
+    "code_evidence": "[`_writable_columns`, `_transform_sqlite`][C19]; [`_verify_sqlite_locations`][C17]",
+    "primary_slide_id": "r11-formats",
+    "implementation_commit": "0375af56bf681e9441edcb7433cfe58951db77b2"
+  },
+  {
+    "id": "Q40",
+    "legacy_slide_id": "03-semantics",
+    "question": "Why accept `0.1` but reject some other JSON decimal tokens?",
+    "short_answer": "The adapter checks decimal numeric round-trip through the serialized float representation, not exact binary representation.",
+    "follow_up_answer": "**“So `0.1` is not exactly representable in binary?”** That is not the test being made. `_finite_float` compares `Decimal(token)` with `Decimal(repr(value))`; it refuses tokens whose decimal numeric value would change, and refuses nonfinite results. Original numeric spelling is not preserved.",
+    "code_evidence": "[`_finite_float`, `_transform_json`][C19]",
+    "primary_slide_id": "r11-formats",
+    "implementation_commit": "0375af56bf681e9441edcb7433cfe58951db77b2"
+  },
+  {
+    "id": "Q41",
+    "legacy_slide_id": "03-semantics",
+    "question": "Do matching and residual scanning apply identical Unicode rules?",
+    "short_answer": "No. Matching is exact or ASCII-insensitive; residual counting/scanning uses `casefold()` for insensitive rules.",
+    "follow_up_answer": "**“Is there an implemented homoglyph detector?”** No general homoglyph/NFKC detector is established by this code. The broader residual fold can conservatively refuse output; it does not expand the matcher’s authority to normalize or replace additional input.",
+    "code_evidence": "[`ascii_lower`][C04]; [`_count`, `verify_corpus`][C13]",
+    "primary_slide_id": "r10-spans",
+    "implementation_commit": "0375af56bf681e9441edcb7433cfe58951db77b2"
+  },
+  {
+    "id": "Q42",
+    "legacy_slide_id": "02-architecture",
+    "question": "Is the temporary input bundle encrypted or immutable?",
+    "short_answer": "No. It is a private filesystem snapshot with copy/readback checks under stated trust assumptions.",
+    "follow_up_answer": "**“Why copy at all?”** It adapts a file/folder into the existing engine’s bundle interface and avoids writing to originals. It is not a replacement for immutable object versions or encrypted work storage in production.",
+    "code_evidence": "[`input_bundle`][C25]; [assurance boundary][D01]",
+    "primary_slide_id": "r05-mounted-cli",
+    "implementation_commit": "0375af56bf681e9441edcb7433cfe58951db77b2"
+  },
+  {
+    "id": "Q43",
+    "legacy_slide_id": "02-architecture",
+    "question": "Do `preflight`, `inspect`, and `verify` all prove the same thing?",
+    "short_answer": "No. Preflight checks admission conditions; inspect summarizes a report; verify checks source/output corpus content.",
+    "follow_up_answer": "**“Can inspect authenticate a release?”** No. It reads selected report fields. The qualification checker separately validates report schema and recomputes digests. Do not use an inspection display as a substitute for those checks.",
+    "code_evidence": "[`_preflight_cmd`, `_inspect_cmd`, `_verify_cmd`][C15]; [`readback`][C10]",
+    "primary_slide_id": "r05-mounted-cli",
+    "implementation_commit": "0375af56bf681e9441edcb7433cfe58951db77b2"
+  },
+  {
+    "id": "Q44",
+    "legacy_slide_id": "04-reliability",
+    "question": "Should repeated runs produce identical reports?",
+    "short_answer": "No. Corpus determinism is distinct from run metadata.",
+    "follow_up_answer": "**“What should replay compare?”** Compare the corpus and appropriate content digests. `run_id` includes a time input, and elapsed time varies. Comparing complete reports would conflate stable transformation with intentionally changing execution metadata.",
+    "code_evidence": "[`run_pipeline`, `_manifest_digest`][C02]; [`qualify` replay comparison][C10]",
+    "primary_slide_id": "r06-output-evidence",
+    "implementation_commit": "0375af56bf681e9441edcb7433cfe58951db77b2"
+  },
+  {
+    "id": "Q45",
+    "legacy_slide_id": "05-evidence",
+    "question": "Does the qualification script accept an arbitrary frozen SHA?",
+    "short_answer": "Not as a `--ref` argument. It records the invoking checkout’s HEAD, clones `main`, and requires equality.",
+    "follow_up_answer": "**“What happens after main advances?”** That historical invocation should fail the equality check rather than silently qualify another commit. For this presentation, inspect the recorded receipt and archive; do not casually rerun the script and call the result historical qualification.",
+    "code_evidence": "[`qualify`][C10]; E01, E05",
+    "primary_slide_id": "r06-output-evidence",
+    "implementation_commit": "0375af56bf681e9441edcb7433cfe58951db77b2"
+  },
+  {
+    "id": "Q46",
+    "legacy_slide_id": "05-evidence",
+    "question": "Does default Docker qualification establish optional discovery-image behavior?",
+    "short_answer": "No. The default build omits RapidFuzz; the optional build uses `INCLUDE_DISCOVERY=1`.",
+    "follow_up_answer": "**“What evidence covers discovery?”** Project/wrapper workflow tests and their scoped artifacts. A default-image `run`/`demo` result does not prove the optional image was built or exercised. This rewrite makes no such extra execution claim.",
+    "code_evidence": "[Dockerfile][C22]; [workflow test][C21]; E01–E03",
+    "primary_slide_id": "r04-docker",
+    "implementation_commit": "0375af56bf681e9441edcb7433cfe58951db77b2"
+  },
+  {
+    "id": "Q47",
+    "legacy_slide_id": "06-production",
+    "question": "Are all real AWS operations priced by the estimator?",
+    "short_answer": "No. It is an explicit but simplified scenario model.",
+    "follow_up_answer": "**“What is simplified beyond disclosed exclusions?”** For example, orchestration budgets one SQS price unit, one EventBridge event, and one KMS request per object. That is not a traced accounting of send/receive/delete, retries, API payload units, or every encryption operation. Use it for assumptions discussion, not invoicing certainty.",
+    "code_evidence": "[`_one`][C11]; [price/unit inputs][D04]; [cost disclosures][D01]",
+    "primary_slide_id": "r16-cost",
+    "implementation_commit": "0375af56bf681e9441edcb7433cfe58951db77b2"
+  },
+  {
+    "id": "Q48",
+    "legacy_slide_id": "07-nonclaims",
+    "question": "Will Live Evidence or an AI copilot help answer during the assessment?",
+    "short_answer": "This document is preparation only; no active assistance or recording is claimed.",
+    "follow_up_answer": "**“The coding trial allowed AI—does that carry over?”** Not automatically. Formal-assessment rules and explicit permission govern interview assistance; recording consent is separate. The preparation bank is not evidence that live use is authorized.",
+    "code_evidence": "[Preparation-only handoff](#live-evidence-handoff); [evidence boundaries](#evidence-ledger)",
+    "primary_slide_id": "r29-discussion",
+    "implementation_commit": "0375af56bf681e9441edcb7433cfe58951db77b2"
+  }
+]

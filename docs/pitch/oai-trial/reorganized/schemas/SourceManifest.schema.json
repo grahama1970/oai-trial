@@ -1,0 +1,207 @@
+{
+  "$defs": {
+    "SeamValidation": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "minLength": 1,
+          "title": "Kind",
+          "type": "string"
+        },
+        "status": {
+          "const": "PASS",
+          "default": "PASS",
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind"
+      ],
+      "title": "SeamValidation",
+      "type": "object"
+    },
+    "SourcePolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "public_deck_source_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Public Deck Source Ids",
+          "type": "array"
+        },
+        "forbidden_unqualified_claims": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Forbidden Unqualified Claims",
+          "type": "array"
+        },
+        "mandatory_non_claims": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Mandatory Non Claims",
+          "type": "array"
+        }
+      },
+      "title": "SourcePolicy",
+      "type": "object"
+    },
+    "SourceRole": {
+      "enum": [
+        "primary",
+        "supporting",
+        "evidence",
+        "design"
+      ],
+      "title": "SourceRole",
+      "type": "string"
+    },
+    "SourceSpec": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "title": {
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        },
+        "path": {
+          "minLength": 1,
+          "title": "Path",
+          "type": "string"
+        },
+        "visibility": {
+          "$ref": "#/$defs/Visibility"
+        },
+        "role": {
+          "$ref": "#/$defs/SourceRole",
+          "default": "primary"
+        },
+        "required": {
+          "default": true,
+          "title": "Required",
+          "type": "boolean"
+        },
+        "repo": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Repo"
+        },
+        "ref": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Ref"
+        },
+        "content_sha": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Content Sha"
+        },
+        "include_sections": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Include Sections",
+          "type": "array"
+        },
+        "exclude_sections": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Exclude Sections",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "path",
+        "visibility"
+      ],
+      "title": "SourceSpec",
+      "type": "object"
+    },
+    "Visibility": {
+      "enum": [
+        "public",
+        "private"
+      ],
+      "title": "Visibility",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema": {
+      "const": "pitchdeck.source_manifest.v1",
+      "default": "pitchdeck.source_manifest.v1",
+      "title": "Schema",
+      "type": "string"
+    },
+    "project_name": {
+      "minLength": 1,
+      "title": "Project Name",
+      "type": "string"
+    },
+    "deck_title": {
+      "minLength": 1,
+      "title": "Deck Title",
+      "type": "string"
+    },
+    "audience": {
+      "minLength": 1,
+      "title": "Audience",
+      "type": "string"
+    },
+    "sources": {
+      "items": {
+        "$ref": "#/$defs/SourceSpec"
+      },
+      "minItems": 1,
+      "title": "Sources",
+      "type": "array"
+    },
+    "policy": {
+      "$ref": "#/$defs/SourcePolicy"
+    },
+    "seam_validation": {
+      "$ref": "#/$defs/SeamValidation"
+    }
+  },
+  "required": [
+    "project_name",
+    "deck_title",
+    "audience",
+    "sources"
+  ],
+  "title": "SourceManifest",
+  "type": "object"
+}

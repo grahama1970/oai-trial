@@ -1,0 +1,74 @@
+[
+  {
+    "scenario": "1TB",
+    "component": "storage",
+    "usd": 69.0,
+    "evidence_kind": "modeled",
+    "price_date": "2026-09-04",
+    "source": "costs/example-estimates.json",
+    "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2"
+  },
+  {
+    "scenario": "1TB",
+    "component": "compute",
+    "usd": 1.4,
+    "evidence_kind": "modeled",
+    "price_date": "2026-09-04",
+    "source": "costs/example-estimates.json",
+    "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2"
+  },
+  {
+    "scenario": "1TB",
+    "component": "requests",
+    "usd": 10.89,
+    "evidence_kind": "modeled",
+    "price_date": "2026-09-04",
+    "source": "costs/example-estimates.json",
+    "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2"
+  },
+  {
+    "scenario": "1TB",
+    "component": "orchestration",
+    "usd": 4.44,
+    "evidence_kind": "modeled",
+    "price_date": "2026-09-04",
+    "source": "costs/example-estimates.json",
+    "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2"
+  },
+  {
+    "scenario": "1PB",
+    "component": "storage",
+    "usd": 69000.0,
+    "evidence_kind": "modeled",
+    "price_date": "2026-09-04",
+    "source": "costs/example-estimates.json",
+    "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2"
+  },
+  {
+    "scenario": "1PB",
+    "component": "compute",
+    "usd": 1398.82,
+    "evidence_kind": "modeled",
+    "price_date": "2026-09-04",
+    "source": "costs/example-estimates.json",
+    "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2"
+  },
+  {
+    "scenario": "1PB",
+    "component": "requests",
+    "usd": 10894.78,
+    "evidence_kind": "modeled",
+    "price_date": "2026-09-04",
+    "source": "costs/example-estimates.json",
+    "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2"
+  },
+  {
+    "scenario": "1PB",
+    "component": "orchestration",
+    "usd": 4440.31,
+    "evidence_kind": "modeled",
+    "price_date": "2026-09-04",
+    "source": "costs/example-estimates.json",
+    "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2"
+  }
+]

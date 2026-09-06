@@ -1,13 +1,9 @@
 # OAI trial: proposed presentation organization
 
-Status: proposed organization for the next deck revision, not evidence that
-existing slide exports have been reorganized. This direction preserves the
+Status: human-review proposal. The deck has not yet been reorganized and no new
+WebGPT reorganization request has been submitted. This revision preserves the
 prepared adversarial-question block explicitly rather than folding it into
 technical detail or audience discussion.
-
-Current coordinated **candidate**, still requiring human review:
-[TOC](reorganized/TOC.md) · [transcript](reorganized/WALKTHROUGH.md) ·
-[slide JSON](reorganized/deck.json) · [integration notes](reorganized/README.md).
 
 ## Fixed instructions
 
@@ -73,7 +69,7 @@ prepared block follows Extra Credit; backup material is outside normal playback.
 ## Graham reference study
 
 The actual supplied PPTX packages were inspected in
-`/mnt/storage12tb/skills/pitchdeck/sources/style-corpus/`. Layout discovery used
+`ARTIFACT_ROOT/skills/pitchdeck/sources/style-corpus/`. Layout discovery used
 `pitchdeck/run.sh find-layout`. Selected existing renders were viewed through
 live Surf pages; source text was checked against the PPTX presentation order.
 
@@ -93,7 +89,7 @@ presenter-local, not in the public repository. The current grahama.co theme
 request remains separate from the historical teal/white references.
 
 Reference-study artifacts:
-`/mnt/storage12tb/oai-trial/deck-authoring/house-study/`
+`ARTIFACT_ROOT/oai-trial/deck-authoring/house-study/`
 
 ## Detail-slide and evidence rules
 

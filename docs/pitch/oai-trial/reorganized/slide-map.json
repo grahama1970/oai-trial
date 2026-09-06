@@ -1,0 +1,1251 @@
+[
+  {
+    "slide_id": "r01-toc",
+    "legacy_walkthrough_sections": [
+      "01-brief"
+    ],
+    "block": "Contents",
+    "duration_minutes": 0.75,
+    "counts_toward_prepared_time": true,
+    "timing_kind": "prepared",
+    "time_cue": "00:00\u201300:45",
+    "archetype": "toc",
+    "question_ids": [],
+    "code_refs": [],
+    "evidence_ids": [
+      "E08"
+    ],
+    "diagram_refs": [],
+    "figure_refs": [],
+    "navigation_asset": null,
+    "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+    "normal_playback": true
+  },
+  {
+    "slide_id": "r02-demo-result",
+    "legacy_walkthrough_sections": [
+      "01-brief",
+      "05-evidence"
+    ],
+    "block": "Demo and Results",
+    "duration_minutes": 1.5,
+    "counts_toward_prepared_time": true,
+    "timing_kind": "prepared",
+    "time_cue": "00:45\u201302:15",
+    "archetype": "assertion + evidence",
+    "question_ids": [],
+    "code_refs": [
+      {
+        "path": "scripts/qualify_submission.py",
+        "symbol": "fixture",
+        "line_start": 39,
+        "line_end": 77,
+        "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+        "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/scripts/qualify_submission.py#L39-L77"
+      },
+      {
+        "path": "scripts/qualify_submission.py",
+        "symbol": "readback",
+        "line_start": 80,
+        "line_end": 134,
+        "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+        "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/scripts/qualify_submission.py#L80-L134"
+      }
+    ],
+    "evidence_ids": [
+      "E01",
+      "E06"
+    ],
+    "diagram_refs": [
+      "fixture-result"
+    ],
+    "figure_refs": [],
+    "navigation_asset": "nav-r02-demo-result",
+    "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+    "normal_playback": true
+  },
+  {
+    "slide_id": "r03-demo-observations",
+    "legacy_walkthrough_sections": [
+      "02-architecture",
+      "05-evidence"
+    ],
+    "block": "Demo and Results",
+    "duration_minutes": 1,
+    "counts_toward_prepared_time": true,
+    "timing_kind": "prepared",
+    "time_cue": "02:15\u201303:15",
+    "archetype": "assertion + evidence",
+    "question_ids": [],
+    "code_refs": [
+      {
+        "path": "src/anonymization_trial/__main__.py",
+        "symbol": "_run_once",
+        "line_start": 41,
+        "line_end": 58,
+        "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+        "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/__main__.py#L41-L58"
+      }
+    ],
+    "evidence_ids": [
+      "E01"
+    ],
+    "diagram_refs": [
+      "demo-observations"
+    ],
+    "figure_refs": [],
+    "navigation_asset": "nav-r03-demo-observations",
+    "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+    "normal_playback": true
+  },
+  {
+    "slide_id": "r04-docker",
+    "legacy_walkthrough_sections": [
+      "02-architecture"
+    ],
+    "block": "Reproduce and Verify",
+    "duration_minutes": 1,
+    "counts_toward_prepared_time": true,
+    "timing_kind": "prepared",
+    "time_cue": "03:15\u201304:15",
+    "archetype": "assertion + evidence",
+    "question_ids": [
+      "Q46"
+    ],
+    "code_refs": [
+      {
+        "path": "src/anonymization_trial/__main__.py",
+        "symbol": "main",
+        "line_start": 207,
+        "line_end": 233,
+        "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+        "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/__main__.py#L207-L233"
+      }
+    ],
+    "evidence_ids": [
+      "E01",
+      "E08"
+    ],
+    "diagram_refs": [
+      "docker-commands"
+    ],
+    "figure_refs": [],
+    "navigation_asset": "nav-r04-docker",
+    "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+    "normal_playback": true
+  },
+  {
+    "slide_id": "r05-mounted-cli",
+    "legacy_walkthrough_sections": [
+      "02-architecture"
+    ],
+    "block": "Reproduce and Verify",
+    "duration_minutes": 1.25,
+    "counts_toward_prepared_time": true,
+    "timing_kind": "prepared",
+    "time_cue": "04:15\u201305:30",
+    "archetype": "assertion + evidence",
+    "question_ids": [
+      "Q42",
+      "Q43"
+    ],
+    "code_refs": [
+      {
+        "path": "src/anonymization_trial/__main__.py",
+        "symbol": "_verify_cmd; _inspect_cmd",
+        "line_start": 139,
+        "line_end": 157,
+        "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+        "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/__main__.py#L139-L157"
+      },
+      {
+        "path": "src/anonymization_trial/bundle.py",
+        "symbol": "input_bundle",
+        "line_start": 40,
+        "line_end": 71,
+        "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+        "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/bundle.py#L40-L71"
+      },
+      {
+        "path": "src/anonymization_trial/__main__.py",
+        "symbol": "main",
+        "line_start": 207,
+        "line_end": 233,
+        "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+        "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/__main__.py#L207-L233"
+      }
+    ],
+    "evidence_ids": [
+      "E01",
+      "E08"
+    ],
+    "diagram_refs": [
+      "mounted-command"
+    ],
+    "figure_refs": [],
+    "navigation_asset": "nav-r05-mounted-cli",
+    "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+    "normal_playback": true
+  },
+  {
+    "slide_id": "r06-output-evidence",
+    "legacy_walkthrough_sections": [
+      "05-evidence"
+    ],
+    "block": "Reproduce and Verify",
+    "duration_minutes": 1.5,
+    "counts_toward_prepared_time": true,
+    "timing_kind": "prepared",
+    "time_cue": "05:30\u201307:00",
+    "archetype": "assertion + evidence",
+    "question_ids": [
+      "Q22",
+      "Q23",
+      "Q44",
+      "Q45"
+    ],
+    "code_refs": [
+      {
+        "path": "scripts/qualify_submission.py",
+        "symbol": "readback",
+        "line_start": 80,
+        "line_end": 134,
+        "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+        "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/scripts/qualify_submission.py#L80-L134"
+      },
+      {
+        "path": "scripts/qualify_submission.py",
+        "symbol": "qualify",
+        "line_start": 137,
+        "line_end": 314,
+        "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+        "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/scripts/qualify_submission.py#L137-L314"
+      }
+    ],
+    "evidence_ids": [
+      "E01",
+      "E06"
+    ],
+    "diagram_refs": [],
+    "figure_refs": [],
+    "navigation_asset": "nav-r06-output-evidence",
+    "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+    "normal_playback": true
+  },
+  {
+    "slide_id": "r07-pipeline-map",
+    "legacy_walkthrough_sections": [
+      "02-architecture"
+    ],
+    "block": "How the Solution Works",
+    "duration_minutes": 0.75,
+    "counts_toward_prepared_time": true,
+    "timing_kind": "prepared",
+    "time_cue": "07:00\u201307:45",
+    "archetype": "assertion + evidence",
+    "question_ids": [],
+    "code_refs": [
+      {
+        "path": "src/anonymization_trial/pipeline.py",
+        "symbol": "run_pipeline",
+        "line_start": 214,
+        "line_end": 258,
+        "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+        "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/pipeline.py#L214-L258"
+      },
+      {
+        "path": "src/anonymization_trial/formats.py",
+        "symbol": "transform_file",
+        "line_start": 39,
+        "line_end": 49,
+        "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+        "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/formats.py#L39-L49"
+      },
+      {
+        "path": "src/anonymization_trial/verification.py",
+        "symbol": "verify_corpus",
+        "line_start": 205,
+        "line_end": 249,
+        "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+        "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/verification.py#L205-L249"
+      },
+      {
+        "path": "src/anonymization_trial/pipeline.py",
+        "symbol": "_publish",
+        "line_start": 166,
+        "line_end": 211,
+        "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+        "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/pipeline.py#L166-L211"
+      }
+    ],
+    "evidence_ids": [
+      "E08"
+    ],
+    "diagram_refs": [
+      "pipeline-overview"
+    ],
+    "figure_refs": [],
+    "navigation_asset": "nav-r07-pipeline-map",
+    "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+    "normal_playback": true
+  },
+  {
+    "slide_id": "r08-policy",
+    "legacy_walkthrough_sections": [
+      "01-brief",
+      "03-semantics"
+    ],
+    "block": "How the Solution Works",
+    "duration_minutes": 1.25,
+    "counts_toward_prepared_time": true,
+    "timing_kind": "prepared",
+    "time_cue": "07:45\u201309:00",
+    "archetype": "assertion + evidence",
+    "question_ids": [
+      "Q05",
+      "Q11",
+      "Q33"
+    ],
+    "code_refs": [
+      {
+        "path": "src/anonymization_trial/policy.py",
+        "symbol": "compile_policy",
+        "line_start": 129,
+        "line_end": 164,
+        "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+        "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/policy.py#L129-L164"
+      },
+      {
+        "path": "src/anonymization_trial/policy.py",
+        "symbol": "_check_overlap",
+        "line_start": 110,
+        "line_end": 126,
+        "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+        "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/policy.py#L110-L126"
+      },
+      {
+        "path": "src/anonymization_trial/pipeline.py",
+        "symbol": "_preflight",
+        "line_start": 80,
+        "line_end": 116,
+        "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+        "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/pipeline.py#L80-L116"
+      }
+    ],
+    "evidence_ids": [
+      "E08"
+    ],
+    "diagram_refs": [],
+    "figure_refs": [],
+    "navigation_asset": "nav-r08-policy",
+    "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+    "normal_playback": true
+  },
+  {
+    "slide_id": "r09-identity",
+    "legacy_walkthrough_sections": [
+      "03-semantics"
+    ],
+    "block": "How the Solution Works",
+    "duration_minutes": 1.75,
+    "counts_toward_prepared_time": true,
+    "timing_kind": "prepared",
+    "time_cue": "09:00\u201310:45",
+    "archetype": "assertion + evidence",
+    "question_ids": [
+      "Q07",
+      "Q08",
+      "Q09",
+      "Q31",
+      "Q32"
+    ],
+    "code_refs": [
+      {
+        "path": "src/anonymization_trial/policy.py",
+        "symbol": "Rule.identity",
+        "line_start": 38,
+        "line_end": 40,
+        "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+        "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/policy.py#L38-L40"
+      },
+      {
+        "path": "src/anonymization_trial/pseudonyms.py",
+        "symbol": "_digest",
+        "line_start": 41,
+        "line_end": 43,
+        "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+        "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/pseudonyms.py#L41-L43"
+      },
+      {
+        "path": "src/anonymization_trial/pseudonyms.py",
+        "symbol": "build_replacements",
+        "line_start": 62,
+        "line_end": 104,
+        "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+        "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/pseudonyms.py#L62-L104"
+      }
+    ],
+    "evidence_ids": [
+      "E08"
+    ],
+    "diagram_refs": [
+      "identity-plan"
+    ],
+    "figure_refs": [],
+    "navigation_asset": "nav-r09-identity",
+    "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+    "normal_playback": true
+  },
+  {
+    "slide_id": "r10-spans",
+    "legacy_walkthrough_sections": [
+      "03-semantics"
+    ],
+    "block": "How the Solution Works",
+    "duration_minutes": 1.5,
+    "counts_toward_prepared_time": true,
+    "timing_kind": "prepared",
+    "time_cue": "10:45\u201312:15",
+    "archetype": "assertion + evidence",
+    "question_ids": [
+      "Q10",
+      "Q41"
+    ],
+    "code_refs": [
+      {
+        "path": "src/anonymization_trial/matcher.py",
+        "symbol": "Matcher.replace",
+        "line_start": 120,
+        "line_end": 131,
+        "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+        "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/matcher.py#L120-L131"
+      },
+      {
+        "path": "src/anonymization_trial/matcher.py",
+        "symbol": "_select",
+        "line_start": 134,
+        "line_end": 145,
+        "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+        "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/matcher.py#L134-L145"
+      }
+    ],
+    "evidence_ids": [
+      "E08"
+    ],
+    "diagram_refs": [
+      "original-spans"
+    ],
+    "figure_refs": [],
+    "navigation_asset": "nav-r10-spans",
+    "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+    "normal_playback": true
+  },
+  {
+    "slide_id": "r11-formats",
+    "legacy_walkthrough_sections": [
+      "03-semantics"
+    ],
+    "block": "How the Solution Works",
+    "duration_minutes": 1.25,
+    "counts_toward_prepared_time": true,
+    "timing_kind": "prepared",
+    "time_cue": "12:15\u201313:30",
+    "archetype": "assertion + evidence",
+    "question_ids": [
+      "Q38",
+      "Q39",
+      "Q40"
+    ],
+    "code_refs": [
+      {
+        "path": "src/anonymization_trial/formats.py",
+        "symbol": "transform_file",
+        "line_start": 39,
+        "line_end": 49,
+        "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+        "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/formats.py#L39-L49"
+      },
+      {
+        "path": "src/anonymization_trial/verification.py",
+        "symbol": "_verify_sqlite_locations",
+        "line_start": 64,
+        "line_end": 126,
+        "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+        "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/verification.py#L64-L126"
+      }
+    ],
+    "evidence_ids": [
+      "E08"
+    ],
+    "diagram_refs": [],
+    "figure_refs": [],
+    "navigation_asset": "nav-r11-formats",
+    "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+    "normal_playback": true
+  },
+  {
+    "slide_id": "r12-typed-locations",
+    "legacy_walkthrough_sections": [
+      "03-semantics"
+    ],
+    "block": "How the Solution Works",
+    "duration_minutes": 1.5,
+    "counts_toward_prepared_time": true,
+    "timing_kind": "prepared",
+    "time_cue": "13:30\u201315:00",
+    "archetype": "assertion + evidence",
+    "question_ids": [
+      "Q12"
+    ],
+    "code_refs": [
+      {
+        "path": "src/anonymization_trial/verification.py",
+        "symbol": "_typed_equal",
+        "line_start": 129,
+        "line_end": 143,
+        "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+        "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/verification.py#L129-L143"
+      },
+      {
+        "path": "src/anonymization_trial/verification.py",
+        "symbol": "_verify_locations",
+        "line_start": 151,
+        "line_end": 184,
+        "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+        "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/verification.py#L151-L184"
+      },
+      {
+        "path": "src/anonymization_trial/verification.py",
+        "symbol": "_verify_sqlite_locations",
+        "line_start": 64,
+        "line_end": 126,
+        "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+        "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/verification.py#L64-L126"
+      },
+      {
+        "path": "security/tests/test_typed_scalar_verification.py",
+        "symbol": "test_json_bool_number_and_sqlite_integer_real_mutations_rejected",
+        "line_start": 21,
+        "line_end": 48,
+        "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+        "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/security/tests/test_typed_scalar_verification.py#L21-L48"
+      }
+    ],
+    "evidence_ids": [
+      "E06",
+      "E08"
+    ],
+    "diagram_refs": [
+      "type-location"
+    ],
+    "figure_refs": [],
+    "navigation_asset": "nav-r12-typed-locations",
+    "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+    "normal_playback": true
+  },
+  {
+    "slide_id": "r13-publication",
+    "legacy_walkthrough_sections": [
+      "04-reliability"
+    ],
+    "block": "How the Solution Works",
+    "duration_minutes": 1.5,
+    "counts_toward_prepared_time": true,
+    "timing_kind": "prepared",
+    "time_cue": "15:00\u201316:30",
+    "archetype": "assertion + evidence",
+    "question_ids": [
+      "Q13",
+      "Q14",
+      "Q37"
+    ],
+    "code_refs": [
+      {
+        "path": "src/anonymization_trial/pipeline.py",
+        "symbol": "_publish",
+        "line_start": 166,
+        "line_end": 211,
+        "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+        "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/pipeline.py#L166-L211"
+      },
+      {
+        "path": "src/anonymization_trial/pipeline.py",
+        "symbol": "run_pipeline",
+        "line_start": 214,
+        "line_end": 258,
+        "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+        "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/pipeline.py#L214-L258"
+      }
+    ],
+    "evidence_ids": [
+      "E08"
+    ],
+    "diagram_refs": [
+      "publication-states"
+    ],
+    "figure_refs": [],
+    "navigation_asset": "nav-r13-publication",
+    "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+    "normal_playback": true
+  },
+  {
+    "slide_id": "r14-cloud",
+    "legacy_walkthrough_sections": [
+      "06-production"
+    ],
+    "block": "How the Solution Works",
+    "duration_minutes": 1.5,
+    "counts_toward_prepared_time": true,
+    "timing_kind": "prepared",
+    "time_cue": "16:30\u201318:00",
+    "archetype": "assertion + evidence",
+    "question_ids": [
+      "Q24",
+      "Q25",
+      "Q27"
+    ],
+    "code_refs": [
+      {
+        "path": "src/anonymization_trial/pseudonyms.py",
+        "symbol": "build_replacements",
+        "line_start": 62,
+        "line_end": 104,
+        "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+        "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/pseudonyms.py#L62-L104"
+      }
+    ],
+    "evidence_ids": [
+      "E07",
+      "E08"
+    ],
+    "diagram_refs": [
+      "cloud-boundaries"
+    ],
+    "figure_refs": [],
+    "navigation_asset": "nav-r14-cloud",
+    "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+    "normal_playback": true
+  },
+  {
+    "slide_id": "r15-capacity",
+    "legacy_walkthrough_sections": [
+      "06-production"
+    ],
+    "block": "How the Solution Works",
+    "duration_minutes": 1,
+    "counts_toward_prepared_time": true,
+    "timing_kind": "prepared",
+    "time_cue": "18:00\u201319:00",
+    "archetype": "assertion + evidence",
+    "question_ids": [],
+    "code_refs": [
+      {
+        "path": "scripts/estimate_aws_cost.py",
+        "symbol": "_one",
+        "line_start": 23,
+        "line_end": 75,
+        "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+        "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/scripts/estimate_aws_cost.py#L23-L75"
+      }
+    ],
+    "evidence_ids": [
+      "E07"
+    ],
+    "diagram_refs": [],
+    "figure_refs": [],
+    "navigation_asset": "nav-r15-capacity",
+    "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+    "normal_playback": true
+  },
+  {
+    "slide_id": "r16-cost",
+    "legacy_walkthrough_sections": [
+      "06-production"
+    ],
+    "block": "How the Solution Works",
+    "duration_minutes": 1.25,
+    "counts_toward_prepared_time": true,
+    "timing_kind": "prepared",
+    "time_cue": "19:00\u201320:15",
+    "archetype": "assertion + evidence",
+    "question_ids": [
+      "Q47"
+    ],
+    "code_refs": [
+      {
+        "path": "scripts/estimate_aws_cost.py",
+        "symbol": "_one",
+        "line_start": 23,
+        "line_end": 75,
+        "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+        "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/scripts/estimate_aws_cost.py#L23-L75"
+      },
+      {
+        "path": "scripts/estimate_aws_cost.py",
+        "symbol": "_sensitivity",
+        "line_start": 78,
+        "line_end": 86,
+        "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+        "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/scripts/estimate_aws_cost.py#L78-L86"
+      }
+    ],
+    "evidence_ids": [
+      "E07"
+    ],
+    "diagram_refs": [],
+    "figure_refs": [
+      "assets/figures/cost-components-1pb.spec.json"
+    ],
+    "navigation_asset": "nav-r16-cost",
+    "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+    "normal_playback": true
+  },
+  {
+    "slide_id": "r17-disclosure",
+    "legacy_walkthrough_sections": [
+      "07-nonclaims"
+    ],
+    "block": "How the Solution Works",
+    "duration_minutes": 0.75,
+    "counts_toward_prepared_time": true,
+    "timing_kind": "prepared",
+    "time_cue": "20:15\u201321:00",
+    "archetype": "assertion + evidence",
+    "question_ids": [
+      "Q28",
+      "Q29",
+      "Q30"
+    ],
+    "code_refs": [],
+    "evidence_ids": [
+      "E04",
+      "E08"
+    ],
+    "diagram_refs": [],
+    "figure_refs": [],
+    "navigation_asset": null,
+    "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+    "normal_playback": true
+  },
+  {
+    "slide_id": "r18-question-exact",
+    "legacy_walkthrough_sections": [
+      "01-brief"
+    ],
+    "block": "Prepared Adversarial Questions",
+    "duration_minutes": 0.25,
+    "counts_toward_prepared_time": true,
+    "timing_kind": "prepared",
+    "time_cue": "21:00\u201321:15",
+    "archetype": "standalone question",
+    "question_ids": [],
+    "code_refs": [
+      {
+        "path": "src/anonymization_trial/policy.py",
+        "symbol": "compile_policy",
+        "line_start": 129,
+        "line_end": 164,
+        "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+        "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/policy.py#L129-L164"
+      }
+    ],
+    "evidence_ids": [
+      "E08"
+    ],
+    "diagram_refs": [
+      "question-exact"
+    ],
+    "figure_refs": [],
+    "navigation_asset": null,
+    "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+    "normal_playback": true
+  },
+  {
+    "slide_id": "r19-answer-exact",
+    "legacy_walkthrough_sections": [
+      "01-brief"
+    ],
+    "block": "Prepared Adversarial Questions",
+    "duration_minutes": 0.75,
+    "counts_toward_prepared_time": true,
+    "timing_kind": "prepared",
+    "time_cue": "21:15\u201322:00",
+    "archetype": "assertion + evidence",
+    "question_ids": [
+      "Q01",
+      "Q02",
+      "Q03"
+    ],
+    "code_refs": [
+      {
+        "path": "src/anonymization_trial/policy.py",
+        "symbol": "compile_policy",
+        "line_start": 129,
+        "line_end": 164,
+        "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+        "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/policy.py#L129-L164"
+      },
+      {
+        "path": "src/anonymization_trial/discovery.py",
+        "symbol": "approve",
+        "line_start": 329,
+        "line_end": 378,
+        "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+        "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/discovery.py#L329-L378"
+      }
+    ],
+    "evidence_ids": [
+      "E08"
+    ],
+    "diagram_refs": [],
+    "figure_refs": [],
+    "navigation_asset": null,
+    "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+    "normal_playback": true
+  },
+  {
+    "slide_id": "r20-question-verifier",
+    "legacy_walkthrough_sections": [
+      "02-architecture",
+      "03-semantics"
+    ],
+    "block": "Prepared Adversarial Questions",
+    "duration_minutes": 0.25,
+    "counts_toward_prepared_time": true,
+    "timing_kind": "prepared",
+    "time_cue": "22:00\u201322:15",
+    "archetype": "standalone question",
+    "question_ids": [],
+    "code_refs": [
+      {
+        "path": "src/anonymization_trial/verification.py",
+        "symbol": "verify_corpus",
+        "line_start": 205,
+        "line_end": 249,
+        "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+        "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/verification.py#L205-L249"
+      }
+    ],
+    "evidence_ids": [
+      "E08"
+    ],
+    "diagram_refs": [
+      "question-shared"
+    ],
+    "figure_refs": [],
+    "navigation_asset": null,
+    "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+    "normal_playback": true
+  },
+  {
+    "slide_id": "r21-answer-verifier",
+    "legacy_walkthrough_sections": [
+      "02-architecture",
+      "03-semantics"
+    ],
+    "block": "Prepared Adversarial Questions",
+    "duration_minutes": 0.75,
+    "counts_toward_prepared_time": true,
+    "timing_kind": "prepared",
+    "time_cue": "22:15\u201323:00",
+    "archetype": "assertion + evidence",
+    "question_ids": [
+      "Q04"
+    ],
+    "code_refs": [
+      {
+        "path": "src/anonymization_trial/verification.py",
+        "symbol": "verify_corpus",
+        "line_start": 205,
+        "line_end": 249,
+        "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+        "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/verification.py#L205-L249"
+      },
+      {
+        "path": "scripts/qualify_submission.py",
+        "symbol": "readback",
+        "line_start": 80,
+        "line_end": 134,
+        "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+        "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/scripts/qualify_submission.py#L80-L134"
+      },
+      {
+        "path": "src/anonymization_trial/verification.py",
+        "symbol": "_typed_equal",
+        "line_start": 129,
+        "line_end": 143,
+        "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+        "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/verification.py#L129-L143"
+      }
+    ],
+    "evidence_ids": [
+      "E06",
+      "E08"
+    ],
+    "diagram_refs": [],
+    "figure_refs": [],
+    "navigation_asset": null,
+    "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+    "normal_playback": true
+  },
+  {
+    "slide_id": "r22-question-scale",
+    "legacy_walkthrough_sections": [
+      "06-production"
+    ],
+    "block": "Prepared Adversarial Questions",
+    "duration_minutes": 0.25,
+    "counts_toward_prepared_time": true,
+    "timing_kind": "prepared",
+    "time_cue": "23:00\u201323:15",
+    "archetype": "standalone question",
+    "question_ids": [],
+    "code_refs": [
+      {
+        "path": "scripts/estimate_aws_cost.py",
+        "symbol": "_one",
+        "line_start": 23,
+        "line_end": 75,
+        "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+        "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/scripts/estimate_aws_cost.py#L23-L75"
+      }
+    ],
+    "evidence_ids": [
+      "E07"
+    ],
+    "diagram_refs": [
+      "question-scale"
+    ],
+    "figure_refs": [],
+    "navigation_asset": null,
+    "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+    "normal_playback": true
+  },
+  {
+    "slide_id": "r23-answer-scale",
+    "legacy_walkthrough_sections": [
+      "06-production"
+    ],
+    "block": "Prepared Adversarial Questions",
+    "duration_minutes": 0.75,
+    "counts_toward_prepared_time": true,
+    "timing_kind": "prepared",
+    "time_cue": "23:15\u201324:00",
+    "archetype": "assertion + evidence",
+    "question_ids": [
+      "Q26"
+    ],
+    "code_refs": [
+      {
+        "path": "scripts/estimate_aws_cost.py",
+        "symbol": "_one",
+        "line_start": 23,
+        "line_end": 75,
+        "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+        "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/scripts/estimate_aws_cost.py#L23-L75"
+      },
+      {
+        "path": "src/anonymization_trial/pseudonyms.py",
+        "symbol": "build_replacements",
+        "line_start": 62,
+        "line_end": 104,
+        "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+        "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/pseudonyms.py#L62-L104"
+      }
+    ],
+    "evidence_ids": [
+      "E07",
+      "E08"
+    ],
+    "diagram_refs": [],
+    "figure_refs": [],
+    "navigation_asset": null,
+    "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+    "normal_playback": true
+  },
+  {
+    "slide_id": "r24-security-evals",
+    "legacy_walkthrough_sections": [
+      "05-evidence"
+    ],
+    "block": "Extra Credit",
+    "duration_minutes": 1.25,
+    "counts_toward_prepared_time": true,
+    "timing_kind": "prepared",
+    "time_cue": "24:00\u201325:15",
+    "archetype": "assertion + evidence",
+    "question_ids": [],
+    "code_refs": [
+      {
+        "path": "security/tests/test_typed_scalar_verification.py",
+        "symbol": "test_json_bool_number_and_sqlite_integer_real_mutations_rejected",
+        "line_start": 21,
+        "line_end": 48,
+        "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+        "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/security/tests/test_typed_scalar_verification.py#L21-L48"
+      },
+      {
+        "path": "tests/test_discovery_boundaries.py",
+        "symbol": "test_work_artifacts_cannot_enter_release_via_relative_or_symlink_paths",
+        "line_start": 180,
+        "line_end": 244,
+        "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+        "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/tests/test_discovery_boundaries.py#L180-L244"
+      }
+    ],
+    "evidence_ids": [
+      "E06",
+      "E09"
+    ],
+    "diagram_refs": [],
+    "figure_refs": [],
+    "navigation_asset": "nav-r24-security-evals",
+    "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+    "normal_playback": true
+  },
+  {
+    "slide_id": "r25-lineage",
+    "legacy_walkthrough_sections": [
+      "05-evidence",
+      "07-nonclaims"
+    ],
+    "block": "Extra Credit",
+    "duration_minutes": 0.75,
+    "counts_toward_prepared_time": true,
+    "timing_kind": "prepared",
+    "time_cue": "25:15\u201326:00",
+    "archetype": "assertion + evidence",
+    "question_ids": [],
+    "code_refs": [],
+    "evidence_ids": [
+      "E10"
+    ],
+    "diagram_refs": [],
+    "figure_refs": [],
+    "navigation_asset": null,
+    "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+    "normal_playback": true
+  },
+  {
+    "slide_id": "r26-wrapper",
+    "legacy_walkthrough_sections": [
+      "02-architecture"
+    ],
+    "block": "Extra Credit",
+    "duration_minutes": 1,
+    "counts_toward_prepared_time": true,
+    "timing_kind": "prepared",
+    "time_cue": "26:00\u201327:00",
+    "archetype": "assertion + evidence",
+    "question_ids": [
+      "Q06"
+    ],
+    "code_refs": [
+      {
+        "path": "src/anonymization_trial/bundle.py",
+        "symbol": "input_bundle",
+        "line_start": 40,
+        "line_end": 71,
+        "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+        "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/bundle.py#L40-L71"
+      },
+      {
+        "path": "src/anonymization_trial/__main__.py",
+        "symbol": "main",
+        "line_start": 207,
+        "line_end": 233,
+        "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+        "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/__main__.py#L207-L233"
+      }
+    ],
+    "evidence_ids": [
+      "E02",
+      "E08"
+    ],
+    "diagram_refs": [
+      "wrapper-command"
+    ],
+    "figure_refs": [],
+    "navigation_asset": "nav-r26-wrapper",
+    "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+    "normal_playback": true
+  },
+  {
+    "slide_id": "r27-discovery",
+    "legacy_walkthrough_sections": [
+      "05-evidence"
+    ],
+    "block": "Extra Credit",
+    "duration_minutes": 1.5,
+    "counts_toward_prepared_time": true,
+    "timing_kind": "prepared",
+    "time_cue": "27:00\u201328:30",
+    "archetype": "assertion + evidence",
+    "question_ids": [
+      "Q19",
+      "Q20",
+      "Q21",
+      "Q34",
+      "Q35",
+      "Q36"
+    ],
+    "code_refs": [
+      {
+        "path": "src/anonymization_trial/discovery.py",
+        "symbol": "discover",
+        "line_start": 222,
+        "line_end": 309,
+        "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+        "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/discovery.py#L222-L309"
+      },
+      {
+        "path": "src/anonymization_trial/discovery.py",
+        "symbol": "approve",
+        "line_start": 329,
+        "line_end": 378,
+        "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+        "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/discovery.py#L329-L378"
+      },
+      {
+        "path": "src/anonymization_trial/discovery.py",
+        "symbol": "write_private",
+        "line_start": 312,
+        "line_end": 326,
+        "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+        "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/discovery.py#L312-L326"
+      },
+      {
+        "path": "tests/test_discovery.py",
+        "symbol": "test_discover_approve_and_anonymize_all_four_formats",
+        "line_start": 64,
+        "line_end": 137,
+        "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+        "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/tests/test_discovery.py#L64-L137"
+      }
+    ],
+    "evidence_ids": [
+      "E02",
+      "E06",
+      "E08"
+    ],
+    "diagram_refs": [],
+    "figure_refs": [],
+    "navigation_asset": "nav-r27-discovery",
+    "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+    "normal_playback": true
+  },
+  {
+    "slide_id": "r28-canonical-path",
+    "legacy_walkthrough_sections": [
+      "04-reliability",
+      "05-evidence"
+    ],
+    "block": "Extra Credit",
+    "duration_minutes": 1.5,
+    "counts_toward_prepared_time": true,
+    "timing_kind": "prepared",
+    "time_cue": "28:30\u201330:00",
+    "archetype": "assertion + evidence",
+    "question_ids": [
+      "Q15",
+      "Q16",
+      "Q17",
+      "Q18"
+    ],
+    "code_refs": [
+      {
+        "path": "src/anonymization_trial/bundle.py",
+        "symbol": "separate_output",
+        "line_start": 22,
+        "line_end": 37,
+        "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+        "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/bundle.py#L22-L37"
+      },
+      {
+        "path": "src/anonymization_trial/discovery.py",
+        "symbol": "approve",
+        "line_start": 329,
+        "line_end": 378,
+        "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+        "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/discovery.py#L329-L378"
+      },
+      {
+        "path": "src/anonymization_trial/discovery.py",
+        "symbol": "write_private",
+        "line_start": 312,
+        "line_end": 326,
+        "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+        "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/discovery.py#L312-L326"
+      },
+      {
+        "path": "tests/test_discovery_boundaries.py",
+        "symbol": "test_work_artifacts_cannot_enter_release_via_relative_or_symlink_paths",
+        "line_start": 180,
+        "line_end": 244,
+        "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+        "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/tests/test_discovery_boundaries.py#L180-L244"
+      }
+    ],
+    "evidence_ids": [
+      "E02",
+      "E04",
+      "E06",
+      "E08"
+    ],
+    "diagram_refs": [
+      "canonical-path"
+    ],
+    "figure_refs": [],
+    "navigation_asset": "nav-r28-canonical-path",
+    "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+    "normal_playback": true
+  },
+  {
+    "slide_id": "r29-discussion",
+    "legacy_walkthrough_sections": [
+      "01-brief",
+      "02-architecture",
+      "03-semantics",
+      "04-reliability",
+      "05-evidence",
+      "06-production",
+      "07-nonclaims"
+    ],
+    "block": "Discussion",
+    "duration_minutes": 15,
+    "counts_toward_prepared_time": false,
+    "timing_kind": "audience_reserve",
+    "time_cue": "30:00\u201345:00+ audience reserve",
+    "archetype": "assertion + evidence",
+    "question_ids": [
+      "Q48"
+    ],
+    "code_refs": [],
+    "evidence_ids": [
+      "E08"
+    ],
+    "diagram_refs": [],
+    "figure_refs": [],
+    "navigation_asset": null,
+    "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+    "normal_playback": true
+  },
+  {
+    "slide_id": "r30-thank-you",
+    "legacy_walkthrough_sections": [],
+    "block": "Thank you",
+    "duration_minutes": 0,
+    "counts_toward_prepared_time": false,
+    "timing_kind": "closing",
+    "time_cue": "After discussion; end playback",
+    "archetype": "close",
+    "question_ids": [],
+    "code_refs": [],
+    "evidence_ids": [],
+    "diagram_refs": [],
+    "figure_refs": [],
+    "navigation_asset": null,
+    "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+    "normal_playback": true
+  }
+]

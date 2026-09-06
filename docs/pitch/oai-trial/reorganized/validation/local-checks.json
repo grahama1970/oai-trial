@@ -1,0 +1,21 @@
+{
+  "schema": "oai_trial.coordinated_draft.v1",
+  "status": "DRAFT_REQUIRES_HUMAN_REVIEW",
+  "implementation_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+  "original_zip_sha256": "1916c38e8d4147b2ef398b348163dd822a4e46d2240398da723018d4fa57e3d5",
+  "prepared_slides": 28,
+  "prepared_minutes": 30,
+  "discussion_minutes_minimum": 15,
+  "playback_slides": 30,
+  "question_ids_preserved": 48,
+  "source_navigation_entries_checked": 31,
+  "exact_python_excerpts_checked": 8,
+  "not_established": [
+    "final visual approval",
+    "Google Slides import",
+    "live demo rehearsal",
+    "VS Code interactions",
+    "Live Evidence integration"
+  ],
+  "source_validation": "Current consumer models, exact question texts, pinned source symbols/line bounds, and required block order checked locally."
+}

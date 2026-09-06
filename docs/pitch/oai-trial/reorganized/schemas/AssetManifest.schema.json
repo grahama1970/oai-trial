@@ -1,0 +1,227 @@
+{
+  "$defs": {
+    "AssetKind": {
+      "enum": [
+        "screenshot",
+        "diagram",
+        "logo",
+        "illustration",
+        "photo",
+        "video",
+        "other"
+      ],
+      "title": "AssetKind",
+      "type": "string"
+    },
+    "AssetSpec": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "$ref": "#/$defs/AssetKind"
+        },
+        "visibility": {
+          "$ref": "#/$defs/Visibility"
+        },
+        "local_path": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Local Path"
+        },
+        "source_url": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Url"
+        },
+        "required": {
+          "default": false,
+          "title": "Required",
+          "type": "boolean"
+        },
+        "alt_text": {
+          "minLength": 1,
+          "title": "Alt Text",
+          "type": "string"
+        },
+        "target_aspect": {
+          "default": "16:9",
+          "title": "Target Aspect",
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/$defs/AssetStatus",
+          "default": "planned"
+        },
+        "generation_brief": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Generation Brief"
+        },
+        "source_ref": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SourceRef"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "clearance": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Clearance"
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "visibility",
+        "alt_text"
+      ],
+      "title": "AssetSpec",
+      "type": "object"
+    },
+    "AssetStatus": {
+      "enum": [
+        "present",
+        "missing",
+        "planned",
+        "stale",
+        "regenerate"
+      ],
+      "title": "AssetStatus",
+      "type": "string"
+    },
+    "SeamValidation": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "minLength": 1,
+          "title": "Kind",
+          "type": "string"
+        },
+        "status": {
+          "const": "PASS",
+          "default": "PASS",
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind"
+      ],
+      "title": "SeamValidation",
+      "type": "object"
+    },
+    "SourceRef": {
+      "additionalProperties": false,
+      "properties": {
+        "source_id": {
+          "minLength": 1,
+          "title": "Source Id",
+          "type": "string"
+        },
+        "section": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Section"
+        },
+        "locator": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Locator"
+        }
+      },
+      "required": [
+        "source_id"
+      ],
+      "title": "SourceRef",
+      "type": "object"
+    },
+    "Visibility": {
+      "enum": [
+        "public",
+        "private"
+      ],
+      "title": "Visibility",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema": {
+      "const": "pitchdeck.asset_manifest.v1",
+      "default": "pitchdeck.asset_manifest.v1",
+      "title": "Schema",
+      "type": "string"
+    },
+    "project_name": {
+      "minLength": 1,
+      "title": "Project Name",
+      "type": "string"
+    },
+    "assets": {
+      "items": {
+        "$ref": "#/$defs/AssetSpec"
+      },
+      "title": "Assets",
+      "type": "array"
+    },
+    "seam_validation": {
+      "$ref": "#/$defs/SeamValidation"
+    }
+  },
+  "required": [
+    "project_name"
+  ],
+  "title": "AssetManifest",
+  "type": "object"
+}

@@ -1,0 +1,317 @@
+{
+  "$defs": {
+    "Claim": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "text": {
+          "minLength": 1,
+          "title": "Text",
+          "type": "string"
+        },
+        "kind": {
+          "$ref": "#/$defs/ClaimKind",
+          "default": "candidate"
+        },
+        "visibility": {
+          "$ref": "#/$defs/Visibility"
+        },
+        "source_refs": {
+          "items": {
+            "$ref": "#/$defs/SourceRef"
+          },
+          "title": "Source Refs",
+          "type": "array"
+        },
+        "risk": {
+          "$ref": "#/$defs/ClaimRisk",
+          "default": "medium"
+        },
+        "status": {
+          "$ref": "#/$defs/ClaimStatus",
+          "default": "candidate"
+        },
+        "required_qualifier": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Required Qualifier"
+        },
+        "approval": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ClaimApproval"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "evidence_spans": {
+          "items": {
+            "$ref": "#/$defs/EvidenceSpan"
+          },
+          "title": "Evidence Spans",
+          "type": "array"
+        },
+        "formula": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Formula"
+        },
+        "notes": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Notes"
+        }
+      },
+      "required": [
+        "id",
+        "text",
+        "visibility"
+      ],
+      "title": "Claim",
+      "type": "object"
+    },
+    "ClaimApproval": {
+      "additionalProperties": false,
+      "description": "Approval provenance (roundtable item 5): who, when, against what evidence.\n\nAn approved claim without provenance is a warning normally and an ERROR at\npublish; an expired approval returns the claim to unpublishable.",
+      "properties": {
+        "approved_by": {
+          "minLength": 1,
+          "title": "Approved By",
+          "type": "string"
+        },
+        "approved_at": {
+          "minLength": 4,
+          "title": "Approved At",
+          "type": "string"
+        },
+        "source_snapshot_sha256": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Snapshot Sha256"
+        },
+        "expires_at": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Expires At"
+        },
+        "fixture": {
+          "default": false,
+          "title": "Fixture",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "approved_by",
+        "approved_at"
+      ],
+      "title": "ClaimApproval",
+      "type": "object"
+    },
+    "ClaimKind": {
+      "enum": [
+        "thesis",
+        "product",
+        "proof",
+        "status",
+        "roadmap",
+        "ask",
+        "non_claim",
+        "candidate"
+      ],
+      "title": "ClaimKind",
+      "type": "string"
+    },
+    "ClaimRisk": {
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "mandatory_non_claim"
+      ],
+      "title": "ClaimRisk",
+      "type": "string"
+    },
+    "ClaimStatus": {
+      "enum": [
+        "candidate",
+        "approved",
+        "rejected"
+      ],
+      "title": "ClaimStatus",
+      "type": "string"
+    },
+    "EvidenceSpan": {
+      "additionalProperties": false,
+      "description": "Verbatim source excerpt \u2014 the canonical unit the human approves.\n\nRoundtable 2026-08-06 (unanimous): deck prose is a RENDERING of a span,\nnever the canonical claim. Spans are deterministic extractions; no LLM\nrewriting between source and approval surface.",
+      "properties": {
+        "source_id": {
+          "minLength": 1,
+          "title": "Source Id",
+          "type": "string"
+        },
+        "text": {
+          "minLength": 1,
+          "title": "Text",
+          "type": "string"
+        },
+        "section": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Section"
+        }
+      },
+      "required": [
+        "source_id",
+        "text"
+      ],
+      "title": "EvidenceSpan",
+      "type": "object"
+    },
+    "SeamValidation": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "minLength": 1,
+          "title": "Kind",
+          "type": "string"
+        },
+        "status": {
+          "const": "PASS",
+          "default": "PASS",
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind"
+      ],
+      "title": "SeamValidation",
+      "type": "object"
+    },
+    "SourceRef": {
+      "additionalProperties": false,
+      "properties": {
+        "source_id": {
+          "minLength": 1,
+          "title": "Source Id",
+          "type": "string"
+        },
+        "section": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Section"
+        },
+        "locator": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Locator"
+        }
+      },
+      "required": [
+        "source_id"
+      ],
+      "title": "SourceRef",
+      "type": "object"
+    },
+    "Visibility": {
+      "enum": [
+        "public",
+        "private"
+      ],
+      "title": "Visibility",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema": {
+      "const": "pitchdeck.claim_ledger.v1",
+      "default": "pitchdeck.claim_ledger.v1",
+      "title": "Schema",
+      "type": "string"
+    },
+    "project_name": {
+      "minLength": 1,
+      "title": "Project Name",
+      "type": "string"
+    },
+    "claims": {
+      "items": {
+        "$ref": "#/$defs/Claim"
+      },
+      "title": "Claims",
+      "type": "array"
+    },
+    "seam_validation": {
+      "$ref": "#/$defs/SeamValidation"
+    }
+  },
+  "required": [
+    "project_name"
+  ],
+  "title": "ClaimLedger",
+  "type": "object"
+}

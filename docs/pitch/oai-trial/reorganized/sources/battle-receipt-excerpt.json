@@ -1,0 +1,12 @@
+{
+  "claim_scope": "fixture_contract_proof",
+  "execution": {
+    "agentic": false,
+    "live": "local_deterministic_fixture",
+    "mocked": false,
+    "models_used": []
+  },
+  "schema": "battle.run_receipt.v1",
+  "status": "PASS",
+  "verdict": "BLUE_SUCCESS"
+}

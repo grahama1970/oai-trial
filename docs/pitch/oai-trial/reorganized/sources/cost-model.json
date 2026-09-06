@@ -1,0 +1,119 @@
+{
+  "assumptions": {
+    "avg_file_bytes": 1048576,
+    "cloudwatch_logs_gb_ingested_usd": 0.5,
+    "eventbridge_per_million_events_usd": 1.0,
+    "fargate_gb_hour_usd": 0.004445,
+    "fargate_vcpu_hour_usd": 0.04048,
+    "kms_per_10k_requests_usd": 0.03,
+    "log_bytes_per_object": 512,
+    "note": "List on-demand prices as of price_date. UNVERIFIED against a dated screenshot; treat as illustrative until confirmed.",
+    "price_date": "2026-09-04",
+    "price_sources": {
+      "cloudwatch_logs_gb_ingested_usd": {
+        "accessed_on": "2026-09-04",
+        "scope": "Standard Logs ingestion in US East; Example 19 ECS Container Insights; free tier and retention excluded",
+        "unit": "USD per GB ingested",
+        "url": "https://aws.amazon.com/cloudwatch/pricing/"
+      },
+      "eventbridge_per_million_events_usd": {
+        "accessed_on": "2026-09-04",
+        "scope": "Custom event ingestion, up to 64 KB per event; same-account delivery; Event buses pricing example",
+        "unit": "USD per million events",
+        "url": "https://aws.amazon.com/eventbridge/pricing/"
+      },
+      "fargate_gb_hour_usd": {
+        "accessed_on": "2026-09-04",
+        "scope": "us-east-1 Linux/x86 on-demand memory",
+        "unit": "USD per GB-hour",
+        "url": "https://aws.amazon.com/fargate/pricing/"
+      },
+      "fargate_vcpu_hour_usd": {
+        "accessed_on": "2026-09-04",
+        "scope": "us-east-1 Linux/x86 on-demand",
+        "unit": "USD per vCPU-hour",
+        "url": "https://aws.amazon.com/fargate/pricing/"
+      },
+      "kms_per_10k_requests_usd": {
+        "accessed_on": "2026-09-04",
+        "scope": "Symmetric key requests; Amazon S3 example; free tier and key rental excluded",
+        "unit": "USD per 10000 requests",
+        "url": "https://aws.amazon.com/kms/pricing/"
+      },
+      "s3_get_per_1k_usd": {
+        "accessed_on": "2026-09-04",
+        "scope": "us-east-1 S3 Standard GET",
+        "unit": "USD per 1000 requests",
+        "url": "https://aws.amazon.com/s3/pricing/"
+      },
+      "s3_put_per_1k_usd": {
+        "accessed_on": "2026-09-04",
+        "scope": "us-east-1 S3 Standard PUT/COPY/POST/LIST",
+        "unit": "USD per 1000 requests",
+        "url": "https://aws.amazon.com/s3/pricing/"
+      },
+      "s3_standard_gb_month_usd": {
+        "accessed_on": "2026-09-04",
+        "scope": "us-east-1 S3 Standard first 50 TB tier",
+        "unit": "USD per GB-month",
+        "url": "https://aws.amazon.com/s3/pricing/"
+      },
+      "sqs_per_million_requests_usd": {
+        "accessed_on": "2026-09-04",
+        "scope": "us-east-1 Standard queue, first paid tier; free tier excluded; dynamic numeric table requires confirmation",
+        "unit": "USD per million requests",
+        "url": "https://aws.amazon.com/sqs/pricing/"
+      }
+    },
+    "quota_assumptions": "S3 default 3,500 PUT/s + 5,500 GET/s per prefix (sharded prefixes); SQS unlimited standard-queue throughput; Fargate default vCPU quota raised to cover the configured worker pool",
+    "region": "us-east-1",
+    "retry_rate": 0.02,
+    "s3_get_per_1k_usd": 0.0004,
+    "s3_put_per_1k_usd": 0.005,
+    "s3_standard_gb_month_usd": 0.023,
+    "s3_tier_assumption": "S3 Standard first-50TB tier list price for both 1 TB and 1 PB; no volume discounts or savings plans modeled",
+    "source": "Official AWS pricing pages, accessed 2026-09-04; see price_sources for each externally priced input. List-price scenario, not a deployment quote.",
+    "sqs_per_million_requests_usd": 0.4,
+    "storage_months": 1,
+    "throughput_bytes_per_s_per_worker": 20000000,
+    "transfer_assumption": "same-region S3<->Fargate transfer is free; no egress modeled (release consumed in-region)",
+    "worker_gb": 2,
+    "worker_vcpu": 1,
+    "workers": 200
+  },
+  "estimate_1PB": {
+    "compute_usd": 1398.82,
+    "dominant_term": "storage",
+    "objects": 953674316,
+    "orchestration_usd": 4440.31,
+    "requests_usd": 10894.78,
+    "sensitivity": {
+      "double_throughput_total_usd": 85034.49,
+      "half_throughput_total_usd": 87132.72,
+      "tenth_file_size_total_usd": 223749.65
+    },
+    "storage_usd": 69000.0,
+    "total_usd": 85733.9,
+    "wall_clock_hours_at_workers": 141.67,
+    "workers": 200
+  },
+  "estimate_1TB": {
+    "compute_usd": 1.4,
+    "dominant_term": "storage",
+    "objects": 953674,
+    "orchestration_usd": 4.44,
+    "requests_usd": 10.89,
+    "sensitivity": {
+      "double_throughput_total_usd": 85.03,
+      "half_throughput_total_usd": 87.13,
+      "tenth_file_size_total_usd": 223.75
+    },
+    "storage_usd": 69.0,
+    "total_usd": 85.73,
+    "wall_clock_hours_at_workers": 0.14,
+    "workers": 200
+  },
+  "price_date": "2026-09-04",
+  "region": "us-east-1",
+  "source": "Official AWS pricing pages, accessed 2026-09-04; see price_sources for each externally priced input. List-price scenario, not a deployment quote."
+}

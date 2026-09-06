@@ -1,0 +1,250 @@
+{
+  "policy": {
+    "path": "src/anonymization_trial/policy.py",
+    "symbol": "compile_policy",
+    "line_start": 129,
+    "line_end": 164,
+    "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+    "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/policy.py#L129-L164"
+  },
+  "identity": {
+    "path": "src/anonymization_trial/policy.py",
+    "symbol": "Rule.identity",
+    "line_start": 38,
+    "line_end": 40,
+    "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+    "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/policy.py#L38-L40"
+  },
+  "overlap": {
+    "path": "src/anonymization_trial/policy.py",
+    "symbol": "_check_overlap",
+    "line_start": 110,
+    "line_end": 126,
+    "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+    "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/policy.py#L110-L126"
+  },
+  "digest": {
+    "path": "src/anonymization_trial/pseudonyms.py",
+    "symbol": "_digest",
+    "line_start": 41,
+    "line_end": 43,
+    "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+    "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/pseudonyms.py#L41-L43"
+  },
+  "plan": {
+    "path": "src/anonymization_trial/pseudonyms.py",
+    "symbol": "build_replacements",
+    "line_start": 62,
+    "line_end": 104,
+    "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+    "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/pseudonyms.py#L62-L104"
+  },
+  "spans": {
+    "path": "src/anonymization_trial/matcher.py",
+    "symbol": "Matcher.replace",
+    "line_start": 120,
+    "line_end": 131,
+    "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+    "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/matcher.py#L120-L131"
+  },
+  "select": {
+    "path": "src/anonymization_trial/matcher.py",
+    "symbol": "_select",
+    "line_start": 134,
+    "line_end": 145,
+    "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+    "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/matcher.py#L134-L145"
+  },
+  "formats": {
+    "path": "src/anonymization_trial/formats.py",
+    "symbol": "transform_file",
+    "line_start": 39,
+    "line_end": 49,
+    "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+    "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/formats.py#L39-L49"
+  },
+  "types": {
+    "path": "src/anonymization_trial/verification.py",
+    "symbol": "_typed_equal",
+    "line_start": 129,
+    "line_end": 143,
+    "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+    "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/verification.py#L129-L143"
+  },
+  "locations": {
+    "path": "src/anonymization_trial/verification.py",
+    "symbol": "_verify_locations",
+    "line_start": 151,
+    "line_end": 184,
+    "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+    "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/verification.py#L151-L184"
+  },
+  "sqlite": {
+    "path": "src/anonymization_trial/verification.py",
+    "symbol": "_verify_sqlite_locations",
+    "line_start": 64,
+    "line_end": 126,
+    "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+    "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/verification.py#L64-L126"
+  },
+  "verify": {
+    "path": "src/anonymization_trial/verification.py",
+    "symbol": "verify_corpus",
+    "line_start": 205,
+    "line_end": 249,
+    "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+    "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/verification.py#L205-L249"
+  },
+  "pipeline": {
+    "path": "src/anonymization_trial/pipeline.py",
+    "symbol": "run_pipeline",
+    "line_start": 214,
+    "line_end": 258,
+    "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+    "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/pipeline.py#L214-L258"
+  },
+  "publish": {
+    "path": "src/anonymization_trial/pipeline.py",
+    "symbol": "_publish",
+    "line_start": 166,
+    "line_end": 211,
+    "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+    "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/pipeline.py#L166-L211"
+  },
+  "preflight": {
+    "path": "src/anonymization_trial/pipeline.py",
+    "symbol": "_preflight",
+    "line_start": 80,
+    "line_end": 116,
+    "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+    "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/pipeline.py#L80-L116"
+  },
+  "boundary": {
+    "path": "src/anonymization_trial/bundle.py",
+    "symbol": "separate_output",
+    "line_start": 22,
+    "line_end": 37,
+    "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+    "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/bundle.py#L22-L37"
+  },
+  "bundle": {
+    "path": "src/anonymization_trial/bundle.py",
+    "symbol": "input_bundle",
+    "line_start": 40,
+    "line_end": 71,
+    "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+    "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/bundle.py#L40-L71"
+  },
+  "discover": {
+    "path": "src/anonymization_trial/discovery.py",
+    "symbol": "discover",
+    "line_start": 222,
+    "line_end": 309,
+    "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+    "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/discovery.py#L222-L309"
+  },
+  "approve": {
+    "path": "src/anonymization_trial/discovery.py",
+    "symbol": "approve",
+    "line_start": 329,
+    "line_end": 378,
+    "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+    "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/discovery.py#L329-L378"
+  },
+  "private": {
+    "path": "src/anonymization_trial/discovery.py",
+    "symbol": "write_private",
+    "line_start": 312,
+    "line_end": 326,
+    "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+    "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/discovery.py#L312-L326"
+  },
+  "cli": {
+    "path": "src/anonymization_trial/__main__.py",
+    "symbol": "main",
+    "line_start": 207,
+    "line_end": 233,
+    "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+    "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/__main__.py#L207-L233"
+  },
+  "demo": {
+    "path": "src/anonymization_trial/__main__.py",
+    "symbol": "_run_once",
+    "line_start": 41,
+    "line_end": 58,
+    "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+    "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/__main__.py#L41-L58"
+  },
+  "ops": {
+    "path": "src/anonymization_trial/__main__.py",
+    "symbol": "_verify_cmd; _inspect_cmd",
+    "line_start": 139,
+    "line_end": 157,
+    "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+    "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/__main__.py#L139-L157"
+  },
+  "fixture": {
+    "path": "scripts/qualify_submission.py",
+    "symbol": "fixture",
+    "line_start": 39,
+    "line_end": 77,
+    "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+    "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/scripts/qualify_submission.py#L39-L77"
+  },
+  "readback": {
+    "path": "scripts/qualify_submission.py",
+    "symbol": "readback",
+    "line_start": 80,
+    "line_end": 134,
+    "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+    "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/scripts/qualify_submission.py#L80-L134"
+  },
+  "qualify": {
+    "path": "scripts/qualify_submission.py",
+    "symbol": "qualify",
+    "line_start": 137,
+    "line_end": 314,
+    "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+    "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/scripts/qualify_submission.py#L137-L314"
+  },
+  "path-test": {
+    "path": "tests/test_discovery_boundaries.py",
+    "symbol": "test_work_artifacts_cannot_enter_release_via_relative_or_symlink_paths",
+    "line_start": 180,
+    "line_end": 244,
+    "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+    "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/tests/test_discovery_boundaries.py#L180-L244"
+  },
+  "type-test": {
+    "path": "security/tests/test_typed_scalar_verification.py",
+    "symbol": "test_json_bool_number_and_sqlite_integer_real_mutations_rejected",
+    "line_start": 21,
+    "line_end": 48,
+    "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+    "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/security/tests/test_typed_scalar_verification.py#L21-L48"
+  },
+  "alias-test": {
+    "path": "tests/test_discovery.py",
+    "symbol": "test_discover_approve_and_anonymize_all_four_formats",
+    "line_start": 64,
+    "line_end": 137,
+    "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+    "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/tests/test_discovery.py#L64-L137"
+  },
+  "cost": {
+    "path": "scripts/estimate_aws_cost.py",
+    "symbol": "_one",
+    "line_start": 23,
+    "line_end": 75,
+    "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+    "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/scripts/estimate_aws_cost.py#L23-L75"
+  },
+  "sensitivity": {
+    "path": "scripts/estimate_aws_cost.py",
+    "symbol": "_sensitivity",
+    "line_start": 78,
+    "line_end": 86,
+    "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+    "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/scripts/estimate_aws_cost.py#L78-L86"
+  }
+}

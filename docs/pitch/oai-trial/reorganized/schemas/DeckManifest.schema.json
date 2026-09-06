@@ -1,0 +1,739 @@
+{
+  "$defs": {
+    "BindingKind": {
+      "description": "Relation of a visible text string to the claim ledger (ContentIR core).\n\nSynthesized from the 2026-08-05 roundtable: webgpt's relation taxonomy,\nwebclaude's explicit non-claim/decorative lexicon + unbound-blocks-publish\ndefault, applied at whole-string granularity (runs stay derived artifacts).",
+      "enum": [
+        "claim_quote",
+        "claim_paraphrase",
+        "derived",
+        "qualifier",
+        "non_claim",
+        "decorative"
+      ],
+      "title": "BindingKind",
+      "type": "string"
+    },
+    "ClaimGuard": {
+      "additionalProperties": false,
+      "properties": {
+        "allowed_claim_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Allowed Claim Ids",
+          "type": "array"
+        },
+        "requires_non_claim_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Requires Non Claim Ids",
+          "type": "array"
+        },
+        "forbidden_unqualified": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Forbidden Unqualified",
+          "type": "array"
+        }
+      },
+      "title": "ClaimGuard",
+      "type": "object"
+    },
+    "ContentReveal": {
+      "description": "Browser-deck content entrance animation for body items.\n\n`step` is click-gated: in Present mode the advance key reveals the next\nbullet/card (a fragment) before it advances the slide \u2014 real-presentation\npacing. Honored by the workbench, presenter, and HTML export; PPTX stays\nanimation-free by design.",
+      "enum": [
+        "none",
+        "stagger_up",
+        "stagger_fade",
+        "step"
+      ],
+      "title": "ContentReveal",
+      "type": "string"
+    },
+    "DeckMeta": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "title": {
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        },
+        "subtitle": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Subtitle"
+        },
+        "audience": {
+          "minLength": 1,
+          "title": "Audience",
+          "type": "string"
+        },
+        "visibility": {
+          "$ref": "#/$defs/Visibility"
+        },
+        "target_editor": {
+          "default": "google_slides",
+          "title": "Target Editor",
+          "type": "string"
+        },
+        "theme": {
+          "default": "dark_cyan_evidence",
+          "title": "Theme",
+          "type": "string"
+        },
+        "theme_tokens": {
+          "$ref": "#/$defs/ThemeTokens"
+        },
+        "source_policy": {
+          "$ref": "#/$defs/DeckSourcePolicy"
+        },
+        "author": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Author"
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "audience",
+        "visibility",
+        "source_policy"
+      ],
+      "title": "DeckMeta",
+      "type": "object"
+    },
+    "DeckSourcePolicy": {
+      "enum": [
+        "public_only",
+        "public_and_private"
+      ],
+      "title": "DeckSourcePolicy",
+      "type": "string"
+    },
+    "FreeformElement": {
+      "additionalProperties": false,
+      "description": "Absolutely positioned element; x/y/w/h are fractions of the 16:9 canvas.\n\nThe same fractions drive the browser renderer (x*1920, y*1080) and the\nPPTX builder (x*13.333in, y*7.5in), so geometry round-trips exactly.",
+      "properties": {
+        "id": {
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "type": {
+          "enum": [
+            "text",
+            "asset"
+          ],
+          "title": "Type",
+          "type": "string"
+        },
+        "x": {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "X",
+          "type": "number"
+        },
+        "y": {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Y",
+          "type": "number"
+        },
+        "w": {
+          "exclusiveMinimum": 0.0,
+          "maximum": 1.0,
+          "title": "W",
+          "type": "number"
+        },
+        "h": {
+          "exclusiveMinimum": 0.0,
+          "maximum": 1.0,
+          "title": "H",
+          "type": "number"
+        },
+        "text": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Text"
+        },
+        "size_pt": {
+          "default": 20.0,
+          "maximum": 96.0,
+          "minimum": 8.0,
+          "title": "Size Pt",
+          "type": "number"
+        },
+        "bold": {
+          "default": false,
+          "title": "Bold",
+          "type": "boolean"
+        },
+        "color": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Color"
+        },
+        "align": {
+          "default": "left",
+          "enum": [
+            "left",
+            "center",
+            "right"
+          ],
+          "title": "Align",
+          "type": "string"
+        },
+        "asset_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Asset Id"
+        },
+        "entrance": {
+          "default": "none",
+          "enum": [
+            "none",
+            "fade",
+            "rise",
+            "zoom"
+          ],
+          "title": "Entrance",
+          "type": "string"
+        },
+        "entrance_delay_ms": {
+          "default": 0,
+          "maximum": 5000,
+          "minimum": 0,
+          "title": "Entrance Delay Ms",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "id",
+        "type",
+        "x",
+        "y",
+        "w",
+        "h"
+      ],
+      "title": "FreeformElement",
+      "type": "object"
+    },
+    "SeamValidation": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "minLength": 1,
+          "title": "Kind",
+          "type": "string"
+        },
+        "status": {
+          "const": "PASS",
+          "default": "PASS",
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind"
+      ],
+      "title": "SeamValidation",
+      "type": "object"
+    },
+    "SlideLayout": {
+      "enum": [
+        "cover",
+        "statement",
+        "split",
+        "screenshot",
+        "flow",
+        "three_cards",
+        "proof_cards",
+        "roadmap",
+        "collaboration",
+        "appendix",
+        "freeform"
+      ],
+      "title": "SlideLayout",
+      "type": "string"
+    },
+    "SlideSpec": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "order": {
+          "minimum": 1,
+          "title": "Order",
+          "type": "integer"
+        },
+        "role": {
+          "minLength": 1,
+          "title": "Role",
+          "type": "string"
+        },
+        "layout": {
+          "$ref": "#/$defs/SlideLayout"
+        },
+        "visibility": {
+          "$ref": "#/$defs/Visibility"
+        },
+        "title": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        },
+        "message": {
+          "maxLength": 500,
+          "minLength": 1,
+          "title": "Message",
+          "type": "string"
+        },
+        "body": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Body",
+          "type": "array"
+        },
+        "source_refs": {
+          "items": {
+            "$ref": "#/$defs/SourceRef"
+          },
+          "title": "Source Refs",
+          "type": "array"
+        },
+        "claim_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Claim Ids",
+          "type": "array"
+        },
+        "visual": {
+          "$ref": "#/$defs/VisualSpec"
+        },
+        "claim_guard": {
+          "$ref": "#/$defs/ClaimGuard"
+        },
+        "elements": {
+          "items": {
+            "$ref": "#/$defs/FreeformElement"
+          },
+          "title": "Elements",
+          "type": "array"
+        },
+        "bindings": {
+          "items": {
+            "$ref": "#/$defs/TextBinding"
+          },
+          "title": "Bindings",
+          "type": "array"
+        },
+        "transition": {
+          "$ref": "#/$defs/SlideTransition",
+          "default": "slide"
+        },
+        "transition_duration_ms": {
+          "default": 400,
+          "maximum": 1200,
+          "minimum": 200,
+          "title": "Transition Duration Ms",
+          "type": "integer"
+        },
+        "reveal": {
+          "$ref": "#/$defs/ContentReveal",
+          "default": "stagger_up"
+        },
+        "hidden": {
+          "default": false,
+          "title": "Hidden",
+          "type": "boolean"
+        },
+        "notes": {
+          "default": "",
+          "title": "Notes",
+          "type": "string"
+        },
+        "footer": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Footer"
+        }
+      },
+      "required": [
+        "id",
+        "order",
+        "role",
+        "layout",
+        "visibility",
+        "title",
+        "message"
+      ],
+      "title": "SlideSpec",
+      "type": "object"
+    },
+    "SlideTransition": {
+      "description": "Browser-deck slide transition; PPTX export intentionally ignores it.",
+      "enum": [
+        "none",
+        "fade",
+        "slide",
+        "slide_up",
+        "zoom",
+        "flip",
+        "wipe"
+      ],
+      "title": "SlideTransition",
+      "type": "string"
+    },
+    "SourceRef": {
+      "additionalProperties": false,
+      "properties": {
+        "source_id": {
+          "minLength": 1,
+          "title": "Source Id",
+          "type": "string"
+        },
+        "section": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Section"
+        },
+        "locator": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Locator"
+        }
+      },
+      "required": [
+        "source_id"
+      ],
+      "title": "SourceRef",
+      "type": "object"
+    },
+    "TextBinding": {
+      "additionalProperties": false,
+      "description": "Binds one addressable slide string to the ledger.\n\npath addresses a whole string: title | message | footer | body:<i> |\nelement:<id> | visual.items:<i> | visual.caption. Strings without a\nbinding are UNBOUND: a warning in normal builds, an error at publish.",
+      "properties": {
+        "path": {
+          "minLength": 1,
+          "title": "Path",
+          "type": "string"
+        },
+        "kind": {
+          "$ref": "#/$defs/BindingKind"
+        },
+        "claim_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Claim Id"
+        },
+        "transform_class": {
+          "anyOf": [
+            {
+              "enum": [
+                "verbatim",
+                "truncation",
+                "inflection",
+                "aggregation",
+                "generalization"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Transform Class"
+        }
+      },
+      "required": [
+        "path",
+        "kind"
+      ],
+      "title": "TextBinding",
+      "type": "object"
+    },
+    "ThemeTokens": {
+      "additionalProperties": false,
+      "description": "Typed design tokens applied identically by the browser and PPTX emitters.",
+      "properties": {
+        "accent": {
+          "default": "#22d3ee",
+          "pattern": "^#[0-9a-fA-F]{6}$",
+          "title": "Accent",
+          "type": "string"
+        },
+        "heading_font": {
+          "default": "Arial",
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[A-Za-z][A-Za-z0-9 ,\\-]*$",
+          "title": "Heading Font",
+          "type": "string"
+        },
+        "body_font": {
+          "default": "Arial",
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[A-Za-z][A-Za-z0-9 ,\\-]*$",
+          "title": "Body Font",
+          "type": "string"
+        },
+        "canvas": {
+          "anyOf": [
+            {
+              "pattern": "^#[0-9a-fA-F]{6}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Canvas"
+        },
+        "text": {
+          "default": "#292929",
+          "pattern": "^#[0-9a-fA-F]{6}$",
+          "title": "Text",
+          "type": "string"
+        },
+        "muted": {
+          "default": "#595959",
+          "pattern": "^#[0-9a-fA-F]{6}$",
+          "title": "Muted",
+          "type": "string"
+        },
+        "header": {
+          "default": "#076889",
+          "pattern": "^#[0-9a-fA-F]{6}$",
+          "title": "Header",
+          "type": "string"
+        },
+        "header_text": {
+          "default": "#FFFFFF",
+          "pattern": "^#[0-9a-fA-F]{6}$",
+          "title": "Header Text",
+          "type": "string"
+        },
+        "header_opacity": {
+          "default": 1,
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Header Opacity",
+          "type": "number"
+        },
+        "header_image_opacity": {
+          "default": 0.1,
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Header Image Opacity",
+          "type": "number"
+        }
+      },
+      "title": "ThemeTokens",
+      "type": "object"
+    },
+    "Visibility": {
+      "enum": [
+        "public",
+        "private"
+      ],
+      "title": "Visibility",
+      "type": "string"
+    },
+    "VisualPosition": {
+      "enum": [
+        "left",
+        "right",
+        "full"
+      ],
+      "title": "VisualPosition",
+      "type": "string"
+    },
+    "VisualSpec": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "$ref": "#/$defs/VisualType",
+          "default": "none"
+        },
+        "asset_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Asset Id"
+        },
+        "position": {
+          "$ref": "#/$defs/VisualPosition",
+          "default": "right"
+        },
+        "items": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Items",
+          "type": "array"
+        },
+        "callouts": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Callouts",
+          "type": "array"
+        },
+        "caption": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Caption"
+        },
+        "source": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source"
+        }
+      },
+      "title": "VisualSpec",
+      "type": "object"
+    },
+    "VisualType": {
+      "enum": [
+        "none",
+        "image",
+        "screenshot",
+        "native_diagram",
+        "cards",
+        "mermaid",
+        "math"
+      ],
+      "title": "VisualType",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema": {
+      "const": "pitchdeck.deck_manifest.v1",
+      "default": "pitchdeck.deck_manifest.v1",
+      "title": "Schema",
+      "type": "string"
+    },
+    "deck": {
+      "$ref": "#/$defs/DeckMeta"
+    },
+    "slides": {
+      "items": {
+        "$ref": "#/$defs/SlideSpec"
+      },
+      "minItems": 1,
+      "title": "Slides",
+      "type": "array"
+    },
+    "seam_validation": {
+      "$ref": "#/$defs/SeamValidation"
+    }
+  },
+  "required": [
+    "deck",
+    "slides"
+  ],
+  "title": "DeckManifest",
+  "type": "object"
+}

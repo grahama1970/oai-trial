@@ -1,0 +1,91 @@
+{
+  "scope": "presentation authoring only",
+  "implementation_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+  "method": "Authorized GitHub connector",
+  "newly_inspected_windows": [
+    {
+      "path": "src/anonymization_trial/policy.py",
+      "lines": [
+        31,
+        48
+      ]
+    },
+    {
+      "path": "src/anonymization_trial/policy.py",
+      "lines": [
+        129,
+        165
+      ]
+    },
+    {
+      "path": "src/anonymization_trial/pseudonyms.py",
+      "lines": [
+        40,
+        104
+      ]
+    },
+    {
+      "path": "src/anonymization_trial/matcher.py",
+      "lines": [
+        112,
+        148
+      ]
+    },
+    {
+      "path": "src/anonymization_trial/verification.py",
+      "lines": [
+        129,
+        184
+      ]
+    },
+    {
+      "path": "src/anonymization_trial/formats.py",
+      "lines": [
+        39,
+        50
+      ]
+    },
+    {
+      "path": "src/anonymization_trial/__main__.py",
+      "lines": [
+        128,
+        149
+      ]
+    },
+    {
+      "path": "src/anonymization_trial/__main__.py",
+      "lines": [
+        207,
+        241
+      ]
+    },
+    {
+      "path": "src/anonymization_trial/__main__.py",
+      "lines": [
+        39,
+        58
+      ]
+    },
+    {
+      "path": "security/battle/run-receipt.json",
+      "lines": "complete"
+    }
+  ],
+  "additional_context": "The full reviewed narrative and previous pinned source review in this same conversation were used. The current packet supplied recorded qualification, cost output, schemas and style context. No new security review or implementation changes.",
+  "consumer_compatibility_inspection": {
+    "repo": "grahama1970/agent-skills",
+    "commit": "8bca242a8c77dfc3cfd1d4d7c61db115b0ab7dab",
+    "path": "skills/pitchdeck/src/pitchdeck/theme_style.py",
+    "purpose": "Confirm supported actual-image header compositing and native title font mapping, not override supplied schemas."
+  },
+  "not_executed": [
+    "application",
+    "tests",
+    "Docker",
+    "local compiler",
+    "SVG validators",
+    "analytics",
+    "create-figure",
+    "Live Evidence"
+  ]
+}

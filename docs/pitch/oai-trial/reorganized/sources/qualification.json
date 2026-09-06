@@ -1,0 +1,315 @@
+{
+  "schema": "oai_trial.release_qualification.v1",
+  "status": "PASS",
+  "commands": [
+    {
+      "argv": [
+        "git",
+        "status",
+        "--porcelain"
+      ],
+      "cwd": "PROJECT_ROOT",
+      "exit_code": 0,
+      "log": "ARTIFACT_ROOT/oai-trial/submission-final/qualified/command-00.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "PROJECT_ROOT",
+      "exit_code": 0,
+      "log": "ARTIFACT_ROOT/oai-trial/submission-final/qualified/command-01.log",
+      "sha256": "80f1acf330b8055a4cfc688b54bdda019a0b3ba0de1fbae05ab6eb49d104cd17"
+    },
+    {
+      "argv": [
+        "git",
+        "remote",
+        "get-url",
+        "origin"
+      ],
+      "cwd": "PROJECT_ROOT",
+      "exit_code": 0,
+      "log": "ARTIFACT_ROOT/oai-trial/submission-final/qualified/command-02.log",
+      "sha256": "1a66985dd6043b2192c60279785d5cd65a352813b2ce47a66655360d44565f67"
+    },
+    {
+      "argv": [
+        "git",
+        "clone",
+        "--single-branch",
+        "--branch",
+        "main",
+        "git@github.com:grahama1970/oai-trial.git",
+        "ARTIFACT_ROOT/oai-trial/submission-final/qualified/checkout"
+      ],
+      "cwd": "PROJECT_ROOT",
+      "exit_code": 0,
+      "log": "ARTIFACT_ROOT/oai-trial/submission-final/qualified/command-03.log",
+      "sha256": "ef7ef1dd4dddd89f96940ef617dcb0128e2a95e1708ff1e980b8d92202212256"
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "ARTIFACT_ROOT/oai-trial/submission-final/qualified/checkout",
+      "exit_code": 0,
+      "log": "ARTIFACT_ROOT/oai-trial/submission-final/qualified/command-04.log",
+      "sha256": "80f1acf330b8055a4cfc688b54bdda019a0b3ba0de1fbae05ab6eb49d104cd17"
+    },
+    {
+      "argv": [
+        "git",
+        "merge-base",
+        "--is-ancestor",
+        "eed780c",
+        "HEAD"
+      ],
+      "cwd": "ARTIFACT_ROOT/oai-trial/submission-final/qualified/checkout",
+      "exit_code": 0,
+      "log": "ARTIFACT_ROOT/oai-trial/submission-final/qualified/command-05.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "uv",
+        "sync",
+        "--locked",
+        "--extra",
+        "dev"
+      ],
+      "cwd": "ARTIFACT_ROOT/oai-trial/submission-final/qualified/checkout",
+      "exit_code": 0,
+      "log": "ARTIFACT_ROOT/oai-trial/submission-final/qualified/command-06.log",
+      "sha256": "15da895c3ec77427abe62529c924e79a27614f39a1101dd793d4fb65e20ab6ae"
+    },
+    {
+      "argv": [
+        "uv",
+        "run",
+        "pytest",
+        "-q"
+      ],
+      "cwd": "ARTIFACT_ROOT/oai-trial/submission-final/qualified/checkout",
+      "exit_code": 0,
+      "log": "ARTIFACT_ROOT/oai-trial/submission-final/qualified/command-07.log",
+      "sha256": "fbb281c31ecbc745e048ea39603afb81bef27972ec2126293b81e550d2950ad8"
+    },
+    {
+      "argv": [
+        "uv",
+        "run",
+        "ruff",
+        "check",
+        "src",
+        "tests",
+        "scripts",
+        "security"
+      ],
+      "cwd": "ARTIFACT_ROOT/oai-trial/submission-final/qualified/checkout",
+      "exit_code": 0,
+      "log": "ARTIFACT_ROOT/oai-trial/submission-final/qualified/command-08.log",
+      "sha256": "33d84e2e85ec90510a50e4f7a7f1b53bad413ea2e8a76abd486c5e002d21be00"
+    },
+    {
+      "argv": [
+        "docker",
+        "build",
+        "--no-cache",
+        "-t",
+        "anonymization-trial",
+        "."
+      ],
+      "cwd": "ARTIFACT_ROOT/oai-trial/submission-final/qualified/checkout",
+      "exit_code": 0,
+      "log": "ARTIFACT_ROOT/oai-trial/submission-final/qualified/command-09.log",
+      "sha256": "f20abc6b164f4e2e0790916cd4c1bbc91bff93a4d89c59ea8a9e0545a72c496f"
+    },
+    {
+      "argv": [
+        "docker",
+        "image",
+        "inspect",
+        "--format",
+        "{{.Id}}",
+        "anonymization-trial"
+      ],
+      "cwd": "ARTIFACT_ROOT/oai-trial/submission-final/qualified/checkout",
+      "exit_code": 0,
+      "log": "ARTIFACT_ROOT/oai-trial/submission-final/qualified/command-10.log",
+      "sha256": "45ed34fc191ccd26dfc9c6bb9a6dd6d211e07b2f03d9c48ca3b6f463bf57f868"
+    },
+    {
+      "argv": [
+        "docker",
+        "run",
+        "--rm",
+        "anonymization-trial"
+      ],
+      "cwd": "ARTIFACT_ROOT/oai-trial/submission-final/qualified/checkout",
+      "exit_code": 0,
+      "log": "ARTIFACT_ROOT/oai-trial/submission-final/qualified/command-11.log",
+      "sha256": "aa2cd63ea3d9400a5b3bee57d940487414010258c9a52b36b89b9144ba333582"
+    },
+    {
+      "argv": [
+        "docker",
+        "run",
+        "--rm",
+        "-v",
+        "ARTIFACT_ROOT/oai-trial/submission-final/qualified/input:/trial/input:ro",
+        "-v",
+        "ARTIFACT_ROOT/oai-trial/submission-final/qualified/output:/trial/output",
+        "anonymization-trial",
+        "run"
+      ],
+      "cwd": "ARTIFACT_ROOT/oai-trial/submission-final/qualified/checkout",
+      "exit_code": 0,
+      "log": "ARTIFACT_ROOT/oai-trial/submission-final/qualified/command-12.log",
+      "sha256": "8f67fae00dc6b8997aee906e3325629d2008d092615e48c5ea76edc84fede6ab"
+    },
+    {
+      "argv": [
+        "docker",
+        "run",
+        "--rm",
+        "--network=none",
+        "-v",
+        "ARTIFACT_ROOT/oai-trial/submission-final/qualified/input:/trial/input:ro",
+        "-v",
+        "ARTIFACT_ROOT/oai-trial/submission-final/qualified/offline-output:/trial/output",
+        "anonymization-trial",
+        "run"
+      ],
+      "cwd": "ARTIFACT_ROOT/oai-trial/submission-final/qualified/checkout",
+      "exit_code": 0,
+      "log": "ARTIFACT_ROOT/oai-trial/submission-final/qualified/command-13.log",
+      "sha256": "efbd3246a9fbb3e8f546527cbdd7af6bab51d1f890391c34232debc7154b7926"
+    },
+    {
+      "argv": [
+        "docker",
+        "run",
+        "--rm",
+        "-v",
+        "ARTIFACT_ROOT/oai-trial/submission-final/qualified/early:/trial/input:ro",
+        "-v",
+        "ARTIFACT_ROOT/oai-trial/submission-final/qualified/early-output:/trial/output",
+        "anonymization-trial",
+        "run"
+      ],
+      "cwd": "ARTIFACT_ROOT/oai-trial/submission-final/qualified/checkout",
+      "exit_code": 1,
+      "log": "ARTIFACT_ROOT/oai-trial/submission-final/qualified/command-14.log",
+      "sha256": "4645f9abf8cd520734385efc7ff07394d150adbb594b5866aa2bd894135c8f65"
+    },
+    {
+      "argv": [
+        "docker",
+        "run",
+        "--rm",
+        "-v",
+        "ARTIFACT_ROOT/oai-trial/submission-final/qualified/late:/trial/input:ro",
+        "-v",
+        "ARTIFACT_ROOT/oai-trial/submission-final/qualified/late-output:/trial/output",
+        "anonymization-trial",
+        "run"
+      ],
+      "cwd": "ARTIFACT_ROOT/oai-trial/submission-final/qualified/checkout",
+      "exit_code": 1,
+      "log": "ARTIFACT_ROOT/oai-trial/submission-final/qualified/command-15.log",
+      "sha256": "27afb71fc36755ac90ade539ca6e68a459d40dcc40709054eeb55329010e3f7a"
+    },
+    {
+      "argv": [
+        "git",
+        "status",
+        "--porcelain"
+      ],
+      "cwd": "ARTIFACT_ROOT/oai-trial/submission-final/qualified/checkout",
+      "exit_code": 0,
+      "log": "ARTIFACT_ROOT/oai-trial/submission-final/qualified/command-16.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "git",
+        "ls-files",
+        "-z"
+      ],
+      "cwd": "ARTIFACT_ROOT/oai-trial/submission-final/qualified/checkout",
+      "exit_code": 0,
+      "log": "ARTIFACT_ROOT/oai-trial/submission-final/qualified/command-17.log",
+      "sha256": "6b3c958f4793f4b08fd76537aab2ac923f9173b1a01b0650165ecb8eda521def"
+    }
+  ],
+  "started_at": "2026-09-05T14:51:33.443226+00:00",
+  "non_claims": [
+    "No exhaustive crash/power-loss campaign or production-scale proof.",
+    "No eight-hour timebox compliance claim or presentation approval."
+  ],
+  "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+  "image_id": "sha256:b4b52c337d0f375dbd6083a131d0b43da396723321e0d4900ecae5003860cc97",
+  "demo": {
+    "demo": "success",
+    "runs": [
+      {
+        "bytes_per_second": 1345681.4,
+        "bytes_read": 68310,
+        "elapsed_seconds": 0.050762,
+        "files_processed": 4,
+        "logical_records": 100,
+        "peak_memory_mb": 26.83,
+        "records_per_second": 7919.25,
+        "records_processed": 402,
+        "verification_passed": true
+      },
+      {
+        "bytes_per_second": 1316450.38,
+        "bytes_read": 509366,
+        "elapsed_seconds": 0.386924,
+        "files_processed": 4,
+        "logical_records": 1000,
+        "peak_memory_mb": 29.83,
+        "records_per_second": 10343.12,
+        "records_processed": 4002,
+        "verification_passed": true
+      }
+    ]
+  },
+  "readbacks": [
+    {
+      "formats": [
+        "people.csv",
+        "people.json",
+        "people.sqlite",
+        "people.txt"
+      ],
+      "corpus_sha256": "15e98e6b6c85720a9e6a88f8b85a3239ac577a4392e89160b10bf7ed0a49414c",
+      "report_sha256": "1c247be72a32cc0a23979059ab77710733de508573897dc4b3814e5b060439dc",
+      "schema_validated": true
+    },
+    {
+      "formats": [
+        "people.csv",
+        "people.json",
+        "people.sqlite",
+        "people.txt"
+      ],
+      "corpus_sha256": "15e98e6b6c85720a9e6a88f8b85a3239ac577a4392e89160b10bf7ed0a49414c",
+      "report_sha256": "f557790f6f6a55f0adea08fd5cd0a2850dcf9216462072011cd92e145eb7d9ec",
+      "schema_validated": true
+    }
+  ],
+  "archive": "ARTIFACT_ROOT/oai-trial/submission-final/qualified/oai-trial-0375af56.zip",
+  "archive_sha256": "afb851e90d37159007aa58c4beac453bef5963e80264db28d18775638535a715",
+  "baseline_history_preserved": true,
+  "source_unchanged": true,
+  "early_and_late_rejection": true,
+  "finished_at": "2026-09-05T14:51:54.758524+00:00"
+}

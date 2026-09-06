@@ -1,0 +1,155 @@
+{
+  "schema": "pitchdeck.source_manifest.v1",
+  "project_name": "oai-trial",
+  "deck_title": "Anonymization trial \u2014 results, choices, and evidence",
+  "audience": "Privacy-engineering interviewers and technical reviewers",
+  "sources": [
+    {
+      "id": "reviewed-narrative",
+      "title": "Reviewed narrative and unchanged 48-question answers",
+      "path": "sources/reviewed-WALKTHROUGH.md",
+      "visibility": "public",
+      "role": "primary",
+      "required": true
+    },
+    {
+      "id": "operator-outline",
+      "title": "Supplied revised presentation order",
+      "path": "sources/operator-outline.md",
+      "visibility": "public",
+      "role": "design",
+      "required": true
+    },
+    {
+      "id": "qualification-receipt",
+      "title": "Supplied historical qualification receipt",
+      "path": "sources/qualification.json",
+      "visibility": "public",
+      "role": "evidence",
+      "required": true
+    },
+    {
+      "id": "cost-output",
+      "title": "Committed model output supplied in packet",
+      "path": "sources/cost-model.json",
+      "visibility": "public",
+      "role": "evidence",
+      "required": true
+    },
+    {
+      "id": "cost-rows",
+      "title": "Eight normalized modeled component-cost rows",
+      "path": "sources/cost-rows.json",
+      "visibility": "public",
+      "role": "evidence",
+      "required": true
+    },
+    {
+      "id": "analytics-describe",
+      "title": "Supplied analytics schema description; not rerun",
+      "path": "sources/analytics-describe.txt",
+      "visibility": "public",
+      "role": "evidence",
+      "required": true
+    },
+    {
+      "id": "submission",
+      "title": "Frozen submission disclosures",
+      "path": "sources/SUBMISSION.md",
+      "visibility": "public",
+      "role": "evidence",
+      "required": true
+    },
+    {
+      "id": "security",
+      "title": "Security methodology and scanner evidence limits",
+      "path": "sources/SECURITY.md",
+      "visibility": "public",
+      "role": "evidence",
+      "required": true
+    },
+    {
+      "id": "battle-objective",
+      "title": "Fixture-backed Judge demonstration boundary",
+      "path": "sources/BATTLE_OBJECTIVE.md",
+      "visibility": "public",
+      "role": "evidence",
+      "required": true
+    },
+    {
+      "id": "battle-receipt",
+      "title": "Selected pinned Battle receipt fields",
+      "path": "sources/battle-receipt-excerpt.json",
+      "visibility": "public",
+      "role": "evidence",
+      "required": true
+    },
+    {
+      "id": "code-excerpts",
+      "title": "Selected exact pinned source text",
+      "path": "sources/code-excerpts.md",
+      "visibility": "public",
+      "role": "evidence",
+      "required": true
+    },
+    {
+      "id": "code-navigation",
+      "title": "Pinned code symbol and inspected line-range index",
+      "path": "sources/code-navigation.json",
+      "visibility": "public",
+      "role": "supporting",
+      "required": true
+    },
+    {
+      "id": "brand",
+      "title": "Supplied grahama.co brand contract",
+      "path": "sources/BRAND.md",
+      "visibility": "public",
+      "role": "design",
+      "required": true
+    },
+    {
+      "id": "design",
+      "title": "Supplied grahama.co token and type roles",
+      "path": "sources/DESIGN.md",
+      "visibility": "public",
+      "role": "design",
+      "required": true
+    },
+    {
+      "id": "demo-scale-calculation",
+      "title": "Derived recorded demo workload ratio",
+      "path": "sources/demo-scale-calculation.md",
+      "visibility": "public",
+      "role": "evidence",
+      "required": true
+    }
+  ],
+  "policy": {
+    "public_deck_source_ids": [
+      "reviewed-narrative",
+      "operator-outline",
+      "qualification-receipt",
+      "cost-output",
+      "cost-rows",
+      "analytics-describe",
+      "submission",
+      "security",
+      "battle-objective",
+      "battle-receipt",
+      "code-excerpts",
+      "code-navigation",
+      "brand",
+      "design",
+      "demo-scale-calculation"
+    ],
+    "forbidden_unqualified_claims": [
+      "formally anonymous",
+      "production-ready",
+      "eight-hour compliant",
+      "adaptive live campaign",
+      "race-proof"
+    ],
+    "mandatory_non_claims": []
+  }
+}

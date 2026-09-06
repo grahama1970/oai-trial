@@ -1,0 +1,15 @@
+{
+  "name": "grahama.co",
+  "tokens": {
+    "accent": "#e2ac62",
+    "heading_font": "Fraunces",
+    "body_font": "system-ui",
+    "canvas": "#0c0908",
+    "text": "#ece2d3",
+    "muted": "#a99787",
+    "header": "#211917",
+    "header_text": "#f2eadc",
+    "header_opacity": 1.0,
+    "header_image_opacity": 0.1
+  }
+}
