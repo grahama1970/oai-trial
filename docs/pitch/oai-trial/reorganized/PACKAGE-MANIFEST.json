@@ -10,13 +10,13 @@
     },
     {
       "path": "INTERVIEW_GUIDE.md",
-      "bytes": 9530,
-      "sha256": "41044103be3ca8c44fb5c174f509b822986bd4409cdddba53c2bf36b897141e6"
+      "bytes": 10419,
+      "sha256": "ee455f91326b30a6b48b872f9413a389a82f85506f3cc33f682dfdca014f4abc"
     },
     {
       "path": "README.md",
-      "bytes": 6647,
-      "sha256": "2d48e0ef3f01a073c88ddc1876c2d8b95d1a52ceb13ee6aa0546c815d98d6c43"
+      "bytes": 8219,
+      "sha256": "b7c682f15b1eb5e91afc1937ea097212b67ac7d5881a2d26379fd57c67e0383e"
     },
     {
       "path": "TOC.md",
@@ -239,6 +239,11 @@
       "sha256": "37efc257578ce669fc00e50081fff09c9051ebe8ba97f2a2678eda1cebe4b859"
     },
     {
+      "path": "debugger.json",
+      "bytes": 1352,
+      "sha256": "e730129d367aa002fe918514e1662dbcc2c6a967ab83137c0abcc0fda52d2068"
+    },
+    {
       "path": "deck.public.yaml",
       "bytes": 216714,
       "sha256": "fb24b4d9d01ec39458a2b663eef19e4e98037ca61c19a0389d487afe9453eda8"
@@ -354,6 +359,11 @@
       "sha256": "00a4823b9bc1db0e54e8b3ad8bed398b1fcb2a6a16f569734af9bccc119648af"
     },
     {
+      "path": "sources/live-demo-readback.json",
+      "bytes": 1319,
+      "sha256": "6271b34301ec26ad01c05760728ea621f6a126ce8e1c057a80c4eef20624fc45"
+    },
+    {
       "path": "sources/operator-direction-update.md",
       "bytes": 1147,
       "sha256": "f59d5be25531f6e72f52e014138730cde100210fbca326916dd379975e4f6213"
@@ -367,6 +377,11 @@
       "path": "sources/original-diagrams.json",
       "bytes": 9282,
       "sha256": "a000fd2ca24e36c11687f9d7d60f98362c2a5b9aa33c63f9a9b23d249fce0200"
+    },
+    {
+      "path": "sources/presentation-controls.json",
+      "bytes": 688,
+      "sha256": "340d69cc2466ec716c6d0f402f6fc8e2c4c10d87be0bc1ce2cfd6e90459f2554"
     },
     {
       "path": "sources/project-state-context.md",

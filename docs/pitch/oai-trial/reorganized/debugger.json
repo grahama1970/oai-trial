@@ -1,0 +1,62 @@
+{
+  "schema": "pitchdeck.debugger_map.v1",
+  "slides": {
+    "r09-identity": {
+      "file": "src/anonymization_trial/pseudonyms.py",
+      "line": 104,
+      "launch": "Pitch: identity",
+      "locals": [
+        "replacements"
+      ]
+    },
+    "r12-typed-locations": {
+      "file": "src/anonymization_trial/verification.py",
+      "line": 135,
+      "launch": "Pitch: typed",
+      "locals": [
+        "a",
+        "b"
+      ]
+    },
+    "r13-publication": {
+      "file": "src/anonymization_trial/pipeline.py",
+      "line": 209,
+      "launch": "Pitch: publication",
+      "locals": [
+        "report_path"
+      ]
+    },
+    "r07-pipeline-map": {
+      "file": "src/anonymization_trial/pipeline.py",
+      "line": 215,
+      "launch": "Pitch: publication",
+      "locals": [
+        "input_root"
+      ]
+    },
+    "r08-policy": {
+      "file": "src/anonymization_trial/policy.py",
+      "line": 131,
+      "launch": "Pitch: identity",
+      "locals": [
+        "payload"
+      ]
+    },
+    "r10-spans": {
+      "file": "src/anonymization_trial/matcher.py",
+      "line": 121,
+      "launch": "Pitch: identity",
+      "locals": [
+        "text"
+      ]
+    },
+    "r11-formats": {
+      "file": "src/anonymization_trial/formats.py",
+      "line": 40,
+      "launch": "Pitch: publication",
+      "locals": [
+        "source"
+      ]
+    }
+  }
+}

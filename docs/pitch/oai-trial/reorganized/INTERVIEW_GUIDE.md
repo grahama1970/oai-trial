@@ -94,3 +94,18 @@ The supplied preview predates the latest notes and this revision. All claims rem
 Final consumer rendering, GUI/import, visible typography, demo rehearsal and human approval remain local acceptance work. Source navigation is not a VS Code sync, breakpoint or debugger capture. No Archify, React Flow, GSN, recording, Memory import or Live Evidence delivery is established.
 
 Formal-assessment rules govern any actual assistance. Permission to use AI coding tools is not interview-assistance permission. Recording consent must be explicit and separate. Technical PASS is not eight-hour compliance; preserve the timebox disclosure.
+
+## Subsequent local operational checks
+
+The project agent exercised the real skill preflight/run/verify path on the
+prepared four-format synthetic input and independently read back all four outputs.
+See `sources/live-demo-readback.json`. This was not a timed human rehearsal.
+
+Use the dedicated native viewer on port 3016 for this workspace. Identity, typed
+verification and publication source reveals were observed through the native UI.
+A publication debug session stopped at `_publish:209`, exposed report_path, and
+was continued to termination. Before the marker rename, independent filesystem
+readback found a complete temporary report and the corpus but no final marker.
+This proves the exercised controls, not every configured stop or a crash campaign.
+The existing debug launches use their small Bob/Bobby example, separate from the
+main Alice/A.L demo. No recording was started.

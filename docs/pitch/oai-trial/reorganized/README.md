@@ -58,7 +58,7 @@ uses this project-owned bundle; generated browser assets stay on the artifact
 drive. No shared pitchdeck implementation files are changed.
 
 Native presentation URL (local workstation):
-`http://127.0.0.1:3006/?deck=./oai-trial-current/deck.data.json`
+`http://127.0.0.1:3016/?deck=./oai-trial-current/deck.data.json`
 
 The import preserves title/message claim bindings by using matching freeform
 element IDs. The closing slide adds the grahama.co caption. Candidate claim
@@ -67,3 +67,30 @@ VS Code sync were not activated. The narrow native view currently duplicates
 authored header-positioned titles below its automatic header; this observed
 shared-renderer issue was sent to the pitchdeck owner. It is not final visual
 approval or a reason to alter the anonymizer.
+
+## Native viewer configuration and observed controls
+
+Use the dedicated existing pitchdeck instance on port 3016 with
+`PITCHDECK_DEBUG_WORKSPACE` set to the primary oai-trial checkout. It uses
+`CHOKIDAR_USEPOLLING=true` and `CHOKIDAR_INTERVAL=1000` after the native watcher
+limit was observed. The shared instance on port 3006 was not restarted.
+
+The small emitted viewer manifests must be inside the app's real `public/`
+root to satisfy its source-binding guard. Media remains on the artifact drive.
+After emission, copy this bundle's `debugger.json` beside `deck.data.json`;
+the mapping is configuration, not proof that every configured stop ran.
+
+Observed through the native UI: source reveal at identity, typed verification,
+and publication mappings; Run stopped at `_publish` line 209, Inspect exposed
+`report_path`, and Continue terminated the bound session. Independent filesystem
+readback at the stop found the complete temporary report and corpus, with no
+final readiness marker yet. These are synthetic debugger demonstrations, not a
+crash campaign or recording. Other configured pipeline stops remain untested.
+
+The live skill demo path also completed preflight/run/verify and independent
+four-format readback. See `sources/live-demo-readback.json`. This establishes
+the technical demo path, not timed human rehearsal or interview permission.
+
+Remaining shared visual fixes are owned by the pitchdeck maintainer: duplicate
+header-positioned titles in narrow reading mode and legacy blue image framing.
+Neither is claimed fixed here. Recording was not started.

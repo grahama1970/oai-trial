@@ -1,0 +1,22 @@
+{
+  "formats": [
+    "people.csv",
+    "people.json",
+    "people.sqlite",
+    "people.txt"
+  ],
+  "corpus_sha256": "c51bfb4998a7b3e3a9f58c56bb6ac57363b9cee7dfee2722cdcd575871574238",
+  "report_sha256": "60f16cc48f1cdbf3622665badc3ab472f2dc228931ceccd179636b02d282debf",
+  "schema_validated": true,
+  "status": "PASS",
+  "live": true,
+  "fixture": "synthetic qualification corpus",
+  "scope": "Skill preflight/run/verify plus independent four-format readback; not timed human rehearsal, recording or general privacy assurance.",
+  "input_bundle": "/mnt/storage12tb/oai-trial/submission-final/qualified/input",
+  "output_directory": "/mnt/storage12tb/oai-trial/demo-rehearsal-6zfBpR/output",
+  "commands": [
+    "/home/graham/workspace/experiments/agent-skills/skills/anonymize-data/run.sh preflight --input /mnt/storage12tb/oai-trial/submission-final/qualified/input",
+    "/home/graham/workspace/experiments/agent-skills/skills/anonymize-data/run.sh run --input /mnt/storage12tb/oai-trial/submission-final/qualified/input --output /mnt/storage12tb/oai-trial/demo-rehearsal-6zfBpR/output",
+    "/home/graham/workspace/experiments/agent-skills/skills/anonymize-data/run.sh verify --input /mnt/storage12tb/oai-trial/submission-final/qualified/input --output /mnt/storage12tb/oai-trial/demo-rehearsal-6zfBpR/output"
+  ]
+}
