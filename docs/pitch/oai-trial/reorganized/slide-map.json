@@ -8,7 +8,7 @@
     "duration_minutes": 0.75,
     "counts_toward_prepared_time": true,
     "timing_kind": "prepared",
-    "time_cue": "00:00\u201300:45",
+    "time_cue": "00:00–00:45",
     "archetype": "toc",
     "question_ids": [],
     "code_refs": [],
@@ -31,7 +31,7 @@
     "duration_minutes": 1.5,
     "counts_toward_prepared_time": true,
     "timing_kind": "prepared",
-    "time_cue": "00:45\u201302:15",
+    "time_cue": "00:45–02:15",
     "archetype": "assertion + evidence",
     "question_ids": [],
     "code_refs": [
@@ -60,9 +60,19 @@
       "fixture-result"
     ],
     "figure_refs": [],
-    "navigation_asset": "nav-r02-demo-result",
+    "navigation_asset": null,
     "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
-    "normal_playback": true
+    "normal_playback": true,
+    "navigation_element_id": "source-navigation",
+    "presenter_action": {
+      "kind": "conditional_live_demo_after_preflight",
+      "before_run_sentence": "I’m using a thin skill wrapper around the project’s CLI; the same engine runs independently in Docker.",
+      "runtime_result_status": "not_executed_by_authoring",
+      "success_requires": "Inspect real OUTPUT after a successful run; a static illustration or exit code is insufficient.",
+      "fallback": "Explicitly announce recorded qualification; do not deliver live-success lines.",
+      "same_time_slot": true,
+      "guide_ref": "INTERVIEW_GUIDE.md#demo-decision"
+    }
   },
   {
     "slide_id": "r03-demo-observations",
@@ -74,7 +84,7 @@
     "duration_minutes": 1,
     "counts_toward_prepared_time": true,
     "timing_kind": "prepared",
-    "time_cue": "02:15\u201303:15",
+    "time_cue": "02:15–03:15",
     "archetype": "assertion + evidence",
     "question_ids": [],
     "code_refs": [
@@ -94,9 +104,10 @@
       "demo-observations"
     ],
     "figure_refs": [],
-    "navigation_asset": "nav-r03-demo-observations",
+    "navigation_asset": null,
     "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
-    "normal_playback": true
+    "normal_playback": true,
+    "navigation_element_id": "source-navigation"
   },
   {
     "slide_id": "r04-docker",
@@ -107,7 +118,7 @@
     "duration_minutes": 1,
     "counts_toward_prepared_time": true,
     "timing_kind": "prepared",
-    "time_cue": "03:15\u201304:15",
+    "time_cue": "03:15–04:15",
     "archetype": "assertion + evidence",
     "question_ids": [
       "Q46"
@@ -130,9 +141,10 @@
       "docker-commands"
     ],
     "figure_refs": [],
-    "navigation_asset": "nav-r04-docker",
+    "navigation_asset": null,
     "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
-    "normal_playback": true
+    "normal_playback": true,
+    "navigation_element_id": "source-navigation"
   },
   {
     "slide_id": "r05-mounted-cli",
@@ -143,7 +155,7 @@
     "duration_minutes": 1.25,
     "counts_toward_prepared_time": true,
     "timing_kind": "prepared",
-    "time_cue": "04:15\u201305:30",
+    "time_cue": "04:15–05:30",
     "archetype": "assertion + evidence",
     "question_ids": [
       "Q42",
@@ -183,9 +195,10 @@
       "mounted-command"
     ],
     "figure_refs": [],
-    "navigation_asset": "nav-r05-mounted-cli",
+    "navigation_asset": null,
     "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
-    "normal_playback": true
+    "normal_playback": true,
+    "navigation_element_id": "source-navigation"
   },
   {
     "slide_id": "r06-output-evidence",
@@ -196,7 +209,7 @@
     "duration_minutes": 1.5,
     "counts_toward_prepared_time": true,
     "timing_kind": "prepared",
-    "time_cue": "05:30\u201307:00",
+    "time_cue": "05:30–07:00",
     "archetype": "assertion + evidence",
     "question_ids": [
       "Q22",
@@ -228,9 +241,10 @@
     ],
     "diagram_refs": [],
     "figure_refs": [],
-    "navigation_asset": "nav-r06-output-evidence",
+    "navigation_asset": null,
     "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
-    "normal_playback": true
+    "normal_playback": true,
+    "navigation_element_id": "source-navigation"
   },
   {
     "slide_id": "r07-pipeline-map",
@@ -241,7 +255,7 @@
     "duration_minutes": 0.75,
     "counts_toward_prepared_time": true,
     "timing_kind": "prepared",
-    "time_cue": "07:00\u201307:45",
+    "time_cue": "07:00–07:45",
     "archetype": "assertion + evidence",
     "question_ids": [],
     "code_refs": [
@@ -285,9 +299,10 @@
       "pipeline-overview"
     ],
     "figure_refs": [],
-    "navigation_asset": "nav-r07-pipeline-map",
+    "navigation_asset": null,
     "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
-    "normal_playback": true
+    "normal_playback": true,
+    "navigation_element_id": "source-navigation"
   },
   {
     "slide_id": "r08-policy",
@@ -299,7 +314,7 @@
     "duration_minutes": 1.25,
     "counts_toward_prepared_time": true,
     "timing_kind": "prepared",
-    "time_cue": "07:45\u201309:00",
+    "time_cue": "07:45–09:00",
     "archetype": "assertion + evidence",
     "question_ids": [
       "Q05",
@@ -337,9 +352,10 @@
     ],
     "diagram_refs": [],
     "figure_refs": [],
-    "navigation_asset": "nav-r08-policy",
+    "navigation_asset": null,
     "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
-    "normal_playback": true
+    "normal_playback": true,
+    "navigation_element_id": "source-navigation"
   },
   {
     "slide_id": "r09-identity",
@@ -350,7 +366,7 @@
     "duration_minutes": 1.75,
     "counts_toward_prepared_time": true,
     "timing_kind": "prepared",
-    "time_cue": "09:00\u201310:45",
+    "time_cue": "09:00–10:45",
     "archetype": "assertion + evidence",
     "question_ids": [
       "Q07",
@@ -392,9 +408,10 @@
       "identity-plan"
     ],
     "figure_refs": [],
-    "navigation_asset": "nav-r09-identity",
+    "navigation_asset": null,
     "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
-    "normal_playback": true
+    "normal_playback": true,
+    "navigation_element_id": "source-navigation"
   },
   {
     "slide_id": "r10-spans",
@@ -405,7 +422,7 @@
     "duration_minutes": 1.5,
     "counts_toward_prepared_time": true,
     "timing_kind": "prepared",
-    "time_cue": "10:45\u201312:15",
+    "time_cue": "10:45–12:15",
     "archetype": "assertion + evidence",
     "question_ids": [
       "Q10",
@@ -436,9 +453,10 @@
       "original-spans"
     ],
     "figure_refs": [],
-    "navigation_asset": "nav-r10-spans",
+    "navigation_asset": null,
     "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
-    "normal_playback": true
+    "normal_playback": true,
+    "navigation_element_id": "source-navigation"
   },
   {
     "slide_id": "r11-formats",
@@ -449,7 +467,7 @@
     "duration_minutes": 1.25,
     "counts_toward_prepared_time": true,
     "timing_kind": "prepared",
-    "time_cue": "12:15\u201313:30",
+    "time_cue": "12:15–13:30",
     "archetype": "assertion + evidence",
     "question_ids": [
       "Q38",
@@ -479,9 +497,10 @@
     ],
     "diagram_refs": [],
     "figure_refs": [],
-    "navigation_asset": "nav-r11-formats",
+    "navigation_asset": null,
     "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
-    "normal_playback": true
+    "normal_playback": true,
+    "navigation_element_id": "source-navigation"
   },
   {
     "slide_id": "r12-typed-locations",
@@ -492,7 +511,7 @@
     "duration_minutes": 1.5,
     "counts_toward_prepared_time": true,
     "timing_kind": "prepared",
-    "time_cue": "13:30\u201315:00",
+    "time_cue": "13:30–15:00",
     "archetype": "assertion + evidence",
     "question_ids": [
       "Q12"
@@ -539,9 +558,10 @@
       "type-location"
     ],
     "figure_refs": [],
-    "navigation_asset": "nav-r12-typed-locations",
+    "navigation_asset": null,
     "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
-    "normal_playback": true
+    "normal_playback": true,
+    "navigation_element_id": "source-navigation"
   },
   {
     "slide_id": "r13-publication",
@@ -552,7 +572,7 @@
     "duration_minutes": 1.5,
     "counts_toward_prepared_time": true,
     "timing_kind": "prepared",
-    "time_cue": "15:00\u201316:30",
+    "time_cue": "15:00–16:30",
     "archetype": "assertion + evidence",
     "question_ids": [
       "Q13",
@@ -584,9 +604,10 @@
       "publication-states"
     ],
     "figure_refs": [],
-    "navigation_asset": "nav-r13-publication",
+    "navigation_asset": null,
     "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
-    "normal_playback": true
+    "normal_playback": true,
+    "navigation_element_id": "source-navigation"
   },
   {
     "slide_id": "r14-cloud",
@@ -597,7 +618,7 @@
     "duration_minutes": 1.5,
     "counts_toward_prepared_time": true,
     "timing_kind": "prepared",
-    "time_cue": "16:30\u201318:00",
+    "time_cue": "16:30–18:00",
     "archetype": "assertion + evidence",
     "question_ids": [
       "Q24",
@@ -622,9 +643,10 @@
       "cloud-boundaries"
     ],
     "figure_refs": [],
-    "navigation_asset": "nav-r14-cloud",
+    "navigation_asset": null,
     "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
-    "normal_playback": true
+    "normal_playback": true,
+    "navigation_element_id": "source-navigation"
   },
   {
     "slide_id": "r15-capacity",
@@ -635,7 +657,7 @@
     "duration_minutes": 1,
     "counts_toward_prepared_time": true,
     "timing_kind": "prepared",
-    "time_cue": "18:00\u201319:00",
+    "time_cue": "18:00–19:00",
     "archetype": "assertion + evidence",
     "question_ids": [],
     "code_refs": [
@@ -653,9 +675,10 @@
     ],
     "diagram_refs": [],
     "figure_refs": [],
-    "navigation_asset": "nav-r15-capacity",
+    "navigation_asset": null,
     "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
-    "normal_playback": true
+    "normal_playback": true,
+    "navigation_element_id": "source-navigation"
   },
   {
     "slide_id": "r16-cost",
@@ -666,7 +689,7 @@
     "duration_minutes": 1.25,
     "counts_toward_prepared_time": true,
     "timing_kind": "prepared",
-    "time_cue": "19:00\u201320:15",
+    "time_cue": "19:00–20:15",
     "archetype": "assertion + evidence",
     "question_ids": [
       "Q47"
@@ -696,9 +719,10 @@
     "figure_refs": [
       "assets/figures/cost-components-1pb.spec.json"
     ],
-    "navigation_asset": "nav-r16-cost",
+    "navigation_asset": null,
     "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
-    "normal_playback": true
+    "normal_playback": true,
+    "navigation_element_id": "source-navigation"
   },
   {
     "slide_id": "r17-disclosure",
@@ -709,7 +733,7 @@
     "duration_minutes": 0.75,
     "counts_toward_prepared_time": true,
     "timing_kind": "prepared",
-    "time_cue": "20:15\u201321:00",
+    "time_cue": "20:15–21:00",
     "archetype": "assertion + evidence",
     "question_ids": [
       "Q28",
@@ -736,7 +760,7 @@
     "duration_minutes": 0.25,
     "counts_toward_prepared_time": true,
     "timing_kind": "prepared",
-    "time_cue": "21:00\u201321:15",
+    "time_cue": "21:00–21:15",
     "archetype": "standalone question",
     "question_ids": [],
     "code_refs": [
@@ -752,13 +776,12 @@
     "evidence_ids": [
       "E08"
     ],
-    "diagram_refs": [
-      "question-exact"
-    ],
+    "diagram_refs": [],
     "figure_refs": [],
     "navigation_asset": null,
     "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
-    "normal_playback": true
+    "normal_playback": true,
+    "visual_rationale": "Standalone native editable question text and the existing visible qualifier, preserved from the local integration; historical text-only SVG is not in playback."
   },
   {
     "slide_id": "r19-answer-exact",
@@ -769,7 +792,7 @@
     "duration_minutes": 0.75,
     "counts_toward_prepared_time": true,
     "timing_kind": "prepared",
-    "time_cue": "21:15\u201322:00",
+    "time_cue": "21:15–22:00",
     "archetype": "assertion + evidence",
     "question_ids": [
       "Q01",
@@ -813,7 +836,7 @@
     "duration_minutes": 0.25,
     "counts_toward_prepared_time": true,
     "timing_kind": "prepared",
-    "time_cue": "22:00\u201322:15",
+    "time_cue": "22:00–22:15",
     "archetype": "standalone question",
     "question_ids": [],
     "code_refs": [
@@ -829,13 +852,12 @@
     "evidence_ids": [
       "E08"
     ],
-    "diagram_refs": [
-      "question-shared"
-    ],
+    "diagram_refs": [],
     "figure_refs": [],
     "navigation_asset": null,
     "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
-    "normal_playback": true
+    "normal_playback": true,
+    "visual_rationale": "Standalone native editable question text and the existing visible qualifier, preserved from the local integration; historical text-only SVG is not in playback."
   },
   {
     "slide_id": "r21-answer-verifier",
@@ -847,7 +869,7 @@
     "duration_minutes": 0.75,
     "counts_toward_prepared_time": true,
     "timing_kind": "prepared",
-    "time_cue": "22:15\u201323:00",
+    "time_cue": "22:15–23:00",
     "archetype": "assertion + evidence",
     "question_ids": [
       "Q04"
@@ -897,7 +919,7 @@
     "duration_minutes": 0.25,
     "counts_toward_prepared_time": true,
     "timing_kind": "prepared",
-    "time_cue": "23:00\u201323:15",
+    "time_cue": "23:00–23:15",
     "archetype": "standalone question",
     "question_ids": [],
     "code_refs": [
@@ -913,13 +935,12 @@
     "evidence_ids": [
       "E07"
     ],
-    "diagram_refs": [
-      "question-scale"
-    ],
+    "diagram_refs": [],
     "figure_refs": [],
     "navigation_asset": null,
     "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
-    "normal_playback": true
+    "normal_playback": true,
+    "visual_rationale": "Standalone native editable question text and the existing visible qualifier, preserved from the local integration; historical text-only SVG is not in playback."
   },
   {
     "slide_id": "r23-answer-scale",
@@ -930,7 +951,7 @@
     "duration_minutes": 0.75,
     "counts_toward_prepared_time": true,
     "timing_kind": "prepared",
-    "time_cue": "23:15\u201324:00",
+    "time_cue": "23:15–24:00",
     "archetype": "assertion + evidence",
     "question_ids": [
       "Q26"
@@ -972,7 +993,7 @@
     "duration_minutes": 1.25,
     "counts_toward_prepared_time": true,
     "timing_kind": "prepared",
-    "time_cue": "24:00\u201325:15",
+    "time_cue": "24:00–25:15",
     "archetype": "assertion + evidence",
     "question_ids": [],
     "code_refs": [
@@ -999,9 +1020,10 @@
     ],
     "diagram_refs": [],
     "figure_refs": [],
-    "navigation_asset": "nav-r24-security-evals",
+    "navigation_asset": null,
     "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
-    "normal_playback": true
+    "normal_playback": true,
+    "navigation_element_id": "source-navigation"
   },
   {
     "slide_id": "r25-lineage",
@@ -1013,7 +1035,7 @@
     "duration_minutes": 0.75,
     "counts_toward_prepared_time": true,
     "timing_kind": "prepared",
-    "time_cue": "25:15\u201326:00",
+    "time_cue": "25:15–26:00",
     "archetype": "assertion + evidence",
     "question_ids": [],
     "code_refs": [],
@@ -1035,7 +1057,7 @@
     "duration_minutes": 1,
     "counts_toward_prepared_time": true,
     "timing_kind": "prepared",
-    "time_cue": "26:00\u201327:00",
+    "time_cue": "26:00–27:00",
     "archetype": "assertion + evidence",
     "question_ids": [
       "Q06"
@@ -1060,15 +1082,19 @@
     ],
     "evidence_ids": [
       "E02",
-      "E08"
+      "E08",
+      "E11"
     ],
-    "diagram_refs": [
-      "wrapper-command"
-    ],
+    "diagram_refs": [],
     "figure_refs": [],
-    "navigation_asset": "nav-r26-wrapper",
+    "navigation_asset": null,
     "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
-    "normal_playback": true
+    "normal_playback": true,
+    "visual_rationale": "Native editable contract/delegation/behavior rows explain reuse only in Extra Credit; original source diagram remains a reference asset outside playback.",
+    "reference_docs": [
+      "sources/skill-reuse-reference.md"
+    ],
+    "navigation_element_id": "source-navigation"
   },
   {
     "slide_id": "r27-discovery",
@@ -1079,7 +1105,7 @@
     "duration_minutes": 1.5,
     "counts_toward_prepared_time": true,
     "timing_kind": "prepared",
-    "time_cue": "27:00\u201328:30",
+    "time_cue": "27:00–28:30",
     "archetype": "assertion + evidence",
     "question_ids": [
       "Q19",
@@ -1130,9 +1156,10 @@
     ],
     "diagram_refs": [],
     "figure_refs": [],
-    "navigation_asset": "nav-r27-discovery",
+    "navigation_asset": null,
     "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
-    "normal_playback": true
+    "normal_playback": true,
+    "navigation_element_id": "source-navigation"
   },
   {
     "slide_id": "r28-canonical-path",
@@ -1144,7 +1171,7 @@
     "duration_minutes": 1.5,
     "counts_toward_prepared_time": true,
     "timing_kind": "prepared",
-    "time_cue": "28:30\u201330:00",
+    "time_cue": "28:30–30:00",
     "archetype": "assertion + evidence",
     "question_ids": [
       "Q15",
@@ -1196,9 +1223,10 @@
       "canonical-path"
     ],
     "figure_refs": [],
-    "navigation_asset": "nav-r28-canonical-path",
+    "navigation_asset": null,
     "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
-    "normal_playback": true
+    "normal_playback": true,
+    "navigation_element_id": "source-navigation"
   },
   {
     "slide_id": "r29-discussion",
@@ -1215,7 +1243,7 @@
     "duration_minutes": 15,
     "counts_toward_prepared_time": false,
     "timing_kind": "audience_reserve",
-    "time_cue": "30:00\u201345:00+ audience reserve",
+    "time_cue": "30:00–45:00+ audience reserve",
     "archetype": "assertion + evidence",
     "question_ids": [
       "Q48"

@@ -1,6 +1,6 @@
 # OAI trial — results, choices and evidence
 
-**Candidate coordinated authoring revision.** Implementation frozen at [0375af56bf681e9441edcb7433cfe58951db77b2](https://github.com/grahama1970/oai-trial/tree/0375af56bf681e9441edcb7433cfe58951db77b2). This presentation does not change the submitted runtime, ZIP, or prior technical-review scope.
+**Focused candidate update from committed presentation sources `ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78`.** Implementation frozen at [0375af56bf681e9441edcb7433cfe58951db77b2](https://github.com/grahama1970/oai-trial/tree/0375af56bf681e9441edcb7433cfe58951db77b2). This presentation does not change the submitted runtime, ZIP, or prior technical-review scope.
 
 **Prepared presentation: 30 minutes including navigation. Audience discussion: 15+ minutes separately.** Table of Contents is first; Thank you is last. Extra Credit is the last substantive prepared block. Prepared Question/Answer pairs are distinct from audience Discussion.
 
@@ -8,11 +8,11 @@ The supplied grahama.co house tokens and actual header texture are used. Native 
 
 ## Using the transcript
 
-Read SAY as speaker notes rather than an undocumented authorship claim. Use SHOW for a brief pinned code or source jump inside each allocated interval. Full follow-up answers stay in the separate appendix. The speaker text is about 3,450 words; leave the remaining prepared time for transitions, observation and navigation. That is a rehearsal allocation, not a measured delivery time.
+Read SAY as speaker notes rather than an undocumented authorship claim. Use SHOW for a brief pinned code or source jump inside each allocated interval. Full follow-up answers stay in the separate appendix. Follow the existing slide time cues, including observation and navigation. The demo has conditional live/fallback instructions: speak only the branch actually used. This is a rehearsal allocation, not a measured delivery time.
 
-Use recorded artifacts if setup is unavailable. Do not install packages, rebuild an image or debug a tool during the talk. No successful command in the historical evidence is a command executed by this authoring environment.
+Complete environment and input preflight before the talk. During r02, run the already prepared example only when permitted and ready; inspect its actual output. Otherwise explicitly identify the recorded fallback. Do not install packages, build a skill, rebuild an image or troubleshoot tooling during playback. Historical metrics never become measurements of the current demo. No runtime command was executed by this authoring revision.
 
-[Opening hierarchy](TOC.md) · [Primary question map](question-map.json) · [Code/slide map](slide-map.json)
+[Rehearsal instructions](INTERVIEW_GUIDE.md) · [Opening hierarchy](TOC.md) · [Primary question map](question-map.json) · [Code/slide map](slide-map.json)
 
 ## Prepared timing
 
@@ -56,15 +56,15 @@ Use recorded artifacts if setup is unavailable. Do not install packages, rebuild
 
 ### Say
 
-I’ll start with the recorded result, so you can see what this system produced before we discuss its internals. Then I’ll show the small reproduction interface and the independent output checks. We’ll use the same synthetic Alice, A.L, and Bob example through policy authority, identity, matching, verification, and publication.
-The cloud design and its cost assumptions were required by the assignment, so they stay with the core explanation. I have three prepared questions to defend the choices, followed by the additional security evidence, thin wrapper, and reviewed alias workflow. Those are distinct from your questions at the end. All source navigation is pinned to the submitted implementation.
+We’ll start with the prepared example and inspect its result before discussing the internals. When a live run is unavailable, I’ll identify the recorded fallback explicitly. The same synthetic Alice, A.L, Bob and KEEP example will carry through the code.
+Then we’ll cover reproduction, output evidence, the core decisions, and the required cloud design and cost assumptions. Three prepared objections come before Extra Credit. Your questions have a separate discussion reserve after the prepared thirty minutes.
 
 ### Show / navigate
 
 Point down the hierarchy without reading every subtopic. No cover slide precedes this page.
 
 
-**Visible qualification:** Recorded results first. Source navigation is not a live breakpoint.
+**Presenter boundary:** Demo/result first; identify the branch actually used. Source navigation is not a live breakpoint.
 
 **Evidence IDs:** E08
 
@@ -73,34 +73,48 @@ Point down the hierarchy without reading every subtopic. No cover slide precedes
 
 **Time:** 00:45–02:15. **Block:** Demo and Results. **Primary questions:** None; navigation or paired lead-in.
 
-### Say
+### Presenter precondition — not spoken
+
+Preflight is completed before playback: the existing wrapper is bound to the frozen project checkout, the synthetic INPUT matches the Alice/A.L/person-a and Bob/person-b qualification fixture, and OUTPUT is a dedicated empty directory outside inputs. ANONYMIZE, INPUT and OUTPUT are presenter-resolved paths, not files furnished by this document. No introductory skill slide or live installation is added.
+
+Keep this within the existing 90-second slot: roughly 8 seconds for the sentence, 20 for the prepared action, 30 for output inspection, and the remainder for explanation and transition. These are rehearsal allocations, not observed execution times. If the run is not available or cannot complete in the slot, use the labeled fallback without troubleshooting or implying success.
+
+### Live branch — say exactly, immediately before the command
 
 I’m using a thin skill wrapper around the project’s CLI; the same engine runs independently in Docker.
 
-Start with this concrete result. The qualification fixture links Alice and A.L to person-a, and Bob to person-b. The source-side checker expects one name pseudonym for Alice’s aliases and another for Bob. KEEP, the Boolean flags, and the integer values remain unchanged.
-The supplied receipt records successful readback of CSV, JSON, UTF-8 text and SQLite, including the legal sqliteX table. It also records that the original input remained unchanged. The before-and-after illustration is drawn from those checker assertions; it is not a screenshot of a newly executed terminal or a raw output file supplied with the packet.
-That distinction is deliberate. You can inspect the receipt fields and the checker that produced them. We are evaluating whether the output remained useful and correctly associated—not whether a process printed PASS. The mechanism is policy-bounded pseudonymization, not evidence that every possible identifier was discovered.
-
-### Show / navigate
-
-Before displaying the result, run the prepared synthetic bundle through the existing skill after local preflight. This is a presenter action, not a run performed by this document. Use a dedicated empty output outside the inputs; inspect the actual output. If using the historical fallback instead, say that explicitly.
+### Presenter action — not spoken; run only after preflight
 
 ```bash
-ANONYMIZE="$HOME/workspace/experiments/agent-skills/skills/anonymize-data/run.sh"
-"$ANONYMIZE" run --input "$INPUT" --output "$OUTPUT"
-"$ANONYMIZE" verify --input "$INPUT" --output "$OUTPUT"
+"$ANONYMIZE" run --input "$INPUT" --output "$OUTPUT" &&
+  "$ANONYMIZE" verify --input "$INPUT" --output "$OUTPUT"
 ```
 
-Open sources/qualification.json at readbacks and source_unchanged; then scripts/qualify_submission.py::readback only if needed.
+On any nonzero exit, do not claim a successful release or continue with a success script. Observe the error and move to the recorded fallback. After success, open the **actual** `$OUTPUT/report.json` and generated corpus. The runtime `verify` command is not a substitute for opening those files.
+
+Inspect the real file inventory and the Alice/A.L/Bob associations, KEEP, the JSON Boolean and integer values, and SQLite `sqliteX`. Use the fixture-specific independent readback prepared before the talk when available; do not improvise a new checker here. Do not claim every check ran if only a few rows were displayed. `inspect` is a report summary, not authentication or an independent digest gate.
+
+### Say after the live output is actually inspected
+
+Here is the output from that run. Alice and A.L share person-a; Bob has a different declared identity. The point is to check those associations and the protected content, not just the exit code. What we opened now is current output. The reference diagram on this slide comes from the historical qualification checker; it is not a capture of this run.
+
+### Recorded fallback — alternative branch, not additional talk time
+
+Say: “I’m using the recorded qualification fallback, not a live result.” If a live attempt failed or was stopped, state that before this sentence. Do not deliver the live-success lines above.
+
+Open `sources/qualification.json` at `readbacks` and `source_unchanged`. Say: “This retained receipt records four-format readback, including sqliteX. The diagram shows the checker’s expected alias and protected-value associations. It is historical evidence, not a terminal screenshot or fresh output.”
+
+### Code / evidence navigation
 
 - [`scripts/qualify_submission.py::fixture` — L39–L77](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/scripts/qualify_submission.py#L39-L77)
 - [`scripts/qualify_submission.py::readback` — L80–L134](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/scripts/qualify_submission.py#L80-L134)
+- [Fixture-derived illustration provenance](assets/figures/fixture-result.source.json)
 
 **Visible qualification:** Recorded qualification + checker-asserted values; not a new output capture.
 
-**Evidence IDs:** E01, E06
+**Evidence IDs:** E01, E06. The conditional presenter action is not an additional execution receipt.
 
-**Transition:** The same receipt also gives bounded, observed performance numbers.
+**Transition:** The next timing and memory figures are historical observations from the supplied receipt, regardless of which demo branch we just used.
 
 <a id="r03-demo-observations"></a>
 ## r03-demo-observations — Small workloads were measured; petabytes were not
@@ -109,13 +123,13 @@ Open sources/qualification.json at readbacks and source_unchanged; then scripts/
 
 ### Say
 
-These are the two demo runs recorded in the supplied qualification receipt. The logical fixture sizes are 100 and 1,000. Each run processed four files and reported verification success. The elapsed observations are 0.050762 and 0.386924 seconds, and peak memory is reported as 26.83 and 29.83 MB.
+These are the two demo runs recorded in the supplied qualification receipt. The logical fixture sizes are 100 and 1,000: 1000 / 100 = 10, a tenfold logical-workload step. This ratio is derived from the recorded values, not a new measurement. Each run processed four files and reported verification success. The elapsed observations are 0.050762 and 0.386924 seconds, and peak memory is reported as 26.83 and 29.83 MB.
 The rates are also shown so the result is reproducible as evidence, not reduced to a speed claim. Records processed are not the same field as logical fixture size: the generated formats contribute multiple records to the run counters.
 This is a small synthetic demonstration. It is not an estimate of what one production worker will sustain on arbitrary customer exports. Later I will label the cloud throughput separately as an assumption. Nothing on this page was remeasured while this authoring revision was prepared.
 
 ### Show / navigate
 
-Read the exact values from sources/qualification.json#/demo/runs. Do not extrapolate a linear memory bound.
+Keep this slide labeled historical even after a live r02 run. Read the exact values from sources/qualification.json#/demo/runs. Do not extrapolate a linear memory bound.
 
 - [`src/anonymization_trial/__main__.py::_run_once` — L41–L58](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/__main__.py#L41-L58)
 
@@ -168,7 +182,7 @@ The discovery extra is optional functionality; these setup commands are not addi
 ### Say
 
 The original interface accepts an input bundle containing policy.json and corpus. The input is mounted read-only; the output mount is a dedicated empty directory. On success, the release root contains only corpus and report.json.
-The later file-or-folder interface adapts separate input and policy paths into that same bundle. It is useful to the operator, but it does not replace the evaluator command or create a second engine. I’ll show the thin wrapper in Extra Credit.
+The later file-or-folder interface adapts separate input and policy paths into that same bundle. Here the point is the project’s input separation, not a second evaluator contract; the optional reusable workflow is reserved for Extra Credit.
 The operational commands also have different jobs. Preflight checks admission; inspect summarizes selected report fields; verify rereads the corpus against the source policy. None should be described as authenticating a signed release. The stronger qualification readback checks report schema and digests as a separate operation. Here we use source navigation and a supported command string, not an invented terminal recording.
 
 ### Show / navigate
@@ -751,26 +765,32 @@ security/battle/run-receipt.json: claim_scope and execution; no target campaign 
 
 ### Say
 
-The thin anonymize-data skill makes the canonical project easier to invoke. For workflows we expect to reuse, the pattern is a concise SKILL.md contract, thin delegation in run.sh, and retained behavioral checks following best-practices-skills. We do not duplicate the engine or build/install the wrapper during the presentation. It accepts a supported file or folder plus a separate policy and output location, then uses the project’s installed CLI. Matching, adapters, verification, and errors remain owned by the project.
-The wrapper clears conflicting environment variables and checks the imported package location against the selected checkout. Its retained sanity workflow includes a wrong-install refusal and runs the same project tests through the wrapper. That is a focused installation boundary, not another engine or service platform.
-This was requested after the original qualified trial candidate. The older archive and PASS were not relabeled as proof of the extension. The Docker interface remains self-contained, while the skill is an operator convenience with its own scoped evidence.
+This is a workflow worth reusing: the same input contract, safe invocation, and proof obligation recur. The skill packages that procedure without owning a second engine.
+SKILL.md states when to use it, the inputs, expected outputs, failure limits and permission boundaries. Keep that contract concise. run.sh delegates to the project CLI; matching and verification stay in the project. Retained behavioral checks exercise useful results and refusals, including wrong installation and unsafe output paths.
+That is the best-practices-skills pattern being discussed—not a claim that a frontmatter label proves compliance. Use the existing wrapper; do not build or install it live. This is post-trial convenience, and Docker remains independent.
 
 ### Show / navigate
 
-Project input_bundle()/main(); wrapper is documented and its execution evidence is separately pinned in the source manifest.
+Use at most one short navigation jump in this minute. The slide’s three rows are **native editable text**: concise contract, thin delegation, retained behavior. They are not text-only SVG replacements or proof of a new test run.
 
+- [Source-only reuse reference: SKILL.md contract, run.sh delegation and sanity checks](sources/skill-reuse-reference.md)
 - [`src/anonymization_trial/bundle.py::input_bundle` — L40–L71](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/bundle.py#L40-L71)
 - [`src/anonymization_trial/__main__.py::main` — L207–L233](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/__main__.py#L207-L233)
 
-```bash
-./run.sh --input exports --policy policy.json --output release
-```
+The reference excerpts are from an explicitly pinned, previously reviewed skill snapshot. They explain the pattern; they are not the byte authority for a later wrapper execution receipt. The project behavior stays pinned to `0375af56bf681e9441edcb7433cfe58951db77b2`.
 
-Example from the shared skill directory; source paths are operator-supplied. This is not another engine or a successful command executed here.
+**Exact source excerpt from the wrapper; display only, not execution:**
+
+```bash
+# The installed entrypoint preserves the caller's cwd for relative data paths.
+exec "$ENTRY" "$@"
+```
 
 **Visible qualification:** Post-trial integration. The evaluator image does not require the shared skill.
 
-**Evidence IDs:** E02, E08
+**Evidence IDs:** E02, E08, E11. Best-practices guidance and source inspection do not establish fresh validation or blanket compliance.
+
+**Transition:** That same workflow also supports reviewed aliases; the next slide separates a proposal, an approved exact policy, and a released corpus.
 
 <a id="r27-discovery"></a>
 ## r27-discovery — A proposed alias does not authorize release
@@ -882,6 +902,7 @@ End normal playback. No substantive slide follows. Backup questions are Markdown
 
 **Not in normal slide playback.** The three prepared objections do not require reading this bank. These are the existing Q01–Q48 questions and answer texts, preserved without renumbering or rewriting. The primary slide map is new; the legacy section remains traceable. Questions are plausible preparation material, not predictions of the interview.
 
+<a id="q01"></a>
 ### Q01 — Is this actually anonymization?
 
 **Primary slide:** [r19-answer-exact](#r19-answer-exact) · **Legacy section:** `01-brief`
@@ -892,6 +913,7 @@ End normal playback. No substantive slide follows. Backup questions are Markdown
 
 **Original code/evidence references:** [`compile_policy`][C01]; [scope disclosures][D01]
 
+<a id="q02"></a>
 ### Q02 — What happens to a name absent from the policy?
 
 **Primary slide:** [r19-answer-exact](#r19-answer-exact) · **Legacy section:** `01-brief`
@@ -902,6 +924,7 @@ End normal playback. No substantive slide follows. Backup questions are Markdown
 
 **Original code/evidence references:** [`Matcher.replace`][C04]; [`_strings`, `_name`, `discover`][C12]
 
+<a id="q03"></a>
 ### Q03 — Why not use an existing PII platform?
 
 **Primary slide:** [r19-answer-exact](#r19-answer-exact) · **Legacy section:** `01-brief`
@@ -912,6 +935,7 @@ End normal playback. No substantive slide follows. Backup questions are Markdown
 
 **Original code/evidence references:** [Brief][D00]; [`Matcher`, `_Aho`][C04]; [implementation choices][D01]
 
+<a id="q04"></a>
 ### Q04 — Why isn’t a successful transform enough?
 
 **Primary slide:** [r21-answer-verifier](#r21-answer-verifier) · **Legacy section:** `02-architecture`
@@ -922,6 +946,7 @@ End normal playback. No substantive slide follows. Backup questions are Markdown
 
 **Original code/evidence references:** [`run_pipeline`][C02]; [`verify_corpus`][C13]
 
+<a id="q05"></a>
 ### Q05 — Are inputs protected only by Docker’s read-only mount?
 
 **Primary slide:** [r08-policy](#r08-policy) · **Legacy section:** `02-architecture`
@@ -932,6 +957,7 @@ End normal playback. No substantive slide follows. Backup questions are Markdown
 
 **Original code/evidence references:** [`_preflight`][C14]; [`run_pipeline`][C02]; [`input_bundle`][C25]
 
+<a id="q06"></a>
 ### Q06 — Why create another skill?
 
 **Primary slide:** [r26-wrapper](#r26-wrapper) · **Legacy section:** `02-architecture`
@@ -942,6 +968,7 @@ End normal playback. No substantive slide follows. Backup questions are Markdown
 
 **Original code/evidence references:** [Interface documentation][D06]; [`main`][C15]; [retained wrapper evidence][E02]
 
+<a id="q07"></a>
 ### Q07 — Why do aliases share a pseudonym?
 
 **Primary slide:** [r09-identity](#r09-identity) · **Legacy section:** `03-semantics`
@@ -952,6 +979,7 @@ End normal playback. No substantive slide follows. Backup questions are Markdown
 
 **Original code/evidence references:** [`Rule.identity`, `compile_policy`][C01]; [`build_replacements`][C03]
 
+<a id="q08"></a>
 ### Q08 — Can two identities collide?
 
 **Primary slide:** [r09-identity](#r09-identity) · **Legacy section:** `03-semantics`
@@ -962,6 +990,7 @@ End normal playback. No substantive slide follows. Backup questions are Markdown
 
 **Original code/evidence references:** [`build_replacements`][C03]
 
+<a id="q09"></a>
 ### Q09 — Is the SHA-256 pseudonym secret?
 
 **Primary slide:** [r09-identity](#r09-identity) · **Legacy section:** `03-semantics`
@@ -972,6 +1001,7 @@ End normal playback. No substantive slide follows. Backup questions are Markdown
 
 **Original code/evidence references:** [`_digest`, `KEY_MODE`][C03]; [privacy posture][D01]
 
+<a id="q10"></a>
 ### Q10 — What happens when literals overlap?
 
 **Primary slide:** [r10-spans](#r10-spans) · **Legacy section:** `03-semantics`
@@ -982,6 +1012,7 @@ End normal playback. No substantive slide follows. Backup questions are Markdown
 
 **Original code/evidence references:** [`_select`, `Matcher.replace`][C04]; [`verify_corpus`][C13]
 
+<a id="q11"></a>
 ### Q11 — What if a protected phrase contains a sensitive name?
 
 **Primary slide:** [r08-policy](#r08-policy) · **Legacy section:** `03-semantics`
@@ -992,6 +1023,7 @@ End normal playback. No substantive slide follows. Backup questions are Markdown
 
 **Original code/evidence references:** [`_boundary_overlap`, `_check_overlap`][C16]
 
+<a id="q12"></a>
 ### Q12 — Why require strict type equality?
 
 **Primary slide:** [r12-typed-locations](#r12-typed-locations) · **Legacy section:** `03-semantics`
@@ -1002,6 +1034,7 @@ End normal playback. No substantive slide follows. Backup questions are Markdown
 
 **Original code/evidence references:** [`_typed_equal`][C05]; [`_verify_sqlite_locations`][C17]; [typed regression][C20]
 
+<a id="q13"></a>
 ### Q13 — Is report-last an atomic transaction?
 
 **Primary slide:** [r13-publication](#r13-publication) · **Legacy section:** `04-reliability`
@@ -1012,6 +1045,7 @@ End normal playback. No substantive slide follows. Backup questions are Markdown
 
 **Original code/evidence references:** [`_publish`, `run_pipeline`][C06]
 
+<a id="q14"></a>
 ### Q14 — What if writing the report makes partial progress?
 
 **Primary slide:** [r13-publication](#r13-publication) · **Legacy section:** `04-reliability`
@@ -1022,6 +1056,7 @@ End normal playback. No substantive slide follows. Backup questions are Markdown
 
 **Original code/evidence references:** [`_publish`][C06]
 
+<a id="q15"></a>
 ### Q15 — How did the relative-path leak happen?
 
 **Primary slide:** [r28-canonical-path](#r28-canonical-path) · **Legacy section:** `04-reliability`
@@ -1032,6 +1067,7 @@ End normal playback. No substantive slide follows. Backup questions are Markdown
 
 **Original code/evidence references:** [`separate_output`][C07]; [`main`][C15]; [`approve`][C09]
 
+<a id="q16"></a>
 ### Q16 — Why doesn’t mode `0600` solve the leak?
 
 **Primary slide:** [r28-canonical-path](#r28-canonical-path) · **Legacy section:** `04-reliability`
@@ -1042,6 +1078,7 @@ End normal playback. No substantive slide follows. Backup questions are Markdown
 
 **Original code/evidence references:** [`write_private`][C18]; [path regression][C08]
 
+<a id="q17"></a>
 ### Q17 — Can a symlink change after validation?
 
 **Primary slide:** [r28-canonical-path](#r28-canonical-path) · **Legacy section:** `04-reliability`
@@ -1052,6 +1089,7 @@ End normal playback. No substantive slide follows. Backup questions are Markdown
 
 **Original code/evidence references:** [`separate_output`][C07]; [assurance boundary][D01]
 
+<a id="q18"></a>
 ### Q18 — How do you know the fix didn’t disable all output?
 
 **Primary slide:** [r28-canonical-path](#r28-canonical-path) · **Legacy section:** `05-evidence`
@@ -1062,6 +1100,7 @@ End normal playback. No substantive slide follows. Backup questions are Markdown
 
 **Original code/evidence references:** [Path regression][C08]; E06; [wrapper result][E02]
 
+<a id="q19"></a>
 ### Q19 — Does a similarity score of 95 mean 95% probability?
 
 **Primary slide:** [r27-discovery](#r27-discovery) · **Legacy section:** `05-evidence`
@@ -1072,6 +1111,7 @@ End normal playback. No substantive slide follows. Backup questions are Markdown
 
 **Original code/evidence references:** [`discover`][C12]; [`approve`][C09]
 
+<a id="q20"></a>
 ### Q20 — Can I edit the review to approve an invented alias?
 
 **Primary slide:** [r27-discovery](#r27-discovery) · **Legacy section:** `05-evidence`
@@ -1082,6 +1122,7 @@ End normal playback. No substantive slide follows. Backup questions are Markdown
 
 **Original code/evidence references:** [`DiscoveryReport.validate`, `approve`][C09]; [workflow contract][D06]
 
+<a id="q21"></a>
 ### Q21 — Does human approval authorize release?
 
 **Primary slide:** [r27-discovery](#r27-discovery) · **Legacy section:** `05-evidence`
@@ -1092,6 +1133,7 @@ End normal playback. No substantive slide follows. Backup questions are Markdown
 
 **Original code/evidence references:** [`approve`][C09]; [`_check_overlap`][C16]; [`run_pipeline`][C02]
 
+<a id="q22"></a>
 ### Q22 — Did WebGPT execute your Docker tests?
 
 **Primary slide:** [r06-output-evidence](#r06-output-evidence) · **Legacy section:** `05-evidence`
@@ -1102,6 +1144,7 @@ End normal playback. No substantive slide follows. Backup questions are Markdown
 
 **Original code/evidence references:** [`qualify`, `readback`][C10]; E01–E04
 
+<a id="q23"></a>
 ### Q23 — Does a large green test count prove safety?
 
 **Primary slide:** [r06-output-evidence](#r06-output-evidence) · **Legacy section:** `05-evidence`
@@ -1112,6 +1155,7 @@ End normal playback. No substantive slide follows. Backup questions are Markdown
 
 **Original code/evidence references:** [Path regression][C08]; [typed regression][C20]; [`verify_corpus`][C13]
 
+<a id="q24"></a>
 ### Q24 — Why not split every file at newlines?
 
 **Primary slide:** [r14-cloud](#r14-cloud) · **Legacy section:** `06-production`
@@ -1122,6 +1166,7 @@ End normal playback. No substantive slide follows. Backup questions are Markdown
 
 **Original code/evidence references:** [`transform_file` and adapters][C19]; [AWS design][D02]
 
+<a id="q25"></a>
 ### Q25 — Where is the shared pseudonym state in production?
 
 **Primary slide:** [r14-cloud](#r14-cloud) · **Legacy section:** `06-production`
@@ -1132,6 +1177,7 @@ End normal playback. No substantive slide follows. Backup questions are Markdown
 
 **Original code/evidence references:** [`build_replacements`][C03]; [AWS design][D02]
 
+<a id="q26"></a>
 ### Q26 — What proves the petabyte SLA and price?
 
 **Primary slide:** [r23-answer-scale](#r23-answer-scale) · **Legacy section:** `06-production`
@@ -1142,6 +1188,7 @@ End normal playback. No substantive slide follows. Backup questions are Markdown
 
 **Original code/evidence references:** [`_one`, `_sensitivity`][C11]; [inputs][D04]; [example output][D05]
 
+<a id="q27"></a>
 ### Q27 — What if two workers retry the same object?
 
 **Primary slide:** [r14-cloud](#r14-cloud) · **Legacy section:** `06-production`
@@ -1152,6 +1199,7 @@ End normal playback. No substantive slide follows. Backup questions are Markdown
 
 **Original code/evidence references:** [AWS reliability/publication design][D02]; [`_publish`][C06]
 
+<a id="q28"></a>
 ### Q28 — Did you stay within eight hours?
 
 **Primary slide:** [r17-disclosure](#r17-disclosure) · **Legacy section:** `07-nonclaims`
@@ -1162,6 +1210,7 @@ End normal playback. No substantive slide follows. Backup questions are Markdown
 
 **Original code/evidence references:** [`SUBMISSION.md` time disclosure][D01]
 
+<a id="q29"></a>
 ### Q29 — How much did AI do, and do you understand the implementation?
 
 **Primary slide:** [r17-disclosure](#r17-disclosure) · **Legacy section:** `07-nonclaims`
@@ -1172,6 +1221,7 @@ End normal playback. No substantive slide follows. Backup questions are Markdown
 
 **Original code/evidence references:** [AI disclosure][D01]; [`separate_output`][C07]; [regression][C08]
 
+<a id="q30"></a>
 ### Q30 — What would you do next, and what would you refuse to claim?
 
 **Primary slide:** [r17-disclosure](#r17-disclosure) · **Legacy section:** `07-nonclaims`
@@ -1182,6 +1232,7 @@ End normal playback. No substantive slide follows. Backup questions are Markdown
 
 **Original code/evidence references:** [Unfinished work and stopping rule][D01]
 
+<a id="q31"></a>
 ### Q31 — Is `policy_version` a revision ID for each policy edit?
 
 **Primary slide:** [r09-identity](#r09-identity) · **Legacy section:** `03-semantics`
@@ -1192,6 +1243,7 @@ End normal playback. No substantive slide follows. Backup questions are Markdown
 
 **Original code/evidence references:** [`compile_policy`][C01]; [`_digest`][C03]; [`RunReport`, `run_pipeline`][C02]
 
+<a id="q32"></a>
 ### Q32 — Can renaming a rule change its pseudonym?
 
 **Primary slide:** [r09-identity](#r09-identity) · **Legacy section:** `03-semantics`
@@ -1202,6 +1254,7 @@ End normal playback. No substantive slide follows. Backup questions are Markdown
 
 **Original code/evidence references:** [`Rule.identity`][C01]; [`_select`][C04]
 
+<a id="q33"></a>
 ### Q33 — Can you distinguish two different people both called Alice?
 
 **Primary slide:** [r08-policy](#r08-policy) · **Legacy section:** `03-semantics`
@@ -1212,6 +1265,7 @@ End normal playback. No substantive slide follows. Backup questions are Markdown
 
 **Original code/evidence references:** [`compile_policy` match-domain validation][C01]; [`build_matcher`][C04]
 
+<a id="q34"></a>
 ### Q34 — Does approving one proposed cell authorize only that cell?
 
 **Primary slide:** [r27-discovery](#r27-discovery) · **Legacy section:** `05-evidence`
@@ -1222,6 +1276,7 @@ End normal playback. No substantive slide follows. Backup questions are Markdown
 
 **Original code/evidence references:** [`approve`][C09]; [`Matcher.replace`][C04]; [four-format workflow test][C21]
 
+<a id="q35"></a>
 ### Q35 — Does review recomputation prove who approved it or freeze the original thresholds?
 
 **Primary slide:** [r27-discovery](#r27-discovery) · **Legacy section:** `05-evidence`
@@ -1232,6 +1287,7 @@ End normal playback. No substantive slide follows. Backup questions are Markdown
 
 **Original code/evidence references:** [`DiscoveryReport.validate`, `approve`][C09]; [`discover`][C12]
 
+<a id="q36"></a>
 ### Q36 — Does `seam_validation: PASS` mean the aliases are correct or the policy is released?
 
 **Primary slide:** [r27-discovery](#r27-discovery) · **Legacy section:** `05-evidence`
@@ -1242,6 +1298,7 @@ End normal playback. No substantive slide follows. Backup questions are Markdown
 
 **Original code/evidence references:** [`Candidate.validate`, `DiscoveryReport.validate`, `ApprovalReceipt.validate`][C12]; [workflow test][C21]
 
+<a id="q37"></a>
 ### Q37 — Is `verification_sha256` the hash of a separate verifier receipt?
 
 **Primary slide:** [r13-publication](#r13-publication) · **Legacy section:** `04-reliability`
@@ -1252,6 +1309,7 @@ End normal playback. No substantive slide follows. Backup questions are Markdown
 
 **Original code/evidence references:** [`RunReport`, `run_pipeline`][C02]; [`_publish`][C06]
 
+<a id="q38"></a>
 ### Q38 — What exactly is preserved: physical bytes or logical content?
 
 **Primary slide:** [r11-formats](#r11-formats) · **Legacy section:** `03-semantics`
@@ -1262,6 +1320,7 @@ End normal playback. No substantive slide follows. Backup questions are Markdown
 
 **Original code/evidence references:** [Adapters][C19]; [`_typed_equal`, `_verify_locations`][C05]; [`_verify_sqlite_locations`][C17]
 
+<a id="q39"></a>
 ### Q39 — Do you reject every generated SQLite column?
 
 **Primary slide:** [r11-formats](#r11-formats) · **Legacy section:** `03-semantics`
@@ -1272,6 +1331,7 @@ End normal playback. No substantive slide follows. Backup questions are Markdown
 
 **Original code/evidence references:** [`_writable_columns`, `_transform_sqlite`][C19]; [`_verify_sqlite_locations`][C17]
 
+<a id="q40"></a>
 ### Q40 — Why accept `0.1` but reject some other JSON decimal tokens?
 
 **Primary slide:** [r11-formats](#r11-formats) · **Legacy section:** `03-semantics`
@@ -1282,6 +1342,7 @@ End normal playback. No substantive slide follows. Backup questions are Markdown
 
 **Original code/evidence references:** [`_finite_float`, `_transform_json`][C19]
 
+<a id="q41"></a>
 ### Q41 — Do matching and residual scanning apply identical Unicode rules?
 
 **Primary slide:** [r10-spans](#r10-spans) · **Legacy section:** `03-semantics`
@@ -1292,6 +1353,7 @@ End normal playback. No substantive slide follows. Backup questions are Markdown
 
 **Original code/evidence references:** [`ascii_lower`][C04]; [`_count`, `verify_corpus`][C13]
 
+<a id="q42"></a>
 ### Q42 — Is the temporary input bundle encrypted or immutable?
 
 **Primary slide:** [r05-mounted-cli](#r05-mounted-cli) · **Legacy section:** `02-architecture`
@@ -1302,6 +1364,7 @@ End normal playback. No substantive slide follows. Backup questions are Markdown
 
 **Original code/evidence references:** [`input_bundle`][C25]; [assurance boundary][D01]
 
+<a id="q43"></a>
 ### Q43 — Do `preflight`, `inspect`, and `verify` all prove the same thing?
 
 **Primary slide:** [r05-mounted-cli](#r05-mounted-cli) · **Legacy section:** `02-architecture`
@@ -1312,6 +1375,7 @@ End normal playback. No substantive slide follows. Backup questions are Markdown
 
 **Original code/evidence references:** [`_preflight_cmd`, `_inspect_cmd`, `_verify_cmd`][C15]; [`readback`][C10]
 
+<a id="q44"></a>
 ### Q44 — Should repeated runs produce identical reports?
 
 **Primary slide:** [r06-output-evidence](#r06-output-evidence) · **Legacy section:** `04-reliability`
@@ -1322,6 +1386,7 @@ End normal playback. No substantive slide follows. Backup questions are Markdown
 
 **Original code/evidence references:** [`run_pipeline`, `_manifest_digest`][C02]; [`qualify` replay comparison][C10]
 
+<a id="q45"></a>
 ### Q45 — Does the qualification script accept an arbitrary frozen SHA?
 
 **Primary slide:** [r06-output-evidence](#r06-output-evidence) · **Legacy section:** `05-evidence`
@@ -1332,6 +1397,7 @@ End normal playback. No substantive slide follows. Backup questions are Markdown
 
 **Original code/evidence references:** [`qualify`][C10]; E01, E05
 
+<a id="q46"></a>
 ### Q46 — Does default Docker qualification establish optional discovery-image behavior?
 
 **Primary slide:** [r04-docker](#r04-docker) · **Legacy section:** `05-evidence`
@@ -1342,6 +1408,7 @@ End normal playback. No substantive slide follows. Backup questions are Markdown
 
 **Original code/evidence references:** [Dockerfile][C22]; [workflow test][C21]; E01–E03
 
+<a id="q47"></a>
 ### Q47 — Are all real AWS operations priced by the estimator?
 
 **Primary slide:** [r16-cost](#r16-cost) · **Legacy section:** `06-production`
@@ -1352,6 +1419,7 @@ End normal playback. No substantive slide follows. Backup questions are Markdown
 
 **Original code/evidence references:** [`_one`][C11]; [price/unit inputs][D04]; [cost disclosures][D01]
 
+<a id="q48"></a>
 ### Q48 — Will Live Evidence or an AI copilot help answer during the assessment?
 
 **Primary slide:** [r29-discussion](#r29-discussion) · **Legacy section:** `07-nonclaims`
@@ -1368,16 +1436,18 @@ End normal playback. No substantive slide follows. Backup questions are Markdown
 
 | ID | Actual material available in this revision | Boundary |
 |---|---|---|
-| E01 | Supplied historical qualification receipt copied as sources/qualification.json; exact0375af56 source commit and recorded demo/readbacks | The receipt was read; raw command logs and the original submission archive were not executed or rehashed here. A status does not make the authoring environment an executor. |
+| E01 | Supplied historical qualification receipt copied as sources/qualification.json; exact 0375af56 source commit and recorded demo/readbacks | The receipt was read; raw command logs and the original submission archive were not executed or rehashed here. A status does not make the authoring environment an executor. |
 | E02 | Previously inspected retained wrapper eval, linked in the source record and existing question answers | Historical wrapper evidence, not a new run or automatic approval of all post-trial code. |
 | E03 | Presenter-reported targeted CLI/wrapper results | No new targeted test run during this revision. |
-| E04 | Prior source-only bounded reviewer PASS for canonical-path fix at0375af56 | Not timebox compliance, exhaustive security, or fresh presentation approval. |
+| E04 | Prior source-only bounded reviewer PASS for canonical-path fix at 0375af56 | Not timebox compliance, exhaustive security, or fresh presentation approval. |
 | E05 | Archive identity recorded in supplied qualification receipt | Its hash identifies the reported original ZIP; the new authoring ZIP is a different artifact. Original archive bytes were not supplied for rehash here. |
 | E06 | Source of the targeted path test, typed mutation test and four-format workflow, inspected in this conversation | Assertions and positive controls, not a fresh pytest execution. |
-| E07 | Supplied committed cost output, eight normalized rows and analytics describe output | Modeled, not measured. We author a within-scenario chart and do not claim analytics/create-figure commands ran here. |
+| E07 | Supplied committed cost output, eight normalized rows and analytics describe output | Modeled, not measured. The existing within-scenario chart and its data/spec are reused unchanged; analytics/create-figure were not rerun here. |
 | E08 | Reviewed narrative, selected pinned source windows, and current supplied schemas/design contracts | Source/authoring validation only. No runtime, compiler, SVG skill, GUI or slide-import validation. |
 | E09 | Supplied security methodology and previously inspected scanner receipt | Bandit supporting evidence; Semgrep zero-target scan; no SCA receipt. Not an all-scanner clean result. |
 | E10 | Pinned Battle receipt selected fields, inspected through GitHub | Local deterministic fixture contract. agentic=false; models_used=[]; no adaptive live target campaign. |
+| E11 | [Source-only skill reuse excerpts](sources/skill-reuse-reference.md), fetched from a known pinned skill snapshot | Contract/delegation/checking pattern only; not a later wrapper run, blanket compliance, or new installation. |
+| E12 | [Supplied standard-mode project-state context](sources/project-state-context.md) | Retains reported collection and manual interpretation. Collection is not execution; synthetic keyword flags and basename misses do not authorize unrelated repairs. Report validation/rendering is reported local work, not work performed here. |
 
 The pinned SUBMISSION.md described the follow-up review as pending when committed. The later PASS is conversation evidence; it is not retroactively added to that immutable file.
 

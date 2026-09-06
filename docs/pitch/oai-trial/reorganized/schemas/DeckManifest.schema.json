@@ -42,7 +42,7 @@
       "type": "object"
     },
     "ContentReveal": {
-      "description": "Browser-deck content entrance animation for body items.\n\n`step` is click-gated: in Present mode the advance key reveals the next\nbullet/card (a fragment) before it advances the slide \u2014 real-presentation\npacing. Honored by the workbench, presenter, and HTML export; PPTX stays\nanimation-free by design.",
+      "description": "Browser-deck content entrance animation for body items.\n\n`step` is click-gated: in Present mode the advance key reveals the next\nbullet/card (a fragment) before it advances the slide — real-presentation\npacing. Honored by the workbench, presenter, and HTML export; PPTX stays\nanimation-free by design.",
       "enum": [
         "none",
         "stagger_up",

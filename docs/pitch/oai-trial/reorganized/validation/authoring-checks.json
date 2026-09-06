@@ -1,0 +1,280 @@
+{
+  "kind": "presentation_authoring_validation",
+  "status": "PASS",
+  "presentation_source_commit": "ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78",
+  "implementation_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+  "scope": "JSON Schema and custom authoring/file consistency checks only; not runtime or local-consumer execution.",
+  "checks": [
+    {
+      "check": "json_schema:deck.json",
+      "status": "PASS",
+      "detail": "DeckManifest.schema.json"
+    },
+    {
+      "check": "json_schema:claim_ledger.json",
+      "status": "PASS",
+      "detail": "ClaimLedger.schema.json"
+    },
+    {
+      "check": "json_schema:source_manifest.json",
+      "status": "PASS",
+      "detail": "SourceManifest.schema.json"
+    },
+    {
+      "check": "json_schema:asset_manifest.json",
+      "status": "PASS",
+      "detail": "AssetManifest.schema.json"
+    },
+    {
+      "check": "same_slide_ids_order",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "first_and_last",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "unchanged_duration_fields",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "thirty_prepared_minutes",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "audience_separate",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "three_pairs_before_extra",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "all_candidate",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "question_map_byte_identical",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "48_unique_questions",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "questions_mapped_once",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "primary_slide_consistent",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "runtime_code_refs_frozen",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "input_bundle_end71",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "theme_exact",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "house_texture_identical",
+      "status": "PASS",
+      "detail": "actual bytes, not historical inventory"
+    },
+    {
+      "check": "header_opacity_independent",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "no_fonts_packaged",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "no_authored_footer",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "native_questions_and_visible_qualifiers",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "native_navigation",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "wrapper_three_native_rows",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "element_bounds",
+      "status": "PASS",
+      "detail": "[]"
+    },
+    {
+      "check": "element_box_nonoverlap",
+      "status": "PASS",
+      "detail": "[]"
+    },
+    {
+      "check": "complete_native_text_bindings",
+      "status": "PASS",
+      "detail": "[]"
+    },
+    {
+      "check": "manifest_reference_ids_and_visible_qualifiers",
+      "status": "PASS",
+      "detail": "[]"
+    },
+    {
+      "check": "source_paths_and_exact_evidence_passages",
+      "status": "PASS",
+      "detail": "[]"
+    },
+    {
+      "check": "public_source_allowlist",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "asset_files_exist",
+      "status": "PASS",
+      "detail": "[]"
+    },
+    {
+      "check": "svg_xml_self_contained_parse",
+      "status": "PASS",
+      "detail": "35 files; []; not owning SVG validation"
+    },
+    {
+      "check": "actual_header_png_decodes",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "historical_model_assets_and_specs_unchanged",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "ratio_derivation_retained",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "preserved_answer_text",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "question_anchors",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "demo_exact_sentence",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "demo_live_and_fallback_separate",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "no_skill_introduction_slide",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "only_extra_credit_explains_skill_pattern",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "exact_security_toc_label",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "speaker_notes_transcript_same_source",
+      "status": "PASS",
+      "detail": "[]"
+    },
+    {
+      "check": "no_stale_input_bundle74_in_active_artifacts",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "active_markdown_links_and_anchors",
+      "status": "PASS",
+      "detail": "[]"
+    },
+    {
+      "check": "chart_source_spec_local_paths",
+      "status": "PASS",
+      "detail": "[]"
+    },
+    {
+      "check": "presentation_only",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "input_payload_hashes",
+      "status": "PASS",
+      "detail": ""
+    }
+  ],
+  "warnings": [],
+  "not_run": [
+    "application",
+    "pytest",
+    "Ruff",
+    "Docker",
+    "project-state",
+    "local pitchdeck compiler or producer models",
+    "owning SVG validators",
+    "analytics",
+    "create-figure",
+    "current deck rendering",
+    "Google Slides/import",
+    "human visual approval",
+    "live demo",
+    "recording",
+    "VS Code sync",
+    "Memory or Live Evidence delivery"
+  ],
+  "preview_inspection": "Supplied prior contact sheet inspected as context. No current slide render produced.",
+  "historical_evidence_handling": "Current package payload SHA-256 values checked against decoded payloads. Normalized copies not authenticated with old inventories.",
+  "prepared_minutes": 30.0,
+  "prepared_slides": 28,
+  "question_records": 48,
+  "svg_files": 35,
+  "errors": []
+}

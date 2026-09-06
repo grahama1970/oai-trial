@@ -190,11 +190,11 @@
       "kind": "diagram",
       "visibility": "public",
       "local_path": "assets/wrapper-command.svg",
-      "required": true,
+      "required": false,
       "alt_text": "Post-trial wrapper · example invocation, not new execution",
       "target_aspect": "1400:250",
       "status": "present",
-      "generation_brief": "Candidate authored static SVG; XML/asset checks only, not local create-svg validation or presentation approval. Embedded as an image; SVG internals are not native PowerPoint shapes. Pinned code excerpt; see sources/code-excerpts.md",
+      "generation_brief": "Candidate authored static SVG; XML/asset checks only, not local create-svg validation or presentation approval. Embedded as an image; SVG internals are not native PowerPoint shapes. Pinned code excerpt; see sources/code-excerpts.md Retained reference only; not bound to normal playback. Native question/source-navigation text takes precedence.",
       "source_ref": {
         "source_id": "reviewed-narrative",
         "section": "Pinned code excerpt; see sources/code-excerpts.md"
@@ -205,11 +205,11 @@
       "kind": "diagram",
       "visibility": "public",
       "local_path": "assets/question-exact.svg",
-      "required": true,
+      "required": false,
       "alt_text": "Why exact policy instead of automatic detection?",
       "target_aspect": "1400:420",
       "status": "present",
-      "generation_brief": "Candidate authored static SVG; XML/asset checks only, not local create-svg validation or presentation approval. Embedded as an image; SVG internals are not native PowerPoint shapes. Prepared adversarial block; reviewed Q&A, not audience discussion",
+      "generation_brief": "Candidate authored static SVG; XML/asset checks only, not local create-svg validation or presentation approval. Embedded as an image; SVG internals are not native PowerPoint shapes. Prepared adversarial block; reviewed Q&A, not audience discussion Retained reference only; not bound to normal playback. Native question/source-navigation text takes precedence.",
       "source_ref": {
         "source_id": "reviewed-narrative",
         "section": "Prepared adversarial block; reviewed Q&A, not audience discussion"
@@ -220,11 +220,11 @@
       "kind": "diagram",
       "visibility": "public",
       "local_path": "assets/question-shared.svg",
-      "required": true,
+      "required": false,
       "alt_text": "How independent is a verifier that shares primitives?",
       "target_aspect": "1400:420",
       "status": "present",
-      "generation_brief": "Candidate authored static SVG; XML/asset checks only, not local create-svg validation or presentation approval. Embedded as an image; SVG internals are not native PowerPoint shapes. Prepared adversarial block; reviewed Q&A, not audience discussion",
+      "generation_brief": "Candidate authored static SVG; XML/asset checks only, not local create-svg validation or presentation approval. Embedded as an image; SVG internals are not native PowerPoint shapes. Prepared adversarial block; reviewed Q&A, not audience discussion Retained reference only; not bound to normal playback. Native question/source-navigation text takes precedence.",
       "source_ref": {
         "source_id": "reviewed-narrative",
         "section": "Prepared adversarial block; reviewed Q&A, not audience discussion"
@@ -235,11 +235,11 @@
       "kind": "diagram",
       "visibility": "public",
       "local_path": "assets/question-scale.svg",
-      "required": true,
+      "required": false,
       "alt_text": "What changes at petabyte scale— and what does the model prove?",
       "target_aspect": "1400:420",
       "status": "present",
-      "generation_brief": "Candidate authored static SVG; XML/asset checks only, not local create-svg validation or presentation approval. Embedded as an image; SVG internals are not native PowerPoint shapes. Prepared adversarial block; reviewed Q&A, not audience discussion",
+      "generation_brief": "Candidate authored static SVG; XML/asset checks only, not local create-svg validation or presentation approval. Embedded as an image; SVG internals are not native PowerPoint shapes. Prepared adversarial block; reviewed Q&A, not audience discussion Retained reference only; not bound to normal playback. Native question/source-navigation text takes precedence.",
       "source_ref": {
         "source_id": "reviewed-narrative",
         "section": "Prepared adversarial block; reviewed Q&A, not audience discussion"
@@ -250,11 +250,11 @@
       "kind": "other",
       "visibility": "public",
       "local_path": "assets/nav-r02-demo-result.svg",
-      "required": true,
+      "required": false,
       "alt_text": "Pinned source navigation cue",
       "target_aspect": "1400:110",
       "status": "present",
-      "generation_brief": "Candidate authored static SVG; XML/asset checks only, not local create-svg validation or presentation approval. Embedded as an image; SVG internals are not native PowerPoint shapes. code-navigation; https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/scripts/qualify_submission.py#L39-L77",
+      "generation_brief": "Candidate authored static SVG; XML/asset checks only, not local create-svg validation or presentation approval. Embedded as an image; SVG internals are not native PowerPoint shapes. code-navigation; https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/scripts/qualify_submission.py#L39-L77 Retained reference only; not bound to normal playback. Native question/source-navigation text takes precedence.",
       "source_ref": {
         "source_id": "code-navigation",
         "section": "code-navigation; https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/scripts/qualify_submission.py#L39-L77"
@@ -265,11 +265,11 @@
       "kind": "other",
       "visibility": "public",
       "local_path": "assets/nav-r03-demo-observations.svg",
-      "required": true,
+      "required": false,
       "alt_text": "Pinned source navigation cue",
       "target_aspect": "1400:110",
       "status": "present",
-      "generation_brief": "Candidate authored static SVG; XML/asset checks only, not local create-svg validation or presentation approval. Embedded as an image; SVG internals are not native PowerPoint shapes. code-navigation; https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/__main__.py#L39-L56",
+      "generation_brief": "Candidate authored static SVG; XML/asset checks only, not local create-svg validation or presentation approval. Embedded as an image; SVG internals are not native PowerPoint shapes. code-navigation; https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/__main__.py#L39-L56 Retained reference only; not bound to normal playback. Native question/source-navigation text takes precedence.",
       "source_ref": {
         "source_id": "code-navigation",
         "section": "code-navigation; https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/__main__.py#L39-L56"
@@ -280,11 +280,11 @@
       "kind": "other",
       "visibility": "public",
       "local_path": "assets/nav-r04-docker.svg",
-      "required": true,
+      "required": false,
       "alt_text": "Pinned source navigation cue",
       "target_aspect": "1400:110",
       "status": "present",
-      "generation_brief": "Candidate authored static SVG; XML/asset checks only, not local create-svg validation or presentation approval. Embedded as an image; SVG internals are not native PowerPoint shapes. code-navigation; https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/__main__.py#L207-L233",
+      "generation_brief": "Candidate authored static SVG; XML/asset checks only, not local create-svg validation or presentation approval. Embedded as an image; SVG internals are not native PowerPoint shapes. code-navigation; https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/__main__.py#L207-L233 Retained reference only; not bound to normal playback. Native question/source-navigation text takes precedence.",
       "source_ref": {
         "source_id": "code-navigation",
         "section": "code-navigation; https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/__main__.py#L207-L233"
@@ -295,11 +295,11 @@
       "kind": "other",
       "visibility": "public",
       "local_path": "assets/nav-r05-mounted-cli.svg",
-      "required": true,
+      "required": false,
       "alt_text": "Pinned source navigation cue",
       "target_aspect": "1400:110",
       "status": "present",
-      "generation_brief": "Candidate authored static SVG; XML/asset checks only, not local create-svg validation or presentation approval. Embedded as an image; SVG internals are not native PowerPoint shapes. code-navigation; https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/__main__.py#L139-L157",
+      "generation_brief": "Candidate authored static SVG; XML/asset checks only, not local create-svg validation or presentation approval. Embedded as an image; SVG internals are not native PowerPoint shapes. code-navigation; https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/__main__.py#L139-L157 Retained reference only; not bound to normal playback. Native question/source-navigation text takes precedence.",
       "source_ref": {
         "source_id": "code-navigation",
         "section": "code-navigation; https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/__main__.py#L139-L157"
@@ -310,11 +310,11 @@
       "kind": "other",
       "visibility": "public",
       "local_path": "assets/nav-r06-output-evidence.svg",
-      "required": true,
+      "required": false,
       "alt_text": "Pinned source navigation cue",
       "target_aspect": "1400:110",
       "status": "present",
-      "generation_brief": "Candidate authored static SVG; XML/asset checks only, not local create-svg validation or presentation approval. Embedded as an image; SVG internals are not native PowerPoint shapes. code-navigation; https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/scripts/qualify_submission.py#L80-L134",
+      "generation_brief": "Candidate authored static SVG; XML/asset checks only, not local create-svg validation or presentation approval. Embedded as an image; SVG internals are not native PowerPoint shapes. code-navigation; https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/scripts/qualify_submission.py#L80-L134 Retained reference only; not bound to normal playback. Native question/source-navigation text takes precedence.",
       "source_ref": {
         "source_id": "code-navigation",
         "section": "code-navigation; https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/scripts/qualify_submission.py#L80-L134"
@@ -325,11 +325,11 @@
       "kind": "other",
       "visibility": "public",
       "local_path": "assets/nav-r07-pipeline-map.svg",
-      "required": true,
+      "required": false,
       "alt_text": "Pinned source navigation cue",
       "target_aspect": "1400:110",
       "status": "present",
-      "generation_brief": "Candidate authored static SVG; XML/asset checks only, not local create-svg validation or presentation approval. Embedded as an image; SVG internals are not native PowerPoint shapes. code-navigation; https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/pipeline.py#L214-L258",
+      "generation_brief": "Candidate authored static SVG; XML/asset checks only, not local create-svg validation or presentation approval. Embedded as an image; SVG internals are not native PowerPoint shapes. code-navigation; https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/pipeline.py#L214-L258 Retained reference only; not bound to normal playback. Native question/source-navigation text takes precedence.",
       "source_ref": {
         "source_id": "code-navigation",
         "section": "code-navigation; https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/pipeline.py#L214-L258"
@@ -340,11 +340,11 @@
       "kind": "other",
       "visibility": "public",
       "local_path": "assets/nav-r08-policy.svg",
-      "required": true,
+      "required": false,
       "alt_text": "Pinned source navigation cue",
       "target_aspect": "1400:110",
       "status": "present",
-      "generation_brief": "Candidate authored static SVG; XML/asset checks only, not local create-svg validation or presentation approval. Embedded as an image; SVG internals are not native PowerPoint shapes. code-navigation; https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/policy.py#L129-L164",
+      "generation_brief": "Candidate authored static SVG; XML/asset checks only, not local create-svg validation or presentation approval. Embedded as an image; SVG internals are not native PowerPoint shapes. code-navigation; https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/policy.py#L129-L164 Retained reference only; not bound to normal playback. Native question/source-navigation text takes precedence.",
       "source_ref": {
         "source_id": "code-navigation",
         "section": "code-navigation; https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/policy.py#L129-L164"
@@ -355,11 +355,11 @@
       "kind": "other",
       "visibility": "public",
       "local_path": "assets/nav-r09-identity.svg",
-      "required": true,
+      "required": false,
       "alt_text": "Pinned source navigation cue",
       "target_aspect": "1400:110",
       "status": "present",
-      "generation_brief": "Candidate authored static SVG; XML/asset checks only, not local create-svg validation or presentation approval. Embedded as an image; SVG internals are not native PowerPoint shapes. code-navigation; https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/policy.py#L38-L40",
+      "generation_brief": "Candidate authored static SVG; XML/asset checks only, not local create-svg validation or presentation approval. Embedded as an image; SVG internals are not native PowerPoint shapes. code-navigation; https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/policy.py#L38-L40 Retained reference only; not bound to normal playback. Native question/source-navigation text takes precedence.",
       "source_ref": {
         "source_id": "code-navigation",
         "section": "code-navigation; https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/policy.py#L38-L40"
@@ -370,11 +370,11 @@
       "kind": "other",
       "visibility": "public",
       "local_path": "assets/nav-r10-spans.svg",
-      "required": true,
+      "required": false,
       "alt_text": "Pinned source navigation cue",
       "target_aspect": "1400:110",
       "status": "present",
-      "generation_brief": "Candidate authored static SVG; XML/asset checks only, not local create-svg validation or presentation approval. Embedded as an image; SVG internals are not native PowerPoint shapes. code-navigation; https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/matcher.py#L120-L131",
+      "generation_brief": "Candidate authored static SVG; XML/asset checks only, not local create-svg validation or presentation approval. Embedded as an image; SVG internals are not native PowerPoint shapes. code-navigation; https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/matcher.py#L120-L131 Retained reference only; not bound to normal playback. Native question/source-navigation text takes precedence.",
       "source_ref": {
         "source_id": "code-navigation",
         "section": "code-navigation; https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/matcher.py#L120-L131"
@@ -385,11 +385,11 @@
       "kind": "other",
       "visibility": "public",
       "local_path": "assets/nav-r11-formats.svg",
-      "required": true,
+      "required": false,
       "alt_text": "Pinned source navigation cue",
       "target_aspect": "1400:110",
       "status": "present",
-      "generation_brief": "Candidate authored static SVG; XML/asset checks only, not local create-svg validation or presentation approval. Embedded as an image; SVG internals are not native PowerPoint shapes. code-navigation; https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/formats.py#L39-L49",
+      "generation_brief": "Candidate authored static SVG; XML/asset checks only, not local create-svg validation or presentation approval. Embedded as an image; SVG internals are not native PowerPoint shapes. code-navigation; https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/formats.py#L39-L49 Retained reference only; not bound to normal playback. Native question/source-navigation text takes precedence.",
       "source_ref": {
         "source_id": "code-navigation",
         "section": "code-navigation; https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/formats.py#L39-L49"
@@ -400,11 +400,11 @@
       "kind": "other",
       "visibility": "public",
       "local_path": "assets/nav-r12-typed-locations.svg",
-      "required": true,
+      "required": false,
       "alt_text": "Pinned source navigation cue",
       "target_aspect": "1400:110",
       "status": "present",
-      "generation_brief": "Candidate authored static SVG; XML/asset checks only, not local create-svg validation or presentation approval. Embedded as an image; SVG internals are not native PowerPoint shapes. code-navigation; https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/verification.py#L129-L143",
+      "generation_brief": "Candidate authored static SVG; XML/asset checks only, not local create-svg validation or presentation approval. Embedded as an image; SVG internals are not native PowerPoint shapes. code-navigation; https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/verification.py#L129-L143 Retained reference only; not bound to normal playback. Native question/source-navigation text takes precedence.",
       "source_ref": {
         "source_id": "code-navigation",
         "section": "code-navigation; https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/verification.py#L129-L143"
@@ -415,11 +415,11 @@
       "kind": "other",
       "visibility": "public",
       "local_path": "assets/nav-r13-publication.svg",
-      "required": true,
+      "required": false,
       "alt_text": "Pinned source navigation cue",
       "target_aspect": "1400:110",
       "status": "present",
-      "generation_brief": "Candidate authored static SVG; XML/asset checks only, not local create-svg validation or presentation approval. Embedded as an image; SVG internals are not native PowerPoint shapes. code-navigation; https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/pipeline.py#L166-L211",
+      "generation_brief": "Candidate authored static SVG; XML/asset checks only, not local create-svg validation or presentation approval. Embedded as an image; SVG internals are not native PowerPoint shapes. code-navigation; https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/pipeline.py#L166-L211 Retained reference only; not bound to normal playback. Native question/source-navigation text takes precedence.",
       "source_ref": {
         "source_id": "code-navigation",
         "section": "code-navigation; https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/pipeline.py#L166-L211"
@@ -430,11 +430,11 @@
       "kind": "other",
       "visibility": "public",
       "local_path": "assets/nav-r14-cloud.svg",
-      "required": true,
+      "required": false,
       "alt_text": "Pinned source navigation cue",
       "target_aspect": "1400:110",
       "status": "present",
-      "generation_brief": "Candidate authored static SVG; XML/asset checks only, not local create-svg validation or presentation approval. Embedded as an image; SVG internals are not native PowerPoint shapes. code-navigation; https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/pseudonyms.py#L62-L104",
+      "generation_brief": "Candidate authored static SVG; XML/asset checks only, not local create-svg validation or presentation approval. Embedded as an image; SVG internals are not native PowerPoint shapes. code-navigation; https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/pseudonyms.py#L62-L104 Retained reference only; not bound to normal playback. Native question/source-navigation text takes precedence.",
       "source_ref": {
         "source_id": "code-navigation",
         "section": "code-navigation; https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/pseudonyms.py#L62-L104"
@@ -445,11 +445,11 @@
       "kind": "other",
       "visibility": "public",
       "local_path": "assets/nav-r15-capacity.svg",
-      "required": true,
+      "required": false,
       "alt_text": "Pinned source navigation cue",
       "target_aspect": "1400:110",
       "status": "present",
-      "generation_brief": "Candidate authored static SVG; XML/asset checks only, not local create-svg validation or presentation approval. Embedded as an image; SVG internals are not native PowerPoint shapes. code-navigation; https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/scripts/estimate_aws_cost.py#L23-L75",
+      "generation_brief": "Candidate authored static SVG; XML/asset checks only, not local create-svg validation or presentation approval. Embedded as an image; SVG internals are not native PowerPoint shapes. code-navigation; https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/scripts/estimate_aws_cost.py#L23-L75 Retained reference only; not bound to normal playback. Native question/source-navigation text takes precedence.",
       "source_ref": {
         "source_id": "code-navigation",
         "section": "code-navigation; https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/scripts/estimate_aws_cost.py#L23-L75"
@@ -460,11 +460,11 @@
       "kind": "other",
       "visibility": "public",
       "local_path": "assets/nav-r16-cost.svg",
-      "required": true,
+      "required": false,
       "alt_text": "Pinned source navigation cue",
       "target_aspect": "1400:110",
       "status": "present",
-      "generation_brief": "Candidate authored static SVG; XML/asset checks only, not local create-svg validation or presentation approval. Embedded as an image; SVG internals are not native PowerPoint shapes. code-navigation; https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/scripts/estimate_aws_cost.py#L23-L75",
+      "generation_brief": "Candidate authored static SVG; XML/asset checks only, not local create-svg validation or presentation approval. Embedded as an image; SVG internals are not native PowerPoint shapes. code-navigation; https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/scripts/estimate_aws_cost.py#L23-L75 Retained reference only; not bound to normal playback. Native question/source-navigation text takes precedence.",
       "source_ref": {
         "source_id": "code-navigation",
         "section": "code-navigation; https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/scripts/estimate_aws_cost.py#L23-L75"
@@ -475,11 +475,11 @@
       "kind": "other",
       "visibility": "public",
       "local_path": "assets/nav-r24-security-evals.svg",
-      "required": true,
+      "required": false,
       "alt_text": "Pinned source navigation cue",
       "target_aspect": "1400:110",
       "status": "present",
-      "generation_brief": "Candidate authored static SVG; XML/asset checks only, not local create-svg validation or presentation approval. Embedded as an image; SVG internals are not native PowerPoint shapes. code-navigation; https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/security/tests/test_typed_scalar_verification.py#L21-L48",
+      "generation_brief": "Candidate authored static SVG; XML/asset checks only, not local create-svg validation or presentation approval. Embedded as an image; SVG internals are not native PowerPoint shapes. code-navigation; https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/security/tests/test_typed_scalar_verification.py#L21-L48 Retained reference only; not bound to normal playback. Native question/source-navigation text takes precedence.",
       "source_ref": {
         "source_id": "code-navigation",
         "section": "code-navigation; https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/security/tests/test_typed_scalar_verification.py#L21-L48"
@@ -490,14 +490,14 @@
       "kind": "other",
       "visibility": "public",
       "local_path": "assets/nav-r26-wrapper.svg",
-      "required": true,
+      "required": false,
       "alt_text": "Pinned source navigation cue",
       "target_aspect": "1400:110",
       "status": "present",
-      "generation_brief": "Candidate authored static SVG; XML/asset checks only, not local create-svg validation or presentation approval. Embedded as an image; SVG internals are not native PowerPoint shapes. code-navigation; https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/bundle.py#L40-L74",
+      "generation_brief": "Candidate authored static SVG; XML/asset checks only, not local create-svg validation or presentation approval. Embedded as an image; SVG internals are not native PowerPoint shapes. code-navigation; https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/bundle.py#L40-L71 Retained reference only; not bound to normal playback. Native question/source-navigation text takes precedence.",
       "source_ref": {
         "source_id": "code-navigation",
-        "section": "code-navigation; https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/bundle.py#L40-L74"
+        "section": "code-navigation; https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/bundle.py#L40-L71"
       }
     },
     {
@@ -505,11 +505,11 @@
       "kind": "other",
       "visibility": "public",
       "local_path": "assets/nav-r27-discovery.svg",
-      "required": true,
+      "required": false,
       "alt_text": "Pinned source navigation cue",
       "target_aspect": "1400:110",
       "status": "present",
-      "generation_brief": "Candidate authored static SVG; XML/asset checks only, not local create-svg validation or presentation approval. Embedded as an image; SVG internals are not native PowerPoint shapes. code-navigation; https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/discovery.py#L222-L309",
+      "generation_brief": "Candidate authored static SVG; XML/asset checks only, not local create-svg validation or presentation approval. Embedded as an image; SVG internals are not native PowerPoint shapes. code-navigation; https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/discovery.py#L222-L309 Retained reference only; not bound to normal playback. Native question/source-navigation text takes precedence.",
       "source_ref": {
         "source_id": "code-navigation",
         "section": "code-navigation; https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/discovery.py#L222-L309"
@@ -520,11 +520,11 @@
       "kind": "other",
       "visibility": "public",
       "local_path": "assets/nav-r28-canonical-path.svg",
-      "required": true,
+      "required": false,
       "alt_text": "Pinned source navigation cue",
       "target_aspect": "1400:110",
       "status": "present",
-      "generation_brief": "Candidate authored static SVG; XML/asset checks only, not local create-svg validation or presentation approval. Embedded as an image; SVG internals are not native PowerPoint shapes. code-navigation; https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/bundle.py#L22-L37",
+      "generation_brief": "Candidate authored static SVG; XML/asset checks only, not local create-svg validation or presentation approval. Embedded as an image; SVG internals are not native PowerPoint shapes. code-navigation; https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/bundle.py#L22-L37 Retained reference only; not bound to normal playback. Native question/source-navigation text takes precedence.",
       "source_ref": {
         "source_id": "code-navigation",
         "section": "code-navigation; https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/bundle.py#L22-L37"

@@ -1,7 +1,7 @@
 {
   "schema": "pitchdeck.source_manifest.v1",
   "project_name": "oai-trial",
-  "deck_title": "Anonymization trial \u2014 results, choices, and evidence",
+  "deck_title": "Anonymization trial — results, choices, and evidence",
   "audience": "Privacy-engineering interviewers and technical reviewers",
   "sources": [
     {
@@ -123,6 +123,30 @@
       "visibility": "public",
       "role": "evidence",
       "required": true
+    },
+    {
+      "id": "skill-reuse-reference",
+      "title": "Pinned skill pattern excerpts; source-only, not a new run",
+      "path": "sources/skill-reuse-reference.md",
+      "visibility": "public",
+      "role": "supporting",
+      "required": true
+    },
+    {
+      "id": "operator-update",
+      "title": "Latest demo/wrapper direction",
+      "path": "sources/operator-direction-update.md",
+      "visibility": "public",
+      "role": "design",
+      "required": true
+    },
+    {
+      "id": "project-state-context",
+      "title": "Supplied standard-mode report and source interpretation",
+      "path": "sources/project-state-context.md",
+      "visibility": "public",
+      "role": "supporting",
+      "required": true
     }
   ],
   "policy": {
@@ -141,7 +165,10 @@
       "code-navigation",
       "brand",
       "design",
-      "demo-scale-calculation"
+      "demo-scale-calculation",
+      "skill-reuse-reference",
+      "operator-update",
+      "project-state-context"
     ],
     "forbidden_unqualified_claims": [
       "formally anonymous",

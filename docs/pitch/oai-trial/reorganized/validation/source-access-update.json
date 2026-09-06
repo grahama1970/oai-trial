@@ -1,0 +1,95 @@
+{
+  "presentation_input_commit": "ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78",
+  "implementation_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+  "packet": "presentation-update-context.zip",
+  "packet_decoding": "All 70 record payloads decoded and SHA-256 compared to their own current-package.json entries; no historical inventory used as byte authority.",
+  "inspected_through_connector": [
+    {
+      "repo": "grahama1970/oai-trial",
+      "ref": "ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78",
+      "path": "docs/pitch/oai-trial/reorganized/README.md"
+    },
+    {
+      "repo": "grahama1970/oai-trial",
+      "ref": "ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78",
+      "path": "docs/pitch/oai-trial/reorganized/WALKTHROUGH.md",
+      "line_start": 75,
+      "line_end": 135
+    },
+    {
+      "repo": "grahama1970/oai-trial",
+      "ref": "0375af56bf681e9441edcb7433cfe58951db77b2",
+      "path": "src/anonymization_trial/bundle.py",
+      "line_start": 40,
+      "line_end": 71
+    },
+    {
+      "repo": "grahama1970/agent-skills",
+      "ref": "00c144b3077f6498becd1514c1c8106fba2f0943",
+      "path": "skills/anonymize-data/run.sh"
+    },
+    {
+      "repo": "grahama1970/agent-skills",
+      "ref": "00c144b3077f6498becd1514c1c8106fba2f0943",
+      "path": "skills/anonymize-data/SKILL.md"
+    },
+    {
+      "repo": "grahama1970/agent-skills",
+      "ref": "00c144b3077f6498becd1514c1c8106fba2f0943",
+      "path": "skills/anonymize-data/sanity.sh"
+    },
+    {
+      "repo": "grahama1970/agent-skills",
+      "ref": "00c144b3077f6498becd1514c1c8106fba2f0943",
+      "path": "skills/best-practices-skills/SKILL.md",
+      "line_start": 1,
+      "line_end": 220
+    }
+  ],
+  "unresolved_receipt_ref": {
+    "attempted_repo": "grahama1970/agent-skills",
+    "ref": "4fb9af1dd5ea2fc7fd54c82c87cf91aa984f078d",
+    "result": "GitHub returned No commit found; not treated as a verified source ref.",
+    "handling": "The known earlier skill snapshot is used solely to explain source patterns. It is not relabeled as the execution receipt version."
+  },
+  "not_run": [
+    "application",
+    "pytest",
+    "Ruff",
+    "Docker",
+    "project-state",
+    "local pitchdeck compiler",
+    "create-svg owning validator",
+    "create-figure",
+    "analytics",
+    "GUI/import",
+    "recording",
+    "Memory/Live Evidence"
+  ],
+  "citation_repairs": [
+    {
+      "claim_id": "formats",
+      "question_id": "Q38"
+    },
+    {
+      "claim_id": "exact-answer",
+      "question_id": "Q03"
+    },
+    {
+      "claim_id": "verifier-answer",
+      "question_id": "Q04"
+    },
+    {
+      "claim_id": "verifier-answer",
+      "question_id": "Q12"
+    },
+    {
+      "claim_id": "scale-answer",
+      "question_id": "Q27"
+    },
+    {
+      "claim_id": "scale-answer",
+      "question_id": "Q47"
+    }
+  ]
+}

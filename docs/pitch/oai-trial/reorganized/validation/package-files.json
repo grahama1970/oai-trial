@@ -1,17 +1,16 @@
 {
-  "kind": "locally-integrated-interview-update",
-  "not_a_runtime_qualification": true,
-  "original_zip_sha256": "bc6809168c55c4107324ee20e6e0393ce02f4d7535309c49c16b8b8d12d94058",
+  "kind": "authoring_package_inventory",
+  "hash_scope": "Current delivered file bytes; excludes this inventory itself. Not a historical source approval or original submission inventory.",
   "files": [
     {
       "path": "CHANGELOG.md",
-      "bytes": 4581,
-      "sha256": "4bbdf08f3cbece855736616317d697fffaebe8ca496d933274fae34b6e078ee5"
+      "bytes": 4212,
+      "sha256": "b2934ba8ae16bd81658696bc6a850bb60748e3aec2a44cf64427649593d4ac61"
     },
     {
       "path": "INTERVIEW_GUIDE.md",
-      "bytes": 9530,
-      "sha256": "41044103be3ca8c44fb5c174f509b822986bd4409cdddba53c2bf36b897141e6"
+      "bytes": 9049,
+      "sha256": "f46bbbadc154f82594399bdf96fdc4c54c5dc3b93a5dd3e8c517a4c54076ef8a"
     },
     {
       "path": "README.md",
@@ -419,24 +418,9 @@
       "sha256": "89d2c5be1ae020e03c0ea605ae7678104ccadec8c9a97c5262dd91c69b4ac574"
     },
     {
-      "path": "validation/local-checks.json",
-      "bytes": 531,
-      "sha256": "1cb0ca7d9a37c3fe271e445ad6197a22302bcc644350e9a880c3d62c584319e5"
-    },
-    {
-      "path": "validation/package-files.json",
-      "bytes": 13936,
-      "sha256": "20d01bc69cdef6f8bdce968a7d97a712ca54fa9fd257263182bc67f140923dc3"
-    },
-    {
       "path": "validation/prior-changelog.md",
       "bytes": 8873,
       "sha256": "e6d2650a7b56c725ffa2e7a2ec2a996b61e4dda3b1c32afed2bc6b2f30f6a9a8"
-    },
-    {
-      "path": "validation/report.json",
-      "bytes": 10153,
-      "sha256": "5961570b543251cce7666f95f7c988f26dae7d9a4d44e4e9b96436888a83ef73"
     },
     {
       "path": "validation/source-access-update.json",

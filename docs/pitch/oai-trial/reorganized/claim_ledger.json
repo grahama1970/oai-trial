@@ -19,7 +19,7 @@
       "evidence_spans": [
         {
           "source_id": "reviewed-narrative",
-          "text": "\u201cThe qualification checker is another useful evidence layer: for its synthetic fixture, it calculates expected pseudonyms without importing the runtime, reads CSV/JSON/SQLite directly, and checks report schema and digests. That is stronger than accepting a success flag, but it remains a bounded fixture\u2014not a second production verifier.",
+          "text": "“The qualification checker is another useful evidence layer: for its synthetic fixture, it calculates expected pseudonyms without importing the runtime, reads CSV/JSON/SQLite directly, and checks report schema and digests. That is stronger than accepting a success flag, but it remains a bounded fixture—not a second production verifier.",
           "section": "The qualification checker is another useful evidence layer"
         }
       ],
@@ -126,12 +126,12 @@
       "evidence_spans": [
         {
           "source_id": "reviewed-narrative",
-          "text": "\u201cThe evaluator-facing interface stays small. A bare Docker run executes the synthetic demonstration. A mounted run reads `policy.json` and `corpus/`, then writes the releasable `corpus/` and `report.json`. The image remains the interface; the evaluator does not need the shared skill.",
+          "text": "“The evaluator-facing interface stays small. A bare Docker run executes the synthetic demonstration. A mounted run reads `policy.json` and `corpus/`, then writes the releasable `corpus/` and `report.json`. The image remains the interface; the evaluator does not need the shared skill.",
           "section": "The evaluator-facing interface stays small"
         },
         {
           "source_id": "reviewed-narrative",
-          "text": "| Q43 | `02-architecture` | Do `preflight`, `inspect`, and `verify` all prove the same thing? | No. Preflight checks admission conditions; inspect summarizes a report; verify checks source/output corpus content. | **\u201cCan inspect authenticate a release?\u201d** No. It reads selected report fields. The qualification checker separately validates report schema and recomputes digests. Do not use an inspection display as a substitute for those checks. | [`_preflight_cmd`, `_inspect_cmd`, `_verify_cmd`][C15]; [`readback`][C10] |",
+          "text": "| Q43 | `02-architecture` | Do `preflight`, `inspect`, and `verify` all prove the same thing? | No. Preflight checks admission conditions; inspect summarizes a report; verify checks source/output corpus content. | **“Can inspect authenticate a release?”** No. It reads selected report fields. The qualification checker separately validates report schema and recomputes digests. Do not use an inspection display as a substitute for those checks. | [`_preflight_cmd`, `_inspect_cmd`, `_verify_cmd`][C15]; [`readback`][C10] |",
           "section": "Q43"
         }
       ],
@@ -192,12 +192,12 @@
       "evidence_spans": [
         {
           "source_id": "reviewed-narrative",
-          "text": "\u201cThe adapters write into a private staging directory on the output filesystem. Only after all files have been transformed does the verifier reread source and output. The pipeline then checks the source digests again, computes an output manifest digest, and calls publication.",
+          "text": "“The adapters write into a private staging directory on the output filesystem. Only after all files have been transformed does the verifier reread source and output. The pipeline then checks the source digests again, computes an output manifest digest, and calls publication.",
           "section": "The adapters write into a private staging directory"
         },
         {
           "source_id": "reviewed-narrative",
-          "text": "\u201cThere are two important limits to that description. First, the verifier does not return a signed or independently sealed receipt; the pipeline computes the digest after verification. That interval assumes trusted single-writer staging. Second, the local processing model materializes files and verification structures in memory. It is not the distributed petabyte engine.",
+          "text": "“There are two important limits to that description. First, the verifier does not return a signed or independently sealed receipt; the pipeline computes the digest after verification. That interval assumes trusted single-writer staging. Second, the local processing model materializes files and verification structures in memory. It is not the distributed petabyte engine.",
           "section": "the pipeline computes the digest after verification"
         }
       ],
@@ -220,12 +220,12 @@
       "evidence_spans": [
         {
           "source_id": "reviewed-narrative",
-          "text": "\u201cThe policy tells the engine which literal values are sensitive, which aliases belong to a declared identity, and which values must remain protected. That makes the transformation obligation explicit. It does not prove that the policy contains every sensitive fact in the dataset.",
+          "text": "“The policy tells the engine which literal values are sensitive, which aliases belong to a declared identity, and which values must remain protected. That makes the transformation obligation explicit. It does not prove that the policy contains every sensitive fact in the dataset.",
           "section": "The policy tells the engine"
         },
         {
           "source_id": "reviewed-narrative",
-          "text": "\u201cThe implementation handles contradictions conservatively. For example, if the policy requires replacing a literal that overlaps protected content, it rejects the policy rather than silently choosing which promise to break.",
+          "text": "“The implementation handles contradictions conservatively. For example, if the policy requires replacing a literal that overlaps protected content, it rejects the policy rather than silently choosing which promise to break.",
           "section": "The implementation handles contradictions conservatively"
         }
       ],
@@ -248,12 +248,12 @@
       "evidence_spans": [
         {
           "source_id": "reviewed-narrative",
-          "text": "\u201cThe canonical identity is the pair of data type and subject ID. When `subject_id` is absent, the rule ID is the fallback. Two name aliases with the same canonical identity converge. A name and an email for the same subject have different type-specific replacements; they do not need a common visible token.",
+          "text": "“The canonical identity is the pair of data type and subject ID. When `subject_id` is absent, the rule ID is the fallback. Two name aliases with the same canonical identity converge. A name and an email for the same subject have different type-specific replacements; they do not need a common visible token.",
           "section": "The canonical identity is the pair"
         },
         {
           "source_id": "reviewed-narrative",
-          "text": "\u201cAn alias-only addition that preserves the canonical identity set does not create a new allocation problem. Adding distinct identities can affect collision assignments. I would not promise stability through arbitrary policy growth, or across partitions that independently allocate over different identity subsets.",
+          "text": "“An alias-only addition that preserves the canonical identity set does not create a new allocation problem. Adding distinct identities can affect collision assignments. I would not promise stability through arbitrary policy growth, or across partitions that independently allocate over different identity subsets.",
           "section": "Adding distinct identities can affect collision assignments"
         }
       ],
@@ -276,12 +276,12 @@
       "evidence_spans": [
         {
           "source_id": "reviewed-narrative",
-          "text": "\u201cThe matcher finds spans in the original decoded input. At a shared starting point, the longer match wins. Across overlapping spans, the earlier start wins; rule ID provides a stable tie-break.",
+          "text": "“The matcher finds spans in the original decoded input. At a shared starting point, the longer match wins. Across overlapping spans, the earlier start wins; rule ID provides a stable tie-break.",
           "section": "The matcher finds spans in the original decoded input"
         },
         {
           "source_id": "reviewed-narrative",
-          "text": "\u201cEmission happens once over the selected spans. It does not repeatedly rewrite its own output.\u201d",
+          "text": "“Emission happens once over the selected spans. It does not repeatedly rewrite its own output.”",
           "section": "Emission happens once over the selected spans"
         }
       ],
@@ -304,17 +304,17 @@
       "evidence_spans": [
         {
           "source_id": "reviewed-narrative",
-          "text": "**Appendix depth:** Q31\u2013Q33, Q38\u2013Q41",
+          "text": "| Q38 | `03-semantics` | What exactly is preserved: physical bytes or logical content? | The contract is format-aware; do not claim universal byte identity. | **“Give a concrete distinction.”** JSON formatting and CSV quoting can change while values remain equivalent. SQLite checks logical DDL, metadata, and typed values, not physical pages. The JSON comparator checks key sets, not key insertion order. | [Adapters][C19]; [`_typed_equal`, `_verify_locations`][C05]; [`_verify_sqlite_locations`][C17] |",
           "section": "Q38"
         },
         {
           "source_id": "reviewed-narrative",
-          "text": "| Q39 | `03-semantics` | Do you reject every generated SQLite column? | No. The writer excludes generated/hidden columns from updates; verification still reads resulting row values. | **\u201cWhat happens if a generated value changes?\u201d** The row oracle compares it against the expected contract and can reject. Do not describe this as full generated-column support, or falsely claim every generated-column schema is rejected before processing. | [`_writable_columns`, `_transform_sqlite`][C19]; [`_verify_sqlite_locations`][C17] |",
+          "text": "| Q39 | `03-semantics` | Do you reject every generated SQLite column? | No. The writer excludes generated/hidden columns from updates; verification still reads resulting row values. | **“What happens if a generated value changes?”** The row oracle compares it against the expected contract and can reject. Do not describe this as full generated-column support, or falsely claim every generated-column schema is rejected before processing. | [`_writable_columns`, `_transform_sqlite`][C19]; [`_verify_sqlite_locations`][C17] |",
           "section": "Q39"
         },
         {
           "source_id": "reviewed-narrative",
-          "text": "| Q40 | `03-semantics` | Why accept `0.1` but reject some other JSON decimal tokens? | The adapter checks decimal numeric round-trip through the serialized float representation, not exact binary representation. | **\u201cSo `0.1` is not exactly representable in binary?\u201d** That is not the test being made. `_finite_float` compares `Decimal(token)` with `Decimal(repr(value))`; it refuses tokens whose decimal numeric value would change, and refuses nonfinite results. Original numeric spelling is not preserved. | [`_finite_float`, `_transform_json`][C19] |",
+          "text": "| Q40 | `03-semantics` | Why accept `0.1` but reject some other JSON decimal tokens? | The adapter checks decimal numeric round-trip through the serialized float representation, not exact binary representation. | **“So `0.1` is not exactly representable in binary?”** That is not the test being made. `_finite_float` compares `Decimal(token)` with `Decimal(repr(value))`; it refuses tokens whose decimal numeric value would change, and refuses nonfinite results. Original numeric spelling is not preserved. | [`_finite_float`, `_transform_json`][C19] |",
           "section": "Q40"
         }
       ],
@@ -337,12 +337,12 @@
       "evidence_spans": [
         {
           "source_id": "reviewed-narrative",
-          "text": "\u201cThe verifier therefore compares expected values at locations: ordered CSV cells, JSON nodes and array positions, text content, and SQLite rows. It also checks types.\u201d",
+          "text": "“The verifier therefore compares expected values at locations: ordered CSV cells, JSON nodes and array positions, text content, and SQLite rows. It also checks types.”",
           "section": "The verifier therefore compares expected values at locations"
         },
         {
           "source_id": "reviewed-narrative",
-          "text": "\u201cPython considers `True == 1` and `1 == 1.0`, but those are not interchangeable under this preservation contract. For SQLite, the checker compares logical schema objects, column and foreign-key metadata, row identity, and typed cell values. That is not byte-for-byte preservation of the database\u2019s physical pages.",
+          "text": "“Python considers `True == 1` and `1 == 1.0`, but those are not interchangeable under this preservation contract. For SQLite, the checker compares logical schema objects, column and foreign-key metadata, row identity, and typed cell values. That is not byte-for-byte preservation of the database’s physical pages.",
           "section": "Python considers `True == 1`"
         }
       ],
@@ -365,12 +365,12 @@
       "evidence_spans": [
         {
           "source_id": "reviewed-narrative",
-          "text": "\u201cThe report is the last publication step. At the start of `_publish`, an existing readiness marker is removed before the corpus is changed. The staged digest is checked again, the staged corpus is renamed into place, and the new report is written through a temporary file and renamed last.",
+          "text": "“The report is the last publication step. At the start of `_publish`, an existing readiness marker is removed before the corpus is changed. The staged digest is checked again, the staged corpus is renamed into place, and the new report is written through a temporary file and renamed last.",
           "section": "The report is the last publication step"
         },
         {
           "source_id": "reviewed-narrative",
-          "text": "\u201cThat is not an atomic transaction over every file and every failure state. A failed publication can leave corpus bytes without an authorizing report. A consumer must not treat a directory\u2019s existence as readiness.",
+          "text": "“That is not an atomic transaction over every file and every failure state. A failed publication can leave corpus bytes without an authorizing report. A consumer must not treat a directory’s existence as readiness.",
           "section": "A failed publication can leave corpus bytes"
         }
       ],
@@ -393,17 +393,17 @@
       "evidence_spans": [
         {
           "source_id": "reviewed-narrative",
-          "text": "\u201cThe worked design uses AWS object storage for intake, staging, release, and quarantine, EventBridge and SQS for dispatch, and a bounded Fargate or Batch worker pool.",
+          "text": "“The worked design uses AWS object storage for intake, staging, release, and quarantine, EventBridge and SQS for dispatch, and a bounded Fargate or Batch worker pool.",
           "section": "The worked design uses AWS"
         },
         {
           "source_id": "reviewed-narrative",
-          "text": "\u201cThe local release idea carries forward, but the mechanism changes. Workers can complete at different times. A coordinator must verify the expected corpus, write an immutable manifest of output keys and hashes, and switch an active-corpus pointer. Consumers resolve that pointer; they must not infer readiness by listing staged objects.",
+          "text": "“The local release idea carries forward, but the mechanism changes. Workers can complete at different times. A coordinator must verify the expected corpus, write an immutable manifest of output keys and hashes, and switch an active-corpus pointer. Consumers resolve that pointer; they must not infer readiness by listing staged objects.",
           "section": "A coordinator must verify the expected corpus"
         },
         {
           "source_id": "reviewed-narrative",
-          "text": "\u201cIdentity coherence also has to survive distribution. Every worker must use the same policy, canonical identity set, algorithm configuration, and collision allocation. A common HMAC key alone does not coordinate independently allocated subsets. A shared versioned replacement plan is the semantic requirement, not a feature implemented in the local worker code.",
+          "text": "“Identity coherence also has to survive distribution. Every worker must use the same policy, canonical identity set, algorithm configuration, and collision allocation. A common HMAC key alone does not coordinate independently allocated subsets. A shared versioned replacement plan is the semantic requirement, not a feature implemented in the local worker code.",
           "section": "Identity coherence also has to survive distribution"
         }
       ],
@@ -426,7 +426,7 @@
       "evidence_spans": [
         {
           "source_id": "reviewed-narrative",
-          "text": "\u201cThe capacity calculation assumes 200 workers at 20 million bytes per second each: four billion bytes per second before verification, retries, and scheduling overhead. That is an assumption, not the measured throughput of this local implementation.",
+          "text": "“The capacity calculation assumes 200 workers at 20 million bytes per second each: four billion bytes per second before verification, retries, and scheduling overhead. That is an assumption, not the measured throughput of this local implementation.",
           "section": "The capacity calculation assumes 200 workers"
         },
         {
@@ -535,17 +535,17 @@
       "evidence_spans": [
         {
           "source_id": "reviewed-narrative",
-          "text": "The original seven slide IDs and Q01\u2013Q30 remain stable. Q31\u2013Q48 add deeper follow-ups. All repository links point to the frozen commit. Source links name the relevant symbols rather than relying on obsolete line ranges.",
+          "text": "The original seven slide IDs and Q01–Q30 remain stable. Q31–Q48 add deeper follow-ups. All repository links point to the frozen commit. Source links name the relevant symbols rather than relying on obsolete line ranges.",
           "section": "Q01"
         },
         {
           "source_id": "reviewed-narrative",
-          "text": "| Q02 | `01-brief` | What happens to a name absent from the policy? | There is no general discovery promise. An existing literal may still match a substring. | **\u201cWill discovery find a name in a paragraph?\u201d** It compares the whole line, not extracted name spans. Most narrative lines will not qualify as name-shaped candidates; no general entity detector is implemented. | [`Matcher.replace`][C04]; [`_strings`, `_name`, `discover`][C12] |",
+          "text": "| Q02 | `01-brief` | What happens to a name absent from the policy? | There is no general discovery promise. An existing literal may still match a substring. | **“Will discovery find a name in a paragraph?”** It compares the whole line, not extracted name spans. Most narrative lines will not qualify as name-shaped candidates; no general entity detector is implemented. | [`Matcher.replace`][C04]; [`_strings`, `_name`, `discover`][C12] |",
           "section": "Q02"
         },
         {
           "source_id": "reviewed-narrative",
-          "text": "**Question handles:** Q01\u2013Q03",
+          "text": "| Q03 | `01-brief` | Why not use an existing PII platform? | This implementation makes a narrow transformation contract easy to inspect; that is a tradeoff, not proof that custom code is superior. | **“Did stdlib-only increase your risk?”** It leaves ownership of the matcher here and requires strong tests. The brief permits packaged dependencies. I am not claiming a comparative platform evaluation that was not performed. | [Brief][D00]; [`Matcher`, `_Aho`][C04]; [implementation choices][D01] |",
           "section": "Q03"
         }
       ],
@@ -558,7 +558,7 @@
       "visibility": "public",
       "risk": "high",
       "status": "candidate",
-      "required_qualifier": "Independent reread / re-derivation\u2014not a separately implemented engine.",
+      "required_qualifier": "Independent reread / re-derivation—not a separately implemented engine.",
       "source_refs": [
         {
           "source_id": "reviewed-narrative",
@@ -568,12 +568,12 @@
       "evidence_spans": [
         {
           "source_id": "reviewed-narrative",
-          "text": "**Question handles:** Q04\u2013Q06",
+          "text": "| Q04 | `02-architecture` | Why isn’t a successful transform enough? | Parsing and transformation can succeed while values or associations are wrong. Verification precedes publication. | **“Is the verifier independent?”** It rereads and reconstructs, but shares matcher and pseudonym primitives. It can catch injected output faults without eliminating common-mode implementation errors. | [`run_pipeline`][C02]; [`verify_corpus`][C13] |",
           "section": "Q04"
         },
         {
           "source_id": "reviewed-narrative",
-          "text": "**Question handles:** Q07\u2013Q12<br>",
+          "text": "| Q12 | `03-semantics` | Why require strict type equality? | Ordinary Python equality can equate Boolean/integer and integer/float values. | **“What about correct values on the wrong rows?”** Type checks alone do not catch that. Location reconstruction checks the expected value at the corresponding cell or row. The typed regression covers both JSON and SQLite type mutations. | [`_typed_equal`][C05]; [`_verify_sqlite_locations`][C17]; [typed regression][C20] |",
           "section": "Q12"
         }
       ],
@@ -596,22 +596,22 @@
       "evidence_spans": [
         {
           "source_id": "reviewed-narrative",
-          "text": "| Q25 | `06-production` | Where is the shared pseudonym state in production? | Workers must receive the same versioned policy, identity set, and replacement-allocation plan. | **\u201cDoes using one HMAC key suffice?\u201d** No. Different identity subsets can cause different collision assignments. The local allocator demonstrates semantics; shared distributed plan management is a production design obligation. | [`build_replacements`][C03]; [AWS design][D02] |",
+          "text": "| Q25 | `06-production` | Where is the shared pseudonym state in production? | Workers must receive the same versioned policy, identity set, and replacement-allocation plan. | **“Does using one HMAC key suffice?”** No. Different identity subsets can cause different collision assignments. The local allocator demonstrates semantics; shared distributed plan management is a production design obligation. | [`build_replacements`][C03]; [AWS design][D02] |",
           "section": "Q25"
         },
         {
           "source_id": "reviewed-narrative",
-          "text": "| Q26 | `06-production` | What proves the petabyte SLA and price? | Nothing proves operational delivery yet. The repository contains a scenario model and design targets. | **\u201cWhat would you measure first?\u201d** Representative transform/verify throughput, memory, object-size skew, request volume, retry rates, and attainable concurrency. The model\u2019s compute factor is an assumption, not a benchmark-derived law. | [`_one`, `_sensitivity`][C11]; [inputs][D04]; [example output][D05] |",
+          "text": "| Q26 | `06-production` | What proves the petabyte SLA and price? | Nothing proves operational delivery yet. The repository contains a scenario model and design targets. | **“What would you measure first?”** Representative transform/verify throughput, memory, object-size skew, request volume, retry rates, and attainable concurrency. The model’s compute factor is an assumption, not a benchmark-derived law. | [`_one`, `_sensitivity`][C11]; [inputs][D04]; [example output][D05] |",
           "section": "Q26"
         },
         {
           "source_id": "reviewed-narrative",
-          "text": "**Question handles:** Q24\u2013Q27<br>",
+          "text": "| Q27 | `06-production` | What if two workers retry the same object? | Deterministic content helps, but the proposed orchestrator still needs idempotent attempt handling and conditional publication. | **“Is this exactly-once processing?”** No. The design starts with at-least-once delivery. Duplicate work must not cause inconsistent manifests or premature pointer updates; no distributed commit implementation is claimed locally. | [AWS reliability/publication design][D02]; [`_publish`][C06] |",
           "section": "Q27"
         },
         {
           "source_id": "reviewed-narrative",
-          "text": "**Appendix depth:** Q47",
+          "text": "| Q47 | `06-production` | Are all real AWS operations priced by the estimator? | No. It is an explicit but simplified scenario model. | **“What is simplified beyond disclosed exclusions?”** For example, orchestration budgets one SQS price unit, one EventBridge event, and one KMS request per object. That is not a traced accounting of send/receive/delete, retries, API payload units, or every encryption operation. Use it for assumptions discussion, not invoicing certainty. | [`_one`][C11]; [price/unit inputs][D04]; [cost disclosures][D01] |",
           "section": "Q47"
         }
       ],
@@ -634,7 +634,7 @@
       "evidence_spans": [
         {
           "source_id": "security",
-          "text": "| **White-box** | full source | Bandit SAST via `$hack` (committed Semgrep receipt scanned 0 target files; no SCA receipt committed \u2014 supporting evidence only) |",
+          "text": "| **White-box** | full source | Bandit SAST via `$hack` (committed Semgrep receipt scanned 0 target files; no SCA receipt committed — supporting evidence only) |",
           "section": "**White-box**"
         },
         {
@@ -662,7 +662,7 @@
       "visibility": "public",
       "risk": "mandatory_non_claim",
       "status": "candidate",
-      "required_qualifier": "Fixture contract proof\u2014not an adaptive live campaign against this target.",
+      "required_qualifier": "Fixture contract proof—not an adaptive live campaign against this target.",
       "source_refs": [
         {
           "source_id": "battle-receipt",
@@ -690,7 +690,7 @@
     },
     {
       "id": "wrapper",
-      "text": "The thin anonymize-data skill delegates to the project interface and does not duplicate the engine.",
+      "text": "The reusable skill keeps a concise SKILL.md contract, delegates through run.sh to the project CLI, and retains behavioral checks instead of duplicating the engine.",
       "kind": "proof",
       "visibility": "public",
       "risk": "high",
@@ -700,6 +700,11 @@
         {
           "source_id": "submission",
           "section": "The shared `anonymize-data` skill is a thin wrapper; These extensions were explicitly requested after"
+        },
+        {
+          "source_id": "skill-reuse-reference",
+          "section": "Concise contract; Thin delegation; Retained behavior; best-practices-skills guidance",
+          "locator": "sources/skill-reuse-reference.md"
         }
       ],
       "evidence_spans": [
@@ -712,9 +717,29 @@
           "source_id": "submission",
           "text": "These extensions were explicitly requested after the qualified `9ebb447`",
           "section": "These extensions were explicitly requested after"
+        },
+        {
+          "source_id": "skill-reuse-reference",
+          "section": "Concise contract",
+          "text": "Operate the canonical `oai-trial` project. Do not duplicate its matcher,"
+        },
+        {
+          "source_id": "skill-reuse-reference",
+          "section": "Thin delegation",
+          "text": "exec \"$ENTRY\" \"$@\""
+        },
+        {
+          "source_id": "skill-reuse-reference",
+          "section": "Retained behavior",
+          "text": "export ANONYMIZE_DATA_TEST_RUNNER=\"$HERE/run.sh\""
+        },
+        {
+          "source_id": "skill-reuse-reference",
+          "section": "best-practices-skills guidance",
+          "text": "- Keep `SKILL.md` concise; move large content into `references/` or `scripts/`."
         }
       ],
-      "notes": "Candidate authoring only; no new approval or execution. Package-location checking is discussed in the preserved Q06 and previously inspected wrapper; no new wrapper execution here."
+      "notes": "Candidate authoring only. Source-only contract/delegation/checking examples; not a new validator result or blanket best-practices compliance. Detailed explanation appears only in Extra Credit. No installation or skill creation occurs in playback."
     },
     {
       "id": "discovery",
@@ -723,7 +748,7 @@
       "visibility": "public",
       "risk": "high",
       "status": "candidate",
-      "required_qualifier": "Whole-value proposals; score \u2260 probability. Approval adds a global literal rule.",
+      "required_qualifier": "Whole-value proposals; score ≠ probability. Approval adds a global literal rule.",
       "source_refs": [
         {
           "source_id": "reviewed-narrative",
@@ -733,17 +758,17 @@
       "evidence_spans": [
         {
           "source_id": "reviewed-narrative",
-          "text": "\u201cDiscovery, approval, and release are separate operations.",
+          "text": "“Discovery, approval, and release are separate operations.",
           "section": "Discovery, approval, and release are separate operations"
         },
         {
           "source_id": "reviewed-narrative",
-          "text": "\u201cThere is also an important scope change for the operator to understand: approval creates a literal policy rule, not a permission restricted to one observed row. The ordinary matcher applies that rule wherever its literal matches. Human review must consider that consequence.\u201d",
+          "text": "“There is also an important scope change for the operator to understand: approval creates a literal policy rule, not a permission restricted to one observed row. The ordinary matcher applies that rule wherever its literal matches. Human review must consider that consequence.”",
           "section": "approval creates a literal policy rule"
         },
         {
           "source_id": "reviewed-narrative",
-          "text": "\u201cThe `Alicee` example makes the boundary concrete. Without approval, the existing exact `Alice` rule can match its substring and leave a trailing `e`. Approval adds the longer exact literal `Alicee`, which can then become the same subject\u2019s complete pseudonym. The extension has not changed default matching into fuzzy replacement.",
+          "text": "“The `Alicee` example makes the boundary concrete. Without approval, the existing exact `Alice` rule can match its substring and leave a trailing `e`. Approval adds the longer exact literal `Alicee`, which can then become the same subject’s complete pseudonym. The extension has not changed default matching into fuzzy replacement.",
           "section": "The `Alicee` example"
         }
       ],
@@ -766,17 +791,17 @@
       "evidence_spans": [
         {
           "source_id": "reviewed-narrative",
-          "text": "\u201cThe key is not only `out.parents`. The function returns the validated path. The CLI assigns that result to `args.output`, and approval separately validates its policy destination and its derived receipt destination before either write.",
+          "text": "“The key is not only `out.parents`. The function returns the validated path. The CLI assigns that result to `args.output`, and approval separately validates its policy destination and its derived receipt destination before either write.",
           "section": "The CLI assigns that result to `args.output`"
         },
         {
           "source_id": "reviewed-narrative",
-          "text": "\u201cIt then attempts discovery and approval through relative and symlinked destinations, including a receipt-only symlink into the release. Rejection must leave the recorded release unchanged.",
+          "text": "“It then attempts discovery and approval through relative and symlinked destinations, including a receipt-only symlink into the release. Rejection must leave the recorded release unchanged.",
           "section": "It then attempts discovery and approval"
         },
         {
           "source_id": "reviewed-narrative",
-          "text": "\u201cThe positive controls are essential. Equivalent relative and symlinked paths in a normal private work directory must still allow discovery and approval, and the resulting review, policy, and receipt must have private permissions. Otherwise the test could appear successful because we disabled useful behavior.\u201d",
+          "text": "“The positive controls are essential. Equivalent relative and symlinked paths in a normal private work directory must still allow discovery and approval, and the resulting review, policy, and receipt must have private permissions. Otherwise the test could appear successful because we disabled useful behavior.”",
           "section": "The positive controls are essential"
         }
       ],

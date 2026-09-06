@@ -1,0 +1,422 @@
+[
+  {
+    "path": "CHANGELOG.md",
+    "declared": "e6d2650a7b56c725ffa2e7a2ec2a996b61e4dda3b1c32afed2bc6b2f30f6a9a8",
+    "actual": "e6d2650a7b56c725ffa2e7a2ec2a996b61e4dda3b1c32afed2bc6b2f30f6a9a8",
+    "matches": true
+  },
+  {
+    "path": "README.md",
+    "declared": "3d38ed8f0be778947504a605667231b3186d340137b2ad782ec508df4dbd101e",
+    "actual": "3d38ed8f0be778947504a605667231b3186d340137b2ad782ec508df4dbd101e",
+    "matches": true
+  },
+  {
+    "path": "TOC.md",
+    "declared": "263649751fc8f4ce2c6115ecbbb29511b7d560f411ae2b8687bbcedabf9c7dbc",
+    "actual": "263649751fc8f4ce2c6115ecbbb29511b7d560f411ae2b8687bbcedabf9c7dbc",
+    "matches": true
+  },
+  {
+    "path": "WALKTHROUGH.md",
+    "declared": "89b85e643240305a52c05ec34b9957e675da257b5413cc904fece6fca5f3512d",
+    "actual": "89b85e643240305a52c05ec34b9957e675da257b5413cc904fece6fca5f3512d",
+    "matches": true
+  },
+  {
+    "path": "asset_manifest.json",
+    "declared": "2e999a536f1a0213e78183a9fcc03e151f2974b0666c08c412da08d30c5d3cde",
+    "actual": "2e999a536f1a0213e78183a9fcc03e151f2974b0666c08c412da08d30c5d3cde",
+    "matches": true
+  },
+  {
+    "path": "assets/canonical-path.svg",
+    "declared": "c0934107a74790e3b84342889237c055819c8a4c4d37dd48e43b6337c10ab27e",
+    "actual": "c0934107a74790e3b84342889237c055819c8a4c4d37dd48e43b6337c10ab27e",
+    "matches": true
+  },
+  {
+    "path": "assets/cloud-boundaries.svg",
+    "declared": "28fbc584ffc40827595f2fec4b02cb772cdd35c41ba357f66ada65e0880e76e2",
+    "actual": "28fbc584ffc40827595f2fec4b02cb772cdd35c41ba357f66ada65e0880e76e2",
+    "matches": true
+  },
+  {
+    "path": "assets/cost-components-1pb.svg",
+    "declared": "8650c1de9b322ccf4355b7328b2a839e15ff34c0a51e500021c352cef07c4d91",
+    "actual": "8650c1de9b322ccf4355b7328b2a839e15ff34c0a51e500021c352cef07c4d91",
+    "matches": true
+  },
+  {
+    "path": "assets/demo-observations.svg",
+    "declared": "32b90568522b3d1c7331edefea8a4041a79517799ffe24116ae9fd085b70e75a",
+    "actual": "32b90568522b3d1c7331edefea8a4041a79517799ffe24116ae9fd085b70e75a",
+    "matches": true
+  },
+  {
+    "path": "assets/docker-commands.svg",
+    "declared": "94d6fb017e0a94023f7844bfa3cd7e3a256bdaf351733b1898e2bcbaafa05e9b",
+    "actual": "94d6fb017e0a94023f7844bfa3cd7e3a256bdaf351733b1898e2bcbaafa05e9b",
+    "matches": true
+  },
+  {
+    "path": "assets/figures/cost-components-1pb.metrics.json",
+    "declared": "7ddd10960aa06fa71a7990489740e5f30ac0b26e905984022572678a9998da1d",
+    "actual": "7ddd10960aa06fa71a7990489740e5f30ac0b26e905984022572678a9998da1d",
+    "matches": true
+  },
+  {
+    "path": "assets/figures/cost-components-1pb.spec.json",
+    "declared": "326a84cd8107b624d946de3d2f5cf4b004acacb64344402e200318f335b13b90",
+    "actual": "326a84cd8107b624d946de3d2f5cf4b004acacb64344402e200318f335b13b90",
+    "matches": true
+  },
+  {
+    "path": "assets/figures/cost-sensitivity.source.json",
+    "declared": "19e0fcd2d9223a5aa57178bf2f5e36ac1eb0f97cc2b7e9fc792e7e1e933c4434",
+    "actual": "19e0fcd2d9223a5aa57178bf2f5e36ac1eb0f97cc2b7e9fc792e7e1e933c4434",
+    "matches": true
+  },
+  {
+    "path": "assets/figures/fixture-result.source.json",
+    "declared": "a2e23dec2098b0f0145949f9468ea8ed7e758b3dc52d7ce280a6721ccf7dbc27",
+    "actual": "a2e23dec2098b0f0145949f9468ea8ed7e758b3dc52d7ce280a6721ccf7dbc27",
+    "matches": true
+  },
+  {
+    "path": "assets/fixture-result.svg",
+    "declared": "cbbfd2bd441ddd63eef0b6739bbddaec8e219092edf0028645887c2713eed6e0",
+    "actual": "cbbfd2bd441ddd63eef0b6739bbddaec8e219092edf0028645887c2713eed6e0",
+    "matches": true
+  },
+  {
+    "path": "assets/house-band-texture.png",
+    "declared": "aec0408102d6284bf47e4d57d7924c395bc9912ca4ce1620a25c9379c3417542",
+    "actual": "aec0408102d6284bf47e4d57d7924c395bc9912ca4ce1620a25c9379c3417542",
+    "matches": true
+  },
+  {
+    "path": "assets/identity-plan.svg",
+    "declared": "be2d61896b485a654e8bfd46b0819368a333d39e9901516c34322162e1942669",
+    "actual": "be2d61896b485a654e8bfd46b0819368a333d39e9901516c34322162e1942669",
+    "matches": true
+  },
+  {
+    "path": "assets/mounted-command.svg",
+    "declared": "bbb8acaf789e4dc3580c061c6321ec84f50af60f75b0cf557a11f3dcf8b14d13",
+    "actual": "bbb8acaf789e4dc3580c061c6321ec84f50af60f75b0cf557a11f3dcf8b14d13",
+    "matches": true
+  },
+  {
+    "path": "assets/nav-r02-demo-result.svg",
+    "declared": "35c1ce1aab1c14de8c211ee25546bb6108f14a92878f1c4121cafd075217822c",
+    "actual": "35c1ce1aab1c14de8c211ee25546bb6108f14a92878f1c4121cafd075217822c",
+    "matches": true
+  },
+  {
+    "path": "assets/nav-r03-demo-observations.svg",
+    "declared": "5653636cb819e9f4581c9247490f08a407c10d75a9267c85dfe64e73366fc6cb",
+    "actual": "5653636cb819e9f4581c9247490f08a407c10d75a9267c85dfe64e73366fc6cb",
+    "matches": true
+  },
+  {
+    "path": "assets/nav-r04-docker.svg",
+    "declared": "28bd5d40c03757e659563f060ab40563599b967307f023b76bb5f93989025916",
+    "actual": "28bd5d40c03757e659563f060ab40563599b967307f023b76bb5f93989025916",
+    "matches": true
+  },
+  {
+    "path": "assets/nav-r05-mounted-cli.svg",
+    "declared": "ff4615cce8bdd9c60e846d871694899487b0d484050a41179bcfb0c4986792b0",
+    "actual": "ff4615cce8bdd9c60e846d871694899487b0d484050a41179bcfb0c4986792b0",
+    "matches": true
+  },
+  {
+    "path": "assets/nav-r06-output-evidence.svg",
+    "declared": "48517dfa7eb6274359fc4f12e963ca7d5a8120da9255ecdbf11925422d974b79",
+    "actual": "48517dfa7eb6274359fc4f12e963ca7d5a8120da9255ecdbf11925422d974b79",
+    "matches": true
+  },
+  {
+    "path": "assets/nav-r07-pipeline-map.svg",
+    "declared": "43ae0a1d5667c27274976cec951e19b36d91dcbae9e03631123fc15234926240",
+    "actual": "43ae0a1d5667c27274976cec951e19b36d91dcbae9e03631123fc15234926240",
+    "matches": true
+  },
+  {
+    "path": "assets/nav-r08-policy.svg",
+    "declared": "6ce4b9e6a47ae779c8a5b20988d6b61a6597a1b888495113b22cddd0dfe75c65",
+    "actual": "6ce4b9e6a47ae779c8a5b20988d6b61a6597a1b888495113b22cddd0dfe75c65",
+    "matches": true
+  },
+  {
+    "path": "assets/nav-r09-identity.svg",
+    "declared": "a4251b2f2b1391816412770d619fa69bb7ac9aa427a001723d87a5f8803b150e",
+    "actual": "a4251b2f2b1391816412770d619fa69bb7ac9aa427a001723d87a5f8803b150e",
+    "matches": true
+  },
+  {
+    "path": "assets/nav-r10-spans.svg",
+    "declared": "9f918d9c5f2febccbc87a281eb1a82f6abd21ff80678625af0fe4e4bc755bdc8",
+    "actual": "9f918d9c5f2febccbc87a281eb1a82f6abd21ff80678625af0fe4e4bc755bdc8",
+    "matches": true
+  },
+  {
+    "path": "assets/nav-r11-formats.svg",
+    "declared": "60be01c5af82c5e51e4ad42f8a156255aad17d7f018bbc59b5d206455da50322",
+    "actual": "60be01c5af82c5e51e4ad42f8a156255aad17d7f018bbc59b5d206455da50322",
+    "matches": true
+  },
+  {
+    "path": "assets/nav-r12-typed-locations.svg",
+    "declared": "cadd02509afe7b7a446243244a99b74ddf22c3b564e1b67bc613f2869b5c530d",
+    "actual": "cadd02509afe7b7a446243244a99b74ddf22c3b564e1b67bc613f2869b5c530d",
+    "matches": true
+  },
+  {
+    "path": "assets/nav-r13-publication.svg",
+    "declared": "ebad54284324ca5fc7b5a7be074e3068fc690fab57d93a6c978e46cbe97d90b0",
+    "actual": "ebad54284324ca5fc7b5a7be074e3068fc690fab57d93a6c978e46cbe97d90b0",
+    "matches": true
+  },
+  {
+    "path": "assets/nav-r14-cloud.svg",
+    "declared": "8c81364c2f4138d80f78a77be68e09ba47fbbb0a54fd5d811aff3324a0cbc362",
+    "actual": "8c81364c2f4138d80f78a77be68e09ba47fbbb0a54fd5d811aff3324a0cbc362",
+    "matches": true
+  },
+  {
+    "path": "assets/nav-r15-capacity.svg",
+    "declared": "1ac4c94716d2edacbd6c5cd59bc17af43023e784b572ffaeefbcc17366d4ae3a",
+    "actual": "1ac4c94716d2edacbd6c5cd59bc17af43023e784b572ffaeefbcc17366d4ae3a",
+    "matches": true
+  },
+  {
+    "path": "assets/nav-r16-cost.svg",
+    "declared": "1ac4c94716d2edacbd6c5cd59bc17af43023e784b572ffaeefbcc17366d4ae3a",
+    "actual": "1ac4c94716d2edacbd6c5cd59bc17af43023e784b572ffaeefbcc17366d4ae3a",
+    "matches": true
+  },
+  {
+    "path": "assets/nav-r24-security-evals.svg",
+    "declared": "72fe278533aee0910d8a3d52fde7af180cbb28d97b96975b5761ff3fc122d75e",
+    "actual": "72fe278533aee0910d8a3d52fde7af180cbb28d97b96975b5761ff3fc122d75e",
+    "matches": true
+  },
+  {
+    "path": "assets/nav-r26-wrapper.svg",
+    "declared": "4406d4e2e162c7694db33cfa74e5476fb604f31c879e0be4f267c43bac13c4f6",
+    "actual": "4406d4e2e162c7694db33cfa74e5476fb604f31c879e0be4f267c43bac13c4f6",
+    "matches": true
+  },
+  {
+    "path": "assets/nav-r27-discovery.svg",
+    "declared": "25c37775d6f2f5552260f4a02f880b70f34c3d9c63493a300cf4027141fda151",
+    "actual": "25c37775d6f2f5552260f4a02f880b70f34c3d9c63493a300cf4027141fda151",
+    "matches": true
+  },
+  {
+    "path": "assets/nav-r28-canonical-path.svg",
+    "declared": "a92609407883d82b23f7a82e830d9d271333e9dfbcbaa1ec937b1a8f5e45996c",
+    "actual": "a92609407883d82b23f7a82e830d9d271333e9dfbcbaa1ec937b1a8f5e45996c",
+    "matches": true
+  },
+  {
+    "path": "assets/original-spans.svg",
+    "declared": "e42814c28a5cff0365490e36d949d6a511cab10b8640e686dabad69c28624a21",
+    "actual": "e42814c28a5cff0365490e36d949d6a511cab10b8640e686dabad69c28624a21",
+    "matches": true
+  },
+  {
+    "path": "assets/pipeline-overview.svg",
+    "declared": "20eaa615fc992083c16ab74a9367e333a26934e01bcbfe32763995d7322305e4",
+    "actual": "20eaa615fc992083c16ab74a9367e333a26934e01bcbfe32763995d7322305e4",
+    "matches": true
+  },
+  {
+    "path": "assets/publication-states.svg",
+    "declared": "bc26f19f41f31d341edcae6a578d82a6e77c4224f7169daffe8cae27676761c2",
+    "actual": "bc26f19f41f31d341edcae6a578d82a6e77c4224f7169daffe8cae27676761c2",
+    "matches": true
+  },
+  {
+    "path": "assets/question-exact.svg",
+    "declared": "6997a035a78f705a731b1d1bbae1ee16d940d85066b25c214fd9d4635e3caf5d",
+    "actual": "6997a035a78f705a731b1d1bbae1ee16d940d85066b25c214fd9d4635e3caf5d",
+    "matches": true
+  },
+  {
+    "path": "assets/question-scale.svg",
+    "declared": "36c3d287a78280e4510f2e9df3d365730db91d697c5ef585bd2c82f076842141",
+    "actual": "36c3d287a78280e4510f2e9df3d365730db91d697c5ef585bd2c82f076842141",
+    "matches": true
+  },
+  {
+    "path": "assets/question-shared.svg",
+    "declared": "05af24d0364b28a82c6cc9f9404188c65a81c0e66d55236291054108c8759652",
+    "actual": "05af24d0364b28a82c6cc9f9404188c65a81c0e66d55236291054108c8759652",
+    "matches": true
+  },
+  {
+    "path": "assets/type-location.svg",
+    "declared": "b5e1c0bd8cc921a449d7be54c9a1f1119662c9e6d9709137ccb3884b063e1986",
+    "actual": "b5e1c0bd8cc921a449d7be54c9a1f1119662c9e6d9709137ccb3884b063e1986",
+    "matches": true
+  },
+  {
+    "path": "assets/wrapper-command.svg",
+    "declared": "53f34cd602f9dce827a7cfc8373384c5d215c2fdb11a93414ed0f55138bdbefc",
+    "actual": "53f34cd602f9dce827a7cfc8373384c5d215c2fdb11a93414ed0f55138bdbefc",
+    "matches": true
+  },
+  {
+    "path": "claim_ledger.json",
+    "declared": "3557641a55af73c760d366a6e20424c7575ace80ba6c7628c3bef46ffcffff57",
+    "actual": "3557641a55af73c760d366a6e20424c7575ace80ba6c7628c3bef46ffcffff57",
+    "matches": true
+  },
+  {
+    "path": "deck.json",
+    "declared": "6c2b2ec8bc402ad52d836453f1f2ff961e06be4cfd6b8c0eb323ce7d26aae78f",
+    "actual": "6c2b2ec8bc402ad52d836453f1f2ff961e06be4cfd6b8c0eb323ce7d26aae78f",
+    "matches": true
+  },
+  {
+    "path": "question-map.json",
+    "declared": "6ba9162f7f02c6b36e27dd097a99c5de4f3938d6c5d4460bb20faec8796b3066",
+    "actual": "6ba9162f7f02c6b36e27dd097a99c5de4f3938d6c5d4460bb20faec8796b3066",
+    "matches": true
+  },
+  {
+    "path": "slide-map.json",
+    "declared": "96983aef3a4aec785e36d28406cfbe586e71bd7b738e2d0dfbebc52c83e99afb",
+    "actual": "96983aef3a4aec785e36d28406cfbe586e71bd7b738e2d0dfbebc52c83e99afb",
+    "matches": true
+  },
+  {
+    "path": "source_manifest.json",
+    "declared": "a0917de31d2a2a4354aa5c54fd185c76e057df6eeef1c621677e518ca216ac3c",
+    "actual": "a0917de31d2a2a4354aa5c54fd185c76e057df6eeef1c621677e518ca216ac3c",
+    "matches": true
+  },
+  {
+    "path": "sources/BATTLE_OBJECTIVE.md",
+    "declared": "896514e183b761859b300123045027213dd7aee294f6790e670a6031168052e5",
+    "actual": "896514e183b761859b300123045027213dd7aee294f6790e670a6031168052e5",
+    "matches": true
+  },
+  {
+    "path": "sources/BRAND.md",
+    "declared": "0aa6d6bab1715f25227bf61fa0de5030958a9d9c7383845e408fd95b83b58a42",
+    "actual": "0aa6d6bab1715f25227bf61fa0de5030958a9d9c7383845e408fd95b83b58a42",
+    "matches": true
+  },
+  {
+    "path": "sources/DESIGN.md",
+    "declared": "68f78f68c01cc3629759e71055ef8d435d8e2f428e8dc4ae8730b3ab19d7048d",
+    "actual": "68f78f68c01cc3629759e71055ef8d435d8e2f428e8dc4ae8730b3ab19d7048d",
+    "matches": true
+  },
+  {
+    "path": "sources/SECURITY.md",
+    "declared": "eb48f8c7f7c20307eae065c3dddfc0a84148ac14f60bbab6275e393adc99aada",
+    "actual": "eb48f8c7f7c20307eae065c3dddfc0a84148ac14f60bbab6275e393adc99aada",
+    "matches": true
+  },
+  {
+    "path": "sources/SUBMISSION.md",
+    "declared": "28a46d794513ed4e2e48cd3d8d9fbd663b8905651457d078f795193e47467b4d",
+    "actual": "28a46d794513ed4e2e48cd3d8d9fbd663b8905651457d078f795193e47467b4d",
+    "matches": true
+  },
+  {
+    "path": "sources/analytics-describe.txt",
+    "declared": "d9ee713480d5dc19898ac1e52ef3271aaaf251e8f4cccd400eb3979e2c40c1fe",
+    "actual": "d9ee713480d5dc19898ac1e52ef3271aaaf251e8f4cccd400eb3979e2c40c1fe",
+    "matches": true
+  },
+  {
+    "path": "sources/battle-provenance.md",
+    "declared": "7d51895d7c58b75471cc683f0a0bdd3392f6e5c0b177401435342d0e80584d0f",
+    "actual": "7d51895d7c58b75471cc683f0a0bdd3392f6e5c0b177401435342d0e80584d0f",
+    "matches": true
+  },
+  {
+    "path": "sources/battle-receipt-excerpt.json",
+    "declared": "8219c47fe0e6fc999a7b0a6be6bdb94bff47dc6e03b2942ba435b9df946b6fbf",
+    "actual": "8219c47fe0e6fc999a7b0a6be6bdb94bff47dc6e03b2942ba435b9df946b6fbf",
+    "matches": true
+  },
+  {
+    "path": "sources/code-excerpts.md",
+    "declared": "a7d936b1f13a084c97ca8b6034e2cc3cea29ce0d643fc71e8b30a74db6785d3b",
+    "actual": "a7d936b1f13a084c97ca8b6034e2cc3cea29ce0d643fc71e8b30a74db6785d3b",
+    "matches": true
+  },
+  {
+    "path": "sources/code-navigation.json",
+    "declared": "e64675769c9f8fa79ca4fc4fb61f3b295b2143b20e66bcccacea34ebf3b20ed7",
+    "actual": "e64675769c9f8fa79ca4fc4fb61f3b295b2143b20e66bcccacea34ebf3b20ed7",
+    "matches": true
+  },
+  {
+    "path": "sources/cost-model.json",
+    "declared": "e1258b65dfb6c89b31c9a536b15466644b1c693ea89660da10c7f08ef41a9a51",
+    "actual": "e1258b65dfb6c89b31c9a536b15466644b1c693ea89660da10c7f08ef41a9a51",
+    "matches": true
+  },
+  {
+    "path": "sources/cost-rows.json",
+    "declared": "72e95d474a83b5e45edcf47f44aa80e750b8722eaffa93b6ad1424fcbbaa0a76",
+    "actual": "72e95d474a83b5e45edcf47f44aa80e750b8722eaffa93b6ad1424fcbbaa0a76",
+    "matches": true
+  },
+  {
+    "path": "sources/demo-scale-calculation.md",
+    "declared": "00a4823b9bc1db0e54e8b3ad8bed398b1fcb2a6a16f569734af9bccc119648af",
+    "actual": "00a4823b9bc1db0e54e8b3ad8bed398b1fcb2a6a16f569734af9bccc119648af",
+    "matches": true
+  },
+  {
+    "path": "sources/operator-outline.md",
+    "declared": "6da6b380ad6881958809bc76384ca0a5da8363cad795798e7dcd0b098249a802",
+    "actual": "6da6b380ad6881958809bc76384ca0a5da8363cad795798e7dcd0b098249a802",
+    "matches": true
+  },
+  {
+    "path": "sources/original-diagrams.json",
+    "declared": "a000fd2ca24e36c11687f9d7d60f98362c2a5b9aa33c63f9a9b23d249fce0200",
+    "actual": "a000fd2ca24e36c11687f9d7d60f98362c2a5b9aa33c63f9a9b23d249fce0200",
+    "matches": true
+  },
+  {
+    "path": "sources/qualification.json",
+    "declared": "16bbbf08f5ff02532e58f255616b0c373c57d5e1a790e7b26037490521f3d9b2",
+    "actual": "16bbbf08f5ff02532e58f255616b0c373c57d5e1a790e7b26037490521f3d9b2",
+    "matches": true
+  },
+  {
+    "path": "sources/reviewed-WALKTHROUGH.md",
+    "declared": "cb236d0a486a603b00485f79cca457f5a64f7ebbd8aa514effa1282723ae4f77",
+    "actual": "cb236d0a486a603b00485f79cca457f5a64f7ebbd8aa514effa1282723ae4f77",
+    "matches": true
+  },
+  {
+    "path": "sources/source-access.json",
+    "declared": "c533f02b2599f3a548d6da7b19dc2978187df148d4c798c7c9b310d562252128",
+    "actual": "c533f02b2599f3a548d6da7b19dc2978187df148d4c798c7c9b310d562252128",
+    "matches": true
+  },
+  {
+    "path": "theme/README.md",
+    "declared": "301af0f9cac6c78e62c820048b2371955e16861db6b816c8db9d2569ebc5b736",
+    "actual": "301af0f9cac6c78e62c820048b2371955e16861db6b816c8db9d2569ebc5b736",
+    "matches": true
+  },
+  {
+    "path": "theme/grahama-co-preset.json",
+    "declared": "630a43c5686d8bc834dade359e1aca480166d209adead75333cff9b428d58cc6",
+    "actual": "630a43c5686d8bc834dade359e1aca480166d209adead75333cff9b428d58cc6",
+    "matches": true
+  }
+]

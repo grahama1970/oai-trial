@@ -184,7 +184,7 @@
     },
     "EvidenceSpan": {
       "additionalProperties": false,
-      "description": "Verbatim source excerpt \u2014 the canonical unit the human approves.\n\nRoundtable 2026-08-06 (unanimous): deck prose is a RENDERING of a span,\nnever the canonical claim. Spans are deterministic extractions; no LLM\nrewriting between source and approval surface.",
+      "description": "Verbatim source excerpt — the canonical unit the human approves.\n\nRoundtable 2026-08-06 (unanimous): deck prose is a RENDERING of a span,\nnever the canonical claim. Spans are deterministic extractions; no LLM\nrewriting between source and approval surface.",
       "properties": {
         "source_id": {
           "minLength": 1,

@@ -3,7 +3,7 @@
 **30 minutes prepared, including code navigation. Separate 15+ minutes audience discussion.**
 
 1. **Demo and Results**
-   - Recorded four-format result
+   - Run the prepared example and inspect real output; explicitly label any recorded fallback
    - Observed timing, throughput and memory
 2. **Reproduce and Verify**
    - Supported setup and Docker
@@ -20,13 +20,13 @@
    - Petabyte execution and what the model establishes
 5. **Extra Credit**
    - Security Evals (White, Grey, Black, and Adaptive Lineage)
-   - Thin skill wrapper
+   - Thin skill wrapper: concise contract, delegation and retained checks
    - Reviewed name aliases and corrected artifact path boundary
 6. **Discussion**
    - Audience questions and follow-ups; not prepared objection handling
 7. **Thank you**
 
-The first playback slide is Table of Contents. Extra Credit is the last substantive prepared block. Thank you is the final playback slide. The question bank is not appended to deck.json.
+The first playback slide is Table of Contents. The wrapper receives only the prescribed one-sentence mention immediately before a live demo; features and reuse rationale stay in Extra Credit. Extra Credit is the last substantive prepared block. Thank you is the final playback slide. The question bank is not appended to deck.json.
 
 ## Expanded hierarchy for human review
 
@@ -38,7 +38,7 @@ The first playback slide is Table of Contents. Extra Credit is the last substant
 ### Demo and Results
 
 - `r02-demo-result` — **Here is the result—not just a success flag** — 00:45–02:15
-  - The four-format qualification fixture keeps one declared identity.
+  - Same prepared fixture; live action after preflight or clearly labeled recorded fallback. No introductory skill slide.
 - `r03-demo-observations` — **Small workloads were measured; petabytes were not** — 02:15–03:15
   - Two recorded demo sizes, with a 10× logical-workload step.
 
@@ -98,7 +98,7 @@ The first playback slide is Table of Contents. Extra Credit is the last substant
 - `r25-lineage` — **The retained Judge result is fixture-backed** — 25:15–26:00
   - Adaptive lineage is not established by this demonstration.
 - `r26-wrapper` — **The skill delegates; it does not fork the engine** — 26:00–27:00
-  - Extra Credit · one file/folder interface over the project CLI
+  - Extra Credit · reuse a concise SKILL.md, thin run.sh, and retained behavior checks.
 - `r27-discovery` — **A proposed alias does not authorize release** — 27:00–28:30
   - Extra Credit · propose → approve IDs → exact policy → verify
 - `r28-canonical-path` — **Validate the destination that will actually be written** — 28:30–30:00
