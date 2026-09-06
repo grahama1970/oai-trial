@@ -1,7 +1,7 @@
 # OAI trial: proposed presentation organization
 
-Status: human-review proposal. The deck has not yet been reorganized and no new
-WebGPT reorganization request has been submitted. This revision preserves the
+Status: proposed organization for the next deck revision, not evidence that
+existing slide exports have been reorganized. This direction preserves the
 prepared adversarial-question block explicitly rather than folding it into
 technical detail or audience discussion.
 
