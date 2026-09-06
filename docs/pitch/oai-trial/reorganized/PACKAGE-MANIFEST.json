@@ -442,6 +442,16 @@
       "path": "validation/source-access-update.json",
       "bytes": 2799,
       "sha256": "aa1ffc1c5ef56702f8981ff17ce7d64d44ecc30d9cee33b30d4c10ba44e96150"
+    },
+    {
+      "path": "validation_report.json",
+      "bytes": 6629,
+      "sha256": "fb9922309dffe70a0d3a8cbf5e248584aaec140f61e4b2c52c1e8b7052b1b068"
+    },
+    {
+      "path": "verify_receipt.json",
+      "bytes": 3801,
+      "sha256": "448ceaa9f9f5f39b0d0be89e172b065fd2b5d5161bacda9a422766461782edd4"
     }
   ]
 }
