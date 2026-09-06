@@ -1,6 +1,6 @@
 {
   "schema": "oai_trial.presentation_controls.v1",
-  "status": "PARTIAL_VISUAL_VALIDATION_PENDING",
+  "status": "SCOPED_LOCAL_CHECKS_PASS_SHARED_LANDING_PENDING",
   "demo_path": "PASS",
   "source_reveals": [
     "pseudonyms.py:104",
@@ -15,5 +15,5 @@
   "viewer_url": "http://127.0.0.1:3016/?deck=./oai-trial-current/deck.data.json",
   "recording_started": false,
   "storage_guard": "preserved; known foreign emitted path refused with 409",
-  "shared_scope": "Visual patches returned to pitchdeck owner; frame trials passed, header aggregate settlement remains pending."
+  "shared_scope": "Consumer visual checks passed all six trials; shared combined source landing pending with maintainer."
 }

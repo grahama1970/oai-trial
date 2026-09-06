@@ -36,8 +36,8 @@ The project agent reports that the prior local consumer models and draft build p
 draft: Google Slides import, full visual approval, live-demo rehearsal,
 VS Code interaction, and Live Evidence wiring are not established. The opening
 currently uses recorded qualification evidence, not a newly captured live run.
-Some picture containers retain legacy blue framing; the visual review must not
-be represented as final grahama.co conformance.
+The legacy blue framing has since passed the scoped theme-frame checks below;
+this still does not establish final human visual approval.
 
 The incoming README referred to an older validation/report.json that was not included among the current-package payloads. This update does not invent it. The supplied current schemas and decoded payloads are the authoring authority; new checks are in validation/authoring-checks.json, not a local renderer acceptance receipt.
 
@@ -63,10 +63,9 @@ Native presentation URL (local workstation):
 The import preserves title/message claim bindings by using matching freeform
 element IDs. The closing slide adds the grahama.co caption. Candidate claim
 warnings remain intentional. Next-slide navigation was exercised; recording and
-VS Code sync were not activated. The narrow native view currently duplicates
-authored header-positioned titles below its automatic header; this observed
-shared-renderer issue was sent to the pitchdeck owner. It is not final visual
-approval or a reason to alter the anonymizer.
+VS Code sync were initially untested. Subsequent operational checks below
+exercise source reveal and publication controls. The header-duplication fix now
+passes the scoped consumer checks; human visual approval remains separate.
 
 ## Native viewer configuration and observed controls
 
@@ -91,6 +90,8 @@ The live skill demo path also completed preflight/run/verify and independent
 four-format readback. See `sources/live-demo-readback.json`. This establishes
 the technical demo path, not timed human rehearsal or interview permission.
 
-Remaining shared visual fixes are owned by the pitchdeck maintainer: duplicate
-header-positioned titles in narrow reading mode and legacy blue image framing.
-Neither is claimed fixed here. Recording was not started.
+Both scoped visual fixes now pass three trials each: header-positioned titles
+render once while centered closing heroes remain; frame paint follows the theme
+without changing image bytes or geometry. See validation/consumer-visuals.json.
+The shared source landing remains with the maintainer because of its motion
+integration dependency. Recording was not started.

@@ -1,0 +1,18 @@
+{
+  "schema": "oai_trial.visual_fix_handoff.v1",
+  "status": "SCOPED_CHECKS_PASS_SHARED_LANDING_PENDING",
+  "consumer_run_id": "7ca51a55a29e",
+  "cases": {
+    "PASS": 2,
+    "FAIL": 0,
+    "BLOCKED": 0,
+    "NOT_TESTED": 0
+  },
+  "trials": 6,
+  "source_sha256": {
+    "ui/src/layouts/Freeform.tsx": "099869dd3579228f60cbc78daf075fbbdbcefed3445e3bb0cac470241909c979",
+    "src/pitchdeck/theme_style.py": "d1c667b7af10457cb4ead7cbe862a21ca837110055d3fd5882f5ce5f60f62cc6"
+  },
+  "shared_landing": "Maintainer reports motion integration dependency; combined scoped landing pending.",
+  "human_visual_approval": false
+}

@@ -15,8 +15,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 8219,
-      "sha256": "b7c682f15b1eb5e91afc1937ea097212b67ac7d5881a2d26379fd57c67e0383e"
+      "bytes": 8330,
+      "sha256": "0bd5d12b03d52abab058d956c964867ddab91b3a2ea0e4d562ee0738271f4c65"
     },
     {
       "path": "TOC.md",
@@ -380,8 +380,8 @@
     },
     {
       "path": "sources/presentation-controls.json",
-      "bytes": 688,
-      "sha256": "340d69cc2466ec716c6d0f402f6fc8e2c4c10d87be0bc1ce2cfd6e90459f2554"
+      "bytes": 694,
+      "sha256": "0c5347a21706f867aa9be259f6737b42aa36cc78421c5f73c388f41a5ff181e5"
     },
     {
       "path": "sources/project-state-context.md",
@@ -429,6 +429,11 @@
       "sha256": "cc6949b0fa5f3bab2990837917f964616660990f55df635a64c133c1017368cd"
     },
     {
+      "path": "validation/consumer-visuals.json",
+      "bytes": 17761,
+      "sha256": "853c8e2957eab84e32cc050856a286882c25ee380c7211cd130ce78f460f0599"
+    },
+    {
       "path": "validation/input-payload-checks.json",
       "bytes": 16585,
       "sha256": "89d2c5be1ae020e03c0ea605ae7678104ccadec8c9a97c5262dd91c69b4ac574"
@@ -457,6 +462,11 @@
       "path": "validation/source-access-update.json",
       "bytes": 2799,
       "sha256": "aa1ffc1c5ef56702f8981ff17ce7d64d44ecc30d9cee33b30d4c10ba44e96150"
+    },
+    {
+      "path": "validation/visual-fixes.json",
+      "bytes": 617,
+      "sha256": "cf7f39304566588f90d0fa7df5e064d161ee826b92d7660172fefe058a6ed073"
     },
     {
       "path": "validation_report.json",
