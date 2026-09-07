@@ -10,8 +10,8 @@
     },
     {
       "path": "INTERVIEW_GUIDE.md",
-      "bytes": 11195,
-      "sha256": "ca54113fbdc5345a3d09e5dba0e2d4b4d8e28edfa64e21de48a46103ab514cb9"
+      "bytes": 11223,
+      "sha256": "7c5ebefd89a6b4223172200416689442c4288f65adcf18c1f9a7e279b2bd5f8a"
     },
     {
       "path": "README.md",
@@ -20,13 +20,13 @@
     },
     {
       "path": "TOC.md",
-      "bytes": 6699,
-      "sha256": "c3a334951ad59ee245cac28aac2cdda1c9f9a5605ec9798b7d602844d66ccffa"
+      "bytes": 6729,
+      "sha256": "5caa07834c7ed2582a60d0af15fe038679b76f963eca9f58b7441a8992d01399"
     },
     {
       "path": "WALKTHROUGH.md",
-      "bytes": 103466,
-      "sha256": "80c26c2b1e3087f345cbe04a60570efc57a3456e5d6499d30fa0bb81dc1d20d3"
+      "bytes": 103443,
+      "sha256": "1c1fad76aef45a1055dd38d9ef96dd9551a3b47ebcd2b6e91fb50fd3964a4781"
     },
     {
       "path": "asset_manifest.yaml",
@@ -235,8 +235,8 @@
     },
     {
       "path": "claim_ledger.yaml",
-      "bytes": 52542,
-      "sha256": "dccb2629971d7ec1c17b5a9f3b98e4c1d0d355cf158c111f5698507ee3c42523"
+      "bytes": 52466,
+      "sha256": "7ed44aa782d43a12fdd9d434955cb73e77da51575e91bdb363bf7f2d53031371"
     },
     {
       "path": "debugger.json",
@@ -245,13 +245,13 @@
     },
     {
       "path": "deck.public.yaml",
-      "bytes": 228175,
-      "sha256": "a898ec62430f874e615b220c20d464aee677dead4eecda1569b7042cb415a173"
+      "bytes": 228176,
+      "sha256": "b87bbfb2cf3033184fae59b44769fffb875ade4fb3f13304b33cde9b2284a726"
     },
     {
       "path": "question-map.json",
-      "bytes": 34165,
-      "sha256": "cce752479bd0d138f317d793b36cbe070eb2da50db03524b4791b3f8cc657d84"
+      "bytes": 34156,
+      "sha256": "b7e231e0b11d2b4eb882048dd8ac5db9636bac7bddd26c81c6e129831ccf1f8f"
     },
     {
       "path": "reference/README.md",
@@ -360,8 +360,8 @@
     },
     {
       "path": "sources/effort-estimate.md",
-      "bytes": 814,
-      "sha256": "1fbc4aeb72d39766ecaa184ccbc669422e66f16b2e211bdc7bb9c0384467bf02"
+      "bytes": 734,
+      "sha256": "8839105fa8e75e1281ea2f44b8aa850a54a9e346b6e3dfac858b8ee6ebd13c80"
     },
     {
       "path": "sources/live-demo-readback.json",
@@ -400,8 +400,8 @@
     },
     {
       "path": "sources/research-workflow.md",
-      "bytes": 4368,
-      "sha256": "0260b50b810883cd299840df5a53efede22a7da92a1e7b7779eed71d3327915b"
+      "bytes": 4370,
+      "sha256": "7ee99e5d65fff63ffd203fbcac3033fa6c53de6079b60dc36468e786c5b05e36"
     },
     {
       "path": "sources/reviewed-WALKTHROUGH.md",

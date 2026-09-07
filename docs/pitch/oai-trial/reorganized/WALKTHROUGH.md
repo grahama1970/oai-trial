@@ -600,7 +600,7 @@ The optional local create-figure command in the spec has **NOT_RUN** status. Its
 
 ### Say
 
-I estimate about eight hours: three researching, two implementing and testing, one on extras, and two polishing. Active time was not instrumented. Commit history records when changes landed, not active hours. Later corrections and requested additions remain separately documented.
+My estimated allocation was 37.5% research, 25% implementation and testing, 12.5% extras, and 25% polish. Active time was not instrumented. Commit history records chronology, not effort allocation. Later corrections and requested additions remain separately documented.
 The work was AI-assisted and externally reviewed; I will not invent an authorship percentage. The technical conclusion concerns a bounded mechanism and its evidence. It does not establish general anonymity, production deployment, or complete resistance to linkage. The next three prepared questions explain why these boundaries are deliberate, rather than quietly treating every future hardening idea as a missing local feature.
 
 ### Show / navigate
@@ -1228,9 +1228,9 @@ End normal playback. No substantive slide follows. Backup questions are Markdown
 
 **Primary slide:** [r17-disclosure](#r17-disclosure) · **Legacy section:** `07-nonclaims`
 
-**Short answer:** I estimate about eight hours of active effort; it was not instrumented.
+**Short answer:** My estimated allocation is 37.5% research, 25% implementation/testing, 12.5% extras, and 25% polish.
 
-**Follow-up / deeper answer:** The allocation is retrospective. Commit timestamps show when changes landed, not hours worked, so they do not establish either an active-work overrun or verified compliance. Later corrections and requested additions remain separately documented.
+**Follow-up / deeper answer:** These percentages are retrospective estimates, not instrumented measurements. Commit history records chronology, not effort allocation. Later corrections and requested additions remain separately documented.
 
 **Original code/evidence references:** [`SUBMISSION.md` time disclosure][D01]
 
@@ -1463,7 +1463,7 @@ End normal playback. No substantive slide follows. Backup questions are Markdown
 | E01 | Supplied historical qualification receipt copied as sources/qualification.json; exact 0375af56 source commit and recorded demo/readbacks | The receipt was read; raw command logs and the original submission archive were not executed or rehashed here. A status does not make the authoring environment an executor. |
 | E02 | Previously inspected retained wrapper eval, linked in the source record and existing question answers | Historical wrapper evidence, not a new run or automatic approval of all post-trial code. |
 | E03 | Presenter-reported targeted CLI/wrapper results | No new targeted test run during this revision. |
-| E04 | Prior source-only bounded reviewer PASS for canonical-path fix at 0375af56 | Not timebox compliance, exhaustive security, or fresh presentation approval. |
+| E04 | Prior source-only bounded reviewer PASS for canonical-path fix at 0375af56 | Not measured effort, exhaustive security, or fresh presentation approval. |
 | E05 | Archive identity recorded in supplied qualification receipt | Its hash identifies the reported original ZIP; the new authoring ZIP is a different artifact. Original archive bytes were not supplied for rehash here. |
 | E06 | Source of the targeted path test, typed mutation test and four-format workflow, inspected in this conversation | Assertions and positive controls, not a fresh pytest execution. |
 | E07 | Supplied committed cost output, eight normalized rows and analytics describe output | Modeled, not measured. The existing within-scenario chart and its data/spec are reused unchanged; analytics/create-figure were not rerun here. |

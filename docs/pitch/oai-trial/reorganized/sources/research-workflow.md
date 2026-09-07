@@ -30,7 +30,7 @@ These are adapted ideas, not reproductions of the papers. Exact source mechanism
 
 The committed history supports research-led refinement, not a claim that all research finished before any code existed. Initial research and semantics (`813fdf3`) precede the hardened matcher change (`7248031`). The adoption memo (`12cefd7`) precedes the privacy-contract, subject-check, namespace-label, and verifier-sensitivity change (`bff518c`). Research and implementation also proceeded together; later review produced further corrections.
 
-Estimated effort: about 8 hours—3 research, 2 implementation/testing, 1 extras, 2 polish. Retrospective estimate; active time was not instrumented. Commit history records when changes landed, not active hours. Later corrections and requested additions remain separately documented.
+Estimated allocation: 37.5% research · 25% implementation/testing · 12.5% extras · 25% polish. Retrospective estimate; active time was not instrumented. Commit history records chronology, not effort allocation. Later corrections and requested additions remain separately documented.
 
 ## Source navigation
 

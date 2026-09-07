@@ -75,7 +75,7 @@ Use one answer plus one evidence jump. The three prepared objections already hav
 | Report-last, path boundary and actual evidence | [Q13](WALKTHROUGH.md#q13), [Q15](WALKTHROUGH.md#q15), [Q18](WALKTHROUGH.md#q18), [Q22](WALKTHROUGH.md#q22), [Q45](WALKTHROUGH.md#q45) |
 | Cloud scenario versus measured performance | [Q24](WALKTHROUGH.md#q24), [Q25](WALKTHROUGH.md#q25), [Q26](WALKTHROUGH.md#q26), [Q47](WALKTHROUGH.md#q47) |
 | Extra Credit: reuse and reviewed proposals | [Q06](WALKTHROUGH.md#q06), [Q19](WALKTHROUGH.md#q19), [Q20](WALKTHROUGH.md#q20), [Q21](WALKTHROUGH.md#q21), [Q34](WALKTHROUGH.md#q34), [Q35](WALKTHROUGH.md#q35) |
-| Timebox, authorship and permissions | [Q28](WALKTHROUGH.md#q28), [Q29](WALKTHROUGH.md#q29), [Q30](WALKTHROUGH.md#q30), [Q48](WALKTHROUGH.md#q48) |
+| Effort allocation, authorship and permissions | [Q28](WALKTHROUGH.md#q28), [Q29](WALKTHROUGH.md#q29), [Q30](WALKTHROUGH.md#q30), [Q48](WALKTHROUGH.md#q48) |
 
 The rest of Q01–Q48 remain in the complete appendix, with unchanged answers and primary-slide relationships. For an unverified case, explain the boundary and the evidence needed; do not improvise certainty.
 
@@ -93,7 +93,7 @@ The supplied preview predates the latest notes and this revision. All claims rem
 
 Final consumer rendering, GUI/import, visible typography, demo rehearsal and human approval remain local acceptance work. Source navigation is not a VS Code sync, breakpoint or debugger capture. No Archify, React Flow, GSN, recording, Memory import or Live Evidence delivery is established.
 
-Formal-assessment rules govern any actual assistance. Permission to use AI coding tools is not interview-assistance permission. Recording consent must be explicit and separate. Technical PASS is not eight-hour compliance; preserve the timebox disclosure.
+Formal-assessment rules govern any actual assistance. Permission to use AI coding tools is not interview-assistance permission. Recording consent must be explicit and separate. Technical review does not establish measured effort; preserve the retrospective-estimate label.
 
 ## Subsequent local operational checks
 
