@@ -30,8 +30,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 5424,
-      "sha256": "f9c6a0294289c8c1d9267972422d48615f67d7db9272f3b186e4c1e57210bfdb"
+      "bytes": 5443,
+      "sha256": "f8bb61d12da3f028eaf90d891acb604e340aa1de95050374f8e1a4006a67e278"
     },
     {
       "path": "TOC.md",
@@ -306,7 +306,7 @@
     {
       "path": "deck.document.json",
       "bytes": 421568,
-      "sha256": "db0e453a098353e219e016ddc1badbf7ccf586b2f314dd080aa7d04aeda2543b"
+      "sha256": "40d4e114af553650cbf6c2b67f52f22fa2d64412a4917a3fee9351b5a151b7bb"
     },
     {
       "path": "deck.public.yaml",

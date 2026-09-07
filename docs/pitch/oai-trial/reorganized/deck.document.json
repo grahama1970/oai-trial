@@ -3187,7 +3187,7 @@
                 "size_pt": 23,
                 "bold": true,
                 "font": "Arial",
-                "color": "#93a289",
+                "color": "#a99787",
                 "align": "left"
               },
               "binding_paths": [
@@ -3271,7 +3271,7 @@
                 "size_pt": 23,
                 "bold": true,
                 "font": "Arial",
-                "color": "#93a289",
+                "color": "#a99787",
                 "align": "left"
               },
               "binding_paths": [
@@ -3355,7 +3355,7 @@
                 "size_pt": 23,
                 "bold": true,
                 "font": "Arial",
-                "color": "#93a289",
+                "color": "#a99787",
                 "align": "left"
               },
               "binding_paths": [
@@ -3439,7 +3439,7 @@
                 "size_pt": 23,
                 "bold": true,
                 "font": "Arial",
-                "color": "#93a289",
+                "color": "#a99787",
                 "align": "left"
               },
               "binding_paths": [
@@ -14254,7 +14254,7 @@
       "intent": null
     }
   ],
-  "revision": 4,
+  "revision": 5,
   "provenance": {
     "bundle_dir": "/home/graham/workspace/experiments/oai-trial/docs/pitch/oai-trial/reorganized",
     "deck_manifest": "deck.public.yaml",

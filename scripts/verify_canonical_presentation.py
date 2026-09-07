@@ -50,7 +50,7 @@ with ZipFile('/mnt/storage12tb/oai-trial/native-pitchdeck/oai-trial-current.pptx
                 icons+=1;assert {n.get('val').upper() for n in group.findall('.//a:srgbClr',ns)}=={'F2EADC'}
         for shape in root.findall('.//p:sp',ns):
             if ''.join(n.text or '' for n in shape.findall('.//a:t',ns))=='✓':
-                checks+=1;assert '93A289' in {n.get('val').upper() for n in shape.findall('.//a:srgbClr',ns)}
+                checks+=1;assert 'A99787' in {n.get('val').upper() for n in shape.findall('.//a:srgbClr',ns)}
 assert icons==32 and checks==4
 assert sum(m['duration_minutes'] for m in json.loads((B/'slide-map.json').read_text()) if m['counts_toward_prepared_time'])==30
-print('CANONICAL_READBACK_PASS: complete32-slide JSON; no dropped UI elements; notes/builds preserved;32 cream native header icons;4 green checks; native timing present. Playback not implied.')
+print('CANONICAL_READBACK_PASS: complete32-slide JSON; no dropped UI elements; notes/builds preserved;32 cream native header icons;4 neutral checkmarks; native timing present. Playback not implied.')

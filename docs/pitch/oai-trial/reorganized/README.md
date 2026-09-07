@@ -51,7 +51,7 @@ The dedicated server binds `PITCHDECK_DEBUG_WORKSPACE` to the primary oai-trial 
 - Brief coverage: requirement/solution/check rows move as whole units. Checks mean delivered scope; the production row is a design/model, not deployment.
 - Multi-point explanations: reveal in rhetorical order. Comparisons remain complete when hiding a side would obscure the boundary.
 - Slide changes use a short fade. Flow SVGs use one synchronized cycle and retain a complete reduced-motion base. The separate fixture readback is after publication, not a runtime release gate.
-- Header icons are monochrome native-library cues; green check marks denote the stated delivered scope.
+- Header icons are monochrome native-library cues; muted neutral checkmarks denote the stated delivered scope.
 - `slide.notes` contains short presenter cues. Use the Teleprompter control for the separate companion page; the full script remains in Markdown.
 
 ## Source and debugger controls
@@ -62,7 +62,7 @@ Enable **Sync VS Code** to reveal mapped source ranges. Clicking a mapped concep
 
 ## Retained checks and boundaries
 
-- `scripts/verify_canonical_presentation.py`: actual JSON/UI/PPTX content, native icons, green checks and timing-tree readback.
+- `scripts/verify_canonical_presentation.py`: actual JSON/UI/PPTX content, native icons, muted neutral checkmarks and timing-tree readback.
 - `fixtures/canonical_presentation_eval.json`: repeated readback and unresolved-icon refusal.
 - `scripts/prove_presentation_sync.py` and `fixtures/presentation_sync_eval.json`: live source selection through the browser and independent VS Code bridge-file readback; invalid concept refusal.
 - `scripts/prepare_report_svgs.py`: bounded correction of the supplied report diagrams.
