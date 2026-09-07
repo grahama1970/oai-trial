@@ -25,8 +25,8 @@
     },
     {
       "path": "WALKTHROUGH.md",
-      "bytes": 103428,
-      "sha256": "001ed4be798173ed31486a479436babbefa66e97d6177a836bb3723f2c737047"
+      "bytes": 103565,
+      "sha256": "9543ec502522986ea9989f35a801a222b0bb7f2479a01c04ab39015cb20779e0"
     },
     {
       "path": "asset_manifest.yaml",
@@ -245,13 +245,13 @@
     },
     {
       "path": "deck.public.yaml",
-      "bytes": 228162,
-      "sha256": "48b2b1160972c986ca889370f7b7979db0cc9a4990aa46833bbcabd2329619fa"
+      "bytes": 228288,
+      "sha256": "8b4362c0b44f525cc3fa2cdaf09275872c3fbff99640a1bb572fc128d5dbf95b"
     },
     {
       "path": "question-map.json",
-      "bytes": 34151,
-      "sha256": "471ebd7ef8b0934d24b5d22745e03e53a5e9a7aa07726183873e40068980d47f"
+      "bytes": 34171,
+      "sha256": "9871356282f5318e614bdfdd6e4f08bd6c271e88518ecfd8305ddbb873f80c11"
     },
     {
       "path": "reference/README.md",

@@ -2,9 +2,7 @@
 
 ## Time spent
 
-Estimated active effort: about 8 hours—3 research, 2 implementation/testing,
-1 extras, and 2 polish. This is a retrospective estimate; active time was not
-instrumented.
+For the current rough effort allocation, see the [retrospective estimate](docs/pitch/oai-trial/reorganized/sources/effort-estimate.md). Active time was not instrumented.
 
 The recorded history includes `d8ad9e4` at 2026-09-04 15:09:10 UTC and the
 SQLite/report-write corrections at `5b1f22d`, 23:40:24 UTC that day. These

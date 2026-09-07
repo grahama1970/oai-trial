@@ -45,6 +45,9 @@ for name in ['deck.public.yaml', 'WALKTHROUGH.md', 'TOC.md', 'question-map.json'
     current = (BUNDLE / name).read_text()
     for stale in ['recorded overrun', 'the overrun', 'post-timebox', 'elapsed work exceeded eight hours']:
         assert stale not in current, (name, stale)
+questions = json.loads((BUNDLE / 'question-map.json').read_text())
+assert next(q for q in questions if q['id'] == 'Q28')['code_evidence'] == '[Rough retrospective estimate](sources/effort-estimate.md)'
+assert 'SUBMISSION.md: Time spent' not in slides[18]['notes']
 handout = ROOT / 'docs/DESIGN_DECISIONS_AND_LIMITATIONS.md'
 for target in re.findall(r'\]\(([^)]+)\)', handout.read_text()):
     assert (handout.parent / target.split('#')[0]).is_file(), target

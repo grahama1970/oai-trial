@@ -605,7 +605,8 @@ The work was AI-assisted and externally reviewed; I will not invent an authorshi
 
 ### Show / navigate
 
-SUBMISSION.md: Time spent, Retrospective time estimate, Unfinished work.
+sources/effort-estimate.md: current rough effort allocation and its retrospective qualification.
+SUBMISSION.md: technical exclusions and retained change history—not the current effort allocation.
 
 
 **Visible qualification:** Retrospective estimate; active time was not instrumented.
@@ -1232,7 +1233,7 @@ End normal playback. No substantive slide follows. Backup questions are Markdown
 
 **Follow-up / deeper answer:** These percentages are retrospective estimates, not instrumented measurements. Commit history records chronology, not effort allocation. Later corrections and requested additions remain separately documented.
 
-**Original code/evidence references:** [`SUBMISSION.md` time disclosure][D01]
+**Current effort reference:** [Rough retrospective estimate](sources/effort-estimate.md).
 
 <a id="q29"></a>
 ### Q29 — How much did AI do, and do you understand the implementation?

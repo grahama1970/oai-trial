@@ -275,7 +275,7 @@
     "question": "What is your effort estimate?",
     "short_answer": "Roughly a third researching, a quarter building and testing, and the rest on extras and polish.",
     "follow_up_answer": "These percentages are retrospective estimates, not instrumented measurements. Commit history records chronology, not effort allocation. Later corrections and requested additions remain separately documented.",
-    "code_evidence": "[`SUBMISSION.md` time disclosure][D01]",
+    "code_evidence": "[Rough retrospective estimate](sources/effort-estimate.md)",
     "primary_slide_id": "r17-disclosure",
     "implementation_commit": "0375af56bf681e9441edcb7433cfe58951db77b2"
   },
