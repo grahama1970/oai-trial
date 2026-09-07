@@ -1,6 +1,6 @@
 {
   "schema": "oai_trial.presentation_controls.v1",
-  "status": "SCOPED_LOCAL_CHECKS_PASS_SHARED_LANDING_PENDING",
+  "status": "SCOPED_CHECKS_PASS",
   "demo_path": "PASS",
   "source_reveals": [
     "pseudonyms.py:104",
@@ -15,5 +15,5 @@
   "viewer_url": "http://127.0.0.1:3016/?deck=./oai-trial-current/deck.data.json",
   "recording_started": false,
   "storage_guard": "preserved; known foreign emitted path refused with 409",
-  "shared_scope": "Consumer visual checks passed all six trials; shared combined source landing pending with maintainer."
+  "shared_scope": "Three visual defects landed at 21054950db08ebc298428198b4610ad35b8b446c; consumer cases passed all six trials."
 }

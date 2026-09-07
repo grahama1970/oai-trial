@@ -109,3 +109,11 @@ readback found a complete temporary report and the corpus but no final marker.
 This proves the exercised controls, not every configured stop or a crash campaign.
 The existing debug launches use their small Bob/Bobby example, separate from the
 main Alice/A.L demo. No recording was started.
+
+## Visual-fix handoff completed
+
+The duplicate header, legacy frame paint and narrow header-texture spill fixes
+are landed at shared pitchdeck commit `21054950db08ebc298428198b4610ad35b8b446c`.
+See validation/consumer-visuals.json and validation/visual-fixes.json. Final human
+review, actual interview permissions and playback/import verification remain
+separate; this does not convert candidate claims into approvals.

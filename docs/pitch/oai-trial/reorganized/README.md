@@ -55,7 +55,7 @@ The four current manifests use the standard pitchdeck filenames ending in
 `.yaml` (their JSON syntax is valid YAML). These are the single editable sources;
 the original WebGPT JSON files remain in the downloaded ZIP. Native UI emission
 uses this project-owned bundle; generated browser assets stay on the artifact
-drive. No shared pitchdeck implementation files are changed.
+drive. Shared renderer fixes are tracked separately below; the import itself changes only project-owned manifests.
 
 Native presentation URL (local workstation):
 `http://127.0.0.1:3016/?deck=./oai-trial-current/deck.data.json`
@@ -93,5 +93,15 @@ the technical demo path, not timed human rehearsal or interview permission.
 Both scoped visual fixes now pass three trials each: header-positioned titles
 render once while centered closing heroes remain; frame paint follows the theme
 without changing image bytes or geometry. See validation/consumer-visuals.json.
-The shared source landing remains with the maintainer because of its motion
-integration dependency. Recording was not started.
+Shared fixes landed at `21054950db08ebc298428198b4610ad35b8b446c`, including
+narrow header-texture containment. Relevant remote blobs were independently
+matched to local source. Recording was not started.
+
+## Accepted shared visual fixes
+
+The retained consumer receipt now covers header title deduplication, preservation
+of the centered closing hero and animation target, header-only texture in narrow
+view, and theme-correct frame paint without changing media bytes or fixed
+geometry. Both cases passed all three trials. This is scoped presentation proof,
+not universal animation/export parity or human visual approval. Broader motion
+limitations remain in the maintainer delivery report.

@@ -10,13 +10,13 @@
     },
     {
       "path": "INTERVIEW_GUIDE.md",
-      "bytes": 10419,
-      "sha256": "ee455f91326b30a6b48b872f9413a389a82f85506f3cc33f682dfdca014f4abc"
+      "bytes": 10839,
+      "sha256": "dd8279d179cb10d8dca2255a2eb35ccb7fd7051ce022b8c1143a04bd0f806476"
     },
     {
       "path": "README.md",
-      "bytes": 8330,
-      "sha256": "0bd5d12b03d52abab058d956c964867ddab91b3a2ea0e4d562ee0738271f4c65"
+      "bytes": 8947,
+      "sha256": "0afcc3c6d94306b8d1cdf31ea8af142b4a5ab43fc1d86200773a50cd6c1a92ed"
     },
     {
       "path": "TOC.md",
@@ -380,8 +380,8 @@
     },
     {
       "path": "sources/presentation-controls.json",
-      "bytes": 694,
-      "sha256": "0c5347a21706f867aa9be259f6737b42aa36cc78421c5f73c388f41a5ff181e5"
+      "bytes": 674,
+      "sha256": "7108a686fdbf427b603abef3df66783ab24c498bbc11df80c179e7c9ba6243b5"
     },
     {
       "path": "sources/project-state-context.md",
@@ -430,8 +430,8 @@
     },
     {
       "path": "validation/consumer-visuals.json",
-      "bytes": 17761,
-      "sha256": "853c8e2957eab84e32cc050856a286882c25ee380c7211cd130ce78f460f0599"
+      "bytes": 13349,
+      "sha256": "8554ab999eed6a6fd941f0d18e99b96a08ea37a6ad53ee83d887f587802c7664"
     },
     {
       "path": "validation/input-payload-checks.json",
@@ -465,8 +465,8 @@
     },
     {
       "path": "validation/visual-fixes.json",
-      "bytes": 617,
-      "sha256": "cf7f39304566588f90d0fa7df5e064d161ee826b92d7660172fefe058a6ed073"
+      "bytes": 1690,
+      "sha256": "04c539f410ad9bd95062774f1a676482e637f94a70e4f51ff7896d3bdbaec098"
     },
     {
       "path": "validation_report.json",

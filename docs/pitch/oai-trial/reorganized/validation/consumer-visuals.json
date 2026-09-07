@@ -1,7 +1,7 @@
 {
   "schema": "agentic_evals.report.v2",
   "source": "skills/pitchdeck/fixtures/consumer_visuals.json",
-  "run_id": "7ca51a55a29e",
+  "run_id": "88e2981c6897",
   "fixture_sha256": "sha256:650a8ce30fdc2c1950fd2ec659d4f0f9cd26df74744ff823a803ed49f42b311b",
   "repo": {
     "sha": "7b70696b198000f2868295f01121e5344961aef7",
@@ -22,7 +22,7 @@
   "capability_readiness": null,
   "claims_coverage": "manifest-spanning",
   "focused_cases": [],
-  "generated_at": "2026-09-06T22:50:13.564404+00:00",
+  "generated_at": "2026-09-06T23:14:47.090790+00:00",
   "case_count": 2,
   "required_case_count": 2,
   "outcome_counts": {
@@ -38,7 +38,7 @@
       "flaky": false,
       "name": "live-oai-header-title-and-closing-hero",
       "type": "adversarial",
-      "case_id": "7ca51a55a29e-c000",
+      "case_id": "88e2981c6897-c000",
       "required": true,
       "outcome": "PASS",
       "problems": [],
@@ -63,46 +63,46 @@
       "passed_trials": 3,
       "total_trials": 3,
       "pass_rate": 1.0,
-      "avg_latency_ms": 125925.558,
+      "avg_latency_ms": 20220.845,
       "trials": [
         {
           "exit_code": 0,
           "stdout": "STEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh tab.list\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh window.new\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh zoom\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh emulate.viewport\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh snap\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh snap\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh emulate.viewport\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh snap\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh snap\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh tab.close\n{\"status\": \"PASS\", \"receipt\": \"/mnt/storage12tb/oai-trial/visual-fixes/header-eval.json\", \"error\": null}\n",
           "stderr": "",
-          "duration_ms": 111136.971,
+          "duration_ms": 14010.154,
           "timed_out": false,
           "orphan_pids_after_teardown": [],
-          "trial_id": "7ca51a55a29e-c000-t00",
+          "trial_id": "88e2981c6897-c000-t00",
           "artifact_hashes": {
-            "/mnt/storage12tb/oai-trial/visual-fixes/header-eval.json": "sha256:7044d7b378ad526fd347eef97d5c44b9afa4fd72385451cd388e569c75bb65af"
+            "/mnt/storage12tb/oai-trial/visual-fixes/header-eval.json": "sha256:4a81aa40d73408ac901d4aca34c4074be08289dae245a05c727bea82f75a3d35"
           },
           "outcome": "PASS",
           "problems": []
         },
         {
           "exit_code": 0,
-          "stdout": "STEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh tab.list\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh window.new\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh zoom\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh emulate.viewport\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh snap\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh snap\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh emulate.viewport\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh snap\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh snap\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh tab.close\n{\"status\": \"PASS\", \"receipt\": \"/mnt/storage12tb/oai-trial/visual-fixes/header-eval.json\", \"error\": null}\n",
+          "stdout": "STEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh tab.list\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh window.new\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh zoom\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh emulate.viewport\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh snap\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh snap\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh emulate.viewport\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh snap\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh snap\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh tab.close\n{\"status\": \"PASS\", \"receipt\": \"/mnt/storage12tb/oai-trial/visual-fixes/header-eval.json\", \"error\": null}\n",
           "stderr": "",
-          "duration_ms": 134523.301,
+          "duration_ms": 22938.67,
           "timed_out": false,
           "orphan_pids_after_teardown": [],
-          "trial_id": "7ca51a55a29e-c000-t01",
+          "trial_id": "88e2981c6897-c000-t01",
           "artifact_hashes": {
-            "/mnt/storage12tb/oai-trial/visual-fixes/header-eval.json": "sha256:956b28a598c6b2277258806e7df2f7eafc3008cb0bda689c40561073b8fac5f3"
+            "/mnt/storage12tb/oai-trial/visual-fixes/header-eval.json": "sha256:dd209a3a60310b95314e1cff8764221479c130453f0663da0a9e12a17c833da4"
           },
           "outcome": "PASS",
           "problems": []
         },
         {
           "exit_code": 0,
-          "stdout": "STEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh tab.list\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh window.new\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh zoom\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh emulate.viewport\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh snap\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh snap\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh emulate.viewport\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh snap\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh snap\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh tab.close\n{\"status\": \"PASS\", \"receipt\": \"/mnt/storage12tb/oai-trial/visual-fixes/header-eval.json\", \"error\": null}\n",
+          "stdout": "STEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh tab.list\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh window.new\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh zoom\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh emulate.viewport\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh snap\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh snap\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh emulate.viewport\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh snap\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh js\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh snap\nSTEP /home/graham/workspace/experiments/agent-skills/skills/surf/run.sh tab.close\n{\"status\": \"PASS\", \"receipt\": \"/mnt/storage12tb/oai-trial/visual-fixes/header-eval.json\", \"error\": null}\n",
           "stderr": "",
-          "duration_ms": 132116.403,
+          "duration_ms": 23713.711,
           "timed_out": false,
           "orphan_pids_after_teardown": [],
-          "trial_id": "7ca51a55a29e-c000-t02",
+          "trial_id": "88e2981c6897-c000-t02",
           "artifact_hashes": {
-            "/mnt/storage12tb/oai-trial/visual-fixes/header-eval.json": "sha256:0fb68dd9a6fea599c4f98fd17831c6d453d42a9eafdd17acf8f4a611baea3145"
+            "/mnt/storage12tb/oai-trial/visual-fixes/header-eval.json": "sha256:f42d334328bd5112d5ba86ae9f9f2d00e2a959147cc7cd5053709bc40b2089d2"
           },
           "outcome": "PASS",
           "problems": []
@@ -114,7 +114,7 @@
       "flaky": false,
       "name": "real-oai-pptx-frame-paint-preserves-images",
       "type": "adversarial",
-      "case_id": "7ca51a55a29e-c001",
+      "case_id": "88e2981c6897-c001",
       "required": true,
       "outcome": "PASS",
       "problems": [],
@@ -139,16 +139,16 @@
       "passed_trials": 3,
       "total_trials": 3,
       "pass_rate": 1.0,
-      "avg_latency_ms": 4282.026,
+      "avg_latency_ms": 4308.753,
       "trials": [
         {
           "exit_code": 0,
           "stdout": "STEP /home/graham/workspace/experiments/agent-skills/skills/pitchdeck/run.sh build\n{\"status\": \"PASS\", \"receipt\": \"/mnt/storage12tb/oai-trial/visual-fixes/frame-eval.json\", \"error\": null}\n",
           "stderr": "",
-          "duration_ms": 4336.948,
+          "duration_ms": 4309.755,
           "timed_out": false,
           "orphan_pids_after_teardown": [],
-          "trial_id": "7ca51a55a29e-c001-t00",
+          "trial_id": "88e2981c6897-c001-t00",
           "artifact_hashes": {
             "/mnt/storage12tb/oai-trial/visual-fixes/frame-eval.json": "sha256:bdad9068e781416baa95f95b40b137081d44310b3db4a8345e1ab28a5f00abe0"
           },
@@ -159,10 +159,10 @@
           "exit_code": 0,
           "stdout": "STEP /home/graham/workspace/experiments/agent-skills/skills/pitchdeck/run.sh build\n{\"status\": \"PASS\", \"receipt\": \"/mnt/storage12tb/oai-trial/visual-fixes/frame-eval.json\", \"error\": null}\n",
           "stderr": "",
-          "duration_ms": 4316.05,
+          "duration_ms": 4344.393,
           "timed_out": false,
           "orphan_pids_after_teardown": [],
-          "trial_id": "7ca51a55a29e-c001-t01",
+          "trial_id": "88e2981c6897-c001-t01",
           "artifact_hashes": {
             "/mnt/storage12tb/oai-trial/visual-fixes/frame-eval.json": "sha256:bdad9068e781416baa95f95b40b137081d44310b3db4a8345e1ab28a5f00abe0"
           },
@@ -173,10 +173,10 @@
           "exit_code": 0,
           "stdout": "STEP /home/graham/workspace/experiments/agent-skills/skills/pitchdeck/run.sh build\n{\"status\": \"PASS\", \"receipt\": \"/mnt/storage12tb/oai-trial/visual-fixes/frame-eval.json\", \"error\": null}\n",
           "stderr": "",
-          "duration_ms": 4193.079,
+          "duration_ms": 4272.111,
           "timed_out": false,
           "orphan_pids_after_teardown": [],
-          "trial_id": "7ca51a55a29e-c001-t02",
+          "trial_id": "88e2981c6897-c001-t02",
           "artifact_hashes": {
             "/mnt/storage12tb/oai-trial/visual-fixes/frame-eval.json": "sha256:bdad9068e781416baa95f95b40b137081d44310b3db4a8345e1ab28a5f00abe0"
           },

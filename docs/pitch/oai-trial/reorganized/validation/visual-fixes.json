@@ -1,7 +1,7 @@
 {
   "schema": "oai_trial.visual_fix_handoff.v1",
-  "status": "SCOPED_CHECKS_PASS_SHARED_LANDING_PENDING",
-  "consumer_run_id": "7ca51a55a29e",
+  "status": "FIXES_LANDED_SCOPED_CHECKS_PASS",
+  "consumer_run_id": "88e2981c6897",
   "cases": {
     "PASS": 2,
     "FAIL": 0,
@@ -13,6 +13,35 @@
     "ui/src/layouts/Freeform.tsx": "099869dd3579228f60cbc78daf075fbbdbcefed3445e3bb0cac470241909c979",
     "src/pitchdeck/theme_style.py": "d1c667b7af10457cb4ead7cbe862a21ca837110055d3fd5882f5ce5f60f62cc6"
   },
-  "shared_landing": "Maintainer reports motion integration dependency; combined scoped landing pending.",
-  "human_visual_approval": false
+  "shared_landing": "Independently read back relevant remote blobs and matched current local files.",
+  "human_visual_approval": false,
+  "shared_source_ref": "21054950db08ebc298428198b4610ad35b8b446c",
+  "fixed_defects": [
+    "duplicate header-positioned title",
+    "legacy blue frame paint",
+    "narrow header texture containment"
+  ],
+  "validated_remote_files": [
+    {
+      "path": "skills/pitchdeck/fixtures/consumer_visuals.json",
+      "sha256": "650a8ce30fdc2c1950fd2ec659d4f0f9cd26df74744ff823a803ed49f42b311b"
+    },
+    {
+      "path": "skills/pitchdeck/scripts/eval_consumer_visuals.py",
+      "sha256": "3814ba87f24f48d1e792bdee7df36768796566579ca1245d4031890b2fb87a39"
+    },
+    {
+      "path": "skills/pitchdeck/src/pitchdeck/theme_style.py",
+      "sha256": "d1c667b7af10457cb4ead7cbe862a21ca837110055d3fd5882f5ce5f60f62cc6"
+    },
+    {
+      "path": "skills/pitchdeck/ui/src/layouts/Freeform.tsx",
+      "sha256": "099869dd3579228f60cbc78daf075fbbdbcefed3445e3bb0cac470241909c979"
+    },
+    {
+      "path": "skills/pitchdeck/ui/src/responsive.css",
+      "sha256": "d4a052527b5f928a13edf052e64e424c06e64511fa2320b9a10af40b1c288e36"
+    }
+  ],
+  "upstream_delivery_status": "DELIVERED_WITH_LIMITS"
 }
