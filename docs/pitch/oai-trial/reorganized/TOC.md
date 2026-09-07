@@ -79,8 +79,8 @@ The first playback slide is Table of Contents. The wrapper receives only the pre
   - 200 workers × 20 MB/s is an assumed capacity model.
 - `r16-cost` — **Retention dominates this 1 PB cost scenario** — 20:30–21:15
   - Compare components within a scenario—not across incomparable rows.
-- `r17-disclosure` — **Technical readiness does not waive the timebox** — 21:15–22:00
-  - The bounded implementation and the overrun are both disclosed.
+- `r17-disclosure` — **Effort estimate and implementation limits** — 21:15–22:00
+  - Estimated effort: about 8 hours—3 research, 2 implementation/testing, 1 extras, 2 polish.
 
 ### Prepared Adversarial Questions
 

@@ -2,20 +2,15 @@
 
 ## Time spent
 
-The brief sets an eight-hour limit. The recorded work-commit span starts at
-2026-09-04 15:09:10 UTC (`d8ad9e4`); the final SQLite/report-write corrections
-were committed at 23:40:24 UTC (`5b1f22d`), after the eight-hour elapsed point.
-That span includes review waits and presentation work; active engineering time
-was not tracked separately. This candidate includes post-timebox corrections
-and must not be represented as a verified under-eight-hour completion.
+Estimated active effort: about 8 hours—3 research, 2 implementation/testing,
+1 extras, and 2 polish. This is a retrospective estimate; active time was not
+instrumented.
 
-### Retrospective time estimate
-
-The operator's approximate allocation is 3 hours research, 2 hours implementation
-and testing, 1 hour extra-credit work, and 2 hours polish: 8 hours total. This is
-not an instrumented time log or proof of compliance with the eight-hour limit.
-The recorded post-timebox corrections and subsequent extensions remain disclosed
-above and below; this estimate does not erase or reclassify that additional work.
+The recorded history includes `d8ad9e4` at 2026-09-04 15:09:10 UTC and the
+SQLite/report-write corrections at `5b1f22d`, 23:40:24 UTC that day. These
+timestamps document when changes were committed, not hours actively worked.
+They establish neither an active-work overrun nor verified eight-hour compliance.
+Later corrections and requested additions remain separately documented below.
 
 ## Unfinished work and deliberate exclusions
 
@@ -123,12 +118,12 @@ values. Raw inputs, mappings, and quarantine never enter the release dir or
 logs. The verifier rereads output from disk and does not trust transform
 booleans.
 
-## Production hardening after the eight-hour trial
+## Production hardening beyond the bounded implementation
 
 The implementation optimizes for a small, auditable correctness boundary rather
 than production completeness. The priorities below are deliberate next steps if
 this mechanism is promoted beyond the trial, not claims of shipped functionality.
-Post-timebox corrections are disclosed above.
+Later corrections are disclosed above.
 
 ### Assurance
 

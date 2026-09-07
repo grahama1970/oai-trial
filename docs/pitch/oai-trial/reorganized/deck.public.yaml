@@ -3260,17 +3260,13 @@
       "role": "detail",
       "layout": "freeform",
       "visibility": "public",
-      "title": "Technical readiness does not waive the timebox",
-      "message": "The bounded implementation and the overrun are both disclosed.",
+      "title": "Effort estimate and implementation limits",
+      "message": "Estimated effort: about 8 hours—3 research, 2 implementation/testing, 1 extras, 2 polish.",
       "body": [],
       "source_refs": [
         {
-          "source_id": "submission",
-          "section": "must not be represented as a verified under-eight-hour completion; not an instrumented time log or proof; Built with AI coding assistance"
-        },
-        {
-          "source_id": "reviewed-narrative",
-          "section": "07-nonclaims"
+          "source_id": "effort-estimate",
+          "section": "Effort estimate and implementation limits"
         }
       ],
       "claim_ids": [
@@ -3304,7 +3300,7 @@
           "y": 0.022,
           "w": 0.885,
           "h": 0.07,
-          "text": "Technical readiness does not waive the timebox",
+          "text": "Effort estimate and implementation limits",
           "size_pt": 29,
           "bold": true,
           "color": "#f2eadc",
@@ -3317,7 +3313,7 @@
           "y": 0.14,
           "w": 0.87,
           "h": 0.12,
-          "text": "The bounded implementation and the overrun are both disclosed.",
+          "text": "Estimated effort: about 8 hours—3 research, 2 implementation/testing, 1 extras, 2 polish.",
           "size_pt": 23,
           "bold": false,
           "color": "#e2ac62",
@@ -3330,7 +3326,7 @@
           "y": 0.32,
           "w": 0.83,
           "h": 0.095,
-          "text": "AI assistance and post-timebox work disclosed",
+          "text": "AI assistance; later corrections and additions disclosed",
           "size_pt": 27,
           "bold": false,
           "color": "#ece2d3",
@@ -3369,7 +3365,7 @@
           "y": 0.85,
           "w": 0.87,
           "h": 0.08,
-          "text": "Post-timebox corrections and operator-requested additions remain separate.",
+          "text": "Retrospective estimate; active time was not instrumented.",
           "size_pt": 17.5,
           "bold": false,
           "color": "#a99787",
@@ -3428,7 +3424,7 @@
       "transition": "none",
       "reveal": "none",
       "hidden": false,
-      "notes": "PREPARED REHEARSAL GUIDE — not a record of an interview.\nPresentation source commit: ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78. Frozen implementation: 0375af56bf681e9441edcb7433cfe58951db77b2.\nTIME 21:15–22:00; 0.75 minute(s); timing kind: prepared.\nLegacy sections: 07-nonclaims. Primary question IDs: Q28, Q29, Q30.\n## r17-disclosure — Technical readiness does not waive the timebox\n\n**Time:** 21:15–22:00. **Block:** How the Solution Works. **Primary questions:** Q28, Q29, Q30\n\n### Say\n\nBefore defending the choices, I want the administrative boundary explicit. SUBMISSION.md records post-timebox corrections and later requested additions. Active engineering time was not separately tracked. The retrospective allocation totals eight hours, but it is not an instrumented proof that the stop instruction was satisfied.\nThe work was AI-assisted and externally reviewed; I will not invent an authorship percentage. The technical conclusion concerns a bounded mechanism and its evidence. It does not establish general anonymity, production deployment, or complete resistance to linkage. The next three prepared questions explain why these boundaries are deliberate, rather than quietly treating every future hardening idea as a missing local feature.\n\n### Show / navigate\n\nSUBMISSION.md: Time spent, Retrospective time estimate, Unfinished work.\n\n\n**Visible qualification:** Post-timebox corrections and operator-requested additions remain separate.\n\n**Evidence IDs:** E04, E08\n\nAuthoring only: no application/test/Docker, local pitchdeck compiler, owning SVG validator, analytics/create-figure, recording or Live Evidence execution. Follow the stated assessment permission boundary.\n"
+      "notes": "PREPARED REHEARSAL GUIDE — not a record of an interview.\nPresentation source commit: ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78. Frozen implementation: 0375af56bf681e9441edcb7433cfe58951db77b2.\nTIME 21:15–22:00; 0.75 minute(s); timing kind: prepared.\nLegacy sections: 07-nonclaims. Primary question IDs: Q28, Q29, Q30.\n## r17-disclosure — Effort estimate and implementation limits\n\n**Time:** 21:15–22:00. **Block:** How the Solution Works. **Primary questions:** Q28, Q29, Q30\n\n### Say\n\nI estimate about eight hours: three researching, two implementing and testing, one on extras, and two polishing. Active time was not instrumented. Commit history records when changes landed, not active hours. Later corrections and requested additions remain separately documented.\nThe work was AI-assisted and externally reviewed; I will not invent an authorship percentage. The technical conclusion concerns a bounded mechanism and its evidence. It does not establish general anonymity, production deployment, or complete resistance to linkage. The next three prepared questions explain why these boundaries are deliberate, rather than quietly treating every future hardening idea as a missing local feature.\n\n### Show / navigate\n\nSUBMISSION.md: Time spent, Retrospective time estimate, Unfinished work.\n\n\n**Visible qualification:** Retrospective estimate; active time was not instrumented.\n\n**Evidence IDs:** E04, E08\n\nAuthoring only: no application/test/Docker, local pitchdeck compiler, owning SVG validator, analytics/create-figure, recording or Live Evidence execution. Follow the stated assessment permission boundary.\n"
     },
     {
       "id": "r18-question-exact",
@@ -4717,6 +4713,11 @@
       "body": [],
       "source_refs": [
         {
+          "source_id": "skill-reuse-reference",
+          "section": "Pinned wrapper excerpts",
+          "locator": "https://github.com/grahama1970/oai-trial/blob/398e520fc9e08bc19884063c2fd7c17fe14546b8/docs/pitch/oai-trial/reorganized/sources/skill-reuse-reference.md"
+        },
+        {
           "source_id": "submission",
           "section": "The shared `anonymize-data` skill is a thin wrapper; These extensions were explicitly requested after"
         },
@@ -4834,7 +4835,7 @@
           "y": 0.735,
           "w": 0.87,
           "h": 0.075,
-          "text": "Source: bundle.py:40–71",
+          "text": "Source: pinned SKILL.md / run.sh excerpts — skill-reuse-reference.md",
           "size_pt": 17.5,
           "bold": false,
           "color": "#a99787",

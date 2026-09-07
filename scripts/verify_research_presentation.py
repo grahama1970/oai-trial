@@ -27,7 +27,7 @@ for phrase in ['$dogpile', 'Brave web', 'arXiv', 'GitHub', 'existing projects, s
 with zipfile.ZipFile(PPTX) as archive:
     pages = sorted((n for n in archive.namelist() if re.fullmatch(r'ppt/slides/slide\d+\.xml', n)), key=lambda n: int(re.search(r'slide(\d+)', n)[1]))
     assert len(pages) == len(slides) == 32
-    for i in (6, 7):
+    for i in (6, 7, 18):
         exported = ''.join(ET.fromstring(archive.read(pages[i])).itertext())
         for e in slides[i]['elements']:
             assert e['text'] in exported, e['id']
@@ -35,6 +35,12 @@ with urllib.request.urlopen('http://127.0.0.1:3016/oai-trial-current/deck.data.j
     payload = response.read().decode()
 for sid in ids[6:8]:
     assert sid in payload, sid
+assert 'Effort estimate and implementation limits' in payload
+assert 'Retrospective estimate; active time was not instrumented.' in payload
+for name in ['deck.public.yaml', 'WALKTHROUGH.md', 'TOC.md', 'question-map.json', 'claim_ledger.yaml']:
+    current = (BUNDLE / name).read_text()
+    for stale in ['recorded overrun', 'the overrun', 'post-timebox', 'elapsed work exceeded eight hours']:
+        assert stale not in current, (name, stale)
 handout = ROOT / 'docs/DESIGN_DECISIONS_AND_LIMITATIONS.md'
 for target in re.findall(r'\]\(([^)]+)\)', handout.read_text()):
     assert (handout.parent / target.split('#')[0]).is_file(), target

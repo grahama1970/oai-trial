@@ -13,9 +13,9 @@ There are **30 prepared slides totaling 30 minutes including navigation**, then 
 | Contents | 00:00–00:45 | [r01](WALKTHROUGH.md#r01-toc) |
 | Demo and results | 00:45–03:15 | [r02 action/result](WALKTHROUGH.md#r02-demo-result), [r03 historical metrics](WALKTHROUGH.md#r03-demo-observations) |
 | Reproduce and verify | 03:15–07:00 | [Docker](WALKTHROUGH.md#r04-docker), [mounted CLI](WALKTHROUGH.md#r05-mounted-cli), [readback evidence](WALKTHROUGH.md#r06-output-evidence) |
-| Core code and required cloud model | 07:00–21:00 | [pipeline](WALKTHROUGH.md#r07-pipeline-map) through [disclosure](WALKTHROUGH.md#r17-disclosure) |
-| Three prepared Question → Answer pairs | 21:00–24:00 | [exact policy](WALKTHROUGH.md#r18-question-exact), [shared verifier](WALKTHROUGH.md#r20-question-verifier), [scale](WALKTHROUGH.md#r22-question-scale) |
-| Extra Credit, last substantive block | 24:00–30:00 | [Security Evals](WALKTHROUGH.md#r24-security-evals), [lineage](WALKTHROUGH.md#r25-lineage), [wrapper](WALKTHROUGH.md#r26-wrapper), [aliases](WALKTHROUGH.md#r27-discovery), [path boundary](WALKTHROUGH.md#r28-canonical-path) |
+| Research/reuse, core code and cloud model | 07:00–22:00 | [pipeline](WALKTHROUGH.md#r07-pipeline-map) through [disclosure](WALKTHROUGH.md#r17-disclosure) |
+| Three prepared Question → Answer pairs | 22:00–25:00 | [exact policy](WALKTHROUGH.md#r18-question-exact), [shared verifier](WALKTHROUGH.md#r20-question-verifier), [scale](WALKTHROUGH.md#r22-question-scale) |
+| Extra Credit, last substantive block | 25:00–30:00 | [Security Evals](WALKTHROUGH.md#r24-security-evals), [lineage](WALKTHROUGH.md#r25-lineage), [wrapper](WALKTHROUGH.md#r26-wrapper), [aliases](WALKTHROUGH.md#r27-discovery), [path boundary](WALKTHROUGH.md#r28-canonical-path) |
 | Audience discussion | 30:00–45:00+ | [Discussion](WALKTHROUGH.md#r29-discussion), then [Thank you](WALKTHROUGH.md#r30-thank-you) |
 
 <a id="preflight"></a>

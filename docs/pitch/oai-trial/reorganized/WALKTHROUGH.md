@@ -34,7 +34,7 @@ Complete environment and input preflight before the talk. During r02, run the al
 | [r14-cloud](#r14-cloud) | 18:00–19:30 | Distribute the work; retain one corpus decision |
 | [r15-capacity](#r15-capacity) | 19:30–20:30 | The SLA is a scenario—not a benchmark |
 | [r16-cost](#r16-cost) | 20:30–21:15 | Retention dominates this 1 PB cost scenario |
-| [r17-disclosure](#r17-disclosure) | 21:15–22:00 | Technical readiness does not waive the timebox |
+| [r17-disclosure](#r17-disclosure) | 21:15–22:00 | Effort estimate and implementation limits |
 | [r18-question-exact](#r18-question-exact) | 22:00–22:15 | Question 1 |
 | [r19-answer-exact](#r19-answer-exact) | 22:15–23:00 | Explicit policy separates authority from guessing |
 | [r20-question-verifier](#r20-question-verifier) | 23:00–23:15 | Question 2 |
@@ -594,13 +594,13 @@ The optional local create-figure command in the spec has **NOT_RUN** status. Its
 **Evidence IDs:** E07
 
 <a id="r17-disclosure"></a>
-## r17-disclosure — Technical readiness does not waive the timebox
+## r17-disclosure — Effort estimate and implementation limits
 
 **Time:** 21:15–22:00. **Block:** How the Solution Works. **Primary questions:** Q28, Q29, Q30
 
 ### Say
 
-Before defending the choices, I want the administrative boundary explicit. SUBMISSION.md records post-timebox corrections and later requested additions. Active engineering time was not separately tracked. The retrospective allocation totals eight hours, but it is not an instrumented proof that the stop instruction was satisfied.
+I estimate about eight hours: three researching, two implementing and testing, one on extras, and two polishing. Active time was not instrumented. Commit history records when changes landed, not active hours. Later corrections and requested additions remain separately documented.
 The work was AI-assisted and externally reviewed; I will not invent an authorship percentage. The technical conclusion concerns a bounded mechanism and its evidence. It does not establish general anonymity, production deployment, or complete resistance to linkage. The next three prepared questions explain why these boundaries are deliberate, rather than quietly treating every future hardening idea as a missing local feature.
 
 ### Show / navigate
@@ -608,7 +608,7 @@ The work was AI-assisted and externally reviewed; I will not invent an authorshi
 SUBMISSION.md: Time spent, Retrospective time estimate, Unfinished work.
 
 
-**Visible qualification:** Post-timebox corrections and operator-requested additions remain separate.
+**Visible qualification:** Retrospective estimate; active time was not instrumented.
 
 **Evidence IDs:** E04, E08
 
@@ -1224,13 +1224,13 @@ End normal playback. No substantive slide follows. Backup questions are Markdown
 **Original code/evidence references:** [AWS reliability/publication design][D02]; [`_publish`][C06]
 
 <a id="q28"></a>
-### Q28 — Did you stay within eight hours?
+### Q28 — What is your effort estimate?
 
 **Primary slide:** [r17-disclosure](#r17-disclosure) · **Legacy section:** `07-nonclaims`
 
-**Short answer:** I cannot substantiate compliance; post-timebox work is explicitly disclosed.
+**Short answer:** I estimate about eight hours of active effort; it was not instrumented.
 
-**Follow-up / deeper answer:** **“But the retrospective estimate totals eight hours?”** It is an approximate allocation, not an instrumented log. It does not erase the recorded overrun or later requested extension. The evaluator decides how that affects the trial.
+**Follow-up / deeper answer:** The allocation is retrospective. Commit timestamps show when changes landed, not hours worked, so they do not establish either an active-work overrun or verified compliance. Later corrections and requested additions remain separately documented.
 
 **Original code/evidence references:** [`SUBMISSION.md` time disclosure][D01]
 

@@ -155,6 +155,14 @@
       "visibility": "public",
       "role": "supporting",
       "required": true
+    },
+    {
+      "id": "effort-estimate",
+      "title": "Current estimated-effort clarification",
+      "path": "sources/effort-estimate.md",
+      "visibility": "public",
+      "role": "supporting",
+      "required": true
     }
   ],
   "policy": {
@@ -177,7 +185,8 @@
       "skill-reuse-reference",
       "operator-update",
       "project-state-context",
-      "research-workflow"
+      "research-workflow",
+      "effort-estimate"
     ],
     "forbidden_unqualified_claims": [
       "formally anonymous",

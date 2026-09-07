@@ -10,8 +10,8 @@
     },
     {
       "path": "INTERVIEW_GUIDE.md",
-      "bytes": 11188,
-      "sha256": "187c7488041f6a4d6a43b955e87154637796114ddefba8bc11372cdc4768e810"
+      "bytes": 11195,
+      "sha256": "ca54113fbdc5345a3d09e5dba0e2d4b4d8e28edfa64e21de48a46103ab514cb9"
     },
     {
       "path": "README.md",
@@ -20,13 +20,13 @@
     },
     {
       "path": "TOC.md",
-      "bytes": 6675,
-      "sha256": "cabc7d8f6bf222112c773f7698949abb07eef20304176712480b1cef7479e00e"
+      "bytes": 6699,
+      "sha256": "c3a334951ad59ee245cac28aac2cdda1c9f9a5605ec9798b7d602844d66ccffa"
     },
     {
       "path": "WALKTHROUGH.md",
-      "bytes": 103543,
-      "sha256": "afe1f490b8aa61919947c0a81545eaeed8f79f07fa5258d00672b8f47934b6b4"
+      "bytes": 103466,
+      "sha256": "80c26c2b1e3087f345cbe04a60570efc57a3456e5d6499d30fa0bb81dc1d20d3"
     },
     {
       "path": "asset_manifest.yaml",
@@ -235,8 +235,8 @@
     },
     {
       "path": "claim_ledger.yaml",
-      "bytes": 52343,
-      "sha256": "c58042e3d6953f3b3e3e45419949122c4e7136f02562d7069ed98ac047083b60"
+      "bytes": 52542,
+      "sha256": "dccb2629971d7ec1c17b5a9f3b98e4c1d0d355cf158c111f5698507ee3c42523"
     },
     {
       "path": "debugger.json",
@@ -245,13 +245,13 @@
     },
     {
       "path": "deck.public.yaml",
-      "bytes": 228060,
-      "sha256": "9ed689c5f3a99bbd1550b5656d531022ff1f93ad5024de74b06e7efd32ea1d87"
+      "bytes": 228175,
+      "sha256": "a898ec62430f874e615b220c20d464aee677dead4eecda1569b7042cb415a173"
     },
     {
       "path": "question-map.json",
       "bytes": 34165,
-      "sha256": "6ba9162f7f02c6b36e27dd097a99c5de4f3938d6c5d4460bb20faec8796b3066"
+      "sha256": "cce752479bd0d138f317d793b36cbe070eb2da50db03524b4791b3f8cc657d84"
     },
     {
       "path": "reference/README.md",
@@ -285,13 +285,13 @@
     },
     {
       "path": "slide-map.json",
-      "bytes": 42827,
-      "sha256": "e70a5927051717796d2b544d87b5ee7690dc77335e69dbb2694e2b0d0b038964"
+      "bytes": 43262,
+      "sha256": "a3ad781b003de1317bcf5fabe8dd0f060ec3d9ea930b1dd4b00e9a8aaaebf479"
     },
     {
       "path": "source_manifest.yaml",
-      "bytes": 5326,
-      "sha256": "246bfd51b34399edb478172e50ed01446cc4e1ba812d407aee3f4c5ad1d55459"
+      "bytes": 5577,
+      "sha256": "730160bdf4d7ee268702ad5a3ab1954c8a70ab946cc14d4d9d862b2b00ff2042"
     },
     {
       "path": "sources/BATTLE_OBJECTIVE.md",
@@ -359,6 +359,11 @@
       "sha256": "00a4823b9bc1db0e54e8b3ad8bed398b1fcb2a6a16f569734af9bccc119648af"
     },
     {
+      "path": "sources/effort-estimate.md",
+      "bytes": 814,
+      "sha256": "1fbc4aeb72d39766ecaa184ccbc669422e66f16b2e211bdc7bb9c0384467bf02"
+    },
+    {
       "path": "sources/live-demo-readback.json",
       "bytes": 1319,
       "sha256": "6271b34301ec26ad01c05760728ea621f6a126ce8e1c057a80c4eef20624fc45"
@@ -395,8 +400,8 @@
     },
     {
       "path": "sources/research-workflow.md",
-      "bytes": 4357,
-      "sha256": "722f53db49a8d9f19d33369f978b7cc17a1e854a916d552782055f2f3d18645b"
+      "bytes": 4368,
+      "sha256": "0260b50b810883cd299840df5a53efede22a7da92a1e7b7779eed71d3327915b"
     },
     {
       "path": "sources/reviewed-WALKTHROUGH.md",
