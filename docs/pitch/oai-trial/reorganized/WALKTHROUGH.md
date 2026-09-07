@@ -44,7 +44,7 @@ Complete environment and input preflight before the talk. During r02, run the al
 | [r20-question-verifier](#r20-question-verifier) | 23:00–23:15 | Question 2 |
 | [r21-answer-verifier](#r21-answer-verifier) | 23:15–24:00 | Fresh reread; shared replacement primitives |
 | [r22-question-scale](#r22-question-scale) | 24:00–24:15 | Question 3 |
-| [r23-answer-scale](#r23-answer-scale) | 24:15–25:00 | The model exposes assumptions; it does not validate them |
+| [r23-answer-scale](#r23-answer-scale) | 24:15–25:00 | A model is not a measured result |
 | [r24-security-evals](#r24-security-evals) | 25:00–26:15 | Security evals test different failure surfaces |
 | [r25-lineage](#r25-lineage) | 26:15–27:00 | The retained Judge result is fixture-backed |
 | [r26-wrapper](#r26-wrapper) | 27:00–28:00 | The skill delegates; it does not fork the engine |
@@ -703,7 +703,7 @@ The third question is whether the cloud slide is measured engineering or just mu
 **Evidence IDs:** E07
 
 <a id="r23-answer-scale"></a>
-## r23-answer-scale — The model exposes assumptions; it does not validate them
+## r23-answer-scale — A model is not a measured result
 
 **Time:** 24:15–25:00. **Block:** Prepared Adversarial Questions. **Primary questions:** Q26
 

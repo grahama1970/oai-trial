@@ -35,13 +35,13 @@
     },
     {
       "path": "TOC.md",
-      "bytes": 6714,
-      "sha256": "d1a7d6501578f3eb98996ee26f988f3186d56945e64eb847a81c378351099707"
+      "bytes": 6690,
+      "sha256": "413fad9fa190e7c9a0e8e9671bead72b05f210c4c1f64c8f927f928e8f52e733"
     },
     {
       "path": "WALKTHROUGH.md",
-      "bytes": 104880,
-      "sha256": "39d5ae933814f7a3d11571f18ca3fa3cceb5af25c0541efb887ffe765868140b"
+      "bytes": 104832,
+      "sha256": "b21a9ccd0c68492b665f6960b00fb2afea25b36f58d91e0e68e610859018d172"
     },
     {
       "path": "asset_manifest.yaml",
@@ -305,8 +305,8 @@
     },
     {
       "path": "deck.document.json",
-      "bytes": 421213,
-      "sha256": "f8610d716b12d5ecd7eb1924a5f68f6216c9ebf10da7e9e7b710699edb0903d1"
+      "bytes": 421568,
+      "sha256": "db0e453a098353e219e016ddc1badbf7ccf586b2f314dd080aa7d04aeda2543b"
     },
     {
       "path": "deck.public.yaml",

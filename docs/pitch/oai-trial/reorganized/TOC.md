@@ -94,7 +94,7 @@ The first playback slide is Table of Contents. The wrapper receives only the pre
   - Fixture readback adds a separate, bounded oracle.
 - `r22-question-scale` — **Question 3** — 24:00–24:15
   - What changes at petabyte scale—and what does the model prove?
-- `r23-answer-scale` — **The model exposes assumptions; it does not validate them** — 24:15–25:00
+- `r23-answer-scale` — **A model is not a measured result** — 24:15–25:00
   - Distribution must preserve identity and release semantics.
 
 ### Extra Credit
