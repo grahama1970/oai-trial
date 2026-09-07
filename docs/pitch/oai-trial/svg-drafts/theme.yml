@@ -1,0 +1,75 @@
+schema_version: 1
+name: oai-proof-boundaries
+provenance:
+  repository: disler/fixing-smartass-opus-5
+  commit: 5a349e87201c1987f22191fbac4ca772822aa352
+  license: MIT
+canvas:
+  width: 1408
+  height: 387
+  view_box:
+  - 0
+  - 0
+  - 1408
+  - 387
+  background: '#0c0908'
+  radius: 0
+fonts:
+  display:
+  - Arial
+  - sans-serif
+  mono:
+  - JetBrains Mono
+  - ui-monospace
+  - SF Mono
+  - Menlo
+  - Consolas
+  - monospace
+palette:
+  cyan: '#e2ac62'
+  green: '#93a289'
+  amber: '#a99787'
+  red: '#a99787'
+  orange: '#e2ac62'
+  white: '#ece2d3'
+  dark_text: '#0c0908'
+  deep_panel: '#181211'
+opacity:
+  panel_fill: 0.78
+  soft_panel_accent: 0.1
+  secondary_text: 0.55
+  secondary_border: 0.2
+  halo_peak: 0.35
+strokes:
+  thin: 1
+  normal: 2
+  emphasis: 5
+  icon: 6
+  linecap: round
+  linejoin: round
+shadows:
+  text: none
+  strong: none
+radii:
+  canvas: 24
+  outer_card: 24
+  card: 18
+  chip: 14
+  small: 10
+  pill: 35
+typography:
+  title_size: 28
+  heading_size: 28
+  body_size: 25
+  supporting_size: 23
+  caption_size: 25
+  title_tracking: 0
+  heading_tracking: 0
+  caption_tracking: 0
+animation:
+  ambient_cycle_ms: 3000
+  narrative_cycle_ms: 12000
+  hero_cycle_ms: 14000
+  enter_easing: cubic-bezier(.33,1,.68,1)
+  morph_easing: cubic-bezier(.65,0,.35,1)
+  pulse_easing: ease-in-out

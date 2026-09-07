@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1408 387" width="1408" height="387" role="img" aria-labelledby="rsa-title rsa-desc">
+  <title id="rsa-title">READY has a bounded meaning</title>
+  <desc id="rsa-desc">READY records policy-bounded checks and report-last publication; it does not establish broader privacy properties.</desc>
+  <style>.rsa-sans{font-family:Arial,sans-serif}.rsa-mono{font-family:'JetBrains Mono',ui-monospace,'SF Mono',Menlo,Consolas,monospace}.rsa-shadow{filter:none}.rsa-shadow-strong{filter:none}.rsa-target{transform-box:fill-box;transform-origin:center}</style>
+  <rect width="1408" height="387" rx="0.0" fill="#0c0908"/>
+  <g id="panel-0" data-component="panel-0" data-target="panel-0" class="rsa-target">
+    <rect x="35.2" y="27.090000000000003" width="654.7199999999999" height="290.25" rx="10.0" fill="#181211" stroke="#e2ac62" stroke-width="2.0"/>
+    <text x="362.55999999999995" y="73.53" class="rsa-sans" font-size="28.0" fill="#e2ac62" text-anchor="middle" dominant-baseline="central" font-weight="700">READY checks</text>
+    <text x="362.55999999999995" y="143.5528125" class="rsa-sans" font-size="25.0" fill="#ece2d3" text-anchor="middle" dominant-baseline="central" font-weight="400">Declared literals</text>
+    <text x="362.55999999999995" y="190.7184375" class="rsa-sans" font-size="25.0" fill="#ece2d3" text-anchor="middle" dominant-baseline="central" font-weight="400">Identity consistency</text>
+    <text x="362.55999999999995" y="237.8840625" class="rsa-sans" font-size="25.0" fill="#ece2d3" text-anchor="middle" dominant-baseline="central" font-weight="400">Typed locations</text>
+    <text x="362.55999999999995" y="285.0496875" class="rsa-sans" font-size="25.0" fill="#ece2d3" text-anchor="middle" dominant-baseline="central" font-weight="400">Report-last marker</text>
+  </g>
+  <g id="panel-1" data-component="panel-1" data-target="panel-1" class="rsa-target">
+    <rect x="718.0799999999999" y="27.090000000000003" width="654.7199999999999" height="290.25" rx="10.0" fill="#181211" stroke="#a99787" stroke-width="2.0"/>
+    <text x="1045.4399999999998" y="73.53" class="rsa-sans" font-size="28.0" fill="#a99787" text-anchor="middle" dominant-baseline="central" font-weight="700">Not established</text>
+    <text x="1045.4399999999998" y="143.5528125" class="rsa-sans" font-size="25.0" fill="#ece2d3" text-anchor="middle" dominant-baseline="central" font-weight="400">Policy completeness</text>
+    <text x="1045.4399999999998" y="190.7184375" class="rsa-sans" font-size="25.0" fill="#ece2d3" text-anchor="middle" dominant-baseline="central" font-weight="400">Real-world identity truth</text>
+    <text x="1045.4399999999998" y="237.8840625" class="rsa-sans" font-size="25.0" fill="#ece2d3" text-anchor="middle" dominant-baseline="central" font-weight="400">Contextual linkage resistance</text>
+    <text x="1045.4399999999998" y="285.0496875" class="rsa-sans" font-size="25.0" fill="#ece2d3" text-anchor="middle" dominant-baseline="central" font-weight="400">Formal anonymity</text>
+  </g>
+  <text x="704.0" y="356.04" class="rsa-sans" font-size="25.0" fill="#ece2d3" text-anchor="middle" dominant-baseline="central">Policy conformance is not a privacy guarantee.</text>
+</svg>

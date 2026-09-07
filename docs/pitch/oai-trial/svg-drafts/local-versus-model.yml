@@ -1,0 +1,23 @@
+schema_version: 1
+theme: theme.yml
+template: comparison-panels
+metadata:
+  title: Local evidence is not cloud evidence
+  description: Separate exercised Docker and wrapper paths support local claims; cloud
+    capacity, distribution, keys and costs remain modeled or designed.
+columns:
+- heading: Exercised locally
+  accent: green
+  items:
+  - Offline Docker runs
+  - Separate wrapper run
+  - Conflict-policy refusal
+  - Independent artifact readback
+- heading: Modeled / designed
+  accent: amber
+  items:
+  - Worker pool + partitioning
+  - KMS / HMAC
+  - Shared allocation plan
+  - TB/PB capacity + costs
+caption: Intended semantics persist; execution architecture differs.

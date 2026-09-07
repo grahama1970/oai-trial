@@ -1,0 +1,24 @@
+schema_version: 1
+theme: theme.yml
+template: comparison-panels
+metadata:
+  title: Different checks, different independence
+  description: Transformer and runtime verifier share matcher and allocator; the separate
+    fixture readback does not import the runtime transformer or verifier.
+columns:
+- heading: Transformer
+  accent: amber
+  items:
+  - Matcher + allocator
+  - Format adapters
+- heading: Runtime verifier
+  accent: cyan
+  items:
+  - Location + type checks
+  - Same matcher/allocator
+- heading: Fixture readback
+  accent: green
+  items:
+  - Known-truth format reads
+  - No runtime imports
+caption: Fresh reads do not eliminate shared-code risk.

@@ -1,0 +1,43 @@
+{
+  "canvas": 188.6625,
+  "origin": 119.97,
+  "tolerance": 0.01,
+  "scope": "Uniform body-label rows inside the panels; caption and headings excluded from this row band.",
+  "rows": [
+    {
+      "name": "body-0",
+      "y": 131.0528125,
+      "h": 25
+    },
+    {
+      "name": "body-1",
+      "y": 178.2184375,
+      "h": 25
+    },
+    {
+      "name": "body-2",
+      "y": 225.3840625,
+      "h": 25
+    },
+    {
+      "name": "body-3",
+      "y": 272.5496875,
+      "h": 25
+    }
+  ],
+  "columns": [
+    {
+      "name": "panels",
+      "items": [
+        {
+          "x": 35.2,
+          "w": 654.7199999999999
+        },
+        {
+          "x": 718.0799999999999,
+          "w": 654.7199999999999
+        }
+      ]
+    }
+  ]
+}

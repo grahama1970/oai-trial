@@ -1,0 +1,23 @@
+schema_version: 1
+theme: theme.yml
+template: comparison-panels
+metadata:
+  title: READY has a bounded meaning
+  description: READY records policy-bounded checks and report-last publication; it
+    does not establish broader privacy properties.
+columns:
+- heading: READY checks
+  accent: cyan
+  items:
+  - Declared literals
+  - Identity consistency
+  - Typed locations
+  - Report-last marker
+- heading: Not established
+  accent: amber
+  items:
+  - Policy completeness
+  - Real-world identity truth
+  - Contextual linkage resistance
+  - Formal anonymity
+caption: Policy conformance is not a privacy guarantee.
