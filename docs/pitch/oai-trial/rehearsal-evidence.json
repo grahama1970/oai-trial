@@ -1,0 +1,192 @@
+{
+  "source_commit": "fbd9aa92b6dba38b3438d87329f81ff48fa19bcf",
+  "runtime_baseline": "0375af56bf681e9441edcb7433cfe58951db77b2",
+  "image_tag": "anonymization-trial:interview-fbd9aa92",
+  "image_id": "sha256:5fbb33f9bc45bf006a246d82f6d48fc44a5857e3c2cd1704824011baec9fb19f",
+  "wrapper_sha256": "b53a393e285ea3e853234c842a8a82a5da33374b19ca344e3f704e68409a0191",
+  "proof_boundary": "Live Docker demo/mounted run with network disabled; separate local CLI skill-wrapper run and verify. Synthetic four-format fixture; independent stdlib/jsonschema readback. No discovery, production scale, visual approval or live adaptive attack campaign.",
+  "commands": [
+    {
+      "name": "source-version",
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.002,
+      "stdout": "fbd9aa92b6dba38b3438d87329f81ff48fa19bcf\n",
+      "stderr": ""
+    },
+    {
+      "name": "runtime-baseline-diff",
+      "argv": [
+        "git",
+        "diff",
+        "--exit-code",
+        "0375af56bf681e9441edcb7433cfe58951db77b2",
+        "--",
+        "src/anonymization_trial",
+        "Dockerfile"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.002,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "name": "docker-build",
+      "argv": [
+        "docker",
+        "build",
+        "-t",
+        "anonymization-trial:interview-fbd9aa92",
+        "."
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 5.931,
+      "stdout": "",
+      "stderr": "#0 building with \"default\" instance using docker driver\n\n#1 [internal] load build definition from Dockerfile\n#1 transferring dockerfile: 1.34kB done\n#1 DONE 0.0s\n\n#2 [internal] load metadata for docker.io/library/python:3.12-slim\n#2 DONE 0.0s\n\n#3 [internal] load .dockerignore\n#3 transferring context: 165B done\n#3 DONE 0.0s\n\n#4 [1/6] FROM docker.io/library/python:3.12-slim\n#4 DONE 0.0s\n\n#5 [internal] load build context\n#5 transferring context: 78.71kB done\n#5 DONE 0.0s\n\n#6 [2/6] WORKDIR /trial\n#6 CACHED\n\n#7 [3/6] COPY pyproject.toml README.md ./\n#7 CACHED\n\n#8 [4/6] COPY src ./src\n#8 DONE 0.0s\n\n#9 [5/6] COPY fixtures ./fixtures\n#9 DONE 0.0s\n\n#10 [6/6] RUN if [ \"0\" = \"1\" ]; then pip install '.[discovery]';     elif [ \"0\" = \"0\" ]; then pip install .;     else echo 'INCLUDE_DISCOVERY must be 0 or 1' >&2; exit 2; fi\n#10 1.467 Processing /trial\n#10 1.469   Installing build dependencies: started\n#10 3.585   Installing build dependencies: finished with status 'done'\n#10 3.586   Getting requirements to build wheel: started\n#10 4.146   Getting requirements to build wheel: finished with status 'done'\n#10 4.147   Preparing metadata (pyproject.toml): started\n#10 4.630   Preparing metadata (pyproject.toml): finished with status 'done'\n#10 4.635 Building wheels for collected packages: cloud-data-anonymization-trial\n#10 4.636   Building wheel for cloud-data-anonymization-trial (pyproject.toml): started\n#10 5.166   Building wheel for cloud-data-anonymization-trial (pyproject.toml): finished with status 'done'\n#10 5.167   Created wheel for cloud-data-anonymization-trial: filename=cloud_data_anonymization_trial-0.1.0-py3-none-any.whl size=40767 sha256=fc472244aa2cf7ad20eda5c675d1ee24ecb15d57908af3523553b2184a853917\n#10 5.167   Stored in directory: /tmp/pip-ephem-wheel-cache-l66mb0az/wheels/3a/08/58/ccdae46de1882139fa70cd29a4484989c0956c359cb8717ef2\n#10 5.170 Successfully built cloud-data-anonymization-trial\n#10 5.174 Installing collected packages: cloud-data-anonymization-trial\n#10 5.204 Successfully installed cloud-data-anonymization-trial-0.1.0\n#10 5.204 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.\n#10 5.388 \n#10 5.388 [notice] A new release of pip is available: 25.0.1 -> 26.2.1\n#10 5.388 [notice] To update, run: pip install --upgrade pip\n#10 DONE 5.5s\n\n#11 exporting to image\n#11 exporting layers 0.0s done\n#11 writing image sha256:5fbb33f9bc45bf006a246d82f6d48fc44a5857e3c2cd1704824011baec9fb19f done\n#11 naming to docker.io/library/anonymization-trial:interview-fbd9aa92 done\n#11 DONE 0.0s\n"
+    },
+    {
+      "name": "docker-image-id",
+      "argv": [
+        "docker",
+        "image",
+        "inspect",
+        "anonymization-trial:interview-fbd9aa92",
+        "--format",
+        "{{.Id}}"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.019,
+      "stdout": "sha256:5fbb33f9bc45bf006a246d82f6d48fc44a5857e3c2cd1704824011baec9fb19f\n",
+      "stderr": ""
+    },
+    {
+      "name": "docker-demo-offline",
+      "argv": [
+        "docker",
+        "run",
+        "--rm",
+        "--network=none",
+        "anonymization-trial:interview-fbd9aa92"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 1.487,
+      "stdout": "{\"demo\": \"success\", \"runs\": [{\"bytes_per_second\": 1274025.5, \"bytes_read\": 68310, \"elapsed_seconds\": 0.053617, \"files_processed\": 4, \"logical_records\": 100, \"peak_memory_mb\": 26.71, \"records_per_second\": 7497.56, \"records_processed\": 402, \"verification_passed\": true}, {\"bytes_per_second\": 1147404.02, \"bytes_read\": 509366, \"elapsed_seconds\": 0.443929, \"files_processed\": 4, \"logical_records\": 1000, \"peak_memory_mb\": 29.68, \"records_per_second\": 9014.95, \"records_processed\": 4002, \"verification_passed\": true}]}\n",
+      "stderr": ""
+    },
+    {
+      "name": "docker-mounted-offline",
+      "argv": [
+        "docker",
+        "run",
+        "--rm",
+        "--network=none",
+        "-v",
+        "/mnt/storage12tb/oai-trial/interview-rehearsals/run-20260907T140203Z/input:/trial/input:ro",
+        "-v",
+        "/mnt/storage12tb/oai-trial/interview-rehearsals/run-20260907T140203Z/docker-output:/trial/output",
+        "anonymization-trial:interview-fbd9aa92",
+        "run"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.691,
+      "stdout": "{\"algorithm_version\": \"pseudonym-v1\", \"bytes_read\": 20724, \"bytes_written\": 20913, \"corpus_manifest_sha256\": \"15e98e6b6c85720a9e6a88f8b85a3239ac577a4392e89160b10bf7ed0a49414c\", \"does_not_establish\": [\"discovery_of_unlisted_sensitive_data\", \"resistance_to_all_external_linkage\", \"quasi_identifier_anonymity\", \"formal_anonymity_or_differential_privacy\"], \"elapsed_seconds\": 0.17267, \"files_processed\": 4, \"key_mode\": \"public-deterministic-trial-namespace\", \"policy_sha256\": \"c30857d09bc5c9affdb9b519eb6c034e8dadc6512a849d37a5d0e3817933c097\", \"records_processed\": 12, \"replacements_applied\": 12, \"report_schema\": \"anon.run_report.v1\", \"run_id\": \"b325927c0685f9f263b8b4ea6ea51cb8dfb23087f6f5bef48d1e54dd08113e7c\", \"scope_id\": \"trial-v1\", \"source_manifest_sha256\": \"b2f5664eeb43dac9ecf9dc14710022214502ae88ddd8b9e957c661d2af59df9b\", \"status\": \"ready\", \"verification_passed\": true, \"verification_sha256\": \"15e98e6b6c85720a9e6a88f8b85a3239ac577a4392e89160b10bf7ed0a49414c\"}\n",
+      "stderr": ""
+    },
+    {
+      "name": "skill-wrapper-local-cli",
+      "argv": [
+        "/home/graham/workspace/experiments/agent-skills/skills/anonymize-data/run.sh",
+        "run",
+        "--input",
+        "/mnt/storage12tb/oai-trial/interview-rehearsals/run-20260907T140203Z/input",
+        "--output",
+        "/mnt/storage12tb/oai-trial/interview-rehearsals/run-20260907T140203Z/wrapper-output"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.34,
+      "stdout": "{\"algorithm_version\": \"pseudonym-v1\", \"bytes_read\": 20724, \"bytes_written\": 20913, \"corpus_manifest_sha256\": \"c51bfb4998a7b3e3a9f58c56bb6ac57363b9cee7dfee2722cdcd575871574238\", \"does_not_establish\": [\"discovery_of_unlisted_sensitive_data\", \"resistance_to_all_external_linkage\", \"quasi_identifier_anonymity\", \"formal_anonymity_or_differential_privacy\"], \"elapsed_seconds\": 0.138267, \"files_processed\": 4, \"key_mode\": \"public-deterministic-trial-namespace\", \"policy_sha256\": \"c30857d09bc5c9affdb9b519eb6c034e8dadc6512a849d37a5d0e3817933c097\", \"records_processed\": 12, \"replacements_applied\": 12, \"report_schema\": \"anon.run_report.v1\", \"run_id\": \"517ffea3559c9b70089076c041aa2b6b5aa77f85c5b5103df5244a2b54798a49\", \"scope_id\": \"trial-v1\", \"source_manifest_sha256\": \"b2f5664eeb43dac9ecf9dc14710022214502ae88ddd8b9e957c661d2af59df9b\", \"status\": \"ready\", \"verification_passed\": true, \"verification_sha256\": \"c51bfb4998a7b3e3a9f58c56bb6ac57363b9cee7dfee2722cdcd575871574238\"}\n",
+      "stderr": ""
+    },
+    {
+      "name": "skill-wrapper-verify",
+      "argv": [
+        "/home/graham/workspace/experiments/agent-skills/skills/anonymize-data/run.sh",
+        "verify",
+        "--input",
+        "/mnt/storage12tb/oai-trial/interview-rehearsals/run-20260907T140203Z/input",
+        "--output",
+        "/mnt/storage12tb/oai-trial/interview-rehearsals/run-20260907T140203Z/wrapper-output"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.123,
+      "stdout": "{\"output\": \"/mnt/storage12tb/oai-trial/interview-rehearsals/run-20260907T140203Z/wrapper-output\", \"verify\": \"PASS\"}\n",
+      "stderr": ""
+    },
+    {
+      "name": "docker-expected-rejection",
+      "argv": [
+        "docker",
+        "run",
+        "--rm",
+        "--network=none",
+        "-v",
+        "/mnt/storage12tb/oai-trial/interview-rehearsals/run-20260907T140203Z/rejected-input:/trial/input:ro",
+        "-v",
+        "/mnt/storage12tb/oai-trial/interview-rehearsals/run-20260907T140203Z/docker-rejected:/trial/output",
+        "anonymization-trial:interview-fbd9aa92",
+        "run"
+      ],
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "run failed: protected_sensitive_overlap\n"
+    },
+    {
+      "name": "wrapper-expected-rejection",
+      "argv": [
+        "/home/graham/workspace/experiments/agent-skills/skills/anonymize-data/run.sh",
+        "run",
+        "--input",
+        "/mnt/storage12tb/oai-trial/interview-rehearsals/run-20260907T140203Z/rejected-input",
+        "--output",
+        "/mnt/storage12tb/oai-trial/interview-rehearsals/run-20260907T140203Z/wrapper-rejected"
+      ],
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "run failed: protected_sensitive_overlap\n"
+    }
+  ],
+  "readback": {
+    "docker-output": {
+      "formats": [
+        "people.csv",
+        "people.json",
+        "people.sqlite",
+        "people.txt"
+      ],
+      "corpus_sha256": "15e98e6b6c85720a9e6a88f8b85a3239ac577a4392e89160b10bf7ed0a49414c",
+      "report_sha256": "7d5fba7a62537071e71c4526b01ebf3512df014c43fd7b409223b216b5516151",
+      "schema_validated": true
+    },
+    "wrapper-output": {
+      "formats": [
+        "people.csv",
+        "people.json",
+        "people.sqlite",
+        "people.txt"
+      ],
+      "corpus_sha256": "c51bfb4998a7b3e3a9f58c56bb6ac57363b9cee7dfee2722cdcd575871574238",
+      "report_sha256": "e66917f21af2b152dafbc97ab2660b68ce564caa1d35e0a670eef802032024bb",
+      "schema_validated": true
+    },
+    "matching_logical_outputs": true,
+    "rejections_no_ready_marker": true,
+    "rejections_empty_directories": true,
+    "rejection_raw_name_absent": true,
+    "current_source_matches_both_reported_manifests": true
+  },
+  "comparison_note": "Independent logical/schema/type readback passed on each output. CSV/JSON/TXT bytes match. SQLite bytes differ; logical SQL dumps match. Docker sqlite3 is 3.46.1; local sqlite3 is 3.45.1, also reflected in file-header writer versions. Initial harness incorrectly required cross-environment byte identity; corrected to logical contract without runtime changes or repeating transforms."
+}
