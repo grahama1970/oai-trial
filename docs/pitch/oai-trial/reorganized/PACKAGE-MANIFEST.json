@@ -20,13 +20,13 @@
     },
     {
       "path": "TOC.md",
-      "bytes": 6729,
-      "sha256": "5caa07834c7ed2582a60d0af15fe038679b76f963eca9f58b7441a8992d01399"
+      "bytes": 6727,
+      "sha256": "2e774261d70a1c655127a5a81c1d6bab409aa70074cdde8d4649bb0c493b3ec1"
     },
     {
       "path": "WALKTHROUGH.md",
-      "bytes": 103443,
-      "sha256": "1c1fad76aef45a1055dd38d9ef96dd9551a3b47ebcd2b6e91fb50fd3964a4781"
+      "bytes": 103428,
+      "sha256": "001ed4be798173ed31486a479436babbefa66e97d6177a836bb3723f2c737047"
     },
     {
       "path": "asset_manifest.yaml",
@@ -235,8 +235,8 @@
     },
     {
       "path": "claim_ledger.yaml",
-      "bytes": 52466,
-      "sha256": "7ed44aa782d43a12fdd9d434955cb73e77da51575e91bdb363bf7f2d53031371"
+      "bytes": 52460,
+      "sha256": "b740820a2136ec61b5a61814714c69e6d6775bef8ddfdb7cf95c74e0162bb63b"
     },
     {
       "path": "debugger.json",
@@ -245,13 +245,13 @@
     },
     {
       "path": "deck.public.yaml",
-      "bytes": 228176,
-      "sha256": "b87bbfb2cf3033184fae59b44769fffb875ade4fb3f13304b33cde9b2284a726"
+      "bytes": 228162,
+      "sha256": "48b2b1160972c986ca889370f7b7979db0cc9a4990aa46833bbcabd2329619fa"
     },
     {
       "path": "question-map.json",
-      "bytes": 34156,
-      "sha256": "b7e231e0b11d2b4eb882048dd8ac5db9636bac7bddd26c81c6e129831ccf1f8f"
+      "bytes": 34151,
+      "sha256": "471ebd7ef8b0934d24b5d22745e03e53a5e9a7aa07726183873e40068980d47f"
     },
     {
       "path": "reference/README.md",
@@ -360,8 +360,8 @@
     },
     {
       "path": "sources/effort-estimate.md",
-      "bytes": 734,
-      "sha256": "8839105fa8e75e1281ea2f44b8aa850a54a9e346b6e3dfac858b8ee6ebd13c80"
+      "bytes": 732,
+      "sha256": "3bf7c2103cd4d80449910aee1df8b5f006eb49abfc39fb38d72e6266baedf85f"
     },
     {
       "path": "sources/live-demo-readback.json",
@@ -400,8 +400,8 @@
     },
     {
       "path": "sources/research-workflow.md",
-      "bytes": 4370,
-      "sha256": "7ee99e5d65fff63ffd203fbcac3033fa6c53de6079b60dc36468e786c5b05e36"
+      "bytes": 4368,
+      "sha256": "7e72a091f12dfd97d7ebb8ca8edfb9e8e90585d1fad531cf91eeb948ff980f2f"
     },
     {
       "path": "sources/reviewed-WALKTHROUGH.md",

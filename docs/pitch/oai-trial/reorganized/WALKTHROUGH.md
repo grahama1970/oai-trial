@@ -600,7 +600,7 @@ The optional local create-figure command in the spec has **NOT_RUN** status. Its
 
 ### Say
 
-My estimated allocation was 37.5% research, 25% implementation and testing, 12.5% extras, and 25% polish. Active time was not instrumented. Commit history records chronology, not effort allocation. Later corrections and requested additions remain separately documented.
+Roughly a third researching, a quarter building and testing, and the rest on extras and polish. Active time was not instrumented. Commit history records chronology, not effort allocation. Later corrections and requested additions remain separately documented.
 The work was AI-assisted and externally reviewed; I will not invent an authorship percentage. The technical conclusion concerns a bounded mechanism and its evidence. It does not establish general anonymity, production deployment, or complete resistance to linkage. The next three prepared questions explain why these boundaries are deliberate, rather than quietly treating every future hardening idea as a missing local feature.
 
 ### Show / navigate
@@ -1228,7 +1228,7 @@ End normal playback. No substantive slide follows. Backup questions are Markdown
 
 **Primary slide:** [r17-disclosure](#r17-disclosure) · **Legacy section:** `07-nonclaims`
 
-**Short answer:** My estimated allocation is 37.5% research, 25% implementation/testing, 12.5% extras, and 25% polish.
+**Short answer:** Roughly a third researching, a quarter building and testing, and the rest on extras and polish.
 
 **Follow-up / deeper answer:** These percentages are retrospective estimates, not instrumented measurements. Commit history records chronology, not effort allocation. Later corrections and requested additions remain separately documented.
 

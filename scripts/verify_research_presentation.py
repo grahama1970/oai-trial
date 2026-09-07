@@ -37,9 +37,9 @@ for sid in ids[6:8]:
     assert sid in payload, sid
 assert 'Effort estimate and implementation limits' in payload
 allocation = slides[18]['message']
-assert all(value in allocation for value in ['37.5%', '25%', '12.5%'])
+assert 'Roughly a third researching, a quarter building and testing' in allocation
 assert 'hour' not in allocation.lower()
-assert 37.5 + 25 + 12.5 + 25 == 100
+assert not re.search(r'\d', allocation)
 assert 'Retrospective estimate; active time was not instrumented.' in payload
 for name in ['deck.public.yaml', 'WALKTHROUGH.md', 'TOC.md', 'question-map.json', 'claim_ledger.yaml']:
     current = (BUNDLE / name).read_text()

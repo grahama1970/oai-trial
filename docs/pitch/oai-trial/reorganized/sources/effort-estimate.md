@@ -1,6 +1,6 @@
 # Effort estimate and implementation limits
 
-Estimated allocation: 37.5% research · 25% implementation/testing · 12.5% extras · 25% polish.
+Roughly a third researching, a quarter building and testing, and the rest on extras and polish.
 
 Retrospective estimate; active time was not instrumented. Commit history records chronology, not effort allocation. Later corrections and requested additions remain separately documented in SUBMISSION.md.
 

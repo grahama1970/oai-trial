@@ -80,7 +80,7 @@ The first playback slide is Table of Contents. The wrapper receives only the pre
 - `r16-cost` — **Retention dominates this 1 PB cost scenario** — 20:30–21:15
   - Compare components within a scenario—not across incomparable rows.
 - `r17-disclosure` — **Effort estimate and implementation limits** — 21:15–22:00
-  - Estimated allocation: 37.5% research · 25% implementation/testing · 12.5% extras · 25% polish.
+  - Roughly a third researching, a quarter building and testing, and the rest on extras and polish.
 
 ### Prepared Adversarial Questions
 
