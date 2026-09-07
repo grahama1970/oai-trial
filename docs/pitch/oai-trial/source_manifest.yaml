@@ -55,8 +55,8 @@ sources:
   visibility: public
   required: true
   repo: grahama1970/oai-trial
-  ref: d0039613fa8acfaeba164eed9761632e2d8a5f41
-  content_sha: sha256:e7eec4c10e62654e5a2874597e7c727e9dfd6030694051818b2563c453b4ddc8
+  ref: fa6da62f0562d1c58cecea0a2522966eabc7e8ad
+  content_sha: sha256:32beda1456e473947381347a93d3db8377dba69ff68eb9552d39b2b44d42abe2
 - id: nonclaims
   title: Not established (out of scope for a literal-policy pipeline)
   path: ${PROJECT_ROOT}/docs/PRIVACY_CONTRACT.md

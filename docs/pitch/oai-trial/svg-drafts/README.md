@@ -1,6 +1,6 @@
 # Proof-boundary SVG drafts
 
-**Drafts for human review. Not installed in the presentation.** No slides or runtime features are added to the trial.
+**Comparison artwork now installed on the existing answer slides.** No slides or trial-runtime features were added. Human presentation review remains separate.
 
 | Draft | One idea | Proposed existing slide |
 |---|---|---|
@@ -8,7 +8,7 @@
 | [Verification boundaries](verification-boundary.svg) | Runtime verification shares primitives; fixture readback provides a separate bounded check. | `r21-answer-verifier` |
 | [Local versus modeled](local-versus-model.svg) | Exercised local paths and proposed cloud behavior are different evidence classes. | `r23-answer-scale` |
 
-These replace explanatory bullets if accepted; retain the existing pipeline, publication lifecycle, and required cloud architecture diagrams. Do not turn comparisons into execution arrows.
+These replace explanatory bullets; the existing pipeline, publication lifecycle, and required cloud architecture diagrams remain. Do not turn comparisons into execution arrows.
 
 ## Source grounding
 
@@ -24,4 +24,4 @@ The 1408×387 viewBox matches the existing 0.88×0.43 image slot on the 1920×10
 
 Adjacent `.yml` files are reproducible inputs; `theme.yml` is shared across these drafts. `.grid.json` files describe the panel body-row grid and equal-width columns. Their scope excludes the separate heading/caption bands. XML/deterministic rebuild and grid checks do not establish human visual acceptance.
 
-Preview pages and validation receipts are retained under `/mnt/storage12tb/skills/create-svg/oai-proof-drafts/`. Final deck installation and final visual acceptance require human review of the drafts first.
+Preview pages and validation receipts are retained under `/mnt/storage12tb/skills/create-svg/oai-proof-drafts/`. The flow diagrams use a synchronized cycle; these neutral comparisons remain static because no execution order is implied. Final visual acceptance remains a human presentation decision.

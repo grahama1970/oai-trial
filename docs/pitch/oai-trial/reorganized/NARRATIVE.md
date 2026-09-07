@@ -2,12 +2,16 @@
 
 **Canonical explanatory narrative.** The slide deck compresses this explanation; the code supplies implementation evidence. The speaker walkthrough remains the timed rehearsal script, not a competing technical contract. Adapted from the human-supplied WebGPT report; code blocks below are exact excerpts from the unchanged runtime/qualification source, not rewritten pseudocode.
 
-[Slide-by-slide script](WALKTHROUGH.md) · [Reviewer questions](../../../DESIGN_DECISIONS_AND_LIMITATIONS.md) · [Mock interviews](../../../MOCK_INTERVIEWS.md)
+[Slide-by-slide script](WALKTHROUGH.md) · [Reviewer questions](https://github.com/grahama1970/oai-trial/blob/main/docs/DESIGN_DECISIONS_AND_LIMITATIONS.md) · [Mock interviews](https://github.com/grahama1970/oai-trial/blob/main/docs/MOCK_INTERVIEWS.md)
 
 Terminology: **literal-policy conflict**, **policy-declared identity**, **declared-identity coherence**, **alias candidate generation**, **fresh reread with shared primitives**, **technically READY under the declared transformation contract**. These terms deliberately exclude broader semantic claims.
 
 <a id="challenge"></a>
 ## The challenge and its boundary
+
+The third slide maps the original brief to four delivered groups: four-format transformation; consistency and preservation; reproducible Docker execution; and production architecture/cost modeling. Check marks denote supplied mechanisms and evidence, not exhaustive correctness. Deployment was not required. Recorded small-workload measurements remain supporting evidence.
+
+![Human policy declarations enter the deterministic runtime; broader privacy claims remain outside it.](assets/report-core.svg)
 
 **Slides:** `r02-demo-result`, `r03-demo-observations`, `r07-pipeline-map`
 
@@ -500,7 +504,7 @@ During the later rehearsal, Docker used SQLite 3.46.1 and the local wrapper used
 
 The correction retained the existing logical contract, typed/schema/relationship checks and each report’s own digest bindings. It did not make arbitrary byte changes acceptable. Differing versions and header metadata were observed; no claim attributes every changed byte solely to a version number.
 
-**Supporting rehearsal story, not an added slide or original-trial event.** Evidence: [rehearsal receipt](../rehearsal-evidence.json). An oracle is the rule or mechanism deciding whether an observed result is correct.
+**Supporting rehearsal story, not an added slide or original-trial event.** Evidence: [rehearsal receipt](https://github.com/grahama1970/oai-trial/blob/main/docs/pitch/oai-trial/rehearsal-evidence.json). An oracle is the rule or mechanism deciding whether an observed result is correct.
 
 **Code:** [scripts/qualify_submission.py::readback, lines 81–134](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/scripts/qualify_submission.py#L81-L134)
 
@@ -563,6 +567,8 @@ def readback(source: Path, output: Path, golden: dict, schema: Path) -> dict:
 
 <a id="verification"></a>
 ## Fresh reread with shared primitives
+
+![Runtime publishes after verification; a separate qualification harness checks published fixture outputs afterward.](assets/report-evidence.svg)
 
 **Slides:** `r20-question-verifier`, `r21-answer-verifier`
 
@@ -776,11 +782,13 @@ No SPIA attack evaluation, DICOM processing, paper benchmark reproduction, HMAC,
 <a id="reproduction"></a>
 ## Docker, wrapper and readback are separate evidence paths
 
+The first demo slide invokes `$anonymize-data` using preflighted input/output locations. The wrapper shell command is the underlying implementation, not the audience-facing prompt.
+
 **Slides:** `r04-docker`, `r05-mounted-cli`, `r06-output-evidence`
 
 The self-contained Docker image supports its default synthetic demo and mounted bundle interface. A bundle has policy.json and corpus/. The independent readback checks the mounted output rather than accepting an exit code or a report display.
 
-The later rehearsal records an offline Docker demo/mounted run and a separate local CLI wrapper run/verify; each output received independent four-format readback. A deliberately conflicting policy rejected on both entrypoints without a new ready marker. These are bounded synthetic cases, not original-archive requalification. Build-time network/cache use is separate from network-disabled execution. See [the exact commands and readback receipt](../rehearsal-evidence.json).
+The later rehearsal records an offline Docker demo/mounted run and a separate local CLI wrapper run/verify; each output received independent four-format readback. A deliberately conflicting policy rejected on both entrypoints without a new ready marker. These are bounded synthetic cases, not original-archive requalification. Build-time network/cache use is separate from network-disabled execution. See [the exact commands and readback receipt](https://github.com/grahama1970/oai-trial/blob/main/docs/pitch/oai-trial/rehearsal-evidence.json).
 
 <a id="cloud"></a>
 ## Local evidence versus proposed production architecture
@@ -789,9 +797,11 @@ The later rehearsal records an offline Docker demo/mounted run and a separate lo
 
 The local runtime is not a petabyte implementation. Adapters materialize files or tables, and verification retains searchable text from both corpora.
 
+AWS Key Management Service (KMS) protects keys and controls their use. HMAC (Hash-based Message Authentication Code) uses a secret key for a repeatable keyed hash, which would feed pseudonym derivation. Neither integration is implemented locally; see [the definitions and official references](sources/aws-key-definitions.md).
+
 The production design proposes object storage, queues, a worker pool, format-aware partitioning, a shared versioned identity/allocation plan, distributed verification, immutable manifests and conditional release-pointer publication. A shared cryptographic key alone does not coordinate collision assignment. None of that orchestration is established by the small local demonstration.
 
-The TB/PB capacity and AWS costs are models under explicit throughput, retry, object-size, retention and pricing assumptions—not measured SLAs or invoices. The estimator makes the arithmetic inspectable; it does not validate those assumptions. Its simplified per-object request accounting does not trace every billable API operation. See [production design](../../../production-architecture.md).
+The TB/PB capacity and AWS costs are models under explicit throughput, retry, object-size, retention and pricing assumptions—not measured SLAs or invoices. The estimator makes the arithmetic inspectable; it does not validate those assumptions. Its simplified per-object request accounting does not trace every billable API operation. See [production design](https://github.com/grahama1970/oai-trial/blob/main/docs/production-architecture.md).
 
 **Code:** [src/anonymization_trial/verification.py::_searchable, lines 191–197](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/verification.py#L191-L197)
 
@@ -867,7 +877,7 @@ def _one(total_bytes: float, cfg: dict) -> dict:
 
 **Slides:** `r24-security-evals`, `r25-lineage`
 
-White-box source analysis, gray-box mutation cases and black-box CLI checks inspect different failure surfaces. Their evidence is limited to the tools and cases actually exercised. The retained Judge demonstration is fixture-backed, not a live adaptive attack campaign. New default-engine rehearsal runs do not establish discovery or adaptive-campaign execution. See [security evidence](../../../../security/SECURITY.md) and [Battle objective](../../../../security/BATTLE_OBJECTIVE.md).
+White-box source analysis, gray-box mutation cases and black-box CLI checks inspect different failure surfaces. Their evidence is limited to the tools and cases actually exercised. The retained Judge demonstration is fixture-backed, not a live adaptive attack campaign. New default-engine rehearsal runs do not establish discovery or adaptive-campaign execution. See [security evidence](https://github.com/grahama1970/oai-trial/blob/main/security/SECURITY.md) and [Battle objective](https://github.com/grahama1970/oai-trial/blob/main/security/BATTLE_OBJECTIVE.md).
 
 <a id="wrapper"></a>
 ## Thin wrapper, not a second engine

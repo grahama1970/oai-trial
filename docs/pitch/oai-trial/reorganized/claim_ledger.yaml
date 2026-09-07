@@ -9,7 +9,7 @@
       "visibility": "public",
       "risk": "high",
       "status": "candidate",
-      "required_qualifier": "Recorded qualification + checker-asserted values; not a new output capture.",
+      "required_qualifier": "Run live after preflight; otherwise label the recorded fallback.",
       "source_refs": [
         {
           "source_id": "reviewed-narrative",
@@ -234,7 +234,7 @@
       "visibility": "public",
       "risk": "high",
       "status": "candidate",
-      "required_qualifier": "A valid policy is not proof that its identity assignments are true.",
+      "required_qualifier": "Conservative literal-overlap rejection; context-scoped exceptions are not implemented.",
       "source_refs": [
         {
           "source_id": "reviewed-narrative",

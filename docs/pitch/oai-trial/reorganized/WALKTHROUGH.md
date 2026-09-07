@@ -8,6 +8,8 @@ The supplied grahama.co house tokens and actual header texture are used. Native 
 
 The [canonical explanatory narrative](NARRATIVE.md) owns terminology and expanded code explanations. This document is its timed spoken presentation and question bank.
 
+The visible demo invocation is the `$anonymize-data` skill prompt. Shell commands below document its underlying reproducibility path, not a separate on-slide interface.
+
 ## Using the transcript
 
 Read SAY as speaker notes rather than an undocumented authorship claim. Use SHOW for a brief pinned code or source jump inside each allocated interval. Full follow-up answers stay in the separate appendix. Follow the existing slide time cues, including observation and navigation. The demo has conditional live/fallback instructions: speak only the branch actually used. This is a rehearsal allocation, not a measured delivery time.
@@ -21,7 +23,7 @@ Complete environment and input preflight before the talk. During r02, run the al
 | Slide | Time | Takeaway |
 |---|---|---|
 | [r01-toc](#r01-toc) | 00:00–00:45 | Table of Contents |
-| [r02-demo-result](#r02-demo-result) | 00:45–02:15 | Here is the result—not just a success flag |
+| [r02-demo-result](#r02-demo-result) | 00:45–02:15 | Run the anonymization demo |
 | [r03-demo-observations](#r03-demo-observations) | 02:15–03:15 | Small workloads were measured; petabytes were not |
 | [r04-docker](#r04-docker) | 03:15–04:15 | The evaluator needs one self-contained image |
 | [r05-mounted-cli](#r05-mounted-cli) | 04:15–05:30 | One bundle in; one dedicated release directory out |
@@ -30,11 +32,11 @@ Complete environment and input preflight before the talk. During r02, run the al
 | [r08-policy](#r08-policy) | 09:45–11:00 | Humans supply meaning; code enforces literal rules |
 | [r09-identity](#r09-identity) | 11:00–12:15 | Aliases converge because identity is declared |
 | [r10-spans](#r10-spans) | 12:15–13:45 | Select original spans; emit only once |
-| [r11-formats](#r11-formats) | 13:45–15:00 | Preserve logical meaning—not identical serialization |
+| [r11-formats](#r11-formats) | 13:45–15:00 | Preserve data structure—not identical file bytes |
 | [r12-typed-locations](#r12-typed-locations) | 15:00–16:30 | A correct value on the wrong row is still wrong |
 | [r13-publication](#r13-publication) | 16:30–18:00 | READY is technical—not privacy approval |
 | [r14-cloud](#r14-cloud) | 18:00–19:30 | Distribute the work; retain one corpus decision |
-| [r15-capacity](#r15-capacity) | 19:30–20:30 | The SLA is a scenario—not a benchmark |
+| [r15-capacity](#r15-capacity) | 19:30–20:30 | The completion target is modeled—not measured |
 | [r16-cost](#r16-cost) | 20:30–21:15 | Retention dominates this 1 PB cost scenario |
 | [r17-disclosure](#r17-disclosure) | 21:15–22:00 | Effort estimate and implementation limits |
 | [r18-question-exact](#r18-question-exact) | 22:00–22:15 | Question 1 |
@@ -71,7 +73,7 @@ Point down the hierarchy without reading every subtopic. No cover slide precedes
 **Evidence IDs:** E08
 
 <a id="r02-demo-result"></a>
-## r02-demo-result — Here is the result—not just a success flag
+## r02-demo-result — Run the anonymization demo
 
 **Time:** 00:45–02:15. **Block:** Demo and Results. **Primary questions:** None; navigation or paired lead-in.
 
@@ -119,27 +121,24 @@ Open `sources/qualification.json` at `readbacks` and `source_unchanged`. Say: �
 **Transition:** The next timing and memory figures are historical observations from the supplied receipt, regardless of which demo branch we just used.
 
 <a id="r03-demo-observations"></a>
-## r03-demo-observations — Small workloads were measured; petabytes were not
+## r03-demo-observations — From the brief to the delivered work
 
-**Time:** 02:15–03:15. **Block:** Demo and Results. **Primary questions:** None; navigation or paired lead-in.
+**Time:** 02:15–03:15. **Block:** Demo and Results.
 
 ### Say
 
-These are the two demo runs recorded in the supplied qualification receipt. The logical fixture sizes are 100 and 1,000: 1000 / 100 = 10, a tenfold logical-workload step. This ratio is derived from the recorded values, not a new measurement. Each run processed four files and reported verification success. The elapsed observations are 0.050762 and 0.386924 seconds, and peak memory is reported as 26.83 and 29.83 MB.
-The rates are also shown so the result is reproducible as evidence, not reduced to a speed claim. Records processed are not the same field as logical fixture size: the generated formats contribute multiple records to the run counters.
-This is a small synthetic demonstration. It is not an estimate of what one production worker will sustain on arbitrary customer exports. Later I will label the cloud throughput separately as an assumption. Nothing on this page was remeasured while this authoring revision was prepared.
+- Map the original requirements to what was delivered.
+- The local rows have concrete code and recorded fixture evidence.
+- Production design and cost modeling were required; deployment was not.
+- Checks mean delivered scope, not proof for every possible input.
+- Open the recorded two-size measurements if asked.
 
 ### Show / navigate
 
-Keep this slide labeled historical even after a live r02 run. Read the exact values from sources/qualification.json#/demo/runs. Do not extrapolate a linear memory bound.
+Map each row to the original requirements and its delivered evidence. The production row is a design/model, not deployed execution. [Original brief](https://github.com/grahama1970/oai-trial/blob/main/TRIAL_BRIEF.md).
 
-- [`src/anonymization_trial/__main__.py::_run_once` — L41–L58](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/__main__.py#L41-L58)
+Recorded two-size measurements remain in the [supporting reference](#recorded-measurement-reference), not this slide’s primary script.
 
-**Visible qualification:** Historical observations from the supplied receipt. Not current measurement.
-
-**Evidence IDs:** E01
-
-<a id="r04-docker"></a>
 ## r04-docker — The evaluator needs one self-contained image
 
 **Time:** 03:15–04:15. **Block:** Reproduce and Verify. **Primary questions:** Q46
@@ -423,7 +422,7 @@ Matcher.replace L120–131; point to source slices and replacement append. _sele
 **Evidence IDs:** E08
 
 <a id="r11-formats"></a>
-## r11-formats — Preserve logical meaning—not identical serialization
+## r11-formats — Preserve data structure—not identical file bytes
 
 **Time:** 13:45–15:00. **Block:** How the Solution Works. **Primary questions:** Q38, Q39, Q40
 
@@ -542,7 +541,7 @@ Pinned docs/production-architecture.md; connect local build_replacements to comm
 **Evidence IDs:** E07, E08
 
 <a id="r15-capacity"></a>
-## r15-capacity — The SLA is a scenario—not a benchmark
+## r15-capacity — The completion target is modeled—not measured
 
 **Time:** 19:30–20:30. **Block:** How the Solution Works. **Primary questions:** None; navigation or paired lead-in.
 
@@ -1521,3 +1520,31 @@ No debugger captures or paused frames are included. Code navigation is a source 
 [D05]: https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/costs/example-estimates.json
 [D06]: https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/docs/DISCOVERY.md
 [E02]: https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/artifacts/release-artifact-path-evals.json
+
+
+<a id="recorded-measurement-reference"></a>
+## Supporting recorded measurements
+
+Not the current r03 speaking script; retained evidence context.
+
+### Historical measurement material — Small workloads were measured; petabytes were not
+
+**Time:** 02:15–03:15. **Block:** Demo and Results. **Primary questions:** None; navigation or paired lead-in.
+
+### Reference explanation
+
+These are the two demo runs recorded in the supplied qualification receipt. The logical fixture sizes are 100 and 1,000: 1000 / 100 = 10, a tenfold logical-workload step. This ratio is derived from the recorded values, not a new measurement. Each run processed four files and reported verification success. The elapsed observations are 0.050762 and 0.386924 seconds, and peak memory is reported as 26.83 and 29.83 MB.
+The rates are also shown so the result is reproducible as evidence, not reduced to a speed claim. Records processed are not the same field as logical fixture size: the generated formats contribute multiple records to the run counters.
+This is a small synthetic demonstration. It is not an estimate of what one production worker will sustain on arbitrary customer exports. Later I will label the cloud throughput separately as an assumption. Nothing on this page was remeasured while this authoring revision was prepared.
+
+### Show / navigate
+
+Keep this slide labeled historical even after a live r02 run. Read the exact values from sources/qualification.json#/demo/runs. Do not extrapolate a linear memory bound.
+
+- [`src/anonymization_trial/__main__.py::_run_once` — L41–L58](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/__main__.py#L41-L58)
+
+**Visible qualification:** Historical observations from the supplied receipt. Not current measurement.
+
+**Evidence IDs:** E01
+
+<a id="r04-docker"></a>

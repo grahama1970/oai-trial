@@ -1,0 +1,51 @@
+{
+  "canvas": 550,
+  "centers": [
+    170,
+    495,
+    820
+  ],
+  "tolerance": 0.1,
+  "nodes": {
+    "intake": {
+      "x": 45,
+      "y": 125,
+      "w": 250,
+      "h": 125
+    },
+    "workers": {
+      "x": 325,
+      "y": 125,
+      "w": 340,
+      "h": 125
+    },
+    "verify": {
+      "x": 695,
+      "y": 125,
+      "w": 250,
+      "h": 125
+    },
+    "publish": {
+      "x": 1020,
+      "y": 125,
+      "w": 355,
+      "h": 125
+    },
+    "quarantine": {
+      "x": 660,
+      "y": 369,
+      "w": 320,
+      "h": 105
+    }
+  },
+  "work_boundary": {
+    "x": 20,
+    "y": 48,
+    "w": 950,
+    "h": 250
+  },
+  "publication_boundary_x": 990,
+  "retry_y": 331,
+  "heading_size": 32,
+  "note": "Absolute source geometry; worker label is accommodated by width, not font reduction."
+}

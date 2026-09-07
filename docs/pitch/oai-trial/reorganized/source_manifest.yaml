@@ -171,6 +171,14 @@
       "visibility": "public",
       "role": "primary",
       "required": true
+    },
+    {
+      "id": "aws-key-definitions",
+      "title": "Proposed KMS and HMAC roles",
+      "path": "sources/aws-key-definitions.md",
+      "visibility": "public",
+      "role": "supporting",
+      "required": true
     }
   ],
   "policy": {
@@ -195,7 +203,8 @@
       "project-state-context",
       "research-workflow",
       "effort-estimate",
-      "canonical-narrative"
+      "canonical-narrative",
+      "aws-key-definitions"
     ],
     "forbidden_unqualified_claims": [
       "formally anonymous",

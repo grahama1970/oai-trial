@@ -544,6 +544,81 @@
         "source_id": "design",
         "section": "Theme preset and supplied current.json header_texture"
       }
+    },
+    {
+      "id": "ready-meaning",
+      "kind": "diagram",
+      "visibility": "public",
+      "local_path": "assets/ready-meaning.svg",
+      "required": true,
+      "alt_text": "READY checks the declared contract, not broader privacy properties.",
+      "target_aspect": "1408:387",
+      "status": "present",
+      "generation_brief": "Bounded create-svg comparison-panels render. Static, source-grounded explanation; not an execution screenshot.",
+      "source_ref": {
+        "source_id": "canonical-narrative",
+        "section": "policy"
+      }
+    },
+    {
+      "id": "verification-boundary",
+      "kind": "diagram",
+      "visibility": "public",
+      "local_path": "assets/verification-boundary.svg",
+      "required": true,
+      "alt_text": "Runtime verification shares primitives; fixture readback is a separate bounded oracle.",
+      "target_aspect": "1408:387",
+      "status": "present",
+      "generation_brief": "Bounded create-svg comparison-panels render. Static, source-grounded explanation; not an execution screenshot.",
+      "source_ref": {
+        "source_id": "canonical-narrative",
+        "section": "verification"
+      }
+    },
+    {
+      "id": "local-versus-model",
+      "kind": "diagram",
+      "visibility": "public",
+      "local_path": "assets/local-versus-model.svg",
+      "required": true,
+      "alt_text": "Exercised local paths are separate from proposed cloud behavior.",
+      "target_aspect": "1408:387",
+      "status": "present",
+      "generation_brief": "Bounded create-svg comparison-panels render. Static, source-grounded explanation; not an execution screenshot.",
+      "source_ref": {
+        "source_id": "canonical-narrative",
+        "section": "cloud"
+      }
+    },
+    {
+      "id": "report-core",
+      "kind": "diagram",
+      "visibility": "public",
+      "local_path": "assets/report-core.svg",
+      "required": true,
+      "alt_text": "Source-grounded report diagram; fixture readback is separate from runtime publication.",
+      "target_aspect": "1400:720",
+      "status": "present",
+      "generation_brief": "Report companion SVG, retained from external source and corrected by scripts/prepare_report_svgs.py. One12-second emphasis cycle; full static base under reduced motion.",
+      "source_ref": {
+        "source_id": "canonical-narrative",
+        "section": "challenge"
+      }
+    },
+    {
+      "id": "report-evidence",
+      "kind": "diagram",
+      "visibility": "public",
+      "local_path": "assets/report-evidence.svg",
+      "required": true,
+      "alt_text": "Source-grounded report diagram; fixture readback is separate from runtime publication.",
+      "target_aspect": "1400:760",
+      "status": "present",
+      "generation_brief": "Report companion SVG, retained from external source and corrected by scripts/prepare_report_svgs.py. One12-second emphasis cycle; full static base under reduced motion.",
+      "source_ref": {
+        "source_id": "canonical-narrative",
+        "section": "verification"
+      }
     }
   ]
 }

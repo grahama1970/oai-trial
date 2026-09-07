@@ -1,0 +1,24 @@
+{
+  "version": 2,
+  "skill": "oai-trial-canonical-presentation",
+  "trials": 2,
+  "proof_scope": "Read the actual canonical JSON, emitted live UI payload and PPTX; reject an unresolved native icon. Not slideshow playback or human visual approval.",
+  "cases": [
+    {
+      "name": "canonical-content-and-native-export-readback",
+      "type": "positive",
+      "real_world": true,
+      "command": ["bash", "-c", "cd .. && python3 scripts/verify_canonical_presentation.py"],
+      "expected": {"exit_code": 0, "stdout_contains": ["CANONICAL_READBACK_PASS"]},
+      "timeout_seconds": 30
+    },
+    {
+      "name": "unknown-icon-refuses-import",
+      "type": "adversarial",
+      "real_world": true,
+      "command": ["bash", "-c", "cd .. && python3 -c 'import json,tempfile,subprocess; from pathlib import Path; root=Path.cwd(); b=root/\"docs/pitch/oai-trial/reorganized\"; d=json.loads((b/\"deck.document.json\").read_text()); next(e for e in d[\"slides\"][0][\"elements\"] if e[\"kind\"]==\"icon\")[\"icon\"][\"library_id\"]=\"unregistered-icon\"; t=tempfile.TemporaryDirectory(dir=\"/mnt/storage12tb/oai-trial/canonical-import\"); p=Path(t.name); (p/\"bad.json\").write_text(json.dumps(d)); r=subprocess.run([str(Path.home()/\"workspace/experiments/agent-skills/skills/pitchdeck/run.sh\"),\"emit-document-ui\",\"--document\",str(p/\"bad.json\"),\"--asset-base\",str(b),\"--output-dir\",str(p/\"ui\")],capture_output=True,text=True); assert r.returncode!=0 and not (p/\"ui/deck.data.json\").exists(); assert \"not in the library manifest\" in r.stdout+r.stderr; print(\"UNKNOWN_ICON_REFUSED\")'"],
+      "expected": {"exit_code": 0, "stdout_contains": ["UNKNOWN_ICON_REFUSED"]},
+      "timeout_seconds": 60
+    }
+  ]
+}

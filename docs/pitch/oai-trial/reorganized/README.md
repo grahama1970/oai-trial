@@ -1,107 +1,73 @@
-# OAI trial — reorganized authoring bundle
+# OAI trial presentation package
 
-This is a coordinated **candidate authoring bundle**, not the submitted anonymizer archive, a fresh technical qualification, or an approved slide export.
+## Three views, one technical story
 
-For advance reading, use [`INTERVIEWER_BRIEF.md`](INTERVIEWER_BRIEF.md). Start with [`NARRATIVE.md`](NARRATIVE.md) for the canonical code-assisted explanation. `WALKTHROUGH.md` is its timed spoken version; `INTERVIEW_GUIDE.md` and `TOC.md` handle rehearsal and navigation. `slide-map.json` maps every slide to narrative sections and code/evidence anchors. `deck.public.yaml` contains 32 normal-playback slides: 30 prepared slides totaling 30 minutes, then a separate 15+ minute Discussion reserve and a final Thank you. The entire 48-question bank remains outside playback, preserved in the transcript and `question-map.json`.
+- **[Interviewer brief](INTERVIEWER_BRIEF.md):** compact advance reading.
+- **[Canonical narrative](NARRATIVE.md):** expanded explanations and exact code excerpts.
+- **[Complete deck JSON](deck.document.json):** the authoritative rendering input—32 slides, elements, native icons, claims, source definitions, notes and animation rows.
 
-## Contents
+[WALKTHROUGH.md](WALKTHROUGH.md) retains the detailed speaking script and question bank. [TOC.md](TOC.md) is the navigation outline. Implementation source remains the evidence for all three views.
 
-- `deck.public.yaml`, `claim_ledger.yaml`, `source_manifest.yaml`, `asset_manifest.yaml`: schema-bound current-consumer draft; all claims candidate.
-- `slide-map.json`: stable new slide IDs, primary Q mappings, legacy sections, durations, code path/symbol/line ranges/commit and diagram/figure links.
-- `TOC.md`, `WALKTHROUGH.md`: one coordinated hierarchy and full spoken transcript with code citations and the preserved question appendix.
-- `assets/`: actual supplied header PNG and authored self-contained static SVGs. SVG internals are image content in the current PowerPoint exporter, not native editable shapes. Prose and slide headings remain native text.
-- `assets/figures/`: cost chart rows/spec and create-figure metrics input, plus source-derived fixture expectation metadata. Modeled cost data is not mixed with observed demo measurements.
-- `sources/`: exact supplied source excerpts and normalized historical evidence, including qualification, reviewed narrative, disclosures and modeled costs. Source inspection is distinct from execution.
-- `schemas/`, `validation/authoring-checks.json`, `theme/README.md`, `CHANGELOG.md`: consumer contracts, actual authoring checks and pending local acceptance.
+The `.yaml` manifests are retained authoring/migration history. Do not recompile them over the edited canonical JSON: that would discard later native-element changes. `deck.data.json` is generated browser output, not an authoring source.
 
-## Local handoff
+## What “complete JSON” means
 
-Resolve manifest paths relative to this extracted bundle. Keep the frozen implementation checkout available for linked code navigation; no runtime source is modified. Use the current supported pitchdeck consumer to load these manifests. This package does not replace or patch that renderer.
+The JSON contains the whole supported deck model, not patches or slide prompts. It references image/SVG files in `assets/`; those bytes must accompany it. Native icon references resolve through the installed pitchdeck library. It is not a single file containing the entire codebase, image bytes and renderer dependencies.
 
-The theme tokens already specify the supplied grahama.co preset and independent header fill/image opacity. The existing renderer owns its band texture and footer; do not overlay an authored footer or duplicate texture. The actual supplied PNG is included for identity checking. No font files are bundled.
+`debugger.json` remains the supported code-sync companion because the canonical schema has no structured debugger-map field. `slide-map.json` links slides to narrative sections and code/evidence. These are explicit package dependencies, not opaque JSON strings hidden in provenance.
 
-Claims are not approved. A successful JSON Schema check does not satisfy local producer/publish gates or human visual review. Do not bypass those gates or copy older approvals. A real local preview and export/GUI inspection remain necessary.
+## Import and export
 
-No application, pytest, Ruff, Docker, local compiler, analytics, create-figure, create-svg, recording or Live Evidence execution is claimed by this authoring task. See CHANGELOG.md for exact boundaries.
+From the project root, with the installed pitchdeck skill:
 
-## Reported local integration before this focused update
+```bash
+PITCHDECK="$HOME/workspace/experiments/agent-skills/skills/pitchdeck/run.sh"
+BUNDLE="docs/pitch/oai-trial/reorganized"
 
-The project agent reports that the downloaded original ZIP is retained unchanged outside the repository. The incoming committed copy contains these local corrections: three missing visible qualifiers on
-prepared-question slides; native editable question text and source-navigation
-labels instead of text-only SVGs; an explicit 1000/100 = 10 source derivation;
-and the verified input_bundle end line (71). The transcript qualifiers and
-source references were kept in sync. No runtime source changed.
+"$PITCHDECK" emit-document-ui \
+  --document "$BUNDLE/deck.document.json" --asset-base "$BUNDLE" \
+  --output-dir "$HOME/workspace/experiments/agent-skills/skills/pitchdeck/ui/public/oai-trial-current"
 
-The project agent reports that the prior local consumer models and draft build passed, and that the prior SVG assets passed the owning create-svg XML/safety checks. Those are historical reported results, not executions or acceptance of this update. This remains an unapproved presentation
-draft: Google Slides import, full visual approval, live-demo rehearsal,
-VS Code interaction, and Live Evidence wiring are not established. The opening
-currently uses recorded qualification evidence, not a newly captured live run.
-The legacy blue framing has since passed the scoped theme-frame checks below;
-this still does not establish final human visual approval.
+cp "$BUNDLE/debugger.json" \
+  "$HOME/workspace/experiments/agent-skills/skills/pitchdeck/ui/public/oai-trial-current/debugger.json"
 
-The incoming README referred to an older validation/report.json that was not included among the current-package payloads. This update does not invent it. The supplied current schemas and decoded payloads are the authoring authority; new checks are in validation/authoring-checks.json, not a local renderer acceptance receipt.
+"$PITCHDECK" emit-document-pptx \
+  --document "$BUNDLE/deck.document.json" --asset-base "$BUNDLE" \
+  --output /mnt/storage12tb/oai-trial/native-pitchdeck/oai-trial-current.pptx
 
-## Focused interview/slides update
+"$PITCHDECK" render \
+  --pptx /mnt/storage12tb/oai-trial/native-pitchdeck/oai-trial-current.pptx \
+  --output-dir /mnt/storage12tb/oai-trial/native-pitchdeck/render
+```
 
-This copy updates the committed authoring sources at `ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78`; runtime remains `0375af56bf681e9441edcb7433cfe58951db77b2`. The slide order, 30-minute prepared budget, question IDs and answers are retained. r02 has explicit live-action and historical-fallback branches; only the exact one-sentence wrapper mention precedes a live run. r26 now has native editable contract/delegation/behavior rows and a source-only reuse reference. `INTERVIEW_GUIDE.md` is rehearsal guidance, not a real interview transcript.
+Existing viewer: <http://127.0.0.1:3016/?deck=./oai-trial-current/deck.data.json&rehearse=1>.
 
-All payload hashes in the incoming `current-package.json` were checked against their own decoded content. No older inventory is used as byte authority for normalized evidence. Current authoring checks are in `validation/authoring-checks.json` and their limits in `validation/SCOPE.md`. The prior local draft build reported by the project agent does not establish that this edited deck has been rendered.
+The dedicated server binds `PITCHDECK_DEBUG_WORKSPACE` to the primary oai-trial checkout. Small emitted manifests belong in its real `public/` directory. The renderer's source-containment checks remain enabled.
 
-The actual supplied preview is retained under `reference/` for context only. No font files, application changes, renderer patches, new runtime tests or execution receipts are added. Old question/navigation SVGs remain reference files but are not bound to normal playback.
+## Presentation behavior
 
-## Native pitchdeck import
+- TOC: seven paired entry builds, from the left; title and message remain visible.
+- Demo: show the `$anonymize-data` skill prompt, then inspect real output or explicitly identify the recorded fallback.
+- Brief coverage: requirement/solution/check rows move as whole units. Checks mean delivered scope; the production row is a design/model, not deployment.
+- Multi-point explanations: reveal in rhetorical order. Comparisons remain complete when hiding a side would obscure the boundary.
+- Slide changes use a short fade. Flow SVGs use one synchronized cycle and retain a complete reduced-motion base. The separate fixture readback is after publication, not a runtime release gate.
+- Header icons are monochrome native-library cues; green check marks denote the stated delivered scope.
+- `slide.notes` contains short presenter cues. Use the Teleprompter control for the separate companion page; the full script remains in Markdown.
 
-The four current manifests use the standard pitchdeck filenames ending in
-`.yaml` (their JSON syntax is valid YAML). These are the single editable sources;
-the original WebGPT JSON files remain in the downloaded ZIP. Native UI emission
-uses this project-owned bundle; generated browser assets stay on the artifact
-drive. Shared renderer fixes are tracked separately below; the import itself changes only project-owned manifests.
+## Source and debugger controls
 
-Native presentation URL (local workstation):
-`http://127.0.0.1:3016/?deck=./oai-trial-current/deck.data.json`
+Enable **Sync VS Code** to reveal mapped source ranges. Clicking a mapped concept or selecting **Code for** highlights its source. Progressive builds also follow their mapped concept. Neither navigation nor source reveal executes code.
 
-The import preserves title/message claim bindings by using matching freeform
-element IDs. The closing slide adds the grahama.co caption. Candidate claim
-warnings remain intentional. Next-slide navigation was exercised; recording and
-VS Code sync were initially untested. Subsequent operational checks below
-exercise source reveal and publication controls. The header-duplication fix now
-passes the scoped consumer checks; human visual approval remains separate.
+**Run** is separate and only available for prepared launches. The optional publication demonstration stops before the final report rename; the highlighted function range is separate from its executable `breakLine`. The map generator is `scripts/link_presentation_code.py`.
 
-## Native viewer configuration and observed controls
+## Retained checks and boundaries
 
-Use the dedicated existing pitchdeck instance on port 3016 with
-`PITCHDECK_DEBUG_WORKSPACE` set to the primary oai-trial checkout. It uses
-`CHOKIDAR_USEPOLLING=true` and `CHOKIDAR_INTERVAL=1000` after the native watcher
-limit was observed. The shared instance on port 3006 was not restarted.
+- `scripts/verify_canonical_presentation.py`: actual JSON/UI/PPTX content, native icons, green checks and timing-tree readback.
+- `fixtures/canonical_presentation_eval.json`: repeated readback and unresolved-icon refusal.
+- `scripts/prove_presentation_sync.py` and `fixtures/presentation_sync_eval.json`: live source selection through the browser and independent VS Code bridge-file readback; invalid concept refusal.
+- `scripts/prepare_report_svgs.py`: bounded correction of the supplied report diagrams.
+- `scripts/place_cloud_boundary.py` plus its source/grid: node-fit correction without shrinking the worker label.
 
-The small emitted viewer manifests must be inside the app's real `public/`
-root to satisfy its source-binding guard. Media remains on the artifact drive.
-After emission, copy this bundle's `debugger.json` beside `deck.data.json`;
-the mapping is configuration, not proof that every configured stop ran.
+These checks do not establish PowerPoint/Google Slides slideshow playback, font embedding, human visual approval, a timed human rehearsal, or general runtime correctness. SVG images remain images in PPTX; native comparison groups, text and library icons remain editable. PDF is static.
 
-Observed through the native UI: source reveal at identity, typed verification,
-and publication mappings; Run stopped at `_publish` line 209, Inspect exposed
-`report_path`, and Continue terminated the bound session. Independent filesystem
-readback at the stop found the complete temporary report and corpus, with no
-final readiness marker yet. These are synthetic debugger demonstrations, not a
-crash campaign or recording. Other configured pipeline stops remain untested.
-
-The live skill demo path also completed preflight/run/verify and independent
-four-format readback. See `sources/live-demo-readback.json`. This establishes
-the technical demo path, not timed human rehearsal or interview permission.
-
-Both scoped visual fixes now pass three trials each: header-positioned titles
-render once while centered closing heroes remain; frame paint follows the theme
-without changing image bytes or geometry. See validation/consumer-visuals.json.
-Shared fixes landed at `21054950db08ebc298428198b4610ad35b8b446c`, including
-narrow header-texture containment. Relevant remote blobs were independently
-matched to local source. Recording was not started.
-
-## Accepted shared visual fixes
-
-The retained consumer receipt now covers header title deduplication, preservation
-of the centered closing hero and animation target, header-only texture in narrow
-view, and theme-correct frame paint without changing media bytes or fixed
-geometry. Both cases passed all three trials. This is scoped presentation proof,
-not universal animation/export parity or human visual approval. Broader motion
-limitations remain in the maintainer delivery report.
+The frozen runtime reference is `0375af56bf681e9441edcb7433cfe58951db77b2`. Later rehearsal, presentation and renderer work does not retroactively requalify the original submission archive. Historical receipts and source excerpts are retained as history, not current execution claims.

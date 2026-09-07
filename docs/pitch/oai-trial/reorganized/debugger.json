@@ -1,62 +1,1578 @@
 {
   "schema": "pitchdeck.debugger_map.v1",
   "slides": {
-    "r09-identity": {
-      "file": "src/anonymization_trial/pseudonyms.py",
-      "line": 104,
-      "launch": "Pitch: identity",
-      "locals": [
-        "replacements"
-      ]
+    "r02-demo-result": {
+      "file": "scripts/qualify_submission.py",
+      "line": 39,
+      "endLine": 77,
+      "endColumn": 31,
+      "concepts": {
+        "title": {
+          "file": "scripts/qualify_submission.py",
+          "line": 39,
+          "endLine": 77,
+          "endColumn": 31
+        },
+        "message": {
+          "file": "scripts/qualify_submission.py",
+          "line": 39,
+          "endLine": 77,
+          "endColumn": 31
+        },
+        "demo-output": {
+          "file": "scripts/qualify_submission.py",
+          "line": 39,
+          "endLine": 77,
+          "endColumn": 31
+        },
+        "demo-input": {
+          "file": "scripts/qualify_submission.py",
+          "line": 39,
+          "endLine": 77,
+          "endColumn": 31
+        },
+        "demo-command": {
+          "file": "src/anonymization_trial/__main__.py",
+          "line": 193,
+          "endLine": 238,
+          "endColumn": 17
+        },
+        "source-navigation": {
+          "file": "scripts/qualify_submission.py",
+          "line": 39,
+          "endLine": 77,
+          "endColumn": 31
+        },
+        "qualifier": {
+          "file": "docs/pitch/oai-trial/reorganized/NARRATIVE.md",
+          "line": 9,
+          "endLine": 92,
+          "endColumn": 1
+        }
+      }
     },
-    "r12-typed-locations": {
-      "file": "src/anonymization_trial/verification.py",
-      "line": 135,
-      "launch": "Pitch: typed",
-      "locals": [
-        "a",
-        "b"
-      ]
+    "r03-demo-observations": {
+      "file": "TRIAL_BRIEF.md",
+      "line": 13,
+      "endLine": 25,
+      "endColumn": 1,
+      "concepts": {
+        "title": {
+          "file": "TRIAL_BRIEF.md",
+          "line": 13,
+          "endLine": 25,
+          "endColumn": 1
+        },
+        "message": {
+          "file": "TRIAL_BRIEF.md",
+          "line": 13,
+          "endLine": 25,
+          "endColumn": 1
+        },
+        "qualifier": {
+          "file": "docs/pitch/oai-trial/reorganized/NARRATIVE.md",
+          "line": 9,
+          "endLine": 92,
+          "endColumn": 1
+        },
+        "coverage-head-requirement": {
+          "file": "TRIAL_BRIEF.md",
+          "line": 13,
+          "endLine": 25,
+          "endColumn": 1
+        },
+        "coverage-head-solution": {
+          "file": "TRIAL_BRIEF.md",
+          "line": 13,
+          "endLine": 25,
+          "endColumn": 1
+        },
+        "coverage-head-scope": {
+          "file": "TRIAL_BRIEF.md",
+          "line": 13,
+          "endLine": 25,
+          "endColumn": 1
+        },
+        "coverage-0-row": {
+          "file": "src/anonymization_trial/formats.py",
+          "line": 39,
+          "endLine": 49,
+          "endColumn": 76
+        },
+        "coverage-0-requirement": {
+          "file": "TRIAL_BRIEF.md",
+          "line": 13,
+          "endLine": 25,
+          "endColumn": 1
+        },
+        "coverage-0-solution": {
+          "file": "src/anonymization_trial/formats.py",
+          "line": 39,
+          "endLine": 49,
+          "endColumn": 76
+        },
+        "coverage-0-scope": {
+          "file": "src/anonymization_trial/formats.py",
+          "line": 39,
+          "endLine": 49,
+          "endColumn": 76
+        },
+        "coverage-1-row": {
+          "file": "src/anonymization_trial/verification.py",
+          "line": 205,
+          "endLine": 249,
+          "endColumn": 62
+        },
+        "coverage-1-requirement": {
+          "file": "TRIAL_BRIEF.md",
+          "line": 13,
+          "endLine": 25,
+          "endColumn": 1
+        },
+        "coverage-1-solution": {
+          "file": "src/anonymization_trial/verification.py",
+          "line": 205,
+          "endLine": 249,
+          "endColumn": 62
+        },
+        "coverage-1-scope": {
+          "file": "src/anonymization_trial/verification.py",
+          "line": 205,
+          "endLine": 249,
+          "endColumn": 62
+        },
+        "coverage-2-row": {
+          "file": "Dockerfile",
+          "line": 1,
+          "endLine": 31,
+          "endColumn": 13
+        },
+        "coverage-2-requirement": {
+          "file": "TRIAL_BRIEF.md",
+          "line": 13,
+          "endLine": 25,
+          "endColumn": 1
+        },
+        "coverage-2-solution": {
+          "file": "Dockerfile",
+          "line": 1,
+          "endLine": 31,
+          "endColumn": 13
+        },
+        "coverage-2-scope": {
+          "file": "Dockerfile",
+          "line": 1,
+          "endLine": 31,
+          "endColumn": 13
+        },
+        "coverage-3-row": {
+          "file": "docs/pitch/oai-trial/reorganized/NARRATIVE.md",
+          "line": 793,
+          "endLine": 874,
+          "endColumn": 1
+        },
+        "coverage-3-requirement": {
+          "file": "TRIAL_BRIEF.md",
+          "line": 13,
+          "endLine": 25,
+          "endColumn": 1
+        },
+        "coverage-3-solution": {
+          "file": "docs/pitch/oai-trial/reorganized/NARRATIVE.md",
+          "line": 793,
+          "endLine": 874,
+          "endColumn": 1
+        },
+        "coverage-3-scope": {
+          "file": "docs/pitch/oai-trial/reorganized/NARRATIVE.md",
+          "line": 793,
+          "endLine": 874,
+          "endColumn": 1
+        }
+      }
     },
-    "r13-publication": {
-      "file": "src/anonymization_trial/pipeline.py",
-      "line": 209,
-      "launch": "Pitch: publication",
-      "locals": [
-        "report_path"
-      ]
+    "r04-docker": {
+      "file": "src/anonymization_trial/__main__.py",
+      "line": 207,
+      "endLine": 233,
+      "endColumn": 17,
+      "concepts": {
+        "title": {
+          "file": "src/anonymization_trial/__main__.py",
+          "line": 207,
+          "endLine": 233,
+          "endColumn": 17
+        },
+        "message": {
+          "file": "src/anonymization_trial/__main__.py",
+          "line": 207,
+          "endLine": 233,
+          "endColumn": 17
+        },
+        "main-visual": {
+          "file": "src/anonymization_trial/__main__.py",
+          "line": 207,
+          "endLine": 233,
+          "endColumn": 17
+        },
+        "source-navigation": {
+          "file": "src/anonymization_trial/__main__.py",
+          "line": 207,
+          "endLine": 233,
+          "endColumn": 17
+        },
+        "qualifier": {
+          "file": "docs/pitch/oai-trial/reorganized/NARRATIVE.md",
+          "line": 782,
+          "endLine": 792,
+          "endColumn": 1
+        }
+      }
+    },
+    "r05-mounted-cli": {
+      "file": "src/anonymization_trial/__main__.py",
+      "line": 139,
+      "endLine": 157,
+      "endColumn": 1,
+      "concepts": {
+        "title": {
+          "file": "src/anonymization_trial/__main__.py",
+          "line": 139,
+          "endLine": 157,
+          "endColumn": 1
+        },
+        "message": {
+          "file": "src/anonymization_trial/__main__.py",
+          "line": 139,
+          "endLine": 157,
+          "endColumn": 1
+        },
+        "main-visual": {
+          "file": "src/anonymization_trial/__main__.py",
+          "line": 139,
+          "endLine": 157,
+          "endColumn": 1
+        },
+        "source-navigation": {
+          "file": "src/anonymization_trial/__main__.py",
+          "line": 139,
+          "endLine": 157,
+          "endColumn": 1
+        },
+        "qualifier": {
+          "file": "docs/pitch/oai-trial/reorganized/NARRATIVE.md",
+          "line": 782,
+          "endLine": 792,
+          "endColumn": 1
+        }
+      }
+    },
+    "r06-output-evidence": {
+      "file": "scripts/qualify_submission.py",
+      "line": 80,
+      "endLine": 134,
+      "endColumn": 6,
+      "concepts": {
+        "title": {
+          "file": "scripts/qualify_submission.py",
+          "line": 80,
+          "endLine": 134,
+          "endColumn": 6
+        },
+        "message": {
+          "file": "scripts/qualify_submission.py",
+          "line": 80,
+          "endLine": 134,
+          "endColumn": 6
+        },
+        "body-0": {
+          "file": "scripts/qualify_submission.py",
+          "line": 83,
+          "endLine": 123,
+          "endColumn": 62
+        },
+        "body-1": {
+          "file": "scripts/qualify_submission.py",
+          "line": 124,
+          "endLine": 131,
+          "endColumn": 43
+        },
+        "body-2": {
+          "file": "scripts/qualify_submission.py",
+          "line": 223,
+          "endLine": 280,
+          "endColumn": 51
+        },
+        "source-navigation": {
+          "file": "scripts/qualify_submission.py",
+          "line": 80,
+          "endLine": 134,
+          "endColumn": 6
+        },
+        "qualifier": {
+          "file": "docs/pitch/oai-trial/reorganized/NARRATIVE.md",
+          "line": 782,
+          "endLine": 792,
+          "endColumn": 1
+        }
+      }
+    },
+    "r06a-research-reuse": {
+      "file": "docs/pitch/oai-trial/reorganized/NARRATIVE.md",
+      "line": 762,
+      "endLine": 772,
+      "endColumn": 1,
+      "concepts": {
+        "title": {
+          "file": "docs/pitch/oai-trial/reorganized/NARRATIVE.md",
+          "line": 762,
+          "endLine": 772,
+          "endColumn": 1
+        },
+        "message": {
+          "file": "docs/pitch/oai-trial/reorganized/NARRATIVE.md",
+          "line": 762,
+          "endLine": 772,
+          "endColumn": 1
+        },
+        "body-0": {
+          "file": "docs/pitch/oai-trial/reorganized/NARRATIVE.md",
+          "line": 762,
+          "endLine": 772,
+          "endColumn": 1
+        },
+        "body-1": {
+          "file": "docs/pitch/oai-trial/reorganized/NARRATIVE.md",
+          "line": 762,
+          "endLine": 772,
+          "endColumn": 1
+        },
+        "body-2": {
+          "file": "docs/pitch/oai-trial/reorganized/NARRATIVE.md",
+          "line": 762,
+          "endLine": 772,
+          "endColumn": 1
+        },
+        "body-3": {
+          "file": "docs/pitch/oai-trial/reorganized/NARRATIVE.md",
+          "line": 762,
+          "endLine": 772,
+          "endColumn": 1
+        },
+        "source-navigation": {
+          "file": "docs/pitch/oai-trial/reorganized/sources/research-workflow.md",
+          "line": 1,
+          "endLine": 40,
+          "endColumn": 68
+        },
+        "qualifier": {
+          "file": "docs/pitch/oai-trial/reorganized/NARRATIVE.md",
+          "line": 762,
+          "endLine": 772,
+          "endColumn": 1
+        }
+      }
+    },
+    "r06b-research-adoption": {
+      "file": "docs/pitch/oai-trial/reorganized/NARRATIVE.md",
+      "line": 773,
+      "endLine": 781,
+      "endColumn": 1,
+      "concepts": {
+        "title": {
+          "file": "docs/pitch/oai-trial/reorganized/NARRATIVE.md",
+          "line": 773,
+          "endLine": 781,
+          "endColumn": 1
+        },
+        "message": {
+          "file": "docs/pitch/oai-trial/reorganized/NARRATIVE.md",
+          "line": 773,
+          "endLine": 781,
+          "endColumn": 1
+        },
+        "body-0": {
+          "file": "src/anonymization_trial/verification.py",
+          "line": 252,
+          "endLine": 278,
+          "endColumn": 14
+        },
+        "body-1": {
+          "file": "security/tests/test_verifier_sensitivity.py",
+          "line": 56,
+          "endLine": 91,
+          "endColumn": 63
+        },
+        "body-2": {
+          "file": "src/anonymization_trial/pseudonyms.py",
+          "line": 30,
+          "endLine": 43,
+          "endColumn": 64
+        },
+        "source-navigation": {
+          "file": "docs/pitch/oai-trial/reorganized/sources/research-workflow.md",
+          "line": 1,
+          "endLine": 40,
+          "endColumn": 68
+        },
+        "qualifier": {
+          "file": "docs/pitch/oai-trial/reorganized/NARRATIVE.md",
+          "line": 773,
+          "endLine": 781,
+          "endColumn": 1
+        }
+      }
     },
     "r07-pipeline-map": {
       "file": "src/anonymization_trial/pipeline.py",
-      "line": 215,
-      "launch": "Pitch: publication",
-      "locals": [
-        "input_root"
-      ]
+      "line": 214,
+      "endLine": 258,
+      "endColumn": 68,
+      "concepts": {
+        "title": {
+          "file": "src/anonymization_trial/pipeline.py",
+          "line": 214,
+          "endLine": 258,
+          "endColumn": 68
+        },
+        "message": {
+          "file": "src/anonymization_trial/pipeline.py",
+          "line": 214,
+          "endLine": 258,
+          "endColumn": 68
+        },
+        "main-visual": {
+          "file": "src/anonymization_trial/pipeline.py",
+          "line": 214,
+          "endLine": 258,
+          "endColumn": 68
+        },
+        "source-navigation": {
+          "file": "src/anonymization_trial/pipeline.py",
+          "line": 214,
+          "endLine": 258,
+          "endColumn": 68
+        },
+        "qualifier": {
+          "file": "docs/pitch/oai-trial/reorganized/NARRATIVE.md",
+          "line": 9,
+          "endLine": 92,
+          "endColumn": 1
+        }
+      }
     },
     "r08-policy": {
       "file": "src/anonymization_trial/policy.py",
-      "line": 131,
+      "line": 129,
+      "endLine": 164,
+      "endColumn": 6,
+      "concepts": {
+        "title": {
+          "file": "src/anonymization_trial/policy.py",
+          "line": 129,
+          "endLine": 164,
+          "endColumn": 6
+        },
+        "message": {
+          "file": "src/anonymization_trial/policy.py",
+          "line": 111,
+          "endLine": 126,
+          "endColumn": 18
+        },
+        "body-0": {
+          "file": "src/anonymization_trial/policy.py",
+          "line": 129,
+          "endLine": 164,
+          "endColumn": 6
+        },
+        "body-1": {
+          "file": "src/anonymization_trial/policy.py",
+          "line": 38,
+          "endLine": 40,
+          "endColumn": 65
+        },
+        "body-2": {
+          "file": "src/anonymization_trial/policy.py",
+          "line": 111,
+          "endLine": 126,
+          "endColumn": 18
+        },
+        "source-navigation": {
+          "file": "src/anonymization_trial/policy.py",
+          "line": 129,
+          "endLine": 164,
+          "endColumn": 6
+        },
+        "qualifier": {
+          "file": "docs/pitch/oai-trial/reorganized/NARRATIVE.md",
+          "line": 93,
+          "endLine": 254,
+          "endColumn": 1
+        }
+      }
+    },
+    "r09-identity": {
+      "file": "src/anonymization_trial/pseudonyms.py",
+      "line": 62,
+      "endLine": 104,
+      "endColumn": 24,
       "launch": "Pitch: identity",
+      "breakLine": 104,
       "locals": [
-        "payload"
-      ]
+        "replacements"
+      ],
+      "concepts": {
+        "title": {
+          "file": "src/anonymization_trial/pseudonyms.py",
+          "line": 62,
+          "endLine": 104,
+          "endColumn": 24,
+          "launch": "Pitch: identity",
+          "breakLine": 104,
+          "locals": [
+            "replacements"
+          ]
+        },
+        "message": {
+          "file": "src/anonymization_trial/policy.py",
+          "line": 38,
+          "endLine": 40,
+          "endColumn": 65
+        },
+        "main-visual": {
+          "file": "src/anonymization_trial/pseudonyms.py",
+          "line": 62,
+          "endLine": 104,
+          "endColumn": 24,
+          "launch": "Pitch: identity",
+          "breakLine": 104,
+          "locals": [
+            "replacements"
+          ]
+        },
+        "source-navigation": {
+          "file": "src/anonymization_trial/policy.py",
+          "line": 38,
+          "endLine": 40,
+          "endColumn": 65
+        },
+        "qualifier": {
+          "file": "docs/pitch/oai-trial/reorganized/NARRATIVE.md",
+          "line": 255,
+          "endLine": 329,
+          "endColumn": 1
+        }
+      }
     },
     "r10-spans": {
       "file": "src/anonymization_trial/matcher.py",
-      "line": 121,
-      "launch": "Pitch: identity",
-      "locals": [
-        "text"
-      ]
+      "line": 120,
+      "endLine": 131,
+      "endColumn": 40,
+      "concepts": {
+        "title": {
+          "file": "src/anonymization_trial/matcher.py",
+          "line": 120,
+          "endLine": 131,
+          "endColumn": 40
+        },
+        "message": {
+          "file": "src/anonymization_trial/matcher.py",
+          "line": 120,
+          "endLine": 131,
+          "endColumn": 40
+        },
+        "main-visual": {
+          "file": "src/anonymization_trial/matcher.py",
+          "line": 134,
+          "endLine": 145,
+          "endColumn": 20
+        },
+        "source-navigation": {
+          "file": "src/anonymization_trial/matcher.py",
+          "line": 120,
+          "endLine": 131,
+          "endColumn": 40
+        },
+        "qualifier": {
+          "file": "docs/pitch/oai-trial/reorganized/NARRATIVE.md",
+          "line": 330,
+          "endLine": 384,
+          "endColumn": 1
+        }
+      }
     },
     "r11-formats": {
       "file": "src/anonymization_trial/formats.py",
-      "line": 40,
-      "launch": "Pitch: publication",
+      "line": 39,
+      "endLine": 49,
+      "endColumn": 76,
+      "concepts": {
+        "title": {
+          "file": "src/anonymization_trial/formats.py",
+          "line": 39,
+          "endLine": 49,
+          "endColumn": 76
+        },
+        "message": {
+          "file": "src/anonymization_trial/formats.py",
+          "line": 39,
+          "endLine": 49,
+          "endColumn": 76
+        },
+        "body-0": {
+          "file": "src/anonymization_trial/formats.py",
+          "line": 39,
+          "endLine": 49,
+          "endColumn": 76
+        },
+        "body-1": {
+          "file": "src/anonymization_trial/formats.py",
+          "line": 39,
+          "endLine": 49,
+          "endColumn": 76
+        },
+        "body-2": {
+          "file": "src/anonymization_trial/formats.py",
+          "line": 39,
+          "endLine": 49,
+          "endColumn": 76
+        },
+        "source-navigation": {
+          "file": "src/anonymization_trial/formats.py",
+          "line": 39,
+          "endLine": 49,
+          "endColumn": 76
+        },
+        "qualifier": {
+          "file": "docs/pitch/oai-trial/reorganized/NARRATIVE.md",
+          "line": 385,
+          "endLine": 497,
+          "endColumn": 1
+        }
+      }
+    },
+    "r12-typed-locations": {
+      "file": "src/anonymization_trial/verification.py",
+      "line": 129,
+      "endLine": 143,
+      "endColumn": 18,
+      "launch": "Pitch: typed",
+      "breakLine": 136,
       "locals": [
-        "source"
-      ]
+        "a",
+        "b"
+      ],
+      "concepts": {
+        "title": {
+          "file": "src/anonymization_trial/verification.py",
+          "line": 129,
+          "endLine": 143,
+          "endColumn": 18,
+          "launch": "Pitch: typed",
+          "breakLine": 136,
+          "locals": [
+            "a",
+            "b"
+          ]
+        },
+        "message": {
+          "file": "src/anonymization_trial/verification.py",
+          "line": 129,
+          "endLine": 143,
+          "endColumn": 18,
+          "launch": "Pitch: typed",
+          "breakLine": 136,
+          "locals": [
+            "a",
+            "b"
+          ]
+        },
+        "main-visual": {
+          "file": "src/anonymization_trial/verification.py",
+          "line": 129,
+          "endLine": 143,
+          "endColumn": 18,
+          "launch": "Pitch: typed",
+          "breakLine": 136,
+          "locals": [
+            "a",
+            "b"
+          ]
+        },
+        "source-navigation": {
+          "file": "src/anonymization_trial/verification.py",
+          "line": 129,
+          "endLine": 143,
+          "endColumn": 18
+        },
+        "qualifier": {
+          "file": "docs/pitch/oai-trial/reorganized/NARRATIVE.md",
+          "line": 385,
+          "endLine": 497,
+          "endColumn": 1
+        }
+      }
+    },
+    "r13-publication": {
+      "file": "src/anonymization_trial/pipeline.py",
+      "line": 166,
+      "endLine": 211,
+      "endColumn": 28,
+      "launch": "Pitch: publication",
+      "breakLine": 210,
+      "locals": [
+        "report_path",
+        "output_corpus"
+      ],
+      "concepts": {
+        "title": {
+          "file": "src/anonymization_trial/pipeline.py",
+          "line": 166,
+          "endLine": 211,
+          "endColumn": 28,
+          "launch": "Pitch: publication",
+          "breakLine": 210,
+          "locals": [
+            "report_path",
+            "output_corpus"
+          ]
+        },
+        "message": {
+          "file": "src/anonymization_trial/pipeline.py",
+          "line": 166,
+          "endLine": 211,
+          "endColumn": 28,
+          "launch": "Pitch: publication",
+          "breakLine": 210,
+          "locals": [
+            "report_path",
+            "output_corpus"
+          ]
+        },
+        "main-visual": {
+          "file": "src/anonymization_trial/pipeline.py",
+          "line": 166,
+          "endLine": 211,
+          "endColumn": 28,
+          "launch": "Pitch: publication",
+          "breakLine": 210,
+          "locals": [
+            "report_path",
+            "output_corpus"
+          ]
+        },
+        "source-navigation": {
+          "file": "src/anonymization_trial/pipeline.py",
+          "line": 166,
+          "endLine": 211,
+          "endColumn": 28
+        },
+        "qualifier": {
+          "file": "docs/pitch/oai-trial/reorganized/NARRATIVE.md",
+          "line": 702,
+          "endLine": 761,
+          "endColumn": 1
+        }
+      }
+    },
+    "r14-cloud": {
+      "file": "docs/pitch/oai-trial/reorganized/NARRATIVE.md",
+      "line": 793,
+      "endLine": 874,
+      "endColumn": 1,
+      "concepts": {
+        "title": {
+          "file": "docs/pitch/oai-trial/reorganized/NARRATIVE.md",
+          "line": 793,
+          "endLine": 874,
+          "endColumn": 1
+        },
+        "message": {
+          "file": "docs/pitch/oai-trial/reorganized/NARRATIVE.md",
+          "line": 793,
+          "endLine": 874,
+          "endColumn": 1
+        },
+        "main-visual": {
+          "file": "docs/pitch/oai-trial/reorganized/NARRATIVE.md",
+          "line": 793,
+          "endLine": 874,
+          "endColumn": 1
+        },
+        "source-navigation": {
+          "file": "src/anonymization_trial/pseudonyms.py",
+          "line": 62,
+          "endLine": 104,
+          "endColumn": 24
+        },
+        "qualifier": {
+          "file": "docs/pitch/oai-trial/reorganized/NARRATIVE.md",
+          "line": 793,
+          "endLine": 874,
+          "endColumn": 1
+        }
+      }
+    },
+    "r15-capacity": {
+      "file": "scripts/estimate_aws_cost.py",
+      "line": 23,
+      "endLine": 75,
+      "endColumn": 1,
+      "concepts": {
+        "title": {
+          "file": "scripts/estimate_aws_cost.py",
+          "line": 23,
+          "endLine": 75,
+          "endColumn": 1
+        },
+        "message": {
+          "file": "scripts/estimate_aws_cost.py",
+          "line": 23,
+          "endLine": 75,
+          "endColumn": 1
+        },
+        "body-0": {
+          "file": "scripts/estimate_aws_cost.py",
+          "line": 23,
+          "endLine": 75,
+          "endColumn": 1
+        },
+        "body-1": {
+          "file": "scripts/estimate_aws_cost.py",
+          "line": 23,
+          "endLine": 75,
+          "endColumn": 1
+        },
+        "body-2": {
+          "file": "scripts/estimate_aws_cost.py",
+          "line": 23,
+          "endLine": 75,
+          "endColumn": 1
+        },
+        "source-navigation": {
+          "file": "scripts/estimate_aws_cost.py",
+          "line": 23,
+          "endLine": 75,
+          "endColumn": 1
+        },
+        "qualifier": {
+          "file": "docs/pitch/oai-trial/reorganized/NARRATIVE.md",
+          "line": 793,
+          "endLine": 874,
+          "endColumn": 1
+        }
+      }
+    },
+    "r16-cost": {
+      "file": "scripts/estimate_aws_cost.py",
+      "line": 23,
+      "endLine": 75,
+      "endColumn": 1,
+      "concepts": {
+        "title": {
+          "file": "scripts/estimate_aws_cost.py",
+          "line": 23,
+          "endLine": 75,
+          "endColumn": 1
+        },
+        "message": {
+          "file": "scripts/estimate_aws_cost.py",
+          "line": 23,
+          "endLine": 75,
+          "endColumn": 1
+        },
+        "main-visual": {
+          "file": "scripts/estimate_aws_cost.py",
+          "line": 23,
+          "endLine": 75,
+          "endColumn": 1
+        },
+        "source-navigation": {
+          "file": "scripts/estimate_aws_cost.py",
+          "line": 23,
+          "endLine": 75,
+          "endColumn": 1
+        },
+        "qualifier": {
+          "file": "docs/pitch/oai-trial/reorganized/NARRATIVE.md",
+          "line": 793,
+          "endLine": 874,
+          "endColumn": 1
+        }
+      }
+    },
+    "r17-disclosure": {
+      "file": "docs/pitch/oai-trial/reorganized/NARRATIVE.md",
+      "line": 974,
+      "endLine": 982,
+      "endColumn": 1,
+      "concepts": {
+        "title": {
+          "file": "docs/pitch/oai-trial/reorganized/NARRATIVE.md",
+          "line": 974,
+          "endLine": 982,
+          "endColumn": 1
+        },
+        "message": {
+          "file": "docs/pitch/oai-trial/reorganized/NARRATIVE.md",
+          "line": 974,
+          "endLine": 982,
+          "endColumn": 1
+        },
+        "body-0": {
+          "file": "docs/pitch/oai-trial/reorganized/NARRATIVE.md",
+          "line": 974,
+          "endLine": 982,
+          "endColumn": 1
+        },
+        "body-1": {
+          "file": "docs/pitch/oai-trial/reorganized/NARRATIVE.md",
+          "line": 974,
+          "endLine": 982,
+          "endColumn": 1
+        },
+        "body-2": {
+          "file": "docs/pitch/oai-trial/reorganized/NARRATIVE.md",
+          "line": 974,
+          "endLine": 982,
+          "endColumn": 1
+        },
+        "qualifier": {
+          "file": "docs/pitch/oai-trial/reorganized/NARRATIVE.md",
+          "line": 974,
+          "endLine": 982,
+          "endColumn": 1
+        }
+      }
+    },
+    "r18-question-exact": {
+      "file": "src/anonymization_trial/policy.py",
+      "line": 129,
+      "endLine": 164,
+      "endColumn": 6,
+      "concepts": {
+        "title": {
+          "file": "src/anonymization_trial/policy.py",
+          "line": 129,
+          "endLine": 164,
+          "endColumn": 6
+        },
+        "message": {
+          "file": "src/anonymization_trial/policy.py",
+          "line": 129,
+          "endLine": 164,
+          "endColumn": 6
+        },
+        "qualifier": {
+          "file": "docs/pitch/oai-trial/reorganized/NARRATIVE.md",
+          "line": 93,
+          "endLine": 254,
+          "endColumn": 1
+        }
+      }
+    },
+    "r19-answer-exact": {
+      "file": "src/anonymization_trial/policy.py",
+      "line": 129,
+      "endLine": 164,
+      "endColumn": 6,
+      "concepts": {
+        "title": {
+          "file": "src/anonymization_trial/policy.py",
+          "line": 129,
+          "endLine": 164,
+          "endColumn": 6
+        },
+        "message": {
+          "file": "src/anonymization_trial/policy.py",
+          "line": 129,
+          "endLine": 164,
+          "endColumn": 6
+        },
+        "qualifier": {
+          "file": "docs/pitch/oai-trial/reorganized/NARRATIVE.md",
+          "line": 93,
+          "endLine": 254,
+          "endColumn": 1
+        },
+        "ready-meaning-panel-1": {
+          "file": "src/anonymization_trial/policy.py",
+          "line": 129,
+          "endLine": 164,
+          "endColumn": 6
+        },
+        "ready-meaning-panel-1-heading": {
+          "file": "src/anonymization_trial/policy.py",
+          "line": 129,
+          "endLine": 164,
+          "endColumn": 6
+        },
+        "ready-meaning-panel-1-row-1": {
+          "file": "src/anonymization_trial/policy.py",
+          "line": 129,
+          "endLine": 164,
+          "endColumn": 6
+        },
+        "ready-meaning-panel-1-row-2": {
+          "file": "src/anonymization_trial/policy.py",
+          "line": 129,
+          "endLine": 164,
+          "endColumn": 6
+        },
+        "ready-meaning-panel-1-row-3": {
+          "file": "src/anonymization_trial/policy.py",
+          "line": 129,
+          "endLine": 164,
+          "endColumn": 6
+        },
+        "ready-meaning-panel-1-row-4": {
+          "file": "src/anonymization_trial/policy.py",
+          "line": 129,
+          "endLine": 164,
+          "endColumn": 6
+        },
+        "ready-meaning-panel-2": {
+          "file": "src/anonymization_trial/policy.py",
+          "line": 129,
+          "endLine": 164,
+          "endColumn": 6
+        },
+        "ready-meaning-panel-2-heading": {
+          "file": "src/anonymization_trial/policy.py",
+          "line": 129,
+          "endLine": 164,
+          "endColumn": 6
+        },
+        "ready-meaning-panel-2-row-1": {
+          "file": "src/anonymization_trial/policy.py",
+          "line": 129,
+          "endLine": 164,
+          "endColumn": 6
+        },
+        "ready-meaning-panel-2-row-2": {
+          "file": "src/anonymization_trial/policy.py",
+          "line": 129,
+          "endLine": 164,
+          "endColumn": 6
+        },
+        "ready-meaning-panel-2-row-3": {
+          "file": "src/anonymization_trial/policy.py",
+          "line": 129,
+          "endLine": 164,
+          "endColumn": 6
+        },
+        "ready-meaning-panel-2-row-4": {
+          "file": "src/anonymization_trial/policy.py",
+          "line": 129,
+          "endLine": 164,
+          "endColumn": 6
+        },
+        "ready-meaning-caption": {
+          "file": "src/anonymization_trial/policy.py",
+          "line": 129,
+          "endLine": 164,
+          "endColumn": 6
+        }
+      }
+    },
+    "r20-question-verifier": {
+      "file": "src/anonymization_trial/verification.py",
+      "line": 205,
+      "endLine": 249,
+      "endColumn": 62,
+      "concepts": {
+        "title": {
+          "file": "src/anonymization_trial/verification.py",
+          "line": 205,
+          "endLine": 249,
+          "endColumn": 62
+        },
+        "message": {
+          "file": "src/anonymization_trial/verification.py",
+          "line": 205,
+          "endLine": 249,
+          "endColumn": 62
+        },
+        "qualifier": {
+          "file": "docs/pitch/oai-trial/reorganized/NARRATIVE.md",
+          "line": 568,
+          "endLine": 701,
+          "endColumn": 1
+        }
+      }
+    },
+    "r21-answer-verifier": {
+      "file": "src/anonymization_trial/verification.py",
+      "line": 205,
+      "endLine": 249,
+      "endColumn": 62,
+      "concepts": {
+        "title": {
+          "file": "src/anonymization_trial/verification.py",
+          "line": 205,
+          "endLine": 249,
+          "endColumn": 62
+        },
+        "message": {
+          "file": "scripts/qualify_submission.py",
+          "line": 80,
+          "endLine": 134,
+          "endColumn": 6
+        },
+        "qualifier": {
+          "file": "docs/pitch/oai-trial/reorganized/NARRATIVE.md",
+          "line": 568,
+          "endLine": 701,
+          "endColumn": 1
+        },
+        "verification-boundary-panel-1": {
+          "file": "src/anonymization_trial/verification.py",
+          "line": 205,
+          "endLine": 249,
+          "endColumn": 62
+        },
+        "verification-boundary-panel-1-heading": {
+          "file": "src/anonymization_trial/verification.py",
+          "line": 205,
+          "endLine": 249,
+          "endColumn": 62
+        },
+        "verification-boundary-panel-1-row-1": {
+          "file": "src/anonymization_trial/verification.py",
+          "line": 205,
+          "endLine": 249,
+          "endColumn": 62
+        },
+        "verification-boundary-panel-1-row-2": {
+          "file": "src/anonymization_trial/verification.py",
+          "line": 205,
+          "endLine": 249,
+          "endColumn": 62
+        },
+        "verification-boundary-panel-2": {
+          "file": "src/anonymization_trial/verification.py",
+          "line": 205,
+          "endLine": 249,
+          "endColumn": 62
+        },
+        "verification-boundary-panel-2-heading": {
+          "file": "src/anonymization_trial/verification.py",
+          "line": 205,
+          "endLine": 249,
+          "endColumn": 62
+        },
+        "verification-boundary-panel-2-row-1": {
+          "file": "src/anonymization_trial/verification.py",
+          "line": 205,
+          "endLine": 249,
+          "endColumn": 62
+        },
+        "verification-boundary-panel-2-row-2": {
+          "file": "src/anonymization_trial/verification.py",
+          "line": 205,
+          "endLine": 249,
+          "endColumn": 62
+        },
+        "verification-boundary-panel-3": {
+          "file": "scripts/qualify_submission.py",
+          "line": 80,
+          "endLine": 134,
+          "endColumn": 6
+        },
+        "verification-boundary-panel-3-heading": {
+          "file": "scripts/qualify_submission.py",
+          "line": 80,
+          "endLine": 134,
+          "endColumn": 6
+        },
+        "verification-boundary-panel-3-row-1": {
+          "file": "scripts/qualify_submission.py",
+          "line": 80,
+          "endLine": 134,
+          "endColumn": 6
+        },
+        "verification-boundary-panel-3-row-2": {
+          "file": "scripts/qualify_submission.py",
+          "line": 80,
+          "endLine": 134,
+          "endColumn": 6
+        },
+        "verification-boundary-caption": {
+          "file": "src/anonymization_trial/verification.py",
+          "line": 205,
+          "endLine": 249,
+          "endColumn": 62
+        }
+      }
+    },
+    "r22-question-scale": {
+      "file": "scripts/estimate_aws_cost.py",
+      "line": 23,
+      "endLine": 75,
+      "endColumn": 1,
+      "concepts": {
+        "title": {
+          "file": "scripts/estimate_aws_cost.py",
+          "line": 23,
+          "endLine": 75,
+          "endColumn": 1
+        },
+        "message": {
+          "file": "scripts/estimate_aws_cost.py",
+          "line": 23,
+          "endLine": 75,
+          "endColumn": 1
+        },
+        "qualifier": {
+          "file": "docs/pitch/oai-trial/reorganized/NARRATIVE.md",
+          "line": 793,
+          "endLine": 874,
+          "endColumn": 1
+        }
+      }
+    },
+    "r23-answer-scale": {
+      "file": "scripts/estimate_aws_cost.py",
+      "line": 23,
+      "endLine": 75,
+      "endColumn": 1,
+      "concepts": {
+        "title": {
+          "file": "scripts/estimate_aws_cost.py",
+          "line": 23,
+          "endLine": 75,
+          "endColumn": 1
+        },
+        "message": {
+          "file": "scripts/estimate_aws_cost.py",
+          "line": 23,
+          "endLine": 75,
+          "endColumn": 1
+        },
+        "qualifier": {
+          "file": "docs/pitch/oai-trial/reorganized/NARRATIVE.md",
+          "line": 793,
+          "endLine": 874,
+          "endColumn": 1
+        },
+        "local-versus-model-panel-1": {
+          "file": "scripts/estimate_aws_cost.py",
+          "line": 23,
+          "endLine": 75,
+          "endColumn": 1
+        },
+        "local-versus-model-panel-1-heading": {
+          "file": "scripts/estimate_aws_cost.py",
+          "line": 23,
+          "endLine": 75,
+          "endColumn": 1
+        },
+        "local-versus-model-panel-1-row-1": {
+          "file": "scripts/estimate_aws_cost.py",
+          "line": 23,
+          "endLine": 75,
+          "endColumn": 1
+        },
+        "local-versus-model-panel-1-row-2": {
+          "file": "scripts/estimate_aws_cost.py",
+          "line": 23,
+          "endLine": 75,
+          "endColumn": 1
+        },
+        "local-versus-model-panel-1-row-3": {
+          "file": "scripts/estimate_aws_cost.py",
+          "line": 23,
+          "endLine": 75,
+          "endColumn": 1
+        },
+        "local-versus-model-panel-1-row-4": {
+          "file": "scripts/estimate_aws_cost.py",
+          "line": 23,
+          "endLine": 75,
+          "endColumn": 1
+        },
+        "local-versus-model-panel-2": {
+          "file": "scripts/estimate_aws_cost.py",
+          "line": 23,
+          "endLine": 75,
+          "endColumn": 1
+        },
+        "local-versus-model-panel-2-heading": {
+          "file": "scripts/estimate_aws_cost.py",
+          "line": 23,
+          "endLine": 75,
+          "endColumn": 1
+        },
+        "local-versus-model-panel-2-row-1": {
+          "file": "scripts/estimate_aws_cost.py",
+          "line": 23,
+          "endLine": 75,
+          "endColumn": 1
+        },
+        "local-versus-model-panel-2-row-2": {
+          "file": "docs/pitch/oai-trial/reorganized/sources/aws-key-definitions.md",
+          "line": 1,
+          "endLine": 13,
+          "endColumn": 163
+        },
+        "local-versus-model-panel-2-hmac": {
+          "file": "docs/pitch/oai-trial/reorganized/sources/aws-key-definitions.md",
+          "line": 1,
+          "endLine": 13,
+          "endColumn": 163
+        },
+        "local-versus-model-panel-2-row-3": {
+          "file": "scripts/estimate_aws_cost.py",
+          "line": 23,
+          "endLine": 75,
+          "endColumn": 1
+        },
+        "local-versus-model-panel-2-row-4": {
+          "file": "scripts/estimate_aws_cost.py",
+          "line": 23,
+          "endLine": 75,
+          "endColumn": 1
+        },
+        "local-versus-model-caption": {
+          "file": "scripts/estimate_aws_cost.py",
+          "line": 23,
+          "endLine": 75,
+          "endColumn": 1
+        }
+      }
+    },
+    "r24-security-evals": {
+      "file": "security/tests/test_typed_scalar_verification.py",
+      "line": 21,
+      "endLine": 48,
+      "endColumn": 16,
+      "concepts": {
+        "title": {
+          "file": "security/tests/test_typed_scalar_verification.py",
+          "line": 21,
+          "endLine": 48,
+          "endColumn": 16
+        },
+        "message": {
+          "file": "security/tests/test_typed_scalar_verification.py",
+          "line": 21,
+          "endLine": 48,
+          "endColumn": 16
+        },
+        "body-0": {
+          "file": "security/tests/test_typed_scalar_verification.py",
+          "line": 21,
+          "endLine": 48,
+          "endColumn": 16
+        },
+        "body-1": {
+          "file": "security/tests/test_typed_scalar_verification.py",
+          "line": 21,
+          "endLine": 48,
+          "endColumn": 16
+        },
+        "body-2": {
+          "file": "security/tests/test_typed_scalar_verification.py",
+          "line": 21,
+          "endLine": 48,
+          "endColumn": 16
+        },
+        "source-navigation": {
+          "file": "security/tests/test_typed_scalar_verification.py",
+          "line": 21,
+          "endLine": 48,
+          "endColumn": 16
+        },
+        "qualifier": {
+          "file": "docs/pitch/oai-trial/reorganized/NARRATIVE.md",
+          "line": 875,
+          "endLine": 881,
+          "endColumn": 1
+        }
+      }
+    },
+    "r25-lineage": {
+      "file": "docs/pitch/oai-trial/reorganized/NARRATIVE.md",
+      "line": 875,
+      "endLine": 881,
+      "endColumn": 1,
+      "concepts": {
+        "title": {
+          "file": "docs/pitch/oai-trial/reorganized/NARRATIVE.md",
+          "line": 875,
+          "endLine": 881,
+          "endColumn": 1
+        },
+        "message": {
+          "file": "docs/pitch/oai-trial/reorganized/NARRATIVE.md",
+          "line": 875,
+          "endLine": 881,
+          "endColumn": 1
+        },
+        "body-0": {
+          "file": "docs/pitch/oai-trial/reorganized/NARRATIVE.md",
+          "line": 875,
+          "endLine": 881,
+          "endColumn": 1
+        },
+        "body-1": {
+          "file": "docs/pitch/oai-trial/reorganized/NARRATIVE.md",
+          "line": 875,
+          "endLine": 881,
+          "endColumn": 1
+        },
+        "body-2": {
+          "file": "docs/pitch/oai-trial/reorganized/NARRATIVE.md",
+          "line": 875,
+          "endLine": 881,
+          "endColumn": 1
+        },
+        "qualifier": {
+          "file": "docs/pitch/oai-trial/reorganized/NARRATIVE.md",
+          "line": 875,
+          "endLine": 881,
+          "endColumn": 1
+        }
+      }
+    },
+    "r26-wrapper": {
+      "file": "docs/pitch/oai-trial/reorganized/NARRATIVE.md",
+      "line": 882,
+      "endLine": 888,
+      "endColumn": 1,
+      "concepts": {
+        "title": {
+          "file": "docs/pitch/oai-trial/reorganized/NARRATIVE.md",
+          "line": 882,
+          "endLine": 888,
+          "endColumn": 1
+        },
+        "message": {
+          "file": "docs/pitch/oai-trial/reorganized/NARRATIVE.md",
+          "line": 882,
+          "endLine": 888,
+          "endColumn": 1
+        },
+        "contract": {
+          "file": "docs/pitch/oai-trial/reorganized/NARRATIVE.md",
+          "line": 882,
+          "endLine": 888,
+          "endColumn": 1
+        },
+        "delegation": {
+          "file": "docs/pitch/oai-trial/reorganized/NARRATIVE.md",
+          "line": 882,
+          "endLine": 888,
+          "endColumn": 1
+        },
+        "behavior": {
+          "file": "docs/pitch/oai-trial/reorganized/NARRATIVE.md",
+          "line": 882,
+          "endLine": 888,
+          "endColumn": 1
+        },
+        "source-navigation": {
+          "file": "docs/pitch/oai-trial/reorganized/sources/skill-reuse-reference.md",
+          "line": 1,
+          "endLine": 30,
+          "endColumn": 19
+        },
+        "qualifier": {
+          "file": "docs/pitch/oai-trial/reorganized/NARRATIVE.md",
+          "line": 882,
+          "endLine": 888,
+          "endColumn": 1
+        }
+      }
+    },
+    "r27-discovery": {
+      "file": "src/anonymization_trial/discovery.py",
+      "line": 222,
+      "endLine": 309,
+      "endColumn": 29,
+      "concepts": {
+        "title": {
+          "file": "src/anonymization_trial/discovery.py",
+          "line": 222,
+          "endLine": 309,
+          "endColumn": 29
+        },
+        "message": {
+          "file": "src/anonymization_trial/discovery.py",
+          "line": 222,
+          "endLine": 309,
+          "endColumn": 29
+        },
+        "body-0": {
+          "file": "src/anonymization_trial/discovery.py",
+          "line": 222,
+          "endLine": 309,
+          "endColumn": 29
+        },
+        "body-1": {
+          "file": "src/anonymization_trial/discovery.py",
+          "line": 222,
+          "endLine": 309,
+          "endColumn": 29
+        },
+        "body-2": {
+          "file": "src/anonymization_trial/discovery.py",
+          "line": 222,
+          "endLine": 309,
+          "endColumn": 29
+        },
+        "source-navigation": {
+          "file": "src/anonymization_trial/discovery.py",
+          "line": 222,
+          "endLine": 309,
+          "endColumn": 29
+        },
+        "qualifier": {
+          "file": "docs/pitch/oai-trial/reorganized/NARRATIVE.md",
+          "line": 889,
+          "endLine": 973,
+          "endColumn": 1
+        }
+      }
+    },
+    "r28-canonical-path": {
+      "file": "src/anonymization_trial/bundle.py",
+      "line": 22,
+      "endLine": 37,
+      "endColumn": 15,
+      "concepts": {
+        "title": {
+          "file": "src/anonymization_trial/bundle.py",
+          "line": 22,
+          "endLine": 37,
+          "endColumn": 15
+        },
+        "message": {
+          "file": "src/anonymization_trial/bundle.py",
+          "line": 22,
+          "endLine": 37,
+          "endColumn": 15
+        },
+        "main-visual": {
+          "file": "src/anonymization_trial/bundle.py",
+          "line": 22,
+          "endLine": 37,
+          "endColumn": 15
+        },
+        "source-navigation": {
+          "file": "src/anonymization_trial/bundle.py",
+          "line": 22,
+          "endLine": 37,
+          "endColumn": 15
+        },
+        "qualifier": {
+          "file": "docs/pitch/oai-trial/reorganized/NARRATIVE.md",
+          "line": 889,
+          "endLine": 973,
+          "endColumn": 1
+        }
+      }
     }
   }
 }

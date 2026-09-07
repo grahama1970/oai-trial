@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1408 387" width="1408" height="387" role="img" aria-labelledby="rsa-title rsa-desc">
+  <title id="rsa-title">Different checks, different independence</title>
+  <desc id="rsa-desc">Transformer and runtime verifier share matcher and allocator; the separate fixture readback does not import the runtime transformer or verifier.</desc>
+  <style>.rsa-sans{font-family:Arial,sans-serif}.rsa-mono{font-family:'JetBrains Mono',ui-monospace,'SF Mono',Menlo,Consolas,monospace}.rsa-shadow{filter:none}.rsa-shadow-strong{filter:none}.rsa-target{transform-box:fill-box;transform-origin:center}</style>
+  <rect width="1408" height="387" rx="0.0" fill="#0c0908"/>
+  <g id="panel-0" data-component="panel-0" data-target="panel-0" class="rsa-target">
+    <rect x="35.2" y="27.090000000000003" width="427.0933333333333" height="290.25" rx="10.0" fill="#181211" stroke="#a99787" stroke-width="2.0"/>
+    <text x="248.74666666666667" y="73.53" class="rsa-sans" font-size="28.0" fill="#a99787" text-anchor="middle" dominant-baseline="central" font-weight="700">Transformer</text>
+    <text x="248.74666666666667" y="167.135625" class="rsa-sans" font-size="25.0" fill="#ece2d3" text-anchor="middle" dominant-baseline="central" font-weight="400">Matcher + allocator</text>
+    <text x="248.74666666666667" y="261.46687499999996" class="rsa-sans" font-size="25.0" fill="#ece2d3" text-anchor="middle" dominant-baseline="central" font-weight="400">Format adapters</text>
+  </g>
+  <g id="panel-1" data-component="panel-1" data-target="panel-1" class="rsa-target">
+    <rect x="490.4533333333333" y="27.090000000000003" width="427.0933333333333" height="290.25" rx="10.0" fill="#181211" stroke="#e2ac62" stroke-width="2.0"/>
+    <text x="704.0" y="73.53" class="rsa-sans" font-size="28.0" fill="#e2ac62" text-anchor="middle" dominant-baseline="central" font-weight="700">Runtime verifier</text>
+    <text x="704.0" y="167.135625" class="rsa-sans" font-size="25.0" fill="#ece2d3" text-anchor="middle" dominant-baseline="central" font-weight="400">Location + type checks</text>
+    <text x="704.0" y="261.46687499999996" class="rsa-sans" font-size="25.0" fill="#ece2d3" text-anchor="middle" dominant-baseline="central" font-weight="400">Same matcher/allocator</text>
+  </g>
+  <g id="panel-2" data-component="panel-2" data-target="panel-2" class="rsa-target">
+    <rect x="945.7066666666667" y="27.090000000000003" width="427.0933333333333" height="290.25" rx="10.0" fill="#181211" stroke="#93a289" stroke-width="2.0"/>
+    <text x="1159.2533333333333" y="73.53" class="rsa-sans" font-size="28.0" fill="#93a289" text-anchor="middle" dominant-baseline="central" font-weight="700">Fixture readback</text>
+    <text x="1159.2533333333333" y="167.135625" class="rsa-sans" font-size="25.0" fill="#ece2d3" text-anchor="middle" dominant-baseline="central" font-weight="400">Known-truth format reads</text>
+    <text x="1159.2533333333333" y="261.46687499999996" class="rsa-sans" font-size="25.0" fill="#ece2d3" text-anchor="middle" dominant-baseline="central" font-weight="400">No runtime imports</text>
+  </g>
+  <text x="704.0" y="356.04" class="rsa-sans" font-size="25.0" fill="#ece2d3" text-anchor="middle" dominant-baseline="central">Fresh reads do not eliminate shared-code risk.</text>
+</svg>

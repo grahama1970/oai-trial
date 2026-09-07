@@ -39,10 +39,10 @@ The first playback slide is Table of Contents. The wrapper receives only the pre
 
 ### Demo and Results
 
-- `r02-demo-result` — **Here is the result—not just a success flag** — 00:45–02:15
+- `r02-demo-result` — **Run the anonymization demo** — 00:45–02:15
   - Same prepared fixture; live action after preflight or clearly labeled recorded fallback. No introductory skill slide.
-- `r03-demo-observations` — **Small workloads were measured; petabytes were not** — 02:15–03:15
-  - Two recorded demo sizes, with a 10× logical-workload step.
+- `r03-demo-observations` — **From the brief to the delivered work** — 02:15–03:15
+  - Original requirements mapped to delivered mechanisms and evidence.
 
 ### Reproduce and Verify
 
@@ -67,7 +67,7 @@ The first playback slide is Table of Contents. The wrapper receives only the pre
   - Policy-declared identity—not inferred personhood.
 - `r10-spans` — **Select original spans; emit only once** — 12:15–13:45
   - Original spans only; generated text is never rematched.
-- `r11-formats` — **Preserve logical meaning—not identical serialization** — 13:45–15:00
+- `r11-formats` — **Preserve data structure—not identical file bytes** — 13:45–15:00
   - Adapters own the supported format boundaries.
 - `r12-typed-locations` — **A correct value on the wrong row is still wrong** — 15:00–16:30
   - Verification checks location and scalar type.
@@ -75,7 +75,7 @@ The first playback slide is Table of Contents. The wrapper receives only the pre
   - Technically READY under the declared transformation contract.
 - `r14-cloud` — **Distribute the work; retain one corpus decision** — 18:00–19:30
   - Required production design: AWS, not a deployed extension.
-- `r15-capacity` — **The SLA is a scenario—not a benchmark** — 19:30–20:30
+- `r15-capacity` — **The completion target is modeled—not measured** — 19:30–20:30
   - 200 workers × 20 MB/s is an assumed capacity model.
 - `r16-cost` — **Retention dominates this 1 PB cost scenario** — 20:30–21:15
   - Compare components within a scenario—not across incomparable rows.

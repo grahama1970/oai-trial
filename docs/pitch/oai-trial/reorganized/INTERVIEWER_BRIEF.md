@@ -29,7 +29,7 @@ The workflow starts with problem framing, **dogpile research across Brave, arXiv
 
 Research adaptations are narrow: **SPIA** informed identity-coherence and privacy-limit thinking; **DICOM validation** informed known-truth and corrupted-output checks; **AnonShield/Proteus** informed namespace and keyed-pseudonym design. Their full systems or benchmarks were not reproduced. [Research/reuse map](sources/research-workflow.md).
 
-The [later rehearsal receipt](../rehearsal-evidence.json) records offline Docker executions and a **separate local skill-wrapper** run/verify, independent four-format readback, and conflicting-policy refusals. The wrapper did not run Docker. No discovery or live adaptive attack campaign ran in that receipt.
+The [later rehearsal receipt](https://github.com/grahama1970/oai-trial/blob/main/docs/pitch/oai-trial/rehearsal-evidence.json) records offline Docker executions and a **separate local skill-wrapper** run/verify, independent four-format readback, and conflicting-policy refusals. The wrapper did not run Docker. No discovery or live adaptive attack campaign ran in that receipt.
 
 A useful discussion example: the initial rehearsal oracle demanded cross-environment SQLite byte equality. The unchanged outputs passed logical/schema/type checks; differing SQLite versions and header metadata were observed. The comparison—not the runtime—was corrected. [Explanation](NARRATIVE.md#wrong-oracle).
 
@@ -39,10 +39,11 @@ The local implementation materializes data. **TB/PB capacity and AWS costs are m
 
 | Discussion | Implementation |
 |---|---|
-| Literal conflicts and declared identities | [policy.py](../../../../src/anonymization_trial/policy.py): `_check_overlap`, `Rule.identity` |
-| Overlaps and no cascading | [matcher.py](../../../../src/anonymization_trial/matcher.py): `_select`, `Matcher.replace` |
-| Typed/location checks versus fixture oracle | [verification.py](../../../../src/anonymization_trial/verification.py); [scripts/qualify_submission.py](../../../../scripts/qualify_submission.py): `readback` |
-| Readiness and publication order | [pipeline.py](../../../../src/anonymization_trial/pipeline.py): `_publish` |
+| Literal conflicts and declared identities | [policy.py](https://github.com/grahama1970/oai-trial/blob/main/src/anonymization_trial/policy.py): `_check_overlap`, `Rule.identity` |
+| Overlaps and no cascading | [matcher.py](https://github.com/grahama1970/oai-trial/blob/main/src/anonymization_trial/matcher.py): `_select`, `Matcher.replace` |
+| Typed/location checks versus fixture oracle | [verification.py](https://github.com/grahama1970/oai-trial/blob/main/src/anonymization_trial/verification.py); [scripts/qualify_submission.py](https://github.com/grahama1970/oai-trial/blob/main/scripts/qualify_submission.py): `readback` |
+| Privacy-safe error references | [errors.py](https://github.com/grahama1970/oai-trial/blob/main/src/anonymization_trial/errors.py): `safe_ref` |
+| Readiness and publication order | [pipeline.py](https://github.com/grahama1970/oai-trial/blob/main/src/anonymization_trial/pipeline.py): `_publish` |
 
 This is a bounded trial. Questions may lead to demonstrated code, a deliberate deferral, or an explicit need for further research—not a claim that every hardening scenario has been solved.
 
