@@ -147,6 +147,14 @@
       "visibility": "public",
       "role": "supporting",
       "required": true
+    },
+    {
+      "id": "research-workflow",
+      "title": "Research-led workflow, reuse decisions and bounded adoption",
+      "path": "sources/research-workflow.md",
+      "visibility": "public",
+      "role": "supporting",
+      "required": true
     }
   ],
   "policy": {
@@ -168,7 +176,8 @@
       "demo-scale-calculation",
       "skill-reuse-reference",
       "operator-update",
-      "project-state-context"
+      "project-state-context",
+      "research-workflow"
     ],
     "forbidden_unqualified_claims": [
       "formally anonymous",

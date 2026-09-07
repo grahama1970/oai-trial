@@ -8,8 +8,8 @@ fully read — proof boundary).
 - Privacy Protection of Automotive Location Data Based on FPE of Geographical Coordinates — http://arxiv.org/abs/2510.20300
 - eFPE: Lightweight Format-Preserving Encryption for Embedded Systems — http://arxiv.org/abs/2511.12225
 
-Relevance: backs the optional FF3-1 format-preserving mode (phone/email/id keep a
-valid-looking shape). NIST SP 800-38G is the normative reference.
+Decision: FPE was considered as an alternative; no FF3-1 or other encryption
+mode is implemented. Type-shaped replacement strings are not encryption.
 
 ## Differential privacy (production tradeoffs)
 - **Differential Privacy Overview and Fundamental Techniques** — http://arxiv.org/abs/2411.04710
@@ -31,8 +31,9 @@ A one-paragraph "known limitation" in SUBMISSION should cite this.
 ## Referential integrity mechanics
 - Hashing with Linear Probing and Referential Integrity — http://arxiv.org/abs/1808.04602
 
-Relevance: background for the deterministic-hash → stable-pseudonym design that
-preserves cross-table/file relationships without a mapping table.
+Relevance correction: this paper concerns pointer stability in hash tables,
+not identity preservation across records. Do not cite it as an implementation
+source for consistent cross-file pseudonyms.
 
 ## Recent / cutting-edge (2026, sorted by submission date)
 Retrieved 2026-09-04 via arXiv API `sortBy=submittedDate`. Titles/ids verified;
@@ -47,14 +48,14 @@ context for the optional discovery boundary, not the core runtime.
 - **REDACT: A Systematically Controlled Multilingual Benchmark for Personal Information Detection** (2026-06-18) — http://arxiv.org/abs/2606.19881
   Benchmark framing for the design-time discovery/reviewer tier.
 - **Institution-Specific LLM Prompting Recovers PHI That De-identification Systems and Their Gold Standards Both Miss** (2026-08-17) — http://arxiv.org/abs/2608.17051
-  Direct evidence for the residual re-identification risk our approach does not
-  solve — cite as a known limitation alongside k-anonymity.
+  Evidence that detection systems and reference annotations can miss
+  institution-specific PHI; not a direct re-identification test of this pipeline.
 - **Redakto — The Incognito Tab for LLMs** (2026-08-18) — http://arxiv.org/abs/2608.18260
   Contemporary redaction-pipeline framing; contrast with our offline
   deterministic container.
 - **ToolMinimize: Auditing and Rewriting LLM Agent Tool Calls to Minimize Privacy Exposure** (2026-08-25) — http://arxiv.org/abs/2608.24957
-  Tokenize→untokenize referential-integrity pattern (matches the reuse-audit
-  `pii-tokenization` idea).
+  Background on minimizing disclosure in agent tool-call arguments. Its
+  argument-rewriting middleware is not implemented by this corpus transformer.
 - **LLMs as strategy designers for privacy-preserving tabular data synthesis** (2026-08-30) — http://arxiv.org/abs/2608.29674
   Production-design enrichment: LLM proposes strategy, deterministic code
   executes — mirrors our Tier-2/design-time cascade boundary.

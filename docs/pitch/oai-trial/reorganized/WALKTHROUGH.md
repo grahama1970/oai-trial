@@ -24,28 +24,28 @@ Complete environment and input preflight before the talk. During r02, run the al
 | [r04-docker](#r04-docker) | 03:15–04:15 | The evaluator needs one self-contained image |
 | [r05-mounted-cli](#r05-mounted-cli) | 04:15–05:30 | One bundle in; one dedicated release directory out |
 | [r06-output-evidence](#r06-output-evidence) | 05:30–07:00 | Check the artifacts, not the exit code |
-| [r07-pipeline-map](#r07-pipeline-map) | 07:00–07:45 | Transformation and release are separate steps |
-| [r08-policy](#r08-policy) | 07:45–09:00 | The policy supplies authority—not a guess |
-| [r09-identity](#r09-identity) | 09:00–10:45 | Aliases converge because identity is declared |
-| [r10-spans](#r10-spans) | 10:45–12:15 | Select original spans; emit only once |
-| [r11-formats](#r11-formats) | 12:15–13:30 | Preserve logical meaning—not identical serialization |
-| [r12-typed-locations](#r12-typed-locations) | 13:30–15:00 | A correct value on the wrong row is still wrong |
-| [r13-publication](#r13-publication) | 15:00–16:30 | The marker—not the directory—authorizes use |
-| [r14-cloud](#r14-cloud) | 16:30–18:00 | Distribute the work; retain one corpus decision |
-| [r15-capacity](#r15-capacity) | 18:00–19:00 | The SLA is a scenario—not a benchmark |
-| [r16-cost](#r16-cost) | 19:00–20:15 | Retention dominates this 1 PB cost scenario |
-| [r17-disclosure](#r17-disclosure) | 20:15–21:00 | Technical readiness does not waive the timebox |
-| [r18-question-exact](#r18-question-exact) | 21:00–21:15 | Question 1 |
-| [r19-answer-exact](#r19-answer-exact) | 21:15–22:00 | Explicit policy separates authority from guessing |
-| [r20-question-verifier](#r20-question-verifier) | 22:00–22:15 | Question 2 |
-| [r21-answer-verifier](#r21-answer-verifier) | 22:15–23:00 | Rereading helps; common-mode risk remains |
-| [r22-question-scale](#r22-question-scale) | 23:00–23:15 | Question 3 |
-| [r23-answer-scale](#r23-answer-scale) | 23:15–24:00 | The model exposes assumptions; it does not validate them |
-| [r24-security-evals](#r24-security-evals) | 24:00–25:15 | Security evals test different failure surfaces |
-| [r25-lineage](#r25-lineage) | 25:15–26:00 | The retained Judge result is fixture-backed |
-| [r26-wrapper](#r26-wrapper) | 26:00–27:00 | The skill delegates; it does not fork the engine |
-| [r27-discovery](#r27-discovery) | 27:00–28:30 | A proposed alias does not authorize release |
-| [r28-canonical-path](#r28-canonical-path) | 28:30–30:00 | Validate the destination that will actually be written |
+| [r07-pipeline-map](#r07-pipeline-map) | 09:00–09:45 | Transformation and release are separate steps |
+| [r08-policy](#r08-policy) | 09:45–11:00 | The policy supplies authority—not a guess |
+| [r09-identity](#r09-identity) | 11:00–12:15 | Aliases converge because identity is declared |
+| [r10-spans](#r10-spans) | 12:15–13:45 | Select original spans; emit only once |
+| [r11-formats](#r11-formats) | 13:45–15:00 | Preserve logical meaning—not identical serialization |
+| [r12-typed-locations](#r12-typed-locations) | 15:00–16:30 | A correct value on the wrong row is still wrong |
+| [r13-publication](#r13-publication) | 16:30–18:00 | The marker—not the directory—authorizes use |
+| [r14-cloud](#r14-cloud) | 18:00–19:30 | Distribute the work; retain one corpus decision |
+| [r15-capacity](#r15-capacity) | 19:30–20:30 | The SLA is a scenario—not a benchmark |
+| [r16-cost](#r16-cost) | 20:30–21:15 | Retention dominates this 1 PB cost scenario |
+| [r17-disclosure](#r17-disclosure) | 21:15–22:00 | Technical readiness does not waive the timebox |
+| [r18-question-exact](#r18-question-exact) | 22:00–22:15 | Question 1 |
+| [r19-answer-exact](#r19-answer-exact) | 22:15–23:00 | Explicit policy separates authority from guessing |
+| [r20-question-verifier](#r20-question-verifier) | 23:00–23:15 | Question 2 |
+| [r21-answer-verifier](#r21-answer-verifier) | 23:15–24:00 | Rereading helps; common-mode risk remains |
+| [r22-question-scale](#r22-question-scale) | 24:00–24:15 | Question 3 |
+| [r23-answer-scale](#r23-answer-scale) | 24:15–25:00 | The model exposes assumptions; it does not validate them |
+| [r24-security-evals](#r24-security-evals) | 25:00–26:15 | Security evals test different failure surfaces |
+| [r25-lineage](#r25-lineage) | 26:15–27:00 | The retained Judge result is fixture-backed |
+| [r26-wrapper](#r26-wrapper) | 27:00–28:00 | The skill delegates; it does not fork the engine |
+| [r27-discovery](#r27-discovery) | 28:00–29:00 | A proposed alias does not authorize release |
+| [r28-canonical-path](#r28-canonical-path) | 29:00–30:00 | Validate the destination that will actually be written |
 | [r29-discussion](#r29-discussion) | 30:00–45:00+ audience reserve | Discussion |
 | [r30-thank-you](#r30-thank-you) | After discussion; end playback | Thank you |
 
@@ -269,16 +269,40 @@ Open supplied sources/qualification.json: readbacks, early_and_late_rejection, a
 }
 ```
 
-**Visible qualification:** Supplied receipt inspected; the application, pytest and Docker were not rerun here.
+**Visible qualification:** Recorded qualification evidence.
 
 **Evidence IDs:** E01, E06
 
 **Transition:** Now the pipeline map explains where those checks fit.
 
 <a id="r07-pipeline-map"></a>
+## r06a-research-reuse — Research first; reuse before custom code
+
+### Say
+
+We begin by understanding the challenge, not by generating code. I use dogpile to find current research and implementations across Brave web search, arXiv and GitHub, then inspect the methods and code. I also check our existing projects and skills. Here, extract-entities and clean-text informed the design but their detection and normalization policies did not fit exact literal replacement. Python’s standard library supplied the format machinery. RapidFuzz supplied the optional scorer rather than a bespoke fuzzy algorithm. The local matcher was a bounded contract choice, not a benchmark-proven improvement over FlashText. Research and implementation continued together; the history does not show every paper being read before any code existed.
+
+### Show / navigate
+
+Open sources/research-workflow.md. Keep wrapper implementation details in Extra Credit.
+
+**Visible qualification:** Development workflow—not an offline runtime dependency.
+
+## r06b-research-adoption — Research changed checks—not just citations
+
+### Say
+
+SPIA helped separate identity coherence from protection against inference. DICOM validation reinforced known-truth fixtures and deliberate output corruption checks. AnonShield and Proteus informed explicit namespace labels, but our engine uses public SHA-256, not their keyed systems. The adoption memo precedes the change adding privacy exclusions, subject checks, namespace labels and verifier-sensitivity tests. That is a concrete research-to-code sequence. We did not implement DICOM, subject-inference attacks, HMAC or key rotation. The linked research map distinguishes adopted, rejected and design-only ideas.
+
+### Show / navigate
+
+Open sources/research-workflow.md. Keep wrapper implementation details in Extra Credit.
+
+**Visible qualification:** Adapted ideas—not full paper implementations or cryptographic guarantees.
+
 ## r07-pipeline-map — Transformation and release are separate steps
 
-**Time:** 07:00–07:45. **Block:** How the Solution Works. **Primary questions:** None; navigation or paired lead-in.
+**Time:** 09:00–09:45. **Block:** How the Solution Works. **Primary questions:** None; navigation or paired lead-in.
 
 ### Say
 
@@ -302,7 +326,7 @@ Trace run_pipeline() calls without opening every branch.
 <a id="r08-policy"></a>
 ## r08-policy — The policy supplies authority—not a guess
 
-**Time:** 07:45–09:00. **Block:** How the Solution Works. **Primary questions:** Q05, Q11, Q33
+**Time:** 09:45–11:00. **Block:** How the Solution Works. **Primary questions:** Q05, Q11, Q33
 
 ### Say
 
@@ -334,7 +358,7 @@ def compile_policy(payload: object) -> Policy:
 <a id="r09-identity"></a>
 ## r09-identity — Aliases converge because identity is declared
 
-**Time:** 09:00–10:45. **Block:** How the Solution Works. **Primary questions:** Q07, Q08, Q09, Q31, Q32
+**Time:** 11:00–12:15. **Block:** How the Solution Works. **Primary questions:** Q07, Q08, Q09, Q31, Q32
 
 ### Say
 
@@ -365,7 +389,7 @@ Rule.identity L38–40 → _digest L41–43 → build_replacements L62–104. Co
 <a id="r10-spans"></a>
 ## r10-spans — Select original spans; emit only once
 
-**Time:** 10:45–12:15. **Block:** How the Solution Works. **Primary questions:** Q10, Q41
+**Time:** 12:15–13:45. **Block:** How the Solution Works. **Primary questions:** Q10, Q41
 
 ### Say
 
@@ -399,7 +423,7 @@ Matcher.replace L120–131; point to source slices and replacement append. _sele
 <a id="r11-formats"></a>
 ## r11-formats — Preserve logical meaning—not identical serialization
 
-**Time:** 12:15–13:30. **Block:** How the Solution Works. **Primary questions:** Q38, Q39, Q40
+**Time:** 13:45–15:00. **Block:** How the Solution Works. **Primary questions:** Q38, Q39, Q40
 
 ### Say
 
@@ -430,7 +454,7 @@ def transform_file(source: Path, destination: Path, policy: Policy) -> tuple[int
 <a id="r12-typed-locations"></a>
 ## r12-typed-locations — A correct value on the wrong row is still wrong
 
-**Time:** 13:30–15:00. **Block:** How the Solution Works. **Primary questions:** Q12
+**Time:** 15:00–16:30. **Block:** How the Solution Works. **Primary questions:** Q12
 
 ### Say
 
@@ -463,7 +487,7 @@ Show _typed_equal L129–143 and one corresponding location comparison. Optional
 <a id="r13-publication"></a>
 ## r13-publication — The marker—not the directory—authorizes use
 
-**Time:** 15:00–16:30. **Block:** How the Solution Works. **Primary questions:** Q13, Q14, Q37
+**Time:** 16:30–18:00. **Block:** How the Solution Works. **Primary questions:** Q13, Q14, Q37
 
 ### Say
 
@@ -497,7 +521,7 @@ Walk _publish L166–211 from marker removal to final rename; do not run fault i
 <a id="r14-cloud"></a>
 ## r14-cloud — Distribute the work; retain one corpus decision
 
-**Time:** 16:30–18:00. **Block:** How the Solution Works. **Primary questions:** Q24, Q25, Q27
+**Time:** 18:00–19:30. **Block:** How the Solution Works. **Primary questions:** Q24, Q25, Q27
 
 ### Say
 
@@ -518,7 +542,7 @@ Pinned docs/production-architecture.md; connect local build_replacements to comm
 <a id="r15-capacity"></a>
 ## r15-capacity — The SLA is a scenario—not a benchmark
 
-**Time:** 18:00–19:00. **Block:** How the Solution Works. **Primary questions:** None; navigation or paired lead-in.
+**Time:** 19:30–20:30. **Block:** How the Solution Works. **Primary questions:** None; navigation or paired lead-in.
 
 ### Say
 
@@ -546,7 +570,7 @@ costs/example-estimates.json and _one(); source formula is in the appendix.
 <a id="r16-cost"></a>
 ## r16-cost — Retention dominates this 1 PB cost scenario
 
-**Time:** 19:00–20:15. **Block:** How the Solution Works. **Primary questions:** Q47
+**Time:** 20:30–21:15. **Block:** How the Solution Works. **Primary questions:** Q47
 
 ### Say
 
@@ -572,7 +596,7 @@ The optional local create-figure command in the spec has **NOT_RUN** status. Its
 <a id="r17-disclosure"></a>
 ## r17-disclosure — Technical readiness does not waive the timebox
 
-**Time:** 20:15–21:00. **Block:** How the Solution Works. **Primary questions:** Q28, Q29, Q30
+**Time:** 21:15–22:00. **Block:** How the Solution Works. **Primary questions:** Q28, Q29, Q30
 
 ### Say
 
@@ -591,7 +615,7 @@ SUBMISSION.md: Time spent, Retrospective time estimate, Unfinished work.
 <a id="r18-question-exact"></a>
 ## r18-question-exact — Question 1
 
-**Time:** 21:00–21:15. **Block:** Prepared Adversarial Questions. **Primary questions:** None; navigation or paired lead-in.
+**Time:** 22:00–22:15. **Block:** Prepared Adversarial Questions. **Primary questions:** None; navigation or paired lead-in.
 
 ### Say
 
@@ -606,7 +630,7 @@ The first skeptical question is whether an explicit policy is avoiding the hard 
 <a id="r19-answer-exact"></a>
 ## r19-answer-exact — Explicit policy separates authority from guessing
 
-**Time:** 21:15–22:00. **Block:** Prepared Adversarial Questions. **Primary questions:** Q01, Q02, Q03
+**Time:** 22:15–23:00. **Block:** Prepared Adversarial Questions. **Primary questions:** Q01, Q02, Q03
 
 ### Say
 
@@ -627,7 +651,7 @@ compile_policy() and approve() are the evidence; no generic platform comparison 
 <a id="r20-question-verifier"></a>
 ## r20-question-verifier — Question 2
 
-**Time:** 22:00–22:15. **Block:** Prepared Adversarial Questions. **Primary questions:** None; navigation or paired lead-in.
+**Time:** 23:00–23:15. **Block:** Prepared Adversarial Questions. **Primary questions:** None; navigation or paired lead-in.
 
 ### Say
 
@@ -642,7 +666,7 @@ The second question challenges the checker itself. If the verifier calls the sam
 <a id="r21-answer-verifier"></a>
 ## r21-answer-verifier — Rereading helps; common-mode risk remains
 
-**Time:** 22:15–23:00. **Block:** Prepared Adversarial Questions. **Primary questions:** Q04
+**Time:** 23:15–24:00. **Block:** Prepared Adversarial Questions. **Primary questions:** Q04
 
 ### Say
 
@@ -664,7 +688,7 @@ verify_corpus imports replace_text/build_replacements; readback() has its own sy
 <a id="r22-question-scale"></a>
 ## r22-question-scale — Question 3
 
-**Time:** 23:00–23:15. **Block:** Prepared Adversarial Questions. **Primary questions:** None; navigation or paired lead-in.
+**Time:** 24:00–24:15. **Block:** Prepared Adversarial Questions. **Primary questions:** None; navigation or paired lead-in.
 
 ### Say
 
@@ -679,7 +703,7 @@ The third question is whether the cloud slide is measured engineering or just mu
 <a id="r23-answer-scale"></a>
 ## r23-answer-scale — The model exposes assumptions; it does not validate them
 
-**Time:** 23:15–24:00. **Block:** Prepared Adversarial Questions. **Primary questions:** Q26
+**Time:** 24:15–25:00. **Block:** Prepared Adversarial Questions. **Primary questions:** Q26
 
 ### Say
 
@@ -701,7 +725,7 @@ Point to the model inputs and shared plan, then advance directly into Extra Cred
 <a id="r24-security-evals"></a>
 ## r24-security-evals — Security evals test different failure surfaces
 
-**Time:** 24:00–25:15. **Block:** Extra Credit. **Primary questions:** None; navigation or paired lead-in.
+**Time:** 25:00–26:15. **Block:** Extra Credit. **Primary questions:** None; navigation or paired lead-in.
 
 ### Say
 
@@ -723,7 +747,7 @@ Security/SECURITY.md and retained scanner receipt; no new scans. The exact TOC l
 <a id="r25-lineage"></a>
 ## r25-lineage — The retained Judge result is fixture-backed
 
-**Time:** 25:15–26:00. **Block:** Extra Credit. **Primary questions:** None; navigation or paired lead-in.
+**Time:** 26:15–27:00. **Block:** Extra Credit. **Primary questions:** None; navigation or paired lead-in.
 
 ### Say
 
@@ -761,7 +785,7 @@ security/battle/run-receipt.json: claim_scope and execution; no target campaign 
 <a id="r26-wrapper"></a>
 ## r26-wrapper — The skill delegates; it does not fork the engine
 
-**Time:** 26:00–27:00. **Block:** Extra Credit. **Primary questions:** Q06
+**Time:** 27:00–28:00. **Block:** Extra Credit. **Primary questions:** Q06
 
 ### Say
 
@@ -795,7 +819,7 @@ exec "$ENTRY" "$@"
 <a id="r27-discovery"></a>
 ## r27-discovery — A proposed alias does not authorize release
 
-**Time:** 27:00–28:30. **Block:** Extra Credit. **Primary questions:** Q19, Q20, Q21, Q34, Q35, Q36
+**Time:** 28:00–29:00. **Block:** Extra Credit. **Primary questions:** Q19, Q20, Q21, Q34, Q35, Q36
 
 ### Say
 
@@ -830,7 +854,7 @@ def approve(bundle: Path, review_path: Path, ids: list[str], output: Path, *inpu
 <a id="r28-canonical-path"></a>
 ## r28-canonical-path — Validate the destination that will actually be written
 
-**Time:** 28:30–30:00. **Block:** Extra Credit. **Primary questions:** Q15, Q16, Q17, Q18
+**Time:** 29:00–30:00. **Block:** Extra Credit. **Primary questions:** Q15, Q16, Q17, Q18
 
 ### Say
 

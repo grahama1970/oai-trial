@@ -13,11 +13,11 @@
     "validation_report": "/home/graham/workspace/experiments/oai-trial/docs/pitch/oai-trial/reorganized/validation_report.json"
   },
   "counts": {
-    "slides": 30,
-    "claims": 24,
+    "slides": 32,
+    "claims": 26,
     "assets": 36,
     "errors": 0,
-    "warnings": 27
+    "warnings": 29
   },
   "gaps": [
     "SLIDE_CANDIDATE_CLAIM: Slide uses candidate claim 'demo-fixture'; human review remains open.",
@@ -25,6 +25,8 @@
     "SLIDE_CANDIDATE_CLAIM: Slide uses candidate claim 'docker-interface'; human review remains open.",
     "SLIDE_CANDIDATE_CLAIM: Slide uses candidate claim 'reproduce'; human review remains open.",
     "SLIDE_CANDIDATE_CLAIM: Slide uses candidate claim 'qualification'; human review remains open.",
+    "SLIDE_CANDIDATE_CLAIM: Slide uses candidate claim 'r06a-research-reuse'; human review remains open.",
+    "SLIDE_CANDIDATE_CLAIM: Slide uses candidate claim 'r06b-research-adoption'; human review remains open.",
     "SLIDE_CANDIDATE_CLAIM: Slide uses candidate claim 'local'; human review remains open.",
     "SLIDE_CANDIDATE_CLAIM: Slide uses candidate claim 'policy'; human review remains open.",
     "SLIDE_CANDIDATE_CLAIM: Slide uses candidate claim 'identity'; human review remains open.",

@@ -247,6 +247,42 @@
     "navigation_element_id": "source-navigation"
   },
   {
+    "slide_id": "r06a-research-reuse",
+    "legacy_walkthrough_sections": [],
+    "block": "How the Solution Works",
+    "duration_minutes": 1,
+    "counts_toward_prepared_time": true,
+    "timing_kind": "prepared",
+    "time_cue": "07:00–08:00",
+    "archetype": "assertion + evidence",
+    "question_ids": [],
+    "code_refs": [],
+    "evidence_ids": [],
+    "diagram_refs": [],
+    "figure_refs": [],
+    "navigation_asset": null,
+    "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+    "normal_playback": true
+  },
+  {
+    "slide_id": "r06b-research-adoption",
+    "legacy_walkthrough_sections": [],
+    "block": "How the Solution Works",
+    "duration_minutes": 1,
+    "counts_toward_prepared_time": true,
+    "timing_kind": "prepared",
+    "time_cue": "08:00–09:00",
+    "archetype": "assertion + evidence",
+    "question_ids": [],
+    "code_refs": [],
+    "evidence_ids": [],
+    "diagram_refs": [],
+    "figure_refs": [],
+    "navigation_asset": null,
+    "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+    "normal_playback": true
+  },
+  {
     "slide_id": "r07-pipeline-map",
     "legacy_walkthrough_sections": [
       "02-architecture"
@@ -255,7 +291,7 @@
     "duration_minutes": 0.75,
     "counts_toward_prepared_time": true,
     "timing_kind": "prepared",
-    "time_cue": "07:00–07:45",
+    "time_cue": "09:00–09:45",
     "archetype": "assertion + evidence",
     "question_ids": [],
     "code_refs": [
@@ -314,7 +350,7 @@
     "duration_minutes": 1.25,
     "counts_toward_prepared_time": true,
     "timing_kind": "prepared",
-    "time_cue": "07:45–09:00",
+    "time_cue": "09:45–11:00",
     "archetype": "assertion + evidence",
     "question_ids": [
       "Q05",
@@ -363,10 +399,10 @@
       "03-semantics"
     ],
     "block": "How the Solution Works",
-    "duration_minutes": 1.75,
+    "duration_minutes": 1.25,
     "counts_toward_prepared_time": true,
     "timing_kind": "prepared",
-    "time_cue": "09:00–10:45",
+    "time_cue": "11:00–12:15",
     "archetype": "assertion + evidence",
     "question_ids": [
       "Q07",
@@ -422,7 +458,7 @@
     "duration_minutes": 1.5,
     "counts_toward_prepared_time": true,
     "timing_kind": "prepared",
-    "time_cue": "10:45–12:15",
+    "time_cue": "12:15–13:45",
     "archetype": "assertion + evidence",
     "question_ids": [
       "Q10",
@@ -467,7 +503,7 @@
     "duration_minutes": 1.25,
     "counts_toward_prepared_time": true,
     "timing_kind": "prepared",
-    "time_cue": "12:15–13:30",
+    "time_cue": "13:45–15:00",
     "archetype": "assertion + evidence",
     "question_ids": [
       "Q38",
@@ -511,7 +547,7 @@
     "duration_minutes": 1.5,
     "counts_toward_prepared_time": true,
     "timing_kind": "prepared",
-    "time_cue": "13:30–15:00",
+    "time_cue": "15:00–16:30",
     "archetype": "assertion + evidence",
     "question_ids": [
       "Q12"
@@ -572,7 +608,7 @@
     "duration_minutes": 1.5,
     "counts_toward_prepared_time": true,
     "timing_kind": "prepared",
-    "time_cue": "15:00–16:30",
+    "time_cue": "16:30–18:00",
     "archetype": "assertion + evidence",
     "question_ids": [
       "Q13",
@@ -618,7 +654,7 @@
     "duration_minutes": 1.5,
     "counts_toward_prepared_time": true,
     "timing_kind": "prepared",
-    "time_cue": "16:30–18:00",
+    "time_cue": "18:00–19:30",
     "archetype": "assertion + evidence",
     "question_ids": [
       "Q24",
@@ -657,7 +693,7 @@
     "duration_minutes": 1,
     "counts_toward_prepared_time": true,
     "timing_kind": "prepared",
-    "time_cue": "18:00–19:00",
+    "time_cue": "19:30–20:30",
     "archetype": "assertion + evidence",
     "question_ids": [],
     "code_refs": [
@@ -686,10 +722,10 @@
       "06-production"
     ],
     "block": "How the Solution Works",
-    "duration_minutes": 1.25,
+    "duration_minutes": 0.75,
     "counts_toward_prepared_time": true,
     "timing_kind": "prepared",
-    "time_cue": "19:00–20:15",
+    "time_cue": "20:30–21:15",
     "archetype": "assertion + evidence",
     "question_ids": [
       "Q47"
@@ -733,7 +769,7 @@
     "duration_minutes": 0.75,
     "counts_toward_prepared_time": true,
     "timing_kind": "prepared",
-    "time_cue": "20:15–21:00",
+    "time_cue": "21:15–22:00",
     "archetype": "assertion + evidence",
     "question_ids": [
       "Q28",
@@ -760,7 +796,7 @@
     "duration_minutes": 0.25,
     "counts_toward_prepared_time": true,
     "timing_kind": "prepared",
-    "time_cue": "21:00–21:15",
+    "time_cue": "22:00–22:15",
     "archetype": "standalone question",
     "question_ids": [],
     "code_refs": [
@@ -792,7 +828,7 @@
     "duration_minutes": 0.75,
     "counts_toward_prepared_time": true,
     "timing_kind": "prepared",
-    "time_cue": "21:15–22:00",
+    "time_cue": "22:15–23:00",
     "archetype": "assertion + evidence",
     "question_ids": [
       "Q01",
@@ -836,7 +872,7 @@
     "duration_minutes": 0.25,
     "counts_toward_prepared_time": true,
     "timing_kind": "prepared",
-    "time_cue": "22:00–22:15",
+    "time_cue": "23:00–23:15",
     "archetype": "standalone question",
     "question_ids": [],
     "code_refs": [
@@ -869,7 +905,7 @@
     "duration_minutes": 0.75,
     "counts_toward_prepared_time": true,
     "timing_kind": "prepared",
-    "time_cue": "22:15–23:00",
+    "time_cue": "23:15–24:00",
     "archetype": "assertion + evidence",
     "question_ids": [
       "Q04"
@@ -919,7 +955,7 @@
     "duration_minutes": 0.25,
     "counts_toward_prepared_time": true,
     "timing_kind": "prepared",
-    "time_cue": "23:00–23:15",
+    "time_cue": "24:00–24:15",
     "archetype": "standalone question",
     "question_ids": [],
     "code_refs": [
@@ -951,7 +987,7 @@
     "duration_minutes": 0.75,
     "counts_toward_prepared_time": true,
     "timing_kind": "prepared",
-    "time_cue": "23:15–24:00",
+    "time_cue": "24:15–25:00",
     "archetype": "assertion + evidence",
     "question_ids": [
       "Q26"
@@ -993,7 +1029,7 @@
     "duration_minutes": 1.25,
     "counts_toward_prepared_time": true,
     "timing_kind": "prepared",
-    "time_cue": "24:00–25:15",
+    "time_cue": "25:00–26:15",
     "archetype": "assertion + evidence",
     "question_ids": [],
     "code_refs": [
@@ -1035,7 +1071,7 @@
     "duration_minutes": 0.75,
     "counts_toward_prepared_time": true,
     "timing_kind": "prepared",
-    "time_cue": "25:15–26:00",
+    "time_cue": "26:15–27:00",
     "archetype": "assertion + evidence",
     "question_ids": [],
     "code_refs": [],
@@ -1057,7 +1093,7 @@
     "duration_minutes": 1,
     "counts_toward_prepared_time": true,
     "timing_kind": "prepared",
-    "time_cue": "26:00–27:00",
+    "time_cue": "27:00–28:00",
     "archetype": "assertion + evidence",
     "question_ids": [
       "Q06"
@@ -1102,10 +1138,10 @@
       "05-evidence"
     ],
     "block": "Extra Credit",
-    "duration_minutes": 1.5,
+    "duration_minutes": 1.0,
     "counts_toward_prepared_time": true,
     "timing_kind": "prepared",
-    "time_cue": "27:00–28:30",
+    "time_cue": "28:00–29:00",
     "archetype": "assertion + evidence",
     "question_ids": [
       "Q19",
@@ -1168,10 +1204,10 @@
       "05-evidence"
     ],
     "block": "Extra Credit",
-    "duration_minutes": 1.5,
+    "duration_minutes": 1.0,
     "counts_toward_prepared_time": true,
     "timing_kind": "prepared",
-    "time_cue": "28:30–30:00",
+    "time_cue": "29:00–30:00",
     "archetype": "assertion + evidence",
     "question_ids": [
       "Q15",

@@ -6,7 +6,7 @@
 
 ## Keep the existing clock
 
-There are **28 prepared slides totaling 30 minutes including navigation**, then a separate **15+ minute Discussion** and **Thank you**. No introductory skill slide is added. The original primary question mappings and all short/deeper answers are unchanged. No backup material follows Thank you in normal playback.
+There are **30 prepared slides totaling 30 minutes including navigation**, then a separate **15+ minute Discussion** and **Thank you**. No introductory skill slide is added. The original primary question mappings and all short/deeper answers are unchanged. No backup material follows Thank you in normal playback.
 
 | Prepared block | Time | Navigation |
 |---|---|---|
@@ -117,3 +117,7 @@ are landed at shared pitchdeck commit `21054950db08ebc298428198b4610ad35b8b446c`
 See validation/consumer-visuals.json and validation/visual-fixes.json. Final human
 review, actual interview permissions and playback/import verification remain
 separate; this does not convert candidate claims into approvals.
+
+## Research and reuse code stops
+
+After reproduction and before the pipeline, spend one minute each on research/reuse and concrete adoption. Show the research-workflow source map; do not install skills or repeat wrapper mechanics. The four shortened identity, cost, discovery and path stops fund these two minutes. Prepared total stays 30 minutes.

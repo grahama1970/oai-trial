@@ -10,23 +10,23 @@
     },
     {
       "path": "INTERVIEW_GUIDE.md",
-      "bytes": 10839,
-      "sha256": "dd8279d179cb10d8dca2255a2eb35ccb7fd7051ce022b8c1143a04bd0f806476"
+      "bytes": 11188,
+      "sha256": "187c7488041f6a4d6a43b955e87154637796114ddefba8bc11372cdc4768e810"
     },
     {
       "path": "README.md",
       "bytes": 8947,
-      "sha256": "0afcc3c6d94306b8d1cdf31ea8af142b4a5ab43fc1d86200773a50cd6c1a92ed"
+      "sha256": "a0630759947c109a001bd903638288fbfdb8f9ad50d8c63edf98ca93245353f6"
     },
     {
       "path": "TOC.md",
-      "bytes": 6237,
-      "sha256": "2efa8fbd8af6a36179ae21bbe25132f0c6046392432ee0683e245f79e8176226"
+      "bytes": 6675,
+      "sha256": "cabc7d8f6bf222112c773f7698949abb07eef20304176712480b1cef7479e00e"
     },
     {
       "path": "WALKTHROUGH.md",
-      "bytes": 101650,
-      "sha256": "7d54cba5670839d39a3717edea26953d5cc0055a136a5d55ff010b5ef6ec603f"
+      "bytes": 103543,
+      "sha256": "afe1f490b8aa61919947c0a81545eaeed8f79f07fa5258d00672b8f47934b6b4"
     },
     {
       "path": "asset_manifest.yaml",
@@ -235,8 +235,8 @@
     },
     {
       "path": "claim_ledger.yaml",
-      "bytes": 42027,
-      "sha256": "37efc257578ce669fc00e50081fff09c9051ebe8ba97f2a2678eda1cebe4b859"
+      "bytes": 52343,
+      "sha256": "c58042e3d6953f3b3e3e45419949122c4e7136f02562d7069ed98ac047083b60"
     },
     {
       "path": "debugger.json",
@@ -245,8 +245,8 @@
     },
     {
       "path": "deck.public.yaml",
-      "bytes": 216714,
-      "sha256": "fb24b4d9d01ec39458a2b663eef19e4e98037ca61c19a0389d487afe9453eda8"
+      "bytes": 228060,
+      "sha256": "9ed689c5f3a99bbd1550b5656d531022ff1f93ad5024de74b06e7efd32ea1d87"
     },
     {
       "path": "question-map.json",
@@ -285,13 +285,13 @@
     },
     {
       "path": "slide-map.json",
-      "bytes": 41748,
-      "sha256": "bc66050d51ca4f1b0ddf91ee1dc02780db81615e508a82107a73773356299f8c"
+      "bytes": 42827,
+      "sha256": "e70a5927051717796d2b544d87b5ee7690dc77335e69dbb2694e2b0d0b038964"
     },
     {
       "path": "source_manifest.yaml",
-      "bytes": 5048,
-      "sha256": "3c63044059ef38766ef12d720e057626cf728947c7963523ddcd2e9ca8bef7db"
+      "bytes": 5326,
+      "sha256": "246bfd51b34399edb478172e50ed01446cc4e1ba812d407aee3f4c5ad1d55459"
     },
     {
       "path": "sources/BATTLE_OBJECTIVE.md",
@@ -394,6 +394,11 @@
       "sha256": "16bbbf08f5ff02532e58f255616b0c373c57d5e1a790e7b26037490521f3d9b2"
     },
     {
+      "path": "sources/research-workflow.md",
+      "bytes": 4357,
+      "sha256": "722f53db49a8d9f19d33369f978b7cc17a1e854a916d552782055f2f3d18645b"
+    },
+    {
       "path": "sources/reviewed-WALKTHROUGH.md",
       "bytes": 68571,
       "sha256": "cb236d0a486a603b00485f79cca457f5a64f7ebbd8aa514effa1282723ae4f77"
@@ -470,13 +475,13 @@
     },
     {
       "path": "validation_report.json",
-      "bytes": 6629,
-      "sha256": "fb9922309dffe70a0d3a8cbf5e248584aaec140f61e4b2c52c1e8b7052b1b068"
+      "bytes": 7156,
+      "sha256": "c34efccd030747878c50f1cec7b289ad5266aea61a798cd4377ec61488e34375"
     },
     {
       "path": "verify_receipt.json",
-      "bytes": 3801,
-      "sha256": "448ceaa9f9f5f39b0d0be89e172b065fd2b5d5161bacda9a422766461782edd4"
+      "bytes": 4018,
+      "sha256": "42a1d09f180856469bbbbce519bb60403690a4be0d7fa4f7a615bd4a81a35f16"
     }
   ]
 }

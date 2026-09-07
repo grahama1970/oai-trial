@@ -10,6 +10,8 @@
    - Actual CLI and input/output locations
    - Independent output checks and evidence boundaries
 3. **How the Solution Works**
+   - Research with $dogpile; inspect existing projects and skills; reuse before custom code
+   - Concrete research-to-code adaptations
    - Compact pipeline map
    - Policy → identity → original spans → formats → verification → publication
    - Required production design, capacity/SLA and modeled costs
@@ -53,55 +55,59 @@ The first playback slide is Table of Contents. The wrapper receives only the pre
 
 ### How the Solution Works
 
-- `r07-pipeline-map` — **Transformation and release are separate steps** — 07:00–07:45
+- `r06a-research-reuse` — **Research first; reuse before custom code** — 07:00–08:00
+  - Understand the contract before choosing an implementation.
+- `r06b-research-adoption` — **Research changed checks—not just citations** — 08:00–09:00
+  - Three adaptations you can inspect in the code.
+- `r07-pipeline-map` — **Transformation and release are separate steps** — 09:00–09:45
   - Four high-level groups orient the code walkthrough.
-- `r08-policy` — **The policy supplies authority—not a guess** — 07:45–09:00
+- `r08-policy` — **The policy supplies authority—not a guess** — 09:45–11:00
   - Contradictory sensitive and protected obligations reject.
-- `r09-identity` — **Aliases converge because identity is declared** — 09:00–10:45
+- `r09-identity` — **Aliases converge because identity is declared** — 11:00–12:15
   - One type/identity pair produces one allocated replacement.
-- `r10-spans` — **Select original spans; emit only once** — 10:45–12:15
+- `r10-spans` — **Select original spans; emit only once** — 12:15–13:45
   - The matcher never rematches its own replacements.
-- `r11-formats` — **Preserve logical meaning—not identical serialization** — 12:15–13:30
+- `r11-formats` — **Preserve logical meaning—not identical serialization** — 13:45–15:00
   - Adapters own the supported format boundaries.
-- `r12-typed-locations` — **A correct value on the wrong row is still wrong** — 13:30–15:00
+- `r12-typed-locations` — **A correct value on the wrong row is still wrong** — 15:00–16:30
   - Verification checks location and scalar type.
-- `r13-publication` — **The marker—not the directory—authorizes use** — 15:00–16:30
+- `r13-publication` — **The marker—not the directory—authorizes use** — 16:30–18:00
   - Write the complete report, then rename it last.
-- `r14-cloud` — **Distribute the work; retain one corpus decision** — 16:30–18:00
+- `r14-cloud` — **Distribute the work; retain one corpus decision** — 18:00–19:30
   - Required production design: AWS, not a deployed extension.
-- `r15-capacity` — **The SLA is a scenario—not a benchmark** — 18:00–19:00
+- `r15-capacity` — **The SLA is a scenario—not a benchmark** — 19:30–20:30
   - 200 workers × 20 MB/s is an assumed capacity model.
-- `r16-cost` — **Retention dominates this 1 PB cost scenario** — 19:00–20:15
+- `r16-cost` — **Retention dominates this 1 PB cost scenario** — 20:30–21:15
   - Compare components within a scenario—not across incomparable rows.
-- `r17-disclosure` — **Technical readiness does not waive the timebox** — 20:15–21:00
+- `r17-disclosure` — **Technical readiness does not waive the timebox** — 21:15–22:00
   - The bounded implementation and the overrun are both disclosed.
 
 ### Prepared Adversarial Questions
 
-- `r18-question-exact` — **Question 1** — 21:00–21:15
+- `r18-question-exact` — **Question 1** — 22:00–22:15
   - Why exact policy instead of automatic detection?
-- `r19-answer-exact` — **Explicit policy separates authority from guessing** — 21:15–22:00
+- `r19-answer-exact` — **Explicit policy separates authority from guessing** — 22:15–23:00
   - Exact transformation is auditable; detection completeness is a separate claim.
-- `r20-question-verifier` — **Question 2** — 22:00–22:15
+- `r20-question-verifier` — **Question 2** — 23:00–23:15
   - How independent is a verifier that shares primitives?
-- `r21-answer-verifier` — **Rereading helps; common-mode risk remains** — 22:15–23:00
+- `r21-answer-verifier` — **Rereading helps; common-mode risk remains** — 23:15–24:00
   - Output mutations are checked independently of transform success flags.
-- `r22-question-scale` — **Question 3** — 23:00–23:15
+- `r22-question-scale` — **Question 3** — 24:00–24:15
   - What changes at petabyte scale—and what does the model prove?
-- `r23-answer-scale` — **The model exposes assumptions; it does not validate them** — 23:15–24:00
+- `r23-answer-scale` — **The model exposes assumptions; it does not validate them** — 24:15–25:00
   - Distribution must preserve identity and release semantics.
 
 ### Extra Credit
 
-- `r24-security-evals` — **Security evals test different failure surfaces** — 24:00–25:15
+- `r24-security-evals` — **Security evals test different failure surfaces** — 25:00–26:15
   - Extra Credit · white/gray/black-box methodology
-- `r25-lineage` — **The retained Judge result is fixture-backed** — 25:15–26:00
+- `r25-lineage` — **The retained Judge result is fixture-backed** — 26:15–27:00
   - Adaptive lineage is not established by this demonstration.
-- `r26-wrapper` — **The skill delegates; it does not fork the engine** — 26:00–27:00
+- `r26-wrapper` — **The skill delegates; it does not fork the engine** — 27:00–28:00
   - Extra Credit · reuse a concise SKILL.md, thin run.sh, and retained behavior checks.
-- `r27-discovery` — **A proposed alias does not authorize release** — 27:00–28:30
+- `r27-discovery` — **A proposed alias does not authorize release** — 28:00–29:00
   - Extra Credit · propose → approve IDs → exact policy → verify
-- `r28-canonical-path` — **Validate the destination that will actually be written** — 28:30–30:00
+- `r28-canonical-path` — **Validate the destination that will actually be written** — 29:00–30:00
   - The final path fix closes relative and symlink aliases.
 
 ### Discussion

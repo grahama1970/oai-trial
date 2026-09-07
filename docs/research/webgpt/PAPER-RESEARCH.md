@@ -21,7 +21,7 @@ This is the closest recent implementation analogue I found. AnonShield combines:
 * streaming processing for structured and unstructured formats;
 * JSON streaming through `ijson`;
 * performance and accuracy benchmarking;
-* separation between entity detection and replacement policy. ([arXiv][1])
+* separation between entity detection and replacement policy. ([arXiv][brief1-1])
 
 #### What to borrow
 
@@ -35,11 +35,11 @@ For tickets **#3, #5, #6, #9, and #10**:
 * Benchmark repeated entities and policy sizes, not only record counts.
 * Separate “which value is sensitive?” from “how is its replacement generated?”
 
-AnonShield’s use of HMAC-SHA256 is particularly relevant to the production architecture. The same entity generates a consistent pseudonym under the same key, while unkeyed hashes are more exposed to dictionary attacks. It also uses incremental processing for JSON, JSONL, CSV, and text. ([arXiv][1])
+AnonShield’s use of HMAC-SHA256 is particularly relevant to the production architecture. The same entity generates a consistent pseudonym under the same key, while unkeyed hashes are more exposed to dictionary attacks. It also uses incremental processing for JSON, JSONL, CSV, and text. ([arXiv][brief1-1])
 
 #### What not to borrow
 
-Do not bring its GPU/NER stack into this trial. The input policy already identifies the literals. Also do not persist a local database containing original-to-pseudonym mappings: AnonShield does this to support controlled re-identification, but the trial neither requires re-identification nor permits mappings to leak into the release. ([arXiv][1])
+Do not bring its GPU/NER stack into this trial. The input policy already identifies the literals. Also do not persist a local database containing original-to-pseudonym mappings: AnonShield does this to support controlled re-identification, but the trial neither requires re-identification nor permits mappings to leak into the release. ([arXiv][brief1-1])
 
 For the local implementation, a deterministic synthetic replacement construction is sufficient to meet the specified contract. For production, document:
 
@@ -64,7 +64,7 @@ Do not introduce a new secret parameter into the evaluator’s fixed container c
 
 **arXiv:2508.01889, 2025**
 
-The DICOM format is not relevant, but the **evaluation methodology is extremely relevant**. The authors created a corpus with synthetic PHI/PII planted in structured fields, text fields, and pixel data, then provided known-truth answer keys and Python validators that compare outputs against expected transformations. ([arXiv][2])
+The DICOM format is not relevant, but the **evaluation methodology is extremely relevant**. The authors created a corpus with synthetic PHI/PII planted in structured fields, text fields, and pixel data, then provided known-truth answer keys and Python validators that compare outputs against expected transformations. ([arXiv][brief1-2])
 
 This is the best research precedent for how we should strengthen the fixture generator and verifier.
 
@@ -111,7 +111,7 @@ This truth data belongs only in synthetic fixtures and test working directories.
 
 **arXiv:2606.21389, June 19, 2026**
 
-This paper treats the boundary between private production telemetry and releasable research artifacts as the primary design problem. It emphasizes preserving temporal order and entity consistency, using explicit validation, and reporting a measurable privacy–utility boundary rather than claiming formal anonymity. ([arXiv][3])
+This paper treats the boundary between private production telemetry and releasable research artifacts as the primary design problem. It emphasizes preserving temporal order and entity consistency, using explicit validation, and reporting a measurable privacy–utility boundary rather than claiming formal anonymity. ([arXiv][brief1-3])
 
 That is almost exactly the right conceptual frame for `oai-trial`.
 
@@ -146,7 +146,7 @@ The paper also supports an important wording correction:
 
 **arXiv:2506.05979, revised September 2025; EMNLP 2025 Demo**
 
-Despite the name, this is unrelated to `grahama1970/tau`. Tau-Eval evaluates anonymization through both privacy protection and downstream utility rather than reporting one undifferentiated success metric. ([arXiv][4])
+Despite the name, this is unrelated to `grahama1970/tau`. Tau-Eval evaluates anonymization through both privacy protection and downstream utility rather than reporting one undifferentiated success metric. ([arXiv][brief1-4])
 
 #### What to borrow
 
@@ -168,7 +168,7 @@ I would **not** add Tau-Eval itself as a dependency. Its evaluation model is use
 
 **arXiv:2502.15233, 2025**
 
-This paper separates privacy-value identification, creation of type-compatible replacements, controlled substitution, and optional restoration. It is oriented toward cloud LLM prompts, but the conceptual decomposition is useful. ([arXiv][5])
+This paper separates privacy-value identification, creation of type-compatible replacements, controlled substitution, and optional restoration. It is oriented toward cloud LLM prompts, but the conceptual decomposition is useful. ([arXiv][brief1-5])
 
 #### What to borrow
 
@@ -198,7 +198,7 @@ Do not borrow random or LLM-selected replacement candidates. Replacement choice 
 
 **arXiv:2602.12806, February 2026**
 
-RAT-Bench evaluates anonymization by residual re-identification risk rather than only identifier-removal recall. Its results show that explicit identifiers can be removed while indirect identifiers and unusual representations still permit re-identification. ([arXiv][6])
+RAT-Bench evaluates anonymization by residual re-identification risk rather than only identifier-removal recall. Its results show that explicit identifiers can be removed while indirect identifiers and unusual representations still permit re-identification. ([arXiv][brief1-6])
 
 #### Concrete change
 
@@ -226,7 +226,7 @@ RAT-Bench should not expand the local implementation into an LLM anonymizer. It 
 
 **arXiv:2604.21211v2, June 25, 2026**
 
-SPIA argues that span-level masking is an inadequate unit of evaluation. Its evaluation instead asks whether each data subject remains inferable, including non-primary subjects; the paper reports cases where high span masking still produces weak subject-level protection. ([arXiv][7])
+SPIA argues that span-level masking is an inadequate unit of evaluation. Its evaluation instead asks whether each data subject remains inferable, including non-primary subjects; the paper reports cases where high span masking still produces weak subject-level protection. ([arXiv][brief1-7])
 
 #### Concrete change
 
@@ -246,7 +246,7 @@ This is stronger than merely checking each `rule_id` independently and maps dire
 
 **arXiv:2602.16800, revised February 25, 2026**
 
-This work demonstrates a pipeline that extracts identity clues from unstructured text, retrieves candidate profiles, and reasons over matches. The authors report up to 68% recall at 90% precision in their evaluated settings, substantially above classical baselines, and argue that “practical obscurity” is no longer a reliable privacy assumption for persistent pseudonymous content. ([arXiv][8])
+This work demonstrates a pipeline that extracts identity clues from unstructured text, retrieves candidate profiles, and reasons over matches. The authors report up to 68% recall at 90% precision in their evaluated settings, substantially above classical baselines, and argue that “practical obscurity” is no longer a reliable privacy assumption for persistent pseudonymous content. ([arXiv][brief1-8])
 
 #### Concrete change
 
@@ -267,7 +267,7 @@ This also supports using a corpus- or tenant-scoped HMAC domain in production in
 
 **arXiv:2509.10165, September 2025**
 
-This paper’s most useful argument is that anonymization claims are meaningless without defining the domain, unit of protection, scope, and protection standard. It also argues that practical anonymization is usually case-specific and should be combined with access, retention, security, and governance controls. ([arXiv][9])
+This paper’s most useful argument is that anonymization claims are meaningless without defining the domain, unit of protection, scope, and protection standard. It also argues that practical anonymization is usually case-specific and should be combined with access, retention, security, and governance controls. ([arXiv][brief1-9])
 
 #### Concrete change
 
@@ -297,7 +297,7 @@ That would make the submission much more defensible than calling the output “a
 
 ### *Prεεmpt: Sanitizing Sensitive Prompts for LLMs*
 
-The paper distinguishes format-dependent values, for which it uses format-preserving encryption, from semantically meaningful values, for which it uses metric differential privacy. ([arXiv][10])
+The paper distinguishes format-dependent values, for which it uses format-preserving encryption, from semantically meaningful values, for which it uses metric differential privacy. ([arXiv][brief1-10])
 
 This is valuable as a production alternatives discussion, but I would **not implement FPE or differential privacy locally**. FPE introduces key management, domain-size, collision, type, and test complexity. Differential privacy deliberately adds randomized behavior that conflicts with the trial’s stable-repeatability requirement.
 
@@ -307,15 +307,15 @@ Use it in `SUBMISSION.md` as a considered alternative:
 
 ### *Adaptive Text Anonymization: Learning Privacy–Utility Trade-offs via Prompt Optimization*
 
-This paper adapts LLM anonymization instructions to specific privacy and utility goals. It reinforces that anonymization policy is context-dependent, but LLM rewriting would introduce nondeterminism and semantic drift that are counterproductive for the required literal contract. ([arXiv][11])
+This paper adapts LLM anonymization instructions to specific privacy and utility goals. It reinforces that anonymization policy is context-dependent, but LLM rewriting would introduce nondeterminism and semantic drift that are counterproductive for the required literal contract. ([arXiv][brief1-11])
 
 ### *LLM Anonymization Against Agentic Re-Identification*
 
-AURA evaluates anonymized text against web-search-assisted re-identification while also checking retained utility. This is useful for a future production red-team or a stronger semantic-anonymization lane, but not for the exact, cross-format local transformer. ([arXiv][12])
+AURA evaluates anonymized text against web-search-assisted re-identification while also checking retained utility. This is useful for a future production red-team or a stronger semantic-anonymization lane, but not for the exact, cross-format local transformer. ([arXiv][brief1-12])
 
 ### *What to Remember, What to Reveal: Privacy-Aware Memory for Conversational Agents*
 
-This August 2026 paper separates sanitized searchable memory from isolated exact private values and applies authorization-gated retrieval. It is much more relevant to `graph-memory-operator` than to the standalone trial image. It supports keeping any raw-to-pseudonym mapping outside searchable operational stores, but the simplest `oai-trial` design should avoid storing such a mapping altogether. ([arXiv][13])
+This August 2026 paper separates sanitized searchable memory from isolated exact private values and applies authorization-gated retrieval. It is much more relevant to `graph-memory-operator` than to the standalone trial image. It supports keeping any raw-to-pseudonym mapping outside searchable operational stores, but the simplest `oai-trial` design should avoid storing such a mapping altogether. ([arXiv][brief1-13])
 
 ---
 
@@ -327,7 +327,7 @@ Keep the repository and CLI names required by the trial, but define the mechanis
 
 > Deterministic policy-driven pseudonymization followed by independent whole-corpus verification and fail-closed publication.
 
-Use “anonymization pipeline” when quoting the assignment, but do not claim that literal substitution creates universally anonymous data. RAT-Bench, SPIA, and the large-scale deanonymization paper all show why that distinction matters. ([arXiv][6])
+Use “anonymization pipeline” when quoting the assignment, but do not claim that literal substitution creates universally anonymous data. RAT-Bench, SPIA, and the large-scale deanonymization paper all show why that distinction matters. ([arXiv][brief1-6])
 
 ## 2. Add an explicit threat model to ticket #2
 
@@ -371,7 +371,7 @@ Level A is mandatory for this trial. Level B belongs in the production threat mo
 
 ## 5. Use HMAC in production, not an exposed mapping service
 
-AnonShield strongly supports deterministic keyed pseudonyms for referential integrity. The local trial can retain its self-contained deterministic construction, while the production design should use a KMS-protected HMAC key scoped to the tenant or corpus. ([arXiv][1])
+AnonShield strongly supports deterministic keyed pseudonyms for referential integrity. The local trial can retain its self-contained deterministic construction, while the production design should use a KMS-protected HMAC key scoped to the tenant or corpus. ([arXiv][brief1-1])
 
 The production manifest should bind:
 
@@ -387,7 +387,7 @@ It must not contain plaintext keys or raw mappings.
 
 ## 6. Make streaming an evidence-driven decision
 
-AnonShield demonstrates that streaming and schema-aware processing can improve scale substantially, but its performance results do not prove our specific overlap, protected-value, duplicate-key, and independent-verification semantics. ([arXiv][1])
+AnonShield demonstrates that streaming and schema-aware processing can improve scale substantially, but its performance results do not prove our specific overlap, protected-value, duplicate-key, and independent-verification semantics. ([arXiv][brief1-1])
 
 Therefore:
 
@@ -424,19 +424,19 @@ does not and should not pretend to solve.
 
 That distinction will make the code smaller, the tests stronger, and `SUBMISSION.md` substantially more credible.
 
-[1]: https://arxiv.org/html/2606.15650v1 "AnonShield: Scalable On-PremisePseudonymization for CSIRT Vulnerability Data"
-[2]: https://arxiv.org/abs/2508.01889 "[2508.01889] Medical Image De-Identification Resources: Synthetic DICOM Data and Tools for Validation"
-[3]: https://arxiv.org/html/2606.21389v1 "From Production SIEM toReusable Cybersecurity Artifacts"
-[4]: https://arxiv.org/abs/2506.05979 "[2506.05979] Tau-Eval: A Unified Evaluation Framework for Useful and Private Text Anonymization"
-[5]: https://arxiv.org/abs/2502.15233 "[2502.15233] A General Pseudonymization Framework for Cloud-Based LLMs: Replacing Privacy Information in Controlled Text Generation"
-[6]: https://arxiv.org/html/2602.12806v1 "RAT-Bench: A Comprehensive Benchmark for Text Anonymization"
-[7]: https://arxiv.org/html/2604.21211 "Subject-level Inference for Realistic Text Anonymization Evaluation"
-[8]: https://arxiv.org/pdf/2602.16800?utm_source=chatgpt.com "Large-scale online deanonymization with LLMs"
-[9]: https://arxiv.org/abs/2509.10165?utm_source=chatgpt.com "Why Data Anonymization Has Not Taken Off"
-[10]: https://arxiv.org/abs/2504.05147 "[2504.05147] Pr$εε$mpt: Sanitizing Sensitive Prompts for LLMs"
-[11]: https://arxiv.org/html/2602.20743v1?utm_source=chatgpt.com "Learning Privacy-Utility Trade-offs via Prompt Optimization"
-[12]: https://arxiv.org/html/2605.30848v2?utm_source=chatgpt.com "LLM Anonymization Against Agentic Re-Identification"
-[13]: https://arxiv.org/html/2608.16551v1 "What to Remember, What to Reveal: Privacy-Aware Memory for Conversational Agents"
+[brief1-1]: https://arxiv.org/html/2606.15650v1 "AnonShield: Scalable On-PremisePseudonymization for CSIRT Vulnerability Data"
+[brief1-2]: https://arxiv.org/abs/2508.01889 "[2508.01889] Medical Image De-Identification Resources: Synthetic DICOM Data and Tools for Validation"
+[brief1-3]: https://arxiv.org/html/2606.21389v1 "From Production SIEM toReusable Cybersecurity Artifacts"
+[brief1-4]: https://arxiv.org/abs/2506.05979 "[2506.05979] Tau-Eval: A Unified Evaluation Framework for Useful and Private Text Anonymization"
+[brief1-5]: https://arxiv.org/abs/2502.15233 "[2502.15233] A General Pseudonymization Framework for Cloud-Based LLMs: Replacing Privacy Information in Controlled Text Generation"
+[brief1-6]: https://arxiv.org/html/2602.12806v1 "RAT-Bench: A Comprehensive Benchmark for Text Anonymization"
+[brief1-7]: https://arxiv.org/html/2604.21211 "Subject-level Inference for Realistic Text Anonymization Evaluation"
+[brief1-8]: https://arxiv.org/pdf/2602.16800?utm_source=chatgpt.com "Large-scale online deanonymization with LLMs"
+[brief1-9]: https://arxiv.org/abs/2509.10165?utm_source=chatgpt.com "Why Data Anonymization Has Not Taken Off"
+[brief1-10]: https://arxiv.org/abs/2504.05147 "[2504.05147] Pr$εε$mpt: Sanitizing Sensitive Prompts for LLMs"
+[brief1-11]: https://arxiv.org/html/2602.20743v1?utm_source=chatgpt.com "Learning Privacy-Utility Trade-offs via Prompt Optimization"
+[brief1-12]: https://arxiv.org/html/2605.30848v2?utm_source=chatgpt.com "LLM Anonymization Against Agentic Re-Identification"
+[brief1-13]: https://arxiv.org/html/2608.16551v1 "What to Remember, What to Reveal: Privacy-Aware Memory for Conversational Agents"
 
 
 ---
@@ -448,7 +448,7 @@ The central conclusion is important:
 
 > We should not turn `oai-trial` into an LLM anonymizer. We should turn it into a **verified pseudonymization and release system**, with an optional second plane for probabilistic discovery and re-identification risk.
 
-The current trial requires exact behavior for an authoritative literal policy. That belongs in a deterministic system. Recent research also shows that exact identifier removal does **not** prove that a subject cannot be inferred from contextual clues, so residual privacy risk must be represented separately rather than hidden behind a green “anonymized” label. ([arXiv][1])
+The current trial requires exact behavior for an authoritative literal policy. That belongs in a deterministic system. Recent research also shows that exact identifier removal does **not** prove that a subject cannot be inferred from contextual clues, so residual privacy risk must be represented separately rather than hidden behind a green “anonymized” label. ([arXiv][brief2-1])
 
 ---
 
@@ -515,7 +515,7 @@ This separation resolves a major conceptual problem:
 * The **proof plane** can prove exact claims such as complete policy replacement, structural preservation, deterministic identity coherence, and no partial ready release.
 * The **risk plane** can test whether contextual information might still permit inference, but a passing attack test cannot prove universal anonymity.
 
-RAT-Bench, SPIA, agentic deanonymization research, and AURA all demonstrate why span-removal recall alone is an inadequate privacy claim. Proof-gated data-pipeline research independently supports keeping the release decision in a deterministic outer loop rather than trusting a model or transformer success message. ([arXiv][2])
+RAT-Bench, SPIA, agentic deanonymization research, and AURA all demonstrate why span-removal recall alone is an inadequate privacy claim. Proof-gated data-pipeline research independently supports keeping the release decision in a deterministic outer loop rather than trusting a model or transformer success message. ([arXiv][brief2-2])
 
 ---
 
@@ -559,7 +559,7 @@ excluded_claims:
   - differential privacy
 ```
 
-Recent work stresses that “anonymization” is underspecified until the data domain, protected unit, scope, and protection standard are explicit. Different choices produce fundamentally different guarantees. ([arXiv][3])
+Recent work stresses that “anonymization” is underspecified until the data domain, protected unit, scope, and protection standard are explicit. Different choices produce fundamentally different guarantees. ([arXiv][brief2-3])
 
 This contract should be the authority for:
 
@@ -573,7 +573,7 @@ This contract should be the authority for:
 
 ### Why linkage must be explicit
 
-Stable pseudonyms preserve useful correlation, but stable equality is itself information. Proteus shows that stable keyed tokens support forensic correlation while also permitting cross-snapshot behavioral linkage; its design adds rotation and controlled access where unlinkability across time matters. ([arXiv][4])
+Stable pseudonyms preserve useful correlation, but stable equality is itself information. Proteus shows that stable keyed tokens support forensic correlation while also permitting cross-snapshot behavioral linkage; its design adds rotation and controlled access where unlinkability across time matters. ([arXiv][brief2-4])
 
 For the local trial, stability across files and reruns is mandatory. In production, stability should be scoped deliberately:
 
@@ -621,7 +621,7 @@ The preflight must:
 * use the SQLite backup API to obtain a consistent database snapshot;
 * reject any source that changes during the run.
 
-Proof-gated publication research distinguishes **read-to-sink fidelity** from true **source-to-sink fidelity**. A verifier can prove that output agrees with the bytes it read, but upstream authenticity requires an independently attested source statement. ([arXiv][5])
+Proof-gated publication research distinguishes **read-to-sink fidelity** from true **source-to-sink fidelity**. A verifier can prove that output agrees with the bytes it read, but upstream authenticity requires an independently attested source statement. ([arXiv][brief2-5])
 
 Therefore the claims should be:
 
@@ -663,7 +663,7 @@ Each canonical subject/type record should contain:
 * selected collision counter;
 * internal validation status.
 
-This is more than an implementation convenience. SPIA shows that evaluating isolated text spans can report high masking success while leaving substantial subject-level information inferable, and that non-primary subjects can remain especially exposed. ([arXiv][2])
+This is more than an implementation convenience. SPIA shows that evaluating isolated text spans can report high masking success while leaving substantial subject-level information inferable, and that non-primary subjects can remain especially exposed. ([arXiv][brief2-2])
 
 The deterministic verifier should consequently report both:
 
@@ -688,7 +688,7 @@ Graph Memory is useful for recalling and preserving the **development pattern**,
 
 **Priority: deterministic local version P0; keyed production version P1**
 
-AnonShield’s most relevant contribution is its combination of deterministic keyed pseudonymization, schema-aware rules, caching, and streaming. It demonstrates that consistent HMAC-derived pseudonyms can preserve correlation across structured and unstructured records without requiring a network lookup for every occurrence. ([arXiv][6])
+AnonShield’s most relevant contribution is its combination of deterministic keyed pseudonymization, schema-aware rules, caching, and streaming. It demonstrates that consistent HMAC-derived pseudonyms can preserve correlation across structured and unstructured records without requiring a network lookup for every occurrence. ([arXiv][brief2-6])
 
 The production construction should be conceptually:
 
@@ -716,7 +716,7 @@ Required properties:
 * no plaintext mapping stored or logged;
 * one KMS unwrap per worker task in production, not one KMS request per value.
 
-Recent experiments found that HMAC pseudonymization removed original identifiers from the measured model-exposure surface without producing a correspondingly extractable pseudonym target under that paper’s specific threat model. The same work also emphasizes that pseudonymization, differential privacy, and output filtering operate at different layers and do not automatically compose into one guarantee. ([arXiv][7])
+Recent experiments found that HMAC pseudonymization removed original identifiers from the measured model-exposure surface without producing a correspondingly extractable pseudonym target under that paper’s specific threat model. The same work also emphasizes that pseudonymization, differential privacy, and output filtering operate at different layers and do not automatically compose into one guarantee. ([arXiv][brief2-7])
 
 ### Local trial key mode
 
@@ -790,7 +790,7 @@ For production stability across evolving corpora, rejection is preferable to sil
 
 **Priority: local P0**
 
-Recent systems obtain both reliability and speed by exploiting schema knowledge rather than applying the same detection path everywhere. AnonShield reports large gains when schema-aware configuration can bypass expensive entity detection, but its NER path still has context and malformed-input limitations. ([arXiv][6])
+Recent systems obtain both reliability and speed by exploiting schema knowledge rather than applying the same detection path everywhere. AnonShield reports large gains when schema-aware configuration can bypass expensive entity detection, but its NER path still has context and malformed-input limitations. ([arXiv][brief2-6])
 
 The system should therefore have one policy engine but four independent adapters.
 
@@ -888,7 +888,7 @@ Durable   -> checkpoint the accepted state
 Metadata  -> make the snapshot visible, last
 ```
 
-A failed proof produces no consumer-visible snapshot. The paper is currently a proposed specification rather than a ratified standard, but the invariant maps directly to this trial. ([arXiv][5])
+A failed proof produces no consumer-visible snapshot. The paper is currently a proposed specification rather than a ratified standard, but the invariant maps directly to this trial. ([arXiv][brief2-5])
 
 For `oai-trial`, the corresponding state machine should be:
 
@@ -940,7 +940,7 @@ On startup, detect and resolve:
 * completed run already committed;
 * prior valid release awaiting replacement.
 
-Proof-gated publication research also recommends a durable workload clock separate from individual worker/container lifetimes so retries resume completed work rather than blindly repeating it. ([arXiv][5])
+Proof-gated publication research also recommends a durable workload clock separate from individual worker/container lifetimes so retries resume completed work rather than blindly repeating it. ([arXiv][brief2-5])
 
 ---
 
@@ -986,13 +986,13 @@ Use three complementary proof forms:
 3. **Multiplicity-sensitive content digest**
    Used in distributed production when physical partition layout and row order are not semantically meaningful.
 
-Proof-Gated Publication argues that an ordinary ordered Merkle root is unsuitable for comparing distributed logical content when equivalent records may be arranged into different files. It proposes a keyed, order-independent, multiplicity-sensitive digest while retaining per-file checksums for physical corruption. Duplicate rows must change the digest rather than collapsing as they would under set semantics. ([arXiv][5])
+Proof-Gated Publication argues that an ordinary ordered Merkle root is unsuitable for comparing distributed logical content when equivalent records may be arranged into different files. It proposes a keyed, order-independent, multiplicity-sensitive digest while retaining per-file checksums for physical corruption. Duplicate rows must change the digest rather than collapsing as they would under set semantics. ([arXiv][brief2-5])
 
 For local `oai-trial`, ordinary SHA-256 and explicit format-aware ordered fingerprints are enough. The multiset construction belongs in the production design.
 
 ### Independence boundary
 
-The newest publication research is appropriately cautious: two implementations can still fail identically, and source provenance does not replace independent recomputation. ([arXiv][5])
+The newest publication research is appropriately cautious: two implementations can still fail identically, and source provenance does not replace independent recomputation. ([arXiv][brief2-5])
 
 Therefore:
 
@@ -1077,7 +1077,7 @@ In production, internal verification receipts may contain more detailed safe ide
 
 **Priority: local P0**
 
-The medical de-identification validation papers provide one of the most transferable evaluation ideas: plant synthetic sensitive data in multiple structural locations, retain an exact truth key, and validate output mechanically against that key. ([arXiv][8])
+The medical de-identification validation papers provide one of the most transferable evaluation ideas: plant synthetic sensitive data in multiple structural locations, retain an exact truth key, and validate output mechanically against that key. ([arXiv][brief2-8])
 
 The fixture generator should create an internal truth manifest containing:
 
@@ -1119,7 +1119,7 @@ late transform and publication failures
 
 **Priority: local P0**
 
-Recent property-testing work makes an important distinction: useful property testing begins with a **semantic invariant**, not random input generation. PBT-Bench evaluates whether tests fail on the buggy implementation and pass on the fixed one; DiscPBT shows that semantic properties catch drift and boundary behavior that crash-oriented fuzzing misses. ([arXiv][9])
+Recent property-testing work makes an important distinction: useful property testing begins with a **semantic invariant**, not random input generation. PBT-Bench evaluates whether tests fail on the buggy implementation and pass on the fixed one; DiscPBT shows that semantic properties catch drift and boundary behavior that crash-oriented fuzzing misses. ([arXiv][brief2-9])
 
 The test suite should encode these meta-properties.
 
@@ -1154,7 +1154,7 @@ Hypothesis should generate:
 * SQLite schema variants;
 * fault locations.
 
-Its shrinking behavior is useful because it reduces complex failures to minimal reproducible counterexamples. ([arXiv][9])
+Its shrinking behavior is useful because it reduces complex failures to minimal reproducible counterexamples. ([arXiv][brief2-9])
 
 Every retained regression should have a **fail-before-fix proof**, not merely a test that passes after the repair.
 
@@ -1192,7 +1192,7 @@ For each fault, prove:
 * rerun reaches a deterministic recovery state;
 * already verified work is not duplicated incorrectly.
 
-Proof-gated publication evaluation uses silent drops, duplicate chunks, truncation, value corruption, and partition omission rather than relying solely on thrown exceptions. That is exactly the correct adversarial model for this pipeline. ([arXiv][5])
+Proof-gated publication evaluation uses silent drops, duplicate chunks, truncation, value corruption, and partition omission rather than relying solely on thrown exceptions. That is exactly the correct adversarial model for this pipeline. ([arXiv][brief2-5])
 
 Add data-specific silent faults:
 
@@ -1211,7 +1211,7 @@ Add data-specific silent faults:
 
 **Priority: local P0 for structural utility; production P1 for task utility**
 
-RUPTA uses separate privacy and utility evaluators plus an optimizer. Tau-Eval similarly finds that no single anonymization method or generic similarity metric dominates across downstream tasks. ([arXiv][10])
+RUPTA uses separate privacy and utility evaluators plus an optimizer. Tau-Eval similarly finds that no single anonymization method or generic similarity metric dominates across downstream tasks. ([arXiv][brief2-10])
 
 The useful lesson is the separation—not the use of LLMs in the core.
 
@@ -1248,7 +1248,7 @@ For each approved consumer, define a task-specific suite:
 * model or rules-engine performance;
 * expected relationship traversals.
 
-Production SIEM research demonstrates that anonymized artifacts can appear syntactically valid but fail operationally when temporal order, field semantics, or entity consistency are damaged. ([arXiv][11])
+Production SIEM research demonstrates that anonymized artifacts can appear syntactically valid but fail operationally when temporal order, field semantics, or entity consistency are damaged. ([arXiv][brief2-11])
 
 No generic BLEU, ROUGE, embedding similarity, or “looks reasonable” score should replace the format and consumer-specific utility contract.
 
@@ -1268,7 +1268,7 @@ Can pseudonym frequency or timing reveal identity?
 Can one subject be inferred from another subject’s retained context?
 ```
 
-SPIA reports that masking more than 90% of PII spans can still leave subject-level protection much lower because contextual inference remains possible. ([arXiv][2])
+SPIA reports that masking more than 90% of PII spans can still leave subject-level protection much lower because contextual inference remains possible. ([arXiv][brief2-2])
 
 This evaluation should output:
 
@@ -1292,9 +1292,9 @@ A passing result means only that the declared attacks did not succeed at the con
 
 **Priority: production P1; optional synthetic demonstration**
 
-Recent research shows that LLM agents can combine weak cues with external information and outperform classical linkage approaches. One large-scale study reports up to 68% recall at 90% precision in its evaluated cross-platform settings; InferLink also finds that agents can reconstruct identities from scattered cues, sometimes during tasks not explicitly framed as deanonymization. ([arXiv][12])
+Recent research shows that LLM agents can combine weak cues with external information and outperform classical linkage approaches. One large-scale study reports up to 68% recall at 90% precision in its evaluated cross-platform settings; InferLink also finds that agents can reconstruct identities from scattered cues, sometimes during tasks not explicitly framed as deanonymization. ([arXiv][brief2-12])
 
-AURA adds a web-search-assisted adversary and a utility-retention evaluator, reinforcing the need to test the actual released artifact against a realistic attacker rather than only checking identifier removal. ([arXiv][13])
+AURA adds a web-search-assisted adversary and a utility-retention evaluator, reinforcing the need to test the actual released artifact against a realistic attacker rather than only checking identifier removal. ([arXiv][brief2-13])
 
 A production red-team lane should:
 
@@ -1327,7 +1327,7 @@ schema rules
   -> quarantine or human review
 ```
 
-The 2025 survey finds that NER remains foundational but is insufficient for implicit identifiers and contextual inference. ([arXiv][1])
+The 2025 survey finds that NER remains foundational but is insufficient for implicit identifiers and contextual inference. ([arXiv][brief2-1])
 
 The safe production rule is:
 
@@ -1335,7 +1335,7 @@ The safe production rule is:
 
 ### Risk-adaptive research
 
-TRIP-RAG ranks entities using privacy risk, knowledge divergence, and retrieval utility. IntentAnony uses intent-conditioned exposure budgets and distributed evidence chains. RLAA introduces an arbitrator and marginal privacy-gain versus utility-cost stopping criterion. ([arXiv][14])
+TRIP-RAG ranks entities using privacy risk, knowledge divergence, and retrieval utility. IntentAnony uses intent-conditioned exposure budgets and distributed evidence chains. RLAA introduces an arbitrator and marginal privacy-gain versus utility-cost stopping criterion. ([arXiv][brief2-14])
 
 These suggest a future **policy-profile engine**:
 
@@ -1374,7 +1374,7 @@ time-rotating outer protection
 authorized correlation without unrestricted multi-snapshot linkage
 ```
 
-Its threat model explicitly recognizes that simple stable pseudonyms expose equality and behavioral correlation even when plaintext recovery remains difficult. ([arXiv][4])
+Its threat model explicitly recognizes that simple stable pseudonyms expose equality and behavioral correlation even when plaintext recovery remains difficult. ([arXiv][brief2-4])
 
 Production should support:
 
@@ -1418,7 +1418,7 @@ Differential privacy is appropriate for:
 * downstream model training;
 * public summary publication.
 
-It is generally not the right mechanism for a base corpus whose rows, order, and relationships must remain individually useful and exactly verifiable. Proteus similarly observes that randomized aggregation can sacrifice the event-level fidelity needed for forensic reconstruction. ([arXiv][4])
+It is generally not the right mechanism for a base corpus whose rows, order, and relationships must remain individually useful and exactly verifiable. Proteus similarly observes that randomized aggregation can sacrifice the event-level fidelity needed for forensic reconstruction. ([arXiv][brief2-4])
 
 For downstream model training, add:
 
@@ -1428,11 +1428,11 @@ For downstream model training, add:
 * utility thresholds;
 * separate reporting of data-layer pseudonymization and optimizer-layer DP.
 
-The recent CSIRT study warns against assuming these layers compose trivially and reports significant utility limitations in its evaluated small-model regime. ([arXiv][7])
+The recent CSIRT study warns against assuming these layers compose trivially and reports significant utility limitations in its evaluated small-model regime. ([arXiv][brief2-7])
 
 ### Format-preserving encryption
 
-Prεεmpt separates format-dependent values, where it uses FPE, from semantically meaningful numeric values, where it applies metric differential privacy. ([arXiv][15])
+Prεεmpt separates format-dependent values, where it uses FPE, from semantically meaningful numeric values, where it applies metric differential privacy. ([arXiv][brief2-15])
 
 FPE should remain optional and be adopted only when the actual requirement is:
 
@@ -1470,7 +1470,7 @@ verification receipt digest
 publication decision
 ```
 
-Research on trustworthy provenance emphasizes persistent artifact identifiers, immutability, auditability, and versioned histories. The useful features are those provenance semantics—not necessarily its proposed blockchain implementation. ([arXiv][16])
+Research on trustworthy provenance emphasizes persistent artifact identifiers, immutability, auditability, and versioned histories. The useful features are those provenance semantics—not necessarily its proposed blockchain implementation. ([arXiv][brief2-16])
 
 For production, sign:
 
@@ -1479,7 +1479,7 @@ For production, sign:
 * release manifests;
 * active-pointer changes.
 
-An evidence-driven CI paper combines deterministic builds with TEE-based attestations. TEEs could strengthen high-assurance production provenance, but they attest execution identity and environment; they do not replace semantic corpus verification. ([arXiv][17])
+An evidence-driven CI paper combines deterministic builds with TEE-based attestations. TEEs could strengthen high-assurance production provenance, but they attest execution identity and environment; they do not replace semantic corpus verification. ([arXiv][brief2-17])
 
 ---
 
@@ -1497,7 +1497,7 @@ Tau, project agents, coding models, and reviewer models should be allowed to pro
 
 They must not directly decide that a release is valid.
 
-Proof-carrying agent research describes an outer deterministic verifier that decides whether an untrusted agent branch can merge. ([arXiv][18])
+Proof-carrying agent research describes an outer deterministic verifier that decides whether an untrusted agent branch can merge. ([arXiv][brief2-18])
 
 For this project:
 
@@ -1605,7 +1605,7 @@ These are required to make the architecture genuinely state-of-the-art at TB/PB 
 | TEE as replacement for verification          | Attests execution, not output semantics                                          |
 | Adaptive selective omission of policy values | Directly violates the authoritative policy contract                              |
 
-LLM-based anonymization research remains valuable for the risk plane. RUPTA itself acknowledges the substantial computational cost of an iterative privacy/utility/optimization architecture, while Tau-Eval shows that utility behavior varies by downstream task. ([arXiv][10])
+LLM-based anonymization research remains valuable for the risk plane. RUPTA itself acknowledges the substantial computational cost of an iterative privacy/utility/optimization architecture, while Tau-Eval shows that utility behavior varies by downstream task. ([arXiv][brief2-10])
 
 ---
 
@@ -1613,26 +1613,26 @@ LLM-based anonymization research remains valuable for the risk plane. RUPTA itse
 
 | Research cluster                                   | Feature we should take                                                                                                               | Disposition                                                                      |
 | -------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------- |
-| **2025 anonymization survey**                      | Hybrid detection, explicit quasi-identifier risk, privacy/utility evaluation, recognition of LLMs as both defender and attacker      | Architecture and risk-plane foundation. ([arXiv][1])                             |
-| **AnonShield**                                     | Schema-aware processing, deterministic HMAC pseudonyms, streaming, cache, consistency across records                                 | Core production pseudonym design; no GPU/NER dependency locally. ([arXiv][6])    |
-| **Proteus**                                        | Stable linkage tokens, explicit equality leakage, epoch rotation, controlled time-bounded access, source-side protection             | Production scope and unlinkability options. ([arXiv][4])                         |
-| **HMAC + DP-SGD CSIRT study**                      | Separate data-layer pseudonymization from training-layer privacy; canary attacks; do not assume composition                          | Production ML extension only. ([arXiv][7])                                       |
-| **Production SIEM artifacts**                      | Privacy boundary as a first-class object; preserve temporal order and entity consistency; deterministic verifier; measured non-claim | Core utility and assurance model. ([arXiv][11])                                  |
-| **RUPTA**                                          | Separate privacy evaluator, utility evaluator, and optimizer                                                                         | Take the separation; keep the optimizer out of deterministic core. ([arXiv][10]) |
-| **Tau-Eval**                                       | Task-specific utility, reproducible privacy/utility dimensions, no universal metric                                                  | Core acceptance matrix and production task gates. ([arXiv][19])                  |
-| **RAT-Bench**                                      | Measure residual re-identification risk, including indirect and unusual identifiers                                                  | Production risk gate. ([arXiv][20])                                              |
-| **SPIA**                                           | Subject—not span—as the privacy unit; include non-primary subjects                                                                   | Core subject registry plus production inference tests. ([arXiv][2])              |
-| **Large-scale LLM deanonymization / InferLink**    | Treat weak cross-source cues and benign agent behavior as real attack paths                                                          | Agentic red-team threat model. ([arXiv][12])                                     |
-| **AURA**                                           | Separate privacy localization from utility reconstruction; test with web-assisted attacker                                           | Optional risk plane, not local transformer. ([arXiv][13])                        |
-| **IntentAnony / TRIP-RAG / RLAA**                  | Exposure budgets, context-sensitive risk, rational stopping, privacy-gain versus utility-cost                                        | Future reviewed policy profiles. ([arXiv][14])                                   |
-| **Medical de-identification validation resources** | Planted synthetic PII, known-truth manifests, independent validators                                                                 | Core fixture and mutation methodology. ([arXiv][8])                              |
-| **Proof-Gated Publication**                        | Invisible physical staging, independent verification, durable replay, metadata commit last, silent-fault tests                       | Core publication model and production notary. ([arXiv][5])                       |
-| **Correct-by-Design Lakehouse**                    | Isolated branches, state-machine reasoning, prevent aborted branches from becoming valid inputs                                      | Recovery and stale-state restrictions. ([arXiv][21])                             |
-| **PBT-Bench**                                      | Semantic invariant first; fail-on-bug/pass-on-fix scoring                                                                            | Core retained-regression standard. ([arXiv][9])                                  |
-| **DiscPBT**                                        | Decomposition, recomposition, equivalence, cardinality, schema-aware generation                                                      | Core chunk/partition/format property suite. ([arXiv][22])                        |
-| **Proof-carrying agents**                          | Untrusted agents produce candidate work; deterministic outer verifier controls merge                                                 | Tau development governance. ([arXiv][18])                                        |
-| **Evidence-driven CI and provenance**              | Build/image identity, signed evidence, persistent artifact IDs, versioned lineage                                                    | Production evidence and optional attestation. ([arXiv][17])                      |
-| **Prεεmpt**                                        | FPE for strict format-constrained values and DP for semantically meaningful values                                                   | Documented alternative, not base trial path. ([arXiv][15])                       |
+| **2025 anonymization survey**                      | Hybrid detection, explicit quasi-identifier risk, privacy/utility evaluation, recognition of LLMs as both defender and attacker      | Architecture and risk-plane foundation. ([arXiv][brief2-1])                             |
+| **AnonShield**                                     | Schema-aware processing, deterministic HMAC pseudonyms, streaming, cache, consistency across records                                 | Core production pseudonym design; no GPU/NER dependency locally. ([arXiv][brief2-6])    |
+| **Proteus**                                        | Stable linkage tokens, explicit equality leakage, epoch rotation, controlled time-bounded access, source-side protection             | Production scope and unlinkability options. ([arXiv][brief2-4])                         |
+| **HMAC + DP-SGD CSIRT study**                      | Separate data-layer pseudonymization from training-layer privacy; canary attacks; do not assume composition                          | Production ML extension only. ([arXiv][brief2-7])                                       |
+| **Production SIEM artifacts**                      | Privacy boundary as a first-class object; preserve temporal order and entity consistency; deterministic verifier; measured non-claim | Core utility and assurance model. ([arXiv][brief2-11])                                  |
+| **RUPTA**                                          | Separate privacy evaluator, utility evaluator, and optimizer                                                                         | Take the separation; keep the optimizer out of deterministic core. ([arXiv][brief2-10]) |
+| **Tau-Eval**                                       | Task-specific utility, reproducible privacy/utility dimensions, no universal metric                                                  | Core acceptance matrix and production task gates. ([arXiv][brief2-19])                  |
+| **RAT-Bench**                                      | Measure residual re-identification risk, including indirect and unusual identifiers                                                  | Production risk gate. ([arXiv][brief2-20])                                              |
+| **SPIA**                                           | Subject—not span—as the privacy unit; include non-primary subjects                                                                   | Core subject registry plus production inference tests. ([arXiv][brief2-2])              |
+| **Large-scale LLM deanonymization / InferLink**    | Treat weak cross-source cues and benign agent behavior as real attack paths                                                          | Agentic red-team threat model. ([arXiv][brief2-12])                                     |
+| **AURA**                                           | Separate privacy localization from utility reconstruction; test with web-assisted attacker                                           | Optional risk plane, not local transformer. ([arXiv][brief2-13])                        |
+| **IntentAnony / TRIP-RAG / RLAA**                  | Exposure budgets, context-sensitive risk, rational stopping, privacy-gain versus utility-cost                                        | Future reviewed policy profiles. ([arXiv][brief2-14])                                   |
+| **Medical de-identification validation resources** | Planted synthetic PII, known-truth manifests, independent validators                                                                 | Core fixture and mutation methodology. ([arXiv][brief2-8])                              |
+| **Proof-Gated Publication**                        | Invisible physical staging, independent verification, durable replay, metadata commit last, silent-fault tests                       | Core publication model and production notary. ([arXiv][brief2-5])                       |
+| **Correct-by-Design Lakehouse**                    | Isolated branches, state-machine reasoning, prevent aborted branches from becoming valid inputs                                      | Recovery and stale-state restrictions. ([arXiv][brief2-21])                             |
+| **PBT-Bench**                                      | Semantic invariant first; fail-on-bug/pass-on-fix scoring                                                                            | Core retained-regression standard. ([arXiv][brief2-9])                                  |
+| **DiscPBT**                                        | Decomposition, recomposition, equivalence, cardinality, schema-aware generation                                                      | Core chunk/partition/format property suite. ([arXiv][brief2-22])                        |
+| **Proof-carrying agents**                          | Untrusted agents produce candidate work; deterministic outer verifier controls merge                                                 | Tau development governance. ([arXiv][brief2-18])                                        |
+| **Evidence-driven CI and provenance**              | Build/image identity, signed evidence, persistent artifact IDs, versioned lineage                                                    | Production evidence and optional attestation. ([arXiv][brief2-17])                      |
+| **Prεεmpt**                                        | FPE for strict format-constrained values and DP for semantically meaningful values                                                   | Documented alternative, not base trial path. ([arXiv][brief2-15])                       |
 
 ---
 
@@ -1794,25 +1794,25 @@ canonical subject semantics
 
 That combination gives us a local submission that is small enough to reason about, a production architecture that scales without weakening the invariant, and documentation that makes strong claims only where the evidence supports them.
 
-[1]: https://arxiv.org/html/2508.21587v1 "https://arxiv.org/html/2508.21587v1"
-[2]: https://arxiv.org/abs/2604.21211 "https://arxiv.org/abs/2604.21211"
-[3]: https://arxiv.org/abs/2509.10165 "https://arxiv.org/abs/2509.10165"
-[4]: https://arxiv.org/html/2603.06540 "https://arxiv.org/html/2603.06540"
-[5]: https://arxiv.org/pdf/2608.14643 "https://arxiv.org/pdf/2608.14643"
-[6]: https://arxiv.org/html/2606.15650v1 "https://arxiv.org/html/2606.15650v1"
-[7]: https://arxiv.org/html/2606.28479v1 "https://arxiv.org/html/2606.28479v1"
-[8]: https://arxiv.org/abs/2508.01889 "https://arxiv.org/abs/2508.01889"
-[9]: https://arxiv.org/html/2605.15229v2 "https://arxiv.org/html/2605.15229v2"
-[10]: https://arxiv.org/html/2407.11770v2 "https://arxiv.org/html/2407.11770v2"
-[11]: https://arxiv.org/html/2606.21389v1 "https://arxiv.org/html/2606.21389v1"
-[12]: https://arxiv.org/abs/2602.16800 "https://arxiv.org/abs/2602.16800"
-[13]: https://arxiv.org/abs/2605.30848 "https://arxiv.org/abs/2605.30848"
-[14]: https://arxiv.org/html/2603.26074v3 "https://arxiv.org/html/2603.26074v3"
-[15]: https://arxiv.org/abs/2504.05147 "https://arxiv.org/abs/2504.05147"
-[16]: https://arxiv.org/abs/2505.24675 "https://arxiv.org/abs/2505.24675"
-[17]: https://arxiv.org/abs/2605.21089 "https://arxiv.org/abs/2605.21089"
-[18]: https://arxiv.org/html/2510.09567v1 "https://arxiv.org/html/2510.09567v1"
-[19]: https://arxiv.org/html/2506.05979v2 "https://arxiv.org/html/2506.05979v2"
-[20]: https://arxiv.org/abs/2602.12806 "https://arxiv.org/abs/2602.12806"
-[21]: https://arxiv.org/html/2602.02335v3 "https://arxiv.org/html/2602.02335v3"
-[22]: https://arxiv.org/html/2606.11132v1 "https://arxiv.org/html/2606.11132v1"
+[brief2-1]: https://arxiv.org/html/2508.21587v1 "https://arxiv.org/html/2508.21587v1"
+[brief2-2]: https://arxiv.org/abs/2604.21211 "https://arxiv.org/abs/2604.21211"
+[brief2-3]: https://arxiv.org/abs/2509.10165 "https://arxiv.org/abs/2509.10165"
+[brief2-4]: https://arxiv.org/html/2603.06540 "https://arxiv.org/html/2603.06540"
+[brief2-5]: https://arxiv.org/pdf/2608.14643 "https://arxiv.org/pdf/2608.14643"
+[brief2-6]: https://arxiv.org/html/2606.15650v1 "https://arxiv.org/html/2606.15650v1"
+[brief2-7]: https://arxiv.org/html/2606.28479v1 "https://arxiv.org/html/2606.28479v1"
+[brief2-8]: https://arxiv.org/abs/2508.01889 "https://arxiv.org/abs/2508.01889"
+[brief2-9]: https://arxiv.org/html/2605.15229v2 "https://arxiv.org/html/2605.15229v2"
+[brief2-10]: https://arxiv.org/html/2407.11770v2 "https://arxiv.org/html/2407.11770v2"
+[brief2-11]: https://arxiv.org/html/2606.21389v1 "https://arxiv.org/html/2606.21389v1"
+[brief2-12]: https://arxiv.org/abs/2602.16800 "https://arxiv.org/abs/2602.16800"
+[brief2-13]: https://arxiv.org/abs/2605.30848 "https://arxiv.org/abs/2605.30848"
+[brief2-14]: https://arxiv.org/html/2603.26074v3 "https://arxiv.org/html/2603.26074v3"
+[brief2-15]: https://arxiv.org/abs/2504.05147 "https://arxiv.org/abs/2504.05147"
+[brief2-16]: https://arxiv.org/abs/2505.24675 "https://arxiv.org/abs/2505.24675"
+[brief2-17]: https://arxiv.org/abs/2605.21089 "https://arxiv.org/abs/2605.21089"
+[brief2-18]: https://arxiv.org/html/2510.09567v1 "https://arxiv.org/html/2510.09567v1"
+[brief2-19]: https://arxiv.org/html/2506.05979v2 "https://arxiv.org/html/2506.05979v2"
+[brief2-20]: https://arxiv.org/abs/2602.12806 "https://arxiv.org/abs/2602.12806"
+[brief2-21]: https://arxiv.org/html/2602.02335v3 "https://arxiv.org/html/2602.02335v3"
+[brief2-22]: https://arxiv.org/html/2606.11132v1 "https://arxiv.org/html/2606.11132v1"

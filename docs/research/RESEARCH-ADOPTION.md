@@ -1,4 +1,10 @@
-# Research adoption decision (from webgpt/PAPER-RESEARCH.md)
+# Historical research adoption decision
+
+**Historical decision memo, 4 September 2026—not a current capability inventory.** “Adopt now” records proposed work, not proof that every item shipped. For the current research/reuse mapping, see [research-workflow.md](../pitch/oai-trial/reorganized/sources/research-workflow.md).
+
+Current corrections: fixed replacement domains do not extend; local processing is not bounded-memory streaming and verification retains searchable text from both corpora; publication is report-last, not full rollback; algorithm/scope labels enter the digest, while `key_mode` is reported metadata. The proposed Hypothesis suite and chunk-decomposition contract were not implemented. Adding an identity can change collision allocation, even when its literal is absent from the corpus.
+
+The original decision record follows; its prospective statements must not be read as current capabilities.
 
 Maps the WebGPT arXiv brief against what is already implemented, then ranks the
 few additions worth making. The brief's central thesis is correct and already

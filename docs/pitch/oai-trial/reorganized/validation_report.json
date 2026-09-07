@@ -2,7 +2,7 @@
   "schema": "pitchdeck.validation_report.v1",
   "readiness": "USABLE_WITH_GAPS",
   "errors": 0,
-  "warnings": 27,
+  "warnings": 29,
   "issues": [
     {
       "severity": "warning",
@@ -38,6 +38,20 @@
       "message": "Slide uses candidate claim 'qualification'; human review remains open.",
       "slide_id": "r06-output-evidence",
       "claim_id": "qualification"
+    },
+    {
+      "severity": "warning",
+      "code": "SLIDE_CANDIDATE_CLAIM",
+      "message": "Slide uses candidate claim 'r06a-research-reuse'; human review remains open.",
+      "slide_id": "r06a-research-reuse",
+      "claim_id": "r06a-research-reuse"
+    },
+    {
+      "severity": "warning",
+      "code": "SLIDE_CANDIDATE_CLAIM",
+      "message": "Slide uses candidate claim 'r06b-research-adoption'; human review remains open.",
+      "slide_id": "r06b-research-adoption",
+      "claim_id": "r06b-research-adoption"
     },
     {
       "severity": "warning",

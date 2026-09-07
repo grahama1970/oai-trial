@@ -1,0 +1,42 @@
+{
+  "version": 2,
+  "skill": "oai-trial-presentation",
+  "trials": 2,
+  "proof_scope": "Read actual PPTX and live viewer payload; check research/reuse text, timing, ordering and handout links. No visual approval, runtime qualification, measured talk duration or paper reproduction.",
+  "cases": [
+    {
+      "name": "research-reuse-export-and-live-payload",
+      "type": "positive",
+      "real_world": true,
+      "command": [
+        "bash",
+        "-c",
+        "cd .. && python3 scripts/verify_research_presentation.py"
+      ],
+      "expected": {
+        "exit_code": 0,
+        "stdout_contains": [
+          "PASS: research and reuse visible"
+        ]
+      },
+      "timeout_seconds": 30
+    },
+    {
+      "name": "reject-export-with-missing-research-text",
+      "type": "adversarial",
+      "real_world": true,
+      "command": [
+        "bash",
+        "-c",
+        "cd .. && python3 -c 'import tempfile,zipfile,subprocess; from pathlib import Path; src=Path(\"/mnt/storage12tb/oai-trial/native-pitchdeck/oai-trial-current.pptx\"); t=tempfile.TemporaryDirectory(); bad=Path(t.name)/\"bad.pptx\"; a=zipfile.ZipFile(src); b=zipfile.ZipFile(bad,\"w\"); [b.writestr(n,a.read(n).replace(b\"dogpile\",b\"REMOVED\") if n==\"ppt/slides/slide7.xml\" else a.read(n)) for n in a.namelist()]; b.close(); p=subprocess.run([\"python3\",\"scripts/verify_research_presentation.py\",str(bad)],capture_output=True,text=True); assert p.returncode!=0 and \"AssertionError\" in p.stderr,p; print(\"PASS: missing research text refused\")' "
+      ],
+      "expected": {
+        "exit_code": 0,
+        "stdout_contains": [
+          "PASS: missing research text refused"
+        ]
+      },
+      "timeout_seconds": 30
+    }
+  ]
+}
