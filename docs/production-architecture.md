@@ -4,26 +4,34 @@ Diagram: [`production-architecture.svg`](production-architecture.svg). Labels
 below match the diagram. Cost math: [`../costs/`](../costs) +
 [`../scripts/estimate_aws_cost.py`](../scripts/estimate_aws_cost.py).
 
+This is a proposed architecture, not a deployed or TB/PB-qualified runtime. Its
+partitioners, allocation-plan distribution, cross-check and access controls are
+design requirements, not capabilities established by the local demonstration.
+
 ## Flow (matches the diagram)
 - **Intake** — producers land exports in a KMS-encrypted S3 bucket, mounted
   read-only to workers. An S3 event fans out through EventBridge → SQS.
 - **Distribute** — one SQS message per file (at-least-once). Large single files
   are split with FORMAT-AWARE partition semantics (below); concurrency is
   bounded by the worker pool size, not the queue depth.
-- **Transform** — horizontally scaled Fargate/Batch workers pull the policy +
-  key material once (Secrets Manager/KMS) and derive deterministic pseudonyms
-  locally, so there is no shared-state hotspot. Each worker streams rows and
-  writes to a per-file staging prefix.
-- **Verify** — the independent verifier (this repo's `verification.py`, plus a
-  concurrent `ripgrep -Ff` literal cross-check) reruns over staged output.
+- **Transform** — workers receive the same versioned policy and identity-allocation
+  plan, or the complete identical identity set required to regenerate that plan,
+  plus protected key material. Per-record transformation remains local; collision
+  allocation is not recomputed independently from arbitrary worker subsets.
+  Format-aware workers write to per-file staging prefixes.
+- **Verify** — a separate stage reruns the runtime verifier over staged output.
+  It performs fresh rereads but shares matcher/allocation primitives. A proposed
+  concurrent `ripgrep -Ff` scan adds an implementation-diverse literal-absence
+  cross-check; it does not make the whole verifier implementation-diverse.
 - **Release** — after ALL files verify, an immutable corpus manifest (every
   object key + content hash) is written and a single active-corpus pointer is
-  atomically switched to it. Readers resolve the pointer, so a partially
-  promoted corpus is never observable; individual object copies before the
-  pointer switch are invisible to consumers.
+  conditionally switched to it. Consumers must resolve that pointer, and IAM
+  must prevent direct enumeration/access to candidate release prefixes. S3 does
+  not make pre-publication copies invisible automatically.
 - **Quarantine** — any file that fails preflight, transform, or verification
   goes to a quarantine bucket, is never promoted, and raises a `needs_human`
-  alert. Retries are idempotent (deterministic pseudonyms → same output).
+  alert. Retry equivalence requires the same source snapshot, policy version
+  and identity-allocation plan.
 
 ## Distribution, concurrency, skew, formats
 Work is partitioned per file; format is dispatched by suffix. Skew from large
@@ -41,14 +49,17 @@ lines; a UTF-8 code point may span a byte boundary):
 Concurrency is a bounded worker pool with SQS backpressure.
 
 ## Reliability
-At-least-once SQS delivery + idempotent deterministic transforms make retries
-safe. Checkpointing is per-file: a file is either in staging (in-flight),
+At-least-once SQS delivery requires explicit attempt handling. Retries are
+idempotent for the same source snapshot, policy version and identity-allocation
+plan, not merely because pseudonym derivation is deterministic. Checkpointing is per-file: a file is either in staging (in-flight),
 promoted (done), or quarantined (failed). Recovery replays only unfinished SQS
 messages. Publication is fail-closed: no partial corpus is ever promoted.
 
 ## Security
 KMS-encrypted intake/work/release/quarantine buckets; keys in KMS, never in the
-image or logs. No replacement mapping is persisted (deterministic keyed hash).
+image or logs. No raw value-to-pseudonym mapping belongs in releases or logs.
+A protected, versioned allocation plan or its complete identity-set input is
+required; its exact production representation remains design work.
 Intermediate/staging data is short-TTL and separate from release. Telemetry
 (CloudWatch: records/s, bytes/s, failures) carries no sensitive values.
 Operational access is least-privilege IAM per stage.
@@ -80,8 +91,9 @@ With the committed us-east-1 list-price inputs (price_date 2026-09-04):
 | single-process pipeline | Fargate worker pool + SQS | throughput/scale |
 | `tempfile` staging + `os.replace` | S3 staging prefix → copy to release | distributed publish |
 | `verification.py` in-process | same code per worker + `rg` cross-check | scale/independence |
-| stdlib deterministic pseudonyms | same, key from KMS | key management |
+| public deterministic pseudonyms | scoped keys plus shared allocation plan | key management and coordinated allocation |
 | fixture generator | real producer intake | data source |
 
-Retained semantics: deterministic identity-coherent pseudonyms, fail-closed
-release, independent verification, no mapping/keys in output or logs.
+Intended retained semantics: policy-declared identity coherence, fail-closed
+release, fresh verification with explicit shared-code limits, and no raw mappings
+or keys in output or logs. Deployment must validate these properties.
