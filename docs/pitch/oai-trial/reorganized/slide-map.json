@@ -19,7 +19,10 @@
     "figure_refs": [],
     "navigation_asset": null,
     "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
-    "normal_playback": true
+    "normal_playback": true,
+    "narrative_sections": [
+      "NARRATIVE.md#navigation"
+    ]
   },
   {
     "slide_id": "r02-demo-result",
@@ -72,7 +75,10 @@
       "fallback": "Explicitly announce recorded qualification; do not deliver live-success lines.",
       "same_time_slot": true,
       "guide_ref": "INTERVIEW_GUIDE.md#demo-decision"
-    }
+    },
+    "narrative_sections": [
+      "NARRATIVE.md#challenge"
+    ]
   },
   {
     "slide_id": "r03-demo-observations",
@@ -107,7 +113,10 @@
     "navigation_asset": null,
     "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
     "normal_playback": true,
-    "navigation_element_id": "source-navigation"
+    "navigation_element_id": "source-navigation",
+    "narrative_sections": [
+      "NARRATIVE.md#challenge"
+    ]
   },
   {
     "slide_id": "r04-docker",
@@ -144,7 +153,10 @@
     "navigation_asset": null,
     "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
     "normal_playback": true,
-    "navigation_element_id": "source-navigation"
+    "navigation_element_id": "source-navigation",
+    "narrative_sections": [
+      "NARRATIVE.md#reproduction"
+    ]
   },
   {
     "slide_id": "r05-mounted-cli",
@@ -198,7 +210,10 @@
     "navigation_asset": null,
     "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
     "normal_playback": true,
-    "navigation_element_id": "source-navigation"
+    "navigation_element_id": "source-navigation",
+    "narrative_sections": [
+      "NARRATIVE.md#reproduction"
+    ]
   },
   {
     "slide_id": "r06-output-evidence",
@@ -244,7 +259,10 @@
     "navigation_asset": null,
     "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
     "normal_playback": true,
-    "navigation_element_id": "source-navigation"
+    "navigation_element_id": "source-navigation",
+    "narrative_sections": [
+      "NARRATIVE.md#reproduction"
+    ]
   },
   {
     "slide_id": "r06a-research-reuse",
@@ -262,7 +280,10 @@
     "figure_refs": [],
     "navigation_asset": null,
     "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
-    "normal_playback": true
+    "normal_playback": true,
+    "narrative_sections": [
+      "NARRATIVE.md#research-reuse"
+    ]
   },
   {
     "slide_id": "r06b-research-adoption",
@@ -280,7 +301,10 @@
     "figure_refs": [],
     "navigation_asset": null,
     "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
-    "normal_playback": true
+    "normal_playback": true,
+    "narrative_sections": [
+      "NARRATIVE.md#research-adoption"
+    ]
   },
   {
     "slide_id": "r07-pipeline-map",
@@ -338,7 +362,10 @@
     "navigation_asset": null,
     "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
     "normal_playback": true,
-    "navigation_element_id": "source-navigation"
+    "navigation_element_id": "source-navigation",
+    "narrative_sections": [
+      "NARRATIVE.md#challenge"
+    ]
   },
   {
     "slide_id": "r08-policy",
@@ -391,7 +418,10 @@
     "navigation_asset": null,
     "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
     "normal_playback": true,
-    "navigation_element_id": "source-navigation"
+    "navigation_element_id": "source-navigation",
+    "narrative_sections": [
+      "NARRATIVE.md#policy"
+    ]
   },
   {
     "slide_id": "r09-identity",
@@ -447,7 +477,10 @@
     "navigation_asset": null,
     "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
     "normal_playback": true,
-    "navigation_element_id": "source-navigation"
+    "navigation_element_id": "source-navigation",
+    "narrative_sections": [
+      "NARRATIVE.md#identity"
+    ]
   },
   {
     "slide_id": "r10-spans",
@@ -480,6 +513,14 @@
         "line_end": 145,
         "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
         "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/matcher.py#L134-L145"
+      },
+      {
+        "path": "src/anonymization_trial/matcher.py",
+        "symbol": "Matcher.find",
+        "line_start": 112,
+        "line_end": 118,
+        "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+        "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/matcher.py#L112-L118"
       }
     ],
     "evidence_ids": [
@@ -492,7 +533,10 @@
     "navigation_asset": null,
     "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
     "normal_playback": true,
-    "navigation_element_id": "source-navigation"
+    "navigation_element_id": "source-navigation",
+    "narrative_sections": [
+      "NARRATIVE.md#matching"
+    ]
   },
   {
     "slide_id": "r11-formats",
@@ -536,7 +580,11 @@
     "navigation_asset": null,
     "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
     "normal_playback": true,
-    "navigation_element_id": "source-navigation"
+    "navigation_element_id": "source-navigation",
+    "narrative_sections": [
+      "NARRATIVE.md#formats",
+      "NARRATIVE.md#wrong-oracle"
+    ]
   },
   {
     "slide_id": "r12-typed-locations",
@@ -597,7 +645,10 @@
     "navigation_asset": null,
     "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
     "normal_playback": true,
-    "navigation_element_id": "source-navigation"
+    "navigation_element_id": "source-navigation",
+    "narrative_sections": [
+      "NARRATIVE.md#formats"
+    ]
   },
   {
     "slide_id": "r13-publication",
@@ -643,7 +694,10 @@
     "navigation_asset": null,
     "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
     "normal_playback": true,
-    "navigation_element_id": "source-navigation"
+    "navigation_element_id": "source-navigation",
+    "narrative_sections": [
+      "NARRATIVE.md#publication"
+    ]
   },
   {
     "slide_id": "r14-cloud",
@@ -682,7 +736,10 @@
     "navigation_asset": null,
     "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
     "normal_playback": true,
-    "navigation_element_id": "source-navigation"
+    "navigation_element_id": "source-navigation",
+    "narrative_sections": [
+      "NARRATIVE.md#cloud"
+    ]
   },
   {
     "slide_id": "r15-capacity",
@@ -714,7 +771,10 @@
     "navigation_asset": null,
     "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
     "normal_playback": true,
-    "navigation_element_id": "source-navigation"
+    "navigation_element_id": "source-navigation",
+    "narrative_sections": [
+      "NARRATIVE.md#cloud"
+    ]
   },
   {
     "slide_id": "r16-cost",
@@ -758,7 +818,10 @@
     "navigation_asset": null,
     "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
     "normal_playback": true,
-    "navigation_element_id": "source-navigation"
+    "navigation_element_id": "source-navigation",
+    "narrative_sections": [
+      "NARRATIVE.md#cloud"
+    ]
   },
   {
     "slide_id": "r17-disclosure",
@@ -785,7 +848,10 @@
     "figure_refs": [],
     "navigation_asset": null,
     "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
-    "normal_playback": true
+    "normal_playback": true,
+    "narrative_sections": [
+      "NARRATIVE.md#effort"
+    ]
   },
   {
     "slide_id": "r18-question-exact",
@@ -817,7 +883,10 @@
     "navigation_asset": null,
     "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
     "normal_playback": true,
-    "visual_rationale": "Standalone native editable question text and the existing visible qualifier, preserved from the local integration; historical text-only SVG is not in playback."
+    "visual_rationale": "Standalone native editable question text and the existing visible qualifier, preserved from the local integration; historical text-only SVG is not in playback.",
+    "narrative_sections": [
+      "NARRATIVE.md#policy"
+    ]
   },
   {
     "slide_id": "r19-answer-exact",
@@ -860,7 +929,10 @@
     "figure_refs": [],
     "navigation_asset": null,
     "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
-    "normal_playback": true
+    "normal_playback": true,
+    "narrative_sections": [
+      "NARRATIVE.md#policy"
+    ]
   },
   {
     "slide_id": "r20-question-verifier",
@@ -893,7 +965,10 @@
     "navigation_asset": null,
     "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
     "normal_playback": true,
-    "visual_rationale": "Standalone native editable question text and the existing visible qualifier, preserved from the local integration; historical text-only SVG is not in playback."
+    "visual_rationale": "Standalone native editable question text and the existing visible qualifier, preserved from the local integration; historical text-only SVG is not in playback.",
+    "narrative_sections": [
+      "NARRATIVE.md#verification"
+    ]
   },
   {
     "slide_id": "r21-answer-verifier",
@@ -934,6 +1009,22 @@
         "line_end": 143,
         "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
         "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/verification.py#L129-L143"
+      },
+      {
+        "path": "src/anonymization_trial/verification.py",
+        "symbol": "_verify_locations",
+        "line_start": 151,
+        "line_end": 184,
+        "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+        "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/verification.py#L151-L184"
+      },
+      {
+        "path": "src/anonymization_trial/verification.py",
+        "symbol": "_verify_subject_level",
+        "line_start": 252,
+        "line_end": 278,
+        "commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
+        "url": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/verification.py#L252-L278"
       }
     ],
     "evidence_ids": [
@@ -944,7 +1035,10 @@
     "figure_refs": [],
     "navigation_asset": null,
     "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
-    "normal_playback": true
+    "normal_playback": true,
+    "narrative_sections": [
+      "NARRATIVE.md#verification"
+    ]
   },
   {
     "slide_id": "r22-question-scale",
@@ -976,7 +1070,10 @@
     "navigation_asset": null,
     "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
     "normal_playback": true,
-    "visual_rationale": "Standalone native editable question text and the existing visible qualifier, preserved from the local integration; historical text-only SVG is not in playback."
+    "visual_rationale": "Standalone native editable question text and the existing visible qualifier, preserved from the local integration; historical text-only SVG is not in playback.",
+    "narrative_sections": [
+      "NARRATIVE.md#cloud"
+    ]
   },
   {
     "slide_id": "r23-answer-scale",
@@ -1018,7 +1115,10 @@
     "figure_refs": [],
     "navigation_asset": null,
     "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
-    "normal_playback": true
+    "normal_playback": true,
+    "narrative_sections": [
+      "NARRATIVE.md#cloud"
+    ]
   },
   {
     "slide_id": "r24-security-evals",
@@ -1059,7 +1159,10 @@
     "navigation_asset": null,
     "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
     "normal_playback": true,
-    "navigation_element_id": "source-navigation"
+    "navigation_element_id": "source-navigation",
+    "narrative_sections": [
+      "NARRATIVE.md#security"
+    ]
   },
   {
     "slide_id": "r25-lineage",
@@ -1082,7 +1185,10 @@
     "figure_refs": [],
     "navigation_asset": null,
     "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
-    "normal_playback": true
+    "normal_playback": true,
+    "narrative_sections": [
+      "NARRATIVE.md#security"
+    ]
   },
   {
     "slide_id": "r26-wrapper",
@@ -1138,7 +1244,10 @@
     "reference_docs": [
       "sources/skill-reuse-reference.md"
     ],
-    "navigation_element_id": "source-navigation"
+    "navigation_element_id": "source-navigation",
+    "narrative_sections": [
+      "NARRATIVE.md#wrapper"
+    ]
   },
   {
     "slide_id": "r27-discovery",
@@ -1203,7 +1312,10 @@
     "navigation_asset": null,
     "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
     "normal_playback": true,
-    "navigation_element_id": "source-navigation"
+    "navigation_element_id": "source-navigation",
+    "narrative_sections": [
+      "NARRATIVE.md#discovery"
+    ]
   },
   {
     "slide_id": "r28-canonical-path",
@@ -1270,7 +1382,10 @@
     "navigation_asset": null,
     "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
     "normal_playback": true,
-    "navigation_element_id": "source-navigation"
+    "navigation_element_id": "source-navigation",
+    "narrative_sections": [
+      "NARRATIVE.md#discovery"
+    ]
   },
   {
     "slide_id": "r29-discussion",
@@ -1300,7 +1415,10 @@
     "figure_refs": [],
     "navigation_asset": null,
     "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
-    "normal_playback": true
+    "normal_playback": true,
+    "narrative_sections": [
+      "NARRATIVE.md#navigation"
+    ]
   },
   {
     "slide_id": "r30-thank-you",
@@ -1318,6 +1436,9 @@
     "figure_refs": [],
     "navigation_asset": null,
     "source_commit": "0375af56bf681e9441edcb7433cfe58951db77b2",
-    "normal_playback": true
+    "normal_playback": true,
+    "narrative_sections": [
+      "NARRATIVE.md#navigation"
+    ]
   }
 ]

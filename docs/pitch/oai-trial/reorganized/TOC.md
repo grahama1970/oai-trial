@@ -61,18 +61,18 @@ The first playback slide is Table of Contents. The wrapper receives only the pre
   - Three adaptations you can inspect in the code.
 - `r07-pipeline-map` — **Transformation and release are separate steps** — 09:00–09:45
   - Four high-level groups orient the code walkthrough.
-- `r08-policy` — **The policy supplies authority—not a guess** — 09:45–11:00
-  - Contradictory sensitive and protected obligations reject.
+- `r08-policy` — **Humans supply meaning; code enforces literal rules** — 09:45–11:00
+  - The compiler rejects literal conflicts—not semantic contradictions.
 - `r09-identity` — **Aliases converge because identity is declared** — 11:00–12:15
-  - One type/identity pair produces one allocated replacement.
+  - Policy-declared identity—not inferred personhood.
 - `r10-spans` — **Select original spans; emit only once** — 12:15–13:45
-  - The matcher never rematches its own replacements.
+  - Original spans only; generated text is never rematched.
 - `r11-formats` — **Preserve logical meaning—not identical serialization** — 13:45–15:00
   - Adapters own the supported format boundaries.
 - `r12-typed-locations` — **A correct value on the wrong row is still wrong** — 15:00–16:30
   - Verification checks location and scalar type.
-- `r13-publication` — **The marker—not the directory—authorizes use** — 16:30–18:00
-  - Write the complete report, then rename it last.
+- `r13-publication` — **READY is technical—not privacy approval** — 16:30–18:00
+  - Technically READY under the declared transformation contract.
 - `r14-cloud` — **Distribute the work; retain one corpus decision** — 18:00–19:30
   - Required production design: AWS, not a deployed extension.
 - `r15-capacity` — **The SLA is a scenario—not a benchmark** — 19:30–20:30
@@ -90,8 +90,8 @@ The first playback slide is Table of Contents. The wrapper receives only the pre
   - Exact transformation is auditable; detection completeness is a separate claim.
 - `r20-question-verifier` — **Question 2** — 23:00–23:15
   - How independent is a verifier that shares primitives?
-- `r21-answer-verifier` — **Rereading helps; common-mode risk remains** — 23:15–24:00
-  - Output mutations are checked independently of transform success flags.
+- `r21-answer-verifier` — **Fresh reread; shared replacement primitives** — 23:15–24:00
+  - Fixture readback adds a separate, bounded oracle.
 - `r22-question-scale` — **Question 3** — 24:00–24:15
   - What changes at petabyte scale—and what does the model prove?
 - `r23-answer-scale` — **The model exposes assumptions; it does not validate them** — 24:15–25:00

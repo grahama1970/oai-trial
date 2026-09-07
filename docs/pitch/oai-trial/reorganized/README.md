@@ -2,7 +2,7 @@
 
 This is a coordinated **candidate authoring bundle**, not the submitted anonymizer archive, a fresh technical qualification, or an approved slide export.
 
-Start with `INTERVIEW_GUIDE.md`, then `TOC.md` and `WALKTHROUGH.md`. `deck.public.yaml` contains 32 normal-playback slides: 30 prepared slides totaling 30 minutes, then a separate 15+ minute Discussion reserve and a final Thank you. The entire 48-question bank remains outside playback, preserved in the transcript and `question-map.json`.
+For advance reading, use [`INTERVIEWER_BRIEF.md`](INTERVIEWER_BRIEF.md). Start with [`NARRATIVE.md`](NARRATIVE.md) for the canonical code-assisted explanation. `WALKTHROUGH.md` is its timed spoken version; `INTERVIEW_GUIDE.md` and `TOC.md` handle rehearsal and navigation. `slide-map.json` maps every slide to narrative sections and code/evidence anchors. `deck.public.yaml` contains 32 normal-playback slides: 30 prepared slides totaling 30 minutes, then a separate 15+ minute Discussion reserve and a final Thank you. The entire 48-question bank remains outside playback, preserved in the transcript and `question-map.json`.
 
 ## Contents
 

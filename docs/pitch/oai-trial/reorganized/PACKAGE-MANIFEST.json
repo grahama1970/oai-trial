@@ -9,24 +9,34 @@
       "sha256": "4bbdf08f3cbece855736616317d697fffaebe8ca496d933274fae34b6e078ee5"
     },
     {
+      "path": "INTERVIEWER_BRIEF.md",
+      "bytes": 4711,
+      "sha256": "80a9f02fd456db5725b76a616cae78da1ecb379b23f4e5c5ceba1985616c321c"
+    },
+    {
       "path": "INTERVIEW_GUIDE.md",
       "bytes": 11223,
       "sha256": "7c5ebefd89a6b4223172200416689442c4288f65adcf18c1f9a7e279b2bd5f8a"
     },
     {
+      "path": "NARRATIVE.md",
+      "bytes": 53910,
+      "sha256": "e0d8adb7daab7946fceca143da08aec434a5983986e49c0f616459e968933d98"
+    },
+    {
       "path": "README.md",
-      "bytes": 8947,
-      "sha256": "a0630759947c109a001bd903638288fbfdb8f9ad50d8c63edf98ca93245353f6"
+      "bytes": 9234,
+      "sha256": "f24160da43856b3c563f5fd73ba7b7a28afa92d6a070f3f9e6a5397d9bdc52f4"
     },
     {
       "path": "TOC.md",
-      "bytes": 6727,
-      "sha256": "2e774261d70a1c655127a5a81c1d6bab409aa70074cdde8d4649bb0c493b3ec1"
+      "bytes": 6734,
+      "sha256": "b4e6b9883966d5eb9552dbd264950b61803445068b949a347cfcb97bb03540b9"
     },
     {
       "path": "WALKTHROUGH.md",
-      "bytes": 103565,
-      "sha256": "9543ec502522986ea9989f35a801a222b0bb7f2479a01c04ab39015cb20779e0"
+      "bytes": 103739,
+      "sha256": "4b820ffb7eca50ea1763059d37f49ed6a626b209c9abebc544b54e582156de84"
     },
     {
       "path": "asset_manifest.yaml",
@@ -235,8 +245,8 @@
     },
     {
       "path": "claim_ledger.yaml",
-      "bytes": 52460,
-      "sha256": "b740820a2136ec61b5a61814714c69e6d6775bef8ddfdb7cf95c74e0162bb63b"
+      "bytes": 55052,
+      "sha256": "738cba5a9a73df77e2f781f209c7ef6a1c72fd561bf4a45f25ce329537b79636"
     },
     {
       "path": "debugger.json",
@@ -245,8 +255,8 @@
     },
     {
       "path": "deck.public.yaml",
-      "bytes": 228288,
-      "sha256": "8b4362c0b44f525cc3fa2cdaf09275872c3fbff99640a1bb572fc128d5dbf95b"
+      "bytes": 232050,
+      "sha256": "93dbb4769d12e2b35e930b93072e529ba6e71d0689e5036ac6bf00b094ec35e1"
     },
     {
       "path": "question-map.json",
@@ -285,13 +295,13 @@
     },
     {
       "path": "slide-map.json",
-      "bytes": 43262,
-      "sha256": "a3ad781b003de1317bcf5fabe8dd0f060ec3d9ea930b1dd4b00e9a8aaaebf479"
+      "bytes": 46538,
+      "sha256": "d2f7589897667a11ed2b11c186637d3cfa0a15c023c553b66c4b8fbb352c80c9"
     },
     {
       "path": "source_manifest.yaml",
-      "bytes": 5577,
-      "sha256": "730160bdf4d7ee268702ad5a3ab1954c8a70ab946cc14d4d9d862b2b00ff2042"
+      "bytes": 5826,
+      "sha256": "8bf450f31ec4ac55fee797f34e4a98c7c03ea6bdfff0871e183546ed0c29e355"
     },
     {
       "path": "sources/BATTLE_OBJECTIVE.md",

@@ -364,6 +364,10 @@
           "source_id": "operator-update",
           "section": "Live action after preflight and recorded fallback",
           "locator": "sources/operator-direction-update.md"
+        },
+        {
+          "source_id": "canonical-narrative",
+          "section": "challenge"
         }
       ],
       "claim_ids": [
@@ -514,6 +518,10 @@
           "source_id": "code-navigation",
           "section": "src/anonymization_trial/__main__.py::_run_once",
           "locator": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/__main__.py#L41-L58"
+        },
+        {
+          "source_id": "canonical-narrative",
+          "section": "challenge"
         }
       ],
       "claim_ids": [
@@ -664,6 +672,10 @@
           "source_id": "code-navigation",
           "section": "src/anonymization_trial/__main__.py::main",
           "locator": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/__main__.py#L207-L233"
+        },
+        {
+          "source_id": "canonical-narrative",
+          "section": "reproduction"
         }
       ],
       "claim_ids": [
@@ -824,6 +836,10 @@
           "source_id": "code-navigation",
           "section": "src/anonymization_trial/__main__.py::main",
           "locator": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/__main__.py#L207-L233"
+        },
+        {
+          "source_id": "canonical-narrative",
+          "section": "reproduction"
         }
       ],
       "claim_ids": [
@@ -979,6 +995,10 @@
           "source_id": "code-navigation",
           "section": "scripts/qualify_submission.py::qualify",
           "locator": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/scripts/qualify_submission.py#L137-L314"
+        },
+        {
+          "source_id": "canonical-narrative",
+          "section": "reproduction"
         }
       ],
       "claim_ids": [
@@ -1166,6 +1186,10 @@
         {
           "source_id": "research-workflow",
           "section": "Research first; reuse before custom code"
+        },
+        {
+          "source_id": "canonical-narrative",
+          "section": "research-reuse"
         }
       ],
       "claim_ids": [
@@ -1249,7 +1273,7 @@
           "y": 0.52,
           "w": 0.83,
           "h": 0.085,
-          "text": "Inspect existing projects, skills and libraries",
+          "text": "Inspect existing projects and skills",
           "size_pt": 24,
           "bold": false,
           "color": "#ece2d3",
@@ -1262,7 +1286,7 @@
           "y": 0.625,
           "w": 0.83,
           "h": 0.085,
-          "text": "Compose what fits; custom-code only the gap",
+          "text": "Compare contracts; reuse before custom code",
           "size_pt": 24,
           "bold": false,
           "color": "#ece2d3",
@@ -1357,7 +1381,7 @@
       "transition": "none",
       "reveal": "none",
       "hidden": false,
-      "notes": "## r06a-research-reuse — Research first; reuse before custom code\n\n### Say\n\nWe begin by understanding the challenge, not by generating code. I use dogpile to find current research and implementations across Brave web search, arXiv and GitHub, then inspect the methods and code. I also check our existing projects and skills. Here, extract-entities and clean-text informed the design but their detection and normalization policies did not fit exact literal replacement. Python’s standard library supplied the format machinery. RapidFuzz supplied the optional scorer rather than a bespoke fuzzy algorithm. The local matcher was a bounded contract choice, not a benchmark-proven improvement over FlashText. Research and implementation continued together; the history does not show every paper being read before any code existed.\n\n### Show / navigate\n\nOpen sources/research-workflow.md. Keep wrapper implementation details in Extra Credit.\n\n**Visible qualification:** Development workflow—not an offline runtime dependency.\n"
+      "notes": "## r06a-research-reuse — Research first; reuse before custom code\n\n### Say\n\nWe begin by understanding the challenge, not by generating code. I use dogpile to find current research and implementations across Brave web search, arXiv and GitHub, then inspect the methods and code. I also check our existing projects and skills. Here, extract-entities and clean-text informed the design but their detection and normalization policies did not fit exact literal replacement. Python’s standard library supplied the format machinery. RapidFuzz supplied the optional scorer rather than a bespoke fuzzy algorithm. The local matcher was a bounded contract choice, not a benchmark-proven improvement over FlashText. Research and implementation continued together; the history does not show every paper being read before any code existed.\n\n### Show / navigate\n\nOpen sources/research-workflow.md. Keep wrapper implementation details in Extra Credit.\n\n**Visible qualification:** Development workflow—not an offline runtime dependency.\n\n\n**Canonical explanation:** NARRATIVE.md#research-reuse.\nFlashText-style matching was a familiar solution family considered in the reuse audit. This project chose explicit Aho-Corasick literal semantics; no comparative benchmark established superiority or proved another package could not be adapted.\n"
     },
     {
       "id": "r06b-research-adoption",
@@ -1372,6 +1396,10 @@
         {
           "source_id": "research-workflow",
           "section": "Research changed checks—not just citations"
+        },
+        {
+          "source_id": "canonical-narrative",
+          "section": "research-adoption"
         }
       ],
       "claim_ids": [
@@ -1583,6 +1611,10 @@
           "source_id": "code-navigation",
           "section": "src/anonymization_trial/pipeline.py::_publish",
           "locator": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/pipeline.py#L166-L211"
+        },
+        {
+          "source_id": "canonical-narrative",
+          "section": "challenge"
         }
       ],
       "claim_ids": [
@@ -1717,8 +1749,8 @@
       "role": "detail",
       "layout": "freeform",
       "visibility": "public",
-      "title": "The policy supplies authority—not a guess",
-      "message": "Contradictory sensitive and protected obligations reject.",
+      "title": "Humans supply meaning; code enforces literal rules",
+      "message": "The compiler rejects literal conflicts—not semantic contradictions.",
       "body": [],
       "source_refs": [
         {
@@ -1743,6 +1775,10 @@
           "source_id": "code-navigation",
           "section": "src/anonymization_trial/pipeline.py::_preflight",
           "locator": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/pipeline.py#L80-L116"
+        },
+        {
+          "source_id": "canonical-narrative",
+          "section": "policy"
         }
       ],
       "claim_ids": [
@@ -1774,7 +1810,7 @@
           "y": 0.022,
           "w": 0.885,
           "h": 0.07,
-          "text": "The policy supplies authority—not a guess",
+          "text": "Humans supply meaning; code enforces literal rules",
           "size_pt": 29,
           "bold": true,
           "color": "#f2eadc",
@@ -1787,7 +1823,7 @@
           "y": 0.14,
           "w": 0.87,
           "h": 0.12,
-          "text": "Contradictory sensitive and protected obligations reject.",
+          "text": "The compiler rejects literal conflicts—not semantic contradictions.",
           "size_pt": 23,
           "bold": false,
           "color": "#e2ac62",
@@ -1813,7 +1849,7 @@
           "y": 0.44,
           "w": 0.83,
           "h": 0.095,
-          "text": "Known subject links—not inferred identity",
+          "text": "Policy-declared identity—not inferred personhood",
           "size_pt": 27,
           "bold": false,
           "color": "#ece2d3",
@@ -1826,7 +1862,7 @@
           "y": 0.56,
           "w": 0.83,
           "h": 0.095,
-          "text": "Ambiguous obligations → refuse",
+          "text": "Sensitive/protected literal overlap → reject",
           "size_pt": 27,
           "bold": false,
           "color": "#ece2d3",
@@ -1915,7 +1951,7 @@
       "transition": "none",
       "reveal": "none",
       "hidden": false,
-      "notes": "PREPARED REHEARSAL GUIDE — not a record of an interview.\nPresentation source commit: ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78. Frozen implementation: 0375af56bf681e9441edcb7433cfe58951db77b2.\nTIME 09:45–11:00; 1.25 minute(s); timing kind: prepared.\nLegacy sections: 01-brief, 03-semantics. Primary question IDs: Q05, Q11, Q33.\n## r08-policy — The policy supplies authority—not a guess\n\n**Time:** 09:45–11:00. **Block:** How the Solution Works. **Primary questions:** Q05, Q11, Q33\n\n### Say\n\nFor the running example, the policy explicitly states that Alice and A.L belong to one subject. The compiler can validate that declaration and reject contradictory match domains; it cannot determine whether the author has correctly identified the people.\nIt also requires both sensitive_values and protected_values. A missing sensitive list must not silently become a successful no-op. For protected text such as KEEP, the preservation promise is unconditional. When a sensitive literal equals, contains, or can partially intersect a protected literal, compilation rejects rather than selecting a convenient winner.\nThat overlap rule is deliberately conservative and can reject a policy even before a conflicting occurrence is encountered. A more context-sensitive exception would require a different explicit contract. The filesystem admission checks similarly reject unsafe inputs before transformation. None of those checks expands the engine into automatic detection.\n\n### Show / navigate\n\ncompile_policy() L129–164, then _check_overlap() L110–126. Explain required arrays and one overlap decision.\n\n- [`src/anonymization_trial/policy.py::compile_policy` — L129–L164](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/policy.py#L129-L164)\n- [`src/anonymization_trial/policy.py::_check_overlap` — L110–L126](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/policy.py#L110-L126)\n- [`src/anonymization_trial/pipeline.py::_preflight` — L80–L116](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/pipeline.py#L80-L116)\n\n**Exact source excerpt (context shown in the pinned link):**\n\n```python\ndef compile_policy(payload: object) -> Policy:\n    \"\"\"Validate a policy payload strictly and compile its matcher.\"\"\"\n    _require(isinstance(payload, dict), AnonErrorCode.INVALID_POLICY, \"policy is not an object\")\n    version = payload.get(\"version\")\n```\n\n**Visible qualification:** A valid policy is not proof that its identity assignments are true.\n\n**Evidence IDs:** E08\n\nAuthoring only: no application/test/Docker, local pitchdeck compiler, owning SVG validator, analytics/create-figure, recording or Live Evidence execution. Follow the stated assessment permission boundary.\n"
+      "notes": "PREPARED REHEARSAL GUIDE — not a record of an interview.\nPresentation source commit: ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78. Frozen implementation: 0375af56bf681e9441edcb7433cfe58951db77b2.\nTIME 09:45–11:00; 1.25 minute(s); timing kind: prepared.\nLegacy sections: 01-brief, 03-semantics. Primary question IDs: Q05, Q11, Q33.\n## r08-policy — Humans supply meaning; code enforces literal rules\n\n**Time:** 09:45–11:00. **Block:** How the Solution Works. **Primary questions:** Q05, Q11, Q33\n\n### Say\n\nFor the running example, the policy explicitly states that Alice and A.L belong to one subject. The compiler can validate that declaration and reject contradictory match domains; it cannot determine whether the author has correctly identified the people.\nIt also requires both sensitive_values and protected_values. A missing sensitive list must not silently become a successful no-op. For protected text such as KEEP, the preservation promise is unconditional. When a sensitive literal equals, contains, or can partially intersect a protected literal, compilation rejects rather than selecting a convenient winner.\nThat overlap rule is deliberately conservative and can reject a policy even before a conflicting occurrence is encountered. A more context-sensitive exception would require a different explicit contract. The filesystem admission checks similarly reject unsafe inputs before transformation. None of those checks expands the engine into automatic detection.\n\n### Show / navigate\n\ncompile_policy() L129–164, then _check_overlap() L110–126. Explain required arrays and one overlap decision.\n\n- [`src/anonymization_trial/policy.py::compile_policy` — L129–L164](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/policy.py#L129-L164)\n- [`src/anonymization_trial/policy.py::_check_overlap` — L110–L126](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/policy.py#L110-L126)\n- [`src/anonymization_trial/pipeline.py::_preflight` — L80–L116](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/pipeline.py#L80-L116)\n\n**Exact source excerpt (context shown in the pinned link):**\n\n```python\ndef compile_policy(payload: object) -> Policy:\n    \"\"\"Validate a policy payload strictly and compile its matcher.\"\"\"\n    _require(isinstance(payload, dict), AnonErrorCode.INVALID_POLICY, \"policy is not an object\")\n    version = payload.get(\"version\")\n```\n\n**Visible qualification:** A valid policy is not proof that its identity assignments are true.\n\n**Evidence IDs:** E08\n\nAuthoring only: no application/test/Docker, local pitchdeck compiler, owning SVG validator, analytics/create-figure, recording or Live Evidence execution. Follow the stated assessment permission boundary.\n\n\n**Canonical explanation:** NARRATIVE.md#policy.\n"
     },
     {
       "id": "r09-identity",
@@ -1924,7 +1960,7 @@
       "layout": "freeform",
       "visibility": "public",
       "title": "Aliases converge because identity is declared",
-      "message": "One type/identity pair produces one allocated replacement.",
+      "message": "Policy-declared identity—not inferred personhood.",
       "body": [],
       "source_refs": [
         {
@@ -1949,6 +1985,10 @@
           "source_id": "code-navigation",
           "section": "src/anonymization_trial/pseudonyms.py::build_replacements",
           "locator": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/pseudonyms.py#L62-L104"
+        },
+        {
+          "source_id": "canonical-narrative",
+          "section": "identity"
         }
       ],
       "claim_ids": [
@@ -1995,7 +2035,7 @@
           "y": 0.14,
           "w": 0.87,
           "h": 0.12,
-          "text": "One type/identity pair produces one allocated replacement.",
+          "text": "Policy-declared identity—not inferred personhood.",
           "size_pt": 23,
           "bold": false,
           "color": "#e2ac62",
@@ -2075,7 +2115,7 @@
       "transition": "none",
       "reveal": "none",
       "hidden": false,
-      "notes": "PREPARED REHEARSAL GUIDE — not a record of an interview.\nPresentation source commit: ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78. Frozen implementation: 0375af56bf681e9441edcb7433cfe58951db77b2.\nTIME 11:00–12:15; 1.25 minute(s); timing kind: prepared.\nLegacy sections: 03-semantics. Primary question IDs: Q07, Q08, Q09, Q31, Q32.\n## r09-identity — Aliases converge because identity is declared\n\n**Time:** 11:00–12:15. **Block:** How the Solution Works. **Primary questions:** Q07, Q08, Q09, Q31, Q32\n\n### Say\n\nAlice and A.L converge because Rule.identity returns the same pair: name and person-a. Bob belongs to a different canonical identity and receives a distinct replacement within that type. A name and an email for one subject need not display the same token; the type is part of the derivation.\nWhen subject_id is absent, rule_id is the fallback. Renaming that fallback can therefore change the identity input. policy_version is schema version one, not an incrementing revision counter for every policy edit. The full policy digest is recorded for provenance, not used as the pseudonym seed.\nThe allocator sorts the identity set, detects per-type collisions, and changes the salt or rejects exhaustion. This is deterministic for the same plan. Adding distinct identities can alter collision assignments, so arbitrary policy growth is not promised to preserve all old values. The public salt resolves allocation; it is not a secret. These distinctions matter before we propose distributing work over independent workers.\n\n### Show / navigate\n\nRule.identity L38–40 → _digest L41–43 → build_replacements L62–104. Code navigation, not a breakpoint.\n\n- [`src/anonymization_trial/policy.py::Rule.identity` — L38–L40](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/policy.py#L38-L40)\n- [`src/anonymization_trial/pseudonyms.py::_digest` — L41–L43](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/pseudonyms.py#L41-L43)\n- [`src/anonymization_trial/pseudonyms.py::build_replacements` — L62–L104](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/pseudonyms.py#L62-L104)\n\n**Exact source excerpt (context shown in the pinned link):**\n\n```python\n    @property\n    def identity(self) -> CanonicalIdentity:\n        return (self.data_type, self.subject_id or self.rule_id)\n```\n\n**Visible qualification:** Public unkeyed namespace; stable allocation assumes the same identity set.\n\n**Evidence IDs:** E08\n\nAuthoring only: no application/test/Docker, local pitchdeck compiler, owning SVG validator, analytics/create-figure, recording or Live Evidence execution. Follow the stated assessment permission boundary.\n"
+      "notes": "PREPARED REHEARSAL GUIDE — not a record of an interview.\nPresentation source commit: ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78. Frozen implementation: 0375af56bf681e9441edcb7433cfe58951db77b2.\nTIME 11:00–12:15; 1.25 minute(s); timing kind: prepared.\nLegacy sections: 03-semantics. Primary question IDs: Q07, Q08, Q09, Q31, Q32.\n## r09-identity — Aliases converge because identity is declared\n\n**Time:** 11:00–12:15. **Block:** How the Solution Works. **Primary questions:** Q07, Q08, Q09, Q31, Q32\n\n### Say\n\nAlice and A.L converge because Rule.identity returns the same pair: name and person-a. Bob belongs to a different canonical identity and receives a distinct replacement within that type. A name and an email for one subject need not display the same token; the type is part of the derivation.\nWhen subject_id is absent, rule_id is the fallback. Renaming that fallback can therefore change the identity input. policy_version is schema version one, not an incrementing revision counter for every policy edit. The full policy digest is recorded for provenance, not used as the pseudonym seed.\nThe allocator sorts the identity set, detects per-type collisions, and changes the salt or rejects exhaustion. This is deterministic for the same plan. Adding distinct identities can alter collision assignments, so arbitrary policy growth is not promised to preserve all old values. The public salt resolves allocation; it is not a secret. These distinctions matter before we propose distributing work over independent workers.\n\n### Show / navigate\n\nRule.identity L38–40 → _digest L41–43 → build_replacements L62–104. Code navigation, not a breakpoint.\n\n- [`src/anonymization_trial/policy.py::Rule.identity` — L38–L40](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/policy.py#L38-L40)\n- [`src/anonymization_trial/pseudonyms.py::_digest` — L41–L43](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/pseudonyms.py#L41-L43)\n- [`src/anonymization_trial/pseudonyms.py::build_replacements` — L62–L104](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/pseudonyms.py#L62-L104)\n\n**Exact source excerpt (context shown in the pinned link):**\n\n```python\n    @property\n    def identity(self) -> CanonicalIdentity:\n        return (self.data_type, self.subject_id or self.rule_id)\n```\n\n**Visible qualification:** Public unkeyed namespace; stable allocation assumes the same identity set.\n\n**Evidence IDs:** E08\n\nAuthoring only: no application/test/Docker, local pitchdeck compiler, owning SVG validator, analytics/create-figure, recording or Live Evidence execution. Follow the stated assessment permission boundary.\n\n\n**Canonical explanation:** NARRATIVE.md#identity.\n"
     },
     {
       "id": "r10-spans",
@@ -2084,7 +2124,7 @@
       "layout": "freeform",
       "visibility": "public",
       "title": "Select original spans; emit only once",
-      "message": "The matcher never rematches its own replacements.",
+      "message": "Original spans only; generated text is never rematched.",
       "body": [],
       "source_refs": [
         {
@@ -2104,6 +2144,10 @@
           "source_id": "code-navigation",
           "section": "src/anonymization_trial/matcher.py::_select",
           "locator": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/matcher.py#L134-L145"
+        },
+        {
+          "source_id": "canonical-narrative",
+          "section": "matching"
         }
       ],
       "claim_ids": [
@@ -2150,7 +2194,7 @@
           "y": 0.14,
           "w": 0.87,
           "h": 0.12,
-          "text": "The matcher never rematches its own replacements.",
+          "text": "Original spans only; generated text is never rematched.",
           "size_pt": 23,
           "bold": false,
           "color": "#e2ac62",
@@ -2230,7 +2274,7 @@
       "transition": "none",
       "reveal": "none",
       "hidden": false,
-      "notes": "PREPARED REHEARSAL GUIDE — not a record of an interview.\nPresentation source commit: ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78. Frozen implementation: 0375af56bf681e9441edcb7433cfe58951db77b2.\nTIME 12:15–13:45; 1.5 minute(s); timing kind: prepared.\nLegacy sections: 03-semantics. Primary question IDs: Q10, Q41.\n## r10-spans — Select original spans; emit only once\n\n**Time:** 12:15–13:45. **Block:** How the Solution Works. **Primary questions:** Q10, Q41\n\n### Say\n\nUse the same original sentence: Alice and A.L met Bob, followed by KEEP. The matcher collects spans over that original decoded text, chooses non-overlapping spans, and emits each replacement once.\nThe precedence is earliest start, then the longest match at that start, then stable rule ID. It is not a rule that the globally longest name always wins. The selected replacement is appended to a separate output list. It is never fed back into a chain of text.replace calls that could rewrite newly generated text.\nThis mechanism is separate from the final residual check. A generated token that contains a sensitive literal can still cause refusal; no-cascade is not a promise to publish every possible policy. Case-sensitive matching uses exact code points, and accepted insensitive rules use ASCII lowering without Unicode normalization. Deeper Unicode distinctions stay in the appendix rather than changing the matching promise on this slide.\n\n### Show / navigate\n\nMatcher.replace L120–131; point to source slices and replacement append. _select L134–145 defines precedence.\n\n- [`src/anonymization_trial/matcher.py::Matcher.replace` — L120–L131](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/matcher.py#L120-L131)\n- [`src/anonymization_trial/matcher.py::_select` — L134–L145](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/matcher.py#L134-L145)\n\n**Exact source excerpt (context shown in the pinned link):**\n\n```python\n        cursor = 0\n        for span in spans:\n            out.append(text[cursor:span.start])\n            out.append(span.replacement)\n            cursor = span.end\n        out.append(text[cursor:])\n        return \"\".join(out), len(spans)\n```\n\n**Visible qualification:** No cascade does not guarantee every policy can publish; residuals may reject.\n\n**Evidence IDs:** E08\n\nAuthoring only: no application/test/Docker, local pitchdeck compiler, owning SVG validator, analytics/create-figure, recording or Live Evidence execution. Follow the stated assessment permission boundary.\n"
+      "notes": "PREPARED REHEARSAL GUIDE — not a record of an interview.\nPresentation source commit: ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78. Frozen implementation: 0375af56bf681e9441edcb7433cfe58951db77b2.\nTIME 12:15–13:45; 1.5 minute(s); timing kind: prepared.\nLegacy sections: 03-semantics. Primary question IDs: Q10, Q41.\n## r10-spans — Select original spans; emit only once\n\n**Time:** 12:15–13:45. **Block:** How the Solution Works. **Primary questions:** Q10, Q41\n\n### Say\n\nUse the same original sentence: Alice and A.L met Bob, followed by KEEP. The matcher collects spans over that original decoded text, chooses non-overlapping spans, and emits each replacement once.\nThe precedence is earliest start, then the longest match at that start, then stable rule ID. It is not a rule that the globally longest name always wins. The selected replacement is appended to a separate output list. It is never fed back into a chain of text.replace calls that could rewrite newly generated text.\nThis mechanism is separate from the final residual check. A generated token that contains a sensitive literal can still cause refusal; no-cascade is not a promise to publish every possible policy. Case-sensitive matching uses exact code points, and accepted insensitive rules use ASCII lowering without Unicode normalization. Deeper Unicode distinctions stay in the appendix rather than changing the matching promise on this slide.\n\n### Show / navigate\n\nMatcher.replace L120–131; point to source slices and replacement append. _select L134–145 defines precedence.\n\n- [`src/anonymization_trial/matcher.py::Matcher.replace` — L120–L131](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/matcher.py#L120-L131)\n- [`src/anonymization_trial/matcher.py::_select` — L134–L145](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/matcher.py#L134-L145)\n\n**Exact source excerpt (context shown in the pinned link):**\n\n```python\n        cursor = 0\n        for span in spans:\n            out.append(text[cursor:span.start])\n            out.append(span.replacement)\n            cursor = span.end\n        out.append(text[cursor:])\n        return \"\".join(out), len(spans)\n```\n\n**Visible qualification:** No cascade does not guarantee every policy can publish; residuals may reject.\n\n**Evidence IDs:** E08\n\nAuthoring only: no application/test/Docker, local pitchdeck compiler, owning SVG validator, analytics/create-figure, recording or Live Evidence execution. Follow the stated assessment permission boundary.\n\n\n**Canonical explanation:** NARRATIVE.md#matching.\nFlashText-style matching was a familiar solution family considered in the reuse audit. This project chose explicit Aho-Corasick literal semantics; no comparative benchmark established superiority or proved another package could not be adapted.\n"
     },
     {
       "id": "r11-formats",
@@ -2259,6 +2303,10 @@
           "source_id": "code-navigation",
           "section": "src/anonymization_trial/verification.py::_verify_sqlite_locations",
           "locator": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/verification.py#L64-L126"
+        },
+        {
+          "source_id": "canonical-narrative",
+          "section": "formats"
         }
       ],
       "claim_ids": [
@@ -2470,6 +2518,10 @@
           "source_id": "code-navigation",
           "section": "security/tests/test_typed_scalar_verification.py::test_json_bool_number_and_sqlite_integer_real_mutations_rejected",
           "locator": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/security/tests/test_typed_scalar_verification.py#L21-L48"
+        },
+        {
+          "source_id": "canonical-narrative",
+          "section": "formats"
         }
       ],
       "claim_ids": [
@@ -2604,8 +2656,8 @@
       "role": "detail",
       "layout": "freeform",
       "visibility": "public",
-      "title": "The marker—not the directory—authorizes use",
-      "message": "Write the complete report, then rename it last.",
+      "title": "READY is technical—not privacy approval",
+      "message": "Technically READY under the declared transformation contract.",
       "body": [],
       "source_refs": [
         {
@@ -2625,6 +2677,10 @@
           "source_id": "code-navigation",
           "section": "src/anonymization_trial/pipeline.py::run_pipeline",
           "locator": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/pipeline.py#L214-L258"
+        },
+        {
+          "source_id": "canonical-narrative",
+          "section": "publication"
         }
       ],
       "claim_ids": [
@@ -2658,7 +2714,7 @@
           "y": 0.022,
           "w": 0.885,
           "h": 0.07,
-          "text": "The marker—not the directory—authorizes use",
+          "text": "READY is technical—not privacy approval",
           "size_pt": 29,
           "bold": true,
           "color": "#f2eadc",
@@ -2671,7 +2727,7 @@
           "y": 0.14,
           "w": 0.87,
           "h": 0.12,
-          "text": "Write the complete report, then rename it last.",
+          "text": "Technically READY under the declared transformation contract.",
           "size_pt": 23,
           "bold": false,
           "color": "#e2ac62",
@@ -2751,7 +2807,7 @@
       "transition": "none",
       "reveal": "none",
       "hidden": false,
-      "notes": "PREPARED REHEARSAL GUIDE — not a record of an interview.\nPresentation source commit: ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78. Frozen implementation: 0375af56bf681e9441edcb7433cfe58951db77b2.\nTIME 16:30–18:00; 1.5 minute(s); timing kind: prepared.\nLegacy sections: 04-reliability. Primary question IDs: Q13, Q14, Q37.\n## r13-publication — The marker—not the directory—authorizes use\n\n**Time:** 16:30–18:00. **Block:** How the Solution Works. **Primary questions:** Q13, Q14, Q37\n\n### Say\n\nPublication begins by invalidating an old readiness marker before changing the corpus. It compares the staged digest, moves the staged corpus, writes the report through a temporary file, and renames report.json last.\nThe report writer advances by the number of bytes os.write actually returns. It completes partial progress and rejects zero progress before a new marker is committed. Sync operations support the intended ordering; they do not establish that every device and power-loss sequence has been tested.\nThis is a readiness protocol, not one atomic transaction over every file. Corpus bytes can exist without a marker after a failure, and a preflight rejection can leave an earlier valid release alone. Once publication begins there is no unconditional rollback promise. The pipeline also computes the seal after verification: verification_sha256 is not a separately signed verifier receipt. A consumer that ignores the marker and trusted digest reference is outside the intended usage.\n\n### Show / navigate\n\nWalk _publish L166–211 from marker removal to final rename; do not run fault injection during the talk.\n\n- [`src/anonymization_trial/pipeline.py::_publish` — L166–L211](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/pipeline.py#L166-L211)\n- [`src/anonymization_trial/pipeline.py::run_pipeline` — L214–L258](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/pipeline.py#L214-L258)\n\n**Exact source excerpt from `_publish`:**\n\n```python\n        remaining = memoryview(data)\n        while remaining:\n            written = os.write(fd, remaining)\n            if written <= 0:\n                raise OSError(\"report write made no progress\")\n            remaining = remaining[written:]\n        os.fsync(fd)\n```\n\n**Visible qualification:** Report-last is not full rollback, a signed attestation, or exhaustive crash proof.\n\n**Evidence IDs:** E08\n\nAuthoring only: no application/test/Docker, local pitchdeck compiler, owning SVG validator, analytics/create-figure, recording or Live Evidence execution. Follow the stated assessment permission boundary.\n"
+      "notes": "PREPARED REHEARSAL GUIDE — not a record of an interview.\nPresentation source commit: ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78. Frozen implementation: 0375af56bf681e9441edcb7433cfe58951db77b2.\nTIME 16:30–18:00; 1.5 minute(s); timing kind: prepared.\nLegacy sections: 04-reliability. Primary question IDs: Q13, Q14, Q37.\n## r13-publication — READY is technical—not privacy approval\n\n**Time:** 16:30–18:00. **Block:** How the Solution Works. **Primary questions:** Q13, Q14, Q37\n\n### Say\n\nPublication begins by invalidating an old readiness marker before changing the corpus. It compares the staged digest, moves the staged corpus, writes the report through a temporary file, and renames report.json last.\nThe report writer advances by the number of bytes os.write actually returns. It completes partial progress and rejects zero progress before a new marker is committed. Sync operations support the intended ordering; they do not establish that every device and power-loss sequence has been tested.\nThis is a readiness protocol, not one atomic transaction over every file. Corpus bytes can exist without a marker after a failure, and a preflight rejection can leave an earlier valid release alone. Once publication begins there is no unconditional rollback promise. The pipeline also computes the seal after verification: verification_sha256 is not a separately signed verifier receipt. A consumer that ignores the marker and trusted digest reference is outside the intended usage.\n\n### Show / navigate\n\nWalk _publish L166–211 from marker removal to final rename; do not run fault injection during the talk.\n\n- [`src/anonymization_trial/pipeline.py::_publish` — L166–L211](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/pipeline.py#L166-L211)\n- [`src/anonymization_trial/pipeline.py::run_pipeline` — L214–L258](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/pipeline.py#L214-L258)\n\n**Exact source excerpt from `_publish`:**\n\n```python\n        remaining = memoryview(data)\n        while remaining:\n            written = os.write(fd, remaining)\n            if written <= 0:\n                raise OSError(\"report write made no progress\")\n            remaining = remaining[written:]\n        os.fsync(fd)\n```\n\n**Visible qualification:** Report-last is not full rollback, a signed attestation, or exhaustive crash proof.\n\n**Evidence IDs:** E08\n\nAuthoring only: no application/test/Docker, local pitchdeck compiler, owning SVG validator, analytics/create-figure, recording or Live Evidence execution. Follow the stated assessment permission boundary.\n\n\n**Canonical explanation:** NARRATIVE.md#publication.\n"
     },
     {
       "id": "r14-cloud",
@@ -2775,6 +2831,10 @@
           "source_id": "code-navigation",
           "section": "src/anonymization_trial/pseudonyms.py::build_replacements",
           "locator": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/pseudonyms.py#L62-L104"
+        },
+        {
+          "source_id": "canonical-narrative",
+          "section": "cloud"
         }
       ],
       "claim_ids": [
@@ -2925,6 +2985,10 @@
           "source_id": "code-navigation",
           "section": "scripts/estimate_aws_cost.py::_one",
           "locator": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/scripts/estimate_aws_cost.py#L23-L75"
+        },
+        {
+          "source_id": "canonical-narrative",
+          "section": "cloud"
         }
       ],
       "claim_ids": [
@@ -3126,6 +3190,10 @@
           "source_id": "code-navigation",
           "section": "scripts/estimate_aws_cost.py::_sensitivity",
           "locator": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/scripts/estimate_aws_cost.py#L78-L86"
+        },
+        {
+          "source_id": "canonical-narrative",
+          "section": "cloud"
         }
       ],
       "claim_ids": [
@@ -3267,6 +3335,10 @@
         {
           "source_id": "effort-estimate",
           "section": "Effort estimate and implementation limits"
+        },
+        {
+          "source_id": "canonical-narrative",
+          "section": "effort"
         }
       ],
       "claim_ids": [
@@ -3448,6 +3520,10 @@
           "source_id": "code-navigation",
           "section": "src/anonymization_trial/policy.py::compile_policy",
           "locator": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/policy.py#L129-L164"
+        },
+        {
+          "source_id": "canonical-narrative",
+          "section": "policy"
         }
       ],
       "claim_ids": [
@@ -3567,6 +3643,10 @@
           "source_id": "code-navigation",
           "section": "src/anonymization_trial/discovery.py::approve",
           "locator": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/discovery.py#L329-L378"
+        },
+        {
+          "source_id": "canonical-narrative",
+          "section": "policy"
         }
       ],
       "claim_ids": [
@@ -3746,6 +3826,10 @@
           "source_id": "code-navigation",
           "section": "src/anonymization_trial/verification.py::verify_corpus",
           "locator": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/verification.py#L205-L249"
+        },
+        {
+          "source_id": "canonical-narrative",
+          "section": "verification"
         }
       ],
       "claim_ids": [
@@ -3844,8 +3928,8 @@
       "role": "prepared_answer",
       "layout": "freeform",
       "visibility": "public",
-      "title": "Rereading helps; common-mode risk remains",
-      "message": "Output mutations are checked independently of transform success flags.",
+      "title": "Fresh reread; shared replacement primitives",
+      "message": "Fixture readback adds a separate, bounded oracle.",
       "body": [],
       "source_refs": [
         {
@@ -3870,6 +3954,10 @@
           "source_id": "code-navigation",
           "section": "src/anonymization_trial/verification.py::_typed_equal",
           "locator": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/verification.py#L129-L143"
+        },
+        {
+          "source_id": "canonical-narrative",
+          "section": "verification"
         }
       ],
       "claim_ids": [
@@ -3901,7 +3989,7 @@
           "y": 0.022,
           "w": 0.885,
           "h": 0.07,
-          "text": "Rereading helps; common-mode risk remains",
+          "text": "Fresh reread; shared replacement primitives",
           "size_pt": 29,
           "bold": true,
           "color": "#f2eadc",
@@ -3914,7 +4002,7 @@
           "y": 0.14,
           "w": 0.87,
           "h": 0.12,
-          "text": "Output mutations are checked independently of transform success flags.",
+          "text": "Fixture readback adds a separate, bounded oracle.",
           "size_pt": 23,
           "bold": false,
           "color": "#e2ac62",
@@ -3927,7 +4015,7 @@
           "y": 0.32,
           "w": 0.83,
           "h": 0.095,
-          "text": "Fresh reads of source and output",
+          "text": "Runtime: fresh location and type checks",
           "size_pt": 27,
           "bold": false,
           "color": "#ece2d3",
@@ -3940,7 +4028,7 @@
           "y": 0.44,
           "w": 0.83,
           "h": 0.095,
-          "text": "Location and type mutation checks",
+          "text": "Runtime: shared matcher and allocator",
           "size_pt": 27,
           "bold": false,
           "color": "#ece2d3",
@@ -3953,7 +4041,7 @@
           "y": 0.56,
           "w": 0.83,
           "h": 0.095,
-          "text": "Shared primitives remain an explicit limit",
+          "text": "Fixture oracle: no transformer/verifier imports",
           "size_pt": 27,
           "bold": false,
           "color": "#ece2d3",
@@ -4025,7 +4113,7 @@
       "transition": "none",
       "reveal": "none",
       "hidden": false,
-      "notes": "PREPARED REHEARSAL GUIDE — not a record of an interview.\nPresentation source commit: ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78. Frozen implementation: 0375af56bf681e9441edcb7433cfe58951db77b2.\nTIME 23:15–24:00; 0.75 minute(s); timing kind: prepared.\nLegacy sections: 02-architecture, 03-semantics. Primary question IDs: Q04.\n## r21-answer-verifier — Rereading helps; common-mode risk remains\n\n**Time:** 23:15–24:00. **Block:** Prepared Adversarial Questions. **Primary questions:** Q04\n\n### Say\n\nThe verifier rereads both corpora and does not trust transformation counters or a success Boolean. It detects wrong output locations, scalar types, file sets and supported schema changes. Those are meaningful distinctions demonstrated by deliberate output mutations.\nBut the expected replacement path shares matcher and pseudonym primitives. A common defect can affect both sides. The qualification checker adds an independent expectation for a small synthetic fixture, not universal reference verification. A diverse implementation could increase assurance, but it is disclosed production hardening rather than a capability we pretend was built. The answer is qualified independence, not a slogan that the transformer can never certify itself.\n\n### Show / navigate\n\nverify_corpus imports replace_text/build_replacements; readback() has its own synthetic expectation.\n\n- [`src/anonymization_trial/verification.py::verify_corpus` — L205–L249](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/verification.py#L205-L249)\n- [`scripts/qualify_submission.py::readback` — L80–L134](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/scripts/qualify_submission.py#L80-L134)\n- [`src/anonymization_trial/verification.py::_typed_equal` — L129–L143](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/verification.py#L129-L143)\n\n**Visible qualification:** Independent reread / re-derivation—not a separately implemented engine.\n\n**Evidence IDs:** E06, E08\n\nAuthoring only: no application/test/Docker, local pitchdeck compiler, owning SVG validator, analytics/create-figure, recording or Live Evidence execution. Follow the stated assessment permission boundary.\n"
+      "notes": "PREPARED REHEARSAL GUIDE — not a record of an interview.\nPresentation source commit: ecfaaaac2cc7844bd0e52fd7d2bbf3abab36ab78. Frozen implementation: 0375af56bf681e9441edcb7433cfe58951db77b2.\nTIME 23:15–24:00; 0.75 minute(s); timing kind: prepared.\nLegacy sections: 02-architecture, 03-semantics. Primary question IDs: Q04.\n## r21-answer-verifier — Fresh reread; shared replacement primitives\n\n**Time:** 23:15–24:00. **Block:** Prepared Adversarial Questions. **Primary questions:** Q04\n\n### Say\n\nThe verifier rereads both corpora and does not trust transformation counters or a success Boolean. It detects wrong output locations, scalar types, file sets and supported schema changes. Those are meaningful distinctions demonstrated by deliberate output mutations.\nBut the expected replacement path shares matcher and pseudonym primitives. A common defect can affect both sides. The qualification checker adds an independent expectation for a small synthetic fixture, not universal reference verification. A diverse implementation could increase assurance, but it is disclosed production hardening rather than a capability we pretend was built. The answer is qualified independence, not a slogan that the transformer can never certify itself.\n\n### Show / navigate\n\nverify_corpus imports replace_text/build_replacements; readback() has its own synthetic expectation.\n\n- [`src/anonymization_trial/verification.py::verify_corpus` — L205–L249](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/verification.py#L205-L249)\n- [`scripts/qualify_submission.py::readback` — L80–L134](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/scripts/qualify_submission.py#L80-L134)\n- [`src/anonymization_trial/verification.py::_typed_equal` — L129–L143](https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/verification.py#L129-L143)\n\n**Visible qualification:** Independent reread / re-derivation—not a separately implemented engine.\n\n**Evidence IDs:** E06, E08\n\nAuthoring only: no application/test/Docker, local pitchdeck compiler, owning SVG validator, analytics/create-figure, recording or Live Evidence execution. Follow the stated assessment permission boundary.\n\n\n**Canonical explanation:** NARRATIVE.md#verification.\n"
     },
     {
       "id": "r22-question-scale",
@@ -4049,6 +4137,10 @@
           "source_id": "code-navigation",
           "section": "scripts/estimate_aws_cost.py::_one",
           "locator": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/scripts/estimate_aws_cost.py#L23-L75"
+        },
+        {
+          "source_id": "canonical-narrative",
+          "section": "cloud"
         }
       ],
       "claim_ids": [
@@ -4168,6 +4260,10 @@
           "source_id": "code-navigation",
           "section": "src/anonymization_trial/pseudonyms.py::build_replacements",
           "locator": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/src/anonymization_trial/pseudonyms.py#L62-L104"
+        },
+        {
+          "source_id": "canonical-narrative",
+          "section": "cloud"
         }
       ],
       "claim_ids": [
@@ -4352,6 +4448,10 @@
           "source_id": "code-navigation",
           "section": "tests/test_discovery_boundaries.py::test_work_artifacts_cannot_enter_release_via_relative_or_symlink_paths",
           "locator": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/tests/test_discovery_boundaries.py#L180-L244"
+        },
+        {
+          "source_id": "canonical-narrative",
+          "section": "security"
         }
       ],
       "claim_ids": [
@@ -4543,6 +4643,10 @@
         {
           "source_id": "reviewed-narrative",
           "section": "05-evidence; 07-nonclaims"
+        },
+        {
+          "source_id": "canonical-narrative",
+          "section": "security"
         }
       ],
       "claim_ids": [
@@ -4739,6 +4843,10 @@
           "source_id": "skill-reuse-reference",
           "section": "Concise contract; Thin delegation; Retained behavior",
           "locator": "sources/skill-reuse-reference.md"
+        },
+        {
+          "source_id": "canonical-narrative",
+          "section": "wrapper"
         }
       ],
       "claim_ids": [
@@ -4950,6 +5058,10 @@
           "source_id": "code-navigation",
           "section": "tests/test_discovery.py::test_discover_approve_and_anonymize_all_four_formats",
           "locator": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/tests/test_discovery.py#L64-L137"
+        },
+        {
+          "source_id": "canonical-narrative",
+          "section": "discovery"
         }
       ],
       "claim_ids": [
@@ -5161,6 +5273,10 @@
           "source_id": "code-navigation",
           "section": "tests/test_discovery_boundaries.py::test_work_artifacts_cannot_enter_release_via_relative_or_symlink_paths",
           "locator": "https://github.com/grahama1970/oai-trial/blob/0375af56bf681e9441edcb7433cfe58951db77b2/tests/test_discovery_boundaries.py#L180-L244"
+        },
+        {
+          "source_id": "canonical-narrative",
+          "section": "discovery"
         }
       ],
       "claim_ids": [

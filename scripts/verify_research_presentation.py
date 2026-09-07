@@ -22,7 +22,7 @@ assert ids[0] == 'r01-toc' and ids[-1] == 'r30-thank-you'
 assert ids.index('r23-answer-scale') + 1 == ids.index('r24-security-evals')
 assert sum(m['duration_minutes'] for m in json.loads((BUNDLE / 'slide-map.json').read_text()) if m['counts_toward_prepared_time']) == 30
 text = '\n'.join(e.get('text', '') for s in slides[6:8] for e in s['elements'])
-for phrase in ['$dogpile', 'Brave web', 'arXiv', 'GitHub', 'existing projects, skills', 'Compose what fits', 'SPIA', 'DICOM', 'AnonShield + Proteus']:
+for phrase in ['$dogpile', 'Brave web', 'arXiv', 'GitHub', 'existing projects', 'skills', 'reuse before custom code', 'SPIA', 'DICOM', 'AnonShield + Proteus']:
     assert phrase in text, phrase
 with zipfile.ZipFile(PPTX) as archive:
     pages = sorted((n for n in archive.namelist() if re.fullmatch(r'ppt/slides/slide\d+\.xml', n)), key=lambda n: int(re.search(r'slide(\d+)', n)[1]))
@@ -45,6 +45,14 @@ for name in ['deck.public.yaml', 'WALKTHROUGH.md', 'TOC.md', 'question-map.json'
     current = (BUNDLE / name).read_text()
     for stale in ['recorded overrun', 'the overrun', 'post-timebox', 'elapsed work exceeded eight hours']:
         assert stale not in current, (name, stale)
+narrative = (BUNDLE / 'NARRATIVE.md').read_text()
+for mapping in json.loads((BUNDLE / 'slide-map.json').read_text()):
+    assert mapping['narrative_sections'], mapping['slide_id']
+    for ref in mapping['narrative_sections']:
+        assert '<a id="' + ref.split('#')[1] + '"></a>' in narrative, ref
+for block in re.findall(r'```python\n(.*?)\n```', narrative, re.S):
+    assert any(block in p.read_text() for p in list((ROOT / 'src/anonymization_trial').glob('*.py')) + list((ROOT / 'scripts').glob('*.py'))), 'narrative snippet differs from code'
+assert 'Humans supply meaning; code enforces literal rules' in slides[9]['title']
 questions = json.loads((BUNDLE / 'question-map.json').read_text())
 assert next(q for q in questions if q['id'] == 'Q28')['code_evidence'] == '[Rough retrospective estimate](sources/effort-estimate.md)'
 assert 'SUBMISSION.md: Time spent' not in slides[18]['notes']

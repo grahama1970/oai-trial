@@ -14,6 +14,10 @@
         {
           "source_id": "reviewed-narrative",
           "section": "The qualification checker is another useful evidence layer"
+        },
+        {
+          "source_id": "canonical-narrative",
+          "section": "challenge"
         }
       ],
       "evidence_spans": [
@@ -41,6 +45,10 @@
         {
           "source_id": "demo-scale-calculation",
           "section": "Recorded workload ratio"
+        },
+        {
+          "source_id": "canonical-narrative",
+          "section": "challenge"
         }
       ],
       "evidence_spans": [
@@ -88,6 +96,10 @@
         {
           "source_id": "qualification-receipt",
           "section": "\"docker\"; \"anonymization-trial\"; \"source_commit\": \"0375af56"
+        },
+        {
+          "source_id": "canonical-narrative",
+          "section": "reproduction"
         }
       ],
       "evidence_spans": [
@@ -121,6 +133,10 @@
         {
           "source_id": "reviewed-narrative",
           "section": "The evaluator-facing interface stays small; Q43"
+        },
+        {
+          "source_id": "canonical-narrative",
+          "section": "reproduction"
         }
       ],
       "evidence_spans": [
@@ -149,6 +165,10 @@
         {
           "source_id": "qualification-receipt",
           "section": "\"schema_validated\": true; \"early_and_late_rejection\": true; \"source_unchanged\": true; \"baseline_history_preserved\": true"
+        },
+        {
+          "source_id": "canonical-narrative",
+          "section": "reproduction"
         }
       ],
       "evidence_spans": [
@@ -187,6 +207,10 @@
         {
           "source_id": "reviewed-narrative",
           "section": "The adapters write into a private staging directory; the pipeline computes the digest after verification"
+        },
+        {
+          "source_id": "canonical-narrative",
+          "section": "challenge"
         }
       ],
       "evidence_spans": [
@@ -215,6 +239,10 @@
         {
           "source_id": "reviewed-narrative",
           "section": "The policy tells the engine; The implementation handles contradictions conservatively"
+        },
+        {
+          "source_id": "canonical-narrative",
+          "section": "policy"
         }
       ],
       "evidence_spans": [
@@ -243,6 +271,10 @@
         {
           "source_id": "reviewed-narrative",
           "section": "The canonical identity is the pair; Adding distinct identities can affect collision assignments"
+        },
+        {
+          "source_id": "canonical-narrative",
+          "section": "identity"
         }
       ],
       "evidence_spans": [
@@ -271,6 +303,10 @@
         {
           "source_id": "reviewed-narrative",
           "section": "The matcher finds spans in the original decoded input; Emission happens once over the selected spans"
+        },
+        {
+          "source_id": "canonical-narrative",
+          "section": "matching"
         }
       ],
       "evidence_spans": [
@@ -299,6 +335,10 @@
         {
           "source_id": "reviewed-narrative",
           "section": "Q38; Q39; Q40"
+        },
+        {
+          "source_id": "canonical-narrative",
+          "section": "formats"
         }
       ],
       "evidence_spans": [
@@ -332,6 +372,10 @@
         {
           "source_id": "reviewed-narrative",
           "section": "The verifier therefore compares expected values at locations; Python considers `True == 1`"
+        },
+        {
+          "source_id": "canonical-narrative",
+          "section": "formats"
         }
       ],
       "evidence_spans": [
@@ -360,6 +404,10 @@
         {
           "source_id": "reviewed-narrative",
           "section": "The report is the last publication step; A failed publication can leave corpus bytes"
+        },
+        {
+          "source_id": "canonical-narrative",
+          "section": "publication"
         }
       ],
       "evidence_spans": [
@@ -388,6 +436,10 @@
         {
           "source_id": "reviewed-narrative",
           "section": "The worked design uses AWS; A coordinator must verify the expected corpus; Identity coherence also has to survive distribution"
+        },
+        {
+          "source_id": "canonical-narrative",
+          "section": "cloud"
         }
       ],
       "evidence_spans": [
@@ -421,6 +473,10 @@
         {
           "source_id": "reviewed-narrative",
           "section": "The capacity calculation assumes 200 workers; | 1 TB, defined; | 1 PB, defined"
+        },
+        {
+          "source_id": "canonical-narrative",
+          "section": "cloud"
         }
       ],
       "evidence_spans": [
@@ -454,6 +510,10 @@
         {
           "source_id": "cost-output",
           "section": "\"storage_usd\": 69000.0; \"requests_usd\": 10894.78; \"orchestration_usd\": 4440.31; \"compute_usd\": 1398.82; \"total_usd\": 85733.9"
+        },
+        {
+          "source_id": "canonical-narrative",
+          "section": "cloud"
         }
       ],
       "evidence_spans": [
@@ -497,6 +557,10 @@
         {
           "source_id": "effort-estimate",
           "section": "Effort estimate and implementation limits"
+        },
+        {
+          "source_id": "canonical-narrative",
+          "section": "effort"
         }
       ],
       "evidence_spans": [
@@ -520,6 +584,10 @@
         {
           "source_id": "reviewed-narrative",
           "section": "Q01; Q02; Q03"
+        },
+        {
+          "source_id": "canonical-narrative",
+          "section": "policy"
         }
       ],
       "evidence_spans": [
@@ -553,6 +621,10 @@
         {
           "source_id": "reviewed-narrative",
           "section": "Q04; Q12"
+        },
+        {
+          "source_id": "canonical-narrative",
+          "section": "verification"
         }
       ],
       "evidence_spans": [
@@ -581,6 +653,10 @@
         {
           "source_id": "reviewed-narrative",
           "section": "Q25; Q26; Q27; Q47"
+        },
+        {
+          "source_id": "canonical-narrative",
+          "section": "cloud"
         }
       ],
       "evidence_spans": [
@@ -619,6 +695,10 @@
         {
           "source_id": "security",
           "section": "**White-box**; **Gray-box**; **Black-box**; There is no SCA receipt committed"
+        },
+        {
+          "source_id": "canonical-narrative",
+          "section": "security"
         }
       ],
       "evidence_spans": [
@@ -657,6 +737,10 @@
         {
           "source_id": "battle-receipt",
           "section": "\"claim_scope\": \"fixture_contract_proof\"; \"agentic\": false; \"live\": \"local_deterministic_fixture\""
+        },
+        {
+          "source_id": "canonical-narrative",
+          "section": "security"
         }
       ],
       "evidence_spans": [
@@ -695,6 +779,10 @@
           "source_id": "skill-reuse-reference",
           "section": "Concise contract; Thin delegation; Retained behavior; best-practices-skills guidance",
           "locator": "sources/skill-reuse-reference.md"
+        },
+        {
+          "source_id": "canonical-narrative",
+          "section": "wrapper"
         }
       ],
       "evidence_spans": [
@@ -743,6 +831,10 @@
         {
           "source_id": "reviewed-narrative",
           "section": "Discovery, approval, and release are separate operations; approval creates a literal policy rule; The `Alicee` example"
+        },
+        {
+          "source_id": "canonical-narrative",
+          "section": "discovery"
         }
       ],
       "evidence_spans": [
@@ -776,6 +868,10 @@
         {
           "source_id": "reviewed-narrative",
           "section": "The CLI assigns that result to `args.output`; It then attempts discovery and approval; The positive controls are essential"
+        },
+        {
+          "source_id": "canonical-narrative",
+          "section": "discovery"
         }
       ],
       "evidence_spans": [
@@ -809,6 +905,10 @@
         {
           "source_id": "research-workflow",
           "section": "Research first; reuse before custom code"
+        },
+        {
+          "source_id": "canonical-narrative",
+          "section": "research-reuse"
         }
       ],
       "evidence_spans": [
@@ -832,6 +932,10 @@
         {
           "source_id": "research-workflow",
           "section": "Research changed checks—not just citations"
+        },
+        {
+          "source_id": "canonical-narrative",
+          "section": "research-adoption"
         }
       ],
       "evidence_spans": [

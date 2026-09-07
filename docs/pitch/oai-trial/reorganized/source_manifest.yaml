@@ -163,6 +163,14 @@
       "visibility": "public",
       "role": "supporting",
       "required": true
+    },
+    {
+      "id": "canonical-narrative",
+      "title": "Canonical code-assisted explanatory narrative",
+      "path": "NARRATIVE.md",
+      "visibility": "public",
+      "role": "primary",
+      "required": true
     }
   ],
   "policy": {
@@ -186,7 +194,8 @@
       "operator-update",
       "project-state-context",
       "research-workflow",
-      "effort-estimate"
+      "effort-estimate",
+      "canonical-narrative"
     ],
     "forbidden_unqualified_claims": [
       "formally anonymous",

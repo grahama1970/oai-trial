@@ -6,6 +6,8 @@
 
 The supplied grahama.co house tokens and actual header texture are used. Native text remains editable; SVG internals are images in the export. No sponsor/distribution markings from reference slides are copied. No source navigation below is a breakpoint or evidence of a running debugger.
 
+The [canonical explanatory narrative](NARRATIVE.md) owns terminology and expanded code explanations. This document is its timed spoken presentation and question bank.
+
 ## Using the transcript
 
 Read SAY as speaker notes rather than an undocumented authorship claim. Use SHOW for a brief pinned code or source jump inside each allocated interval. Full follow-up answers stay in the separate appendix. Follow the existing slide time cues, including observation and navigation. The demo has conditional live/fallback instructions: speak only the branch actually used. This is a rehearsal allocation, not a measured delivery time.
@@ -25,12 +27,12 @@ Complete environment and input preflight before the talk. During r02, run the al
 | [r05-mounted-cli](#r05-mounted-cli) | 04:15–05:30 | One bundle in; one dedicated release directory out |
 | [r06-output-evidence](#r06-output-evidence) | 05:30–07:00 | Check the artifacts, not the exit code |
 | [r07-pipeline-map](#r07-pipeline-map) | 09:00–09:45 | Transformation and release are separate steps |
-| [r08-policy](#r08-policy) | 09:45–11:00 | The policy supplies authority—not a guess |
+| [r08-policy](#r08-policy) | 09:45–11:00 | Humans supply meaning; code enforces literal rules |
 | [r09-identity](#r09-identity) | 11:00–12:15 | Aliases converge because identity is declared |
 | [r10-spans](#r10-spans) | 12:15–13:45 | Select original spans; emit only once |
 | [r11-formats](#r11-formats) | 13:45–15:00 | Preserve logical meaning—not identical serialization |
 | [r12-typed-locations](#r12-typed-locations) | 15:00–16:30 | A correct value on the wrong row is still wrong |
-| [r13-publication](#r13-publication) | 16:30–18:00 | The marker—not the directory—authorizes use |
+| [r13-publication](#r13-publication) | 16:30–18:00 | READY is technical—not privacy approval |
 | [r14-cloud](#r14-cloud) | 18:00–19:30 | Distribute the work; retain one corpus decision |
 | [r15-capacity](#r15-capacity) | 19:30–20:30 | The SLA is a scenario—not a benchmark |
 | [r16-cost](#r16-cost) | 20:30–21:15 | Retention dominates this 1 PB cost scenario |
@@ -38,7 +40,7 @@ Complete environment and input preflight before the talk. During r02, run the al
 | [r18-question-exact](#r18-question-exact) | 22:00–22:15 | Question 1 |
 | [r19-answer-exact](#r19-answer-exact) | 22:15–23:00 | Explicit policy separates authority from guessing |
 | [r20-question-verifier](#r20-question-verifier) | 23:00–23:15 | Question 2 |
-| [r21-answer-verifier](#r21-answer-verifier) | 23:15–24:00 | Rereading helps; common-mode risk remains |
+| [r21-answer-verifier](#r21-answer-verifier) | 23:15–24:00 | Fresh reread; shared replacement primitives |
 | [r22-question-scale](#r22-question-scale) | 24:00–24:15 | Question 3 |
 | [r23-answer-scale](#r23-answer-scale) | 24:15–25:00 | The model exposes assumptions; it does not validate them |
 | [r24-security-evals](#r24-security-evals) | 25:00–26:15 | Security evals test different failure surfaces |
@@ -324,7 +326,7 @@ Trace run_pipeline() calls without opening every branch.
 **Evidence IDs:** E08
 
 <a id="r08-policy"></a>
-## r08-policy — The policy supplies authority—not a guess
+## r08-policy — Humans supply meaning; code enforces literal rules
 
 **Time:** 09:45–11:00. **Block:** How the Solution Works. **Primary questions:** Q05, Q11, Q33
 
@@ -485,7 +487,7 @@ Show _typed_equal L129–143 and one corresponding location comparison. Optional
 **Evidence IDs:** E06, E08
 
 <a id="r13-publication"></a>
-## r13-publication — The marker—not the directory—authorizes use
+## r13-publication — READY is technical—not privacy approval
 
 **Time:** 16:30–18:00. **Block:** How the Solution Works. **Primary questions:** Q13, Q14, Q37
 
@@ -665,7 +667,7 @@ The second question challenges the checker itself. If the verifier calls the sam
 **Evidence IDs:** E08
 
 <a id="r21-answer-verifier"></a>
-## r21-answer-verifier — Rereading helps; common-mode risk remains
+## r21-answer-verifier — Fresh reread; shared replacement primitives
 
 **Time:** 23:15–24:00. **Block:** Prepared Adversarial Questions. **Primary questions:** Q04
 
