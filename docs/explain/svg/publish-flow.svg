@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 200" role="img" aria-label="Publish flow: staging, verify, atomic report publish">
+  <!-- Rendered from docs/explain/boards/publish-flow.excalidraw; element ids mirror board node ids. -->
+  <rect width="840" height="200" fill="#ffffff"/>
+  <g id="staging" data-node-id="staging">
+    <rect x="40" y="60" width="200" height="80" rx="8" fill="#cffafe" stroke="#0e7490" stroke-width="2"/>
+    <text x="140" y="94" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="16" fill="#164e63">Staging</text>
+    <text x="140" y="116" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#155e75">.tmp writes only</text>
+  </g>
+  <g id="arrow-staging-verify">
+    <line x1="240" y1="100" x2="312" y2="100" stroke="#52525b" stroke-width="2"/>
+    <path d="M312 100 l-10 -5 v10 z" fill="#52525b"/>
+  </g>
+  <g id="verify" data-node-id="verify">
+    <rect x="320" y="60" width="200" height="80" rx="8" fill="#cffafe" stroke="#0e7490" stroke-width="2"/>
+    <text x="420" y="94" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="16" fill="#164e63">Verify corpus</text>
+    <text x="420" y="116" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#155e75">typed re-read, fail closed</text>
+  </g>
+  <g id="arrow-verify-publish">
+    <line x1="520" y1="100" x2="592" y2="100" stroke="#52525b" stroke-width="2"/>
+    <path d="M592 100 l-10 -5 v10 z" fill="#52525b"/>
+  </g>
+  <g id="publish-report" data-node-id="publish-report">
+    <rect x="600" y="60" width="200" height="80" rx="8" fill="#cffafe" stroke="#0e7490" stroke-width="2"/>
+    <text x="700" y="94" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="16" fill="#164e63">Publish report</text>
+    <text x="700" y="116" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#155e75">os.replace, written last</text>
+  </g>
+</svg>
