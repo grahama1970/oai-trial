@@ -25,7 +25,10 @@ _ASCII_LOWER = {c: c + 32 for c in range(ord("A"), ord("Z") + 1)}
 
 
 def ascii_lower(text: str) -> str:
-    """Lowercase only ASCII A-Z; leave all other code points unchanged."""
+    """Lowercase only ASCII A-Z; leave all other code points unchanged.
+
+    Excalidraw source: docs/explain/boards/publish-flow.excalidraw
+    """
     return text.translate(_ASCII_LOWER)
 
 

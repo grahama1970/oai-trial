@@ -1,0 +1,39 @@
+{
+  "curated_explainers": 3,
+  "debugger_stops": [
+    {
+      "file": "src/anonymization_trial/__main__.py",
+      "line": 194,
+      "locals": [],
+      "proves": "Runtime reached the scaffolded project entrypoint.",
+      "watches": []
+    }
+  ],
+  "diagram": {
+    "compiled_by": "discovered from source/docstring/doc references",
+    "editable": false,
+    "node_ids": [
+      "entrypoint",
+      "state",
+      "diagram"
+    ],
+    "rendered_svg_path": "docs/production-architecture.svg",
+    "sha256": null,
+    "source_kind": "svg",
+    "source_path": "docs/production-architecture.svg"
+  },
+  "entrypoint": "/home/graham/workspace/experiments/oai-trial/src/anonymization_trial/__main__.py",
+  "explainers": "/home/graham/workspace/experiments/oai-trial/docs/explain/milestones/current/explainers.jsonl",
+  "milestone": "current",
+  "next_commands": {
+    "cockpit": "skills/explain-project/run.sh cockpit --repo /home/graham/workspace/experiments/oai-trial --explainers /home/graham/workspace/experiments/oai-trial/docs/explain/milestones/current/explainers.jsonl",
+    "validate": "skills/explain-project/run.sh validate /home/graham/workspace/experiments/oai-trial/docs/explain/milestones/current/explainers.jsonl"
+  },
+  "output_dir": "/home/graham/workspace/experiments/oai-trial/docs/explain/milestones/current",
+  "project_state": "/home/graham/workspace/experiments/oai-trial/docs/explain/milestones/current/project-state.quick.json",
+  "proof_boundary": "Milestone refresh updates explain-project scaffolds and a quick project-state receipt. It does not mutate code docstrings, accept Excalidraw proposals, or prove diagram freshness without human/project-agent review.",
+  "repo": "/home/graham/workspace/experiments/oai-trial",
+  "schema": "explain_project.milestone.v1",
+  "stale_diagrams": [],
+  "status": "PASS"
+}

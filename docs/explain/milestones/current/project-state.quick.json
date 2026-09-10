@@ -1,0 +1,73 @@
+{
+  "schema": "project_state.report.v1",
+  "project": "cloud-data-anonymization-trial",
+  "project_root": "/home/graham/workspace/experiments/oai-trial",
+  "project_profile": "generic",
+  "timestamp": "2026-09-10T23:50:47.424799+00:00",
+  "mode": "quick",
+  "phase_1_infrastructure": {
+    "daemons": {
+      "applicable": false,
+      "reason": "target root is not an Embry-style project",
+      "daemons": {},
+      "up": 0,
+      "total": 0
+    },
+    "tests": {
+      "total": 84,
+      "collected": true,
+      "path": "/home/graham/workspace/experiments/oai-trial/tests"
+    },
+    "cascade": {
+      "applicable": false,
+      "reason": "target root is not an Embry-style project",
+      "registry": {
+        "validators": 0,
+        "classifiers": 0,
+        "regressors": 0,
+        "gpts": 0
+      },
+      "shadow": {
+        "total": 0,
+        "usable": 0
+      },
+      "training_data": {},
+      "classifiers_on_disk": [],
+      "tier_status": {
+        "tier_2_teacher": "NOT_APPLICABLE",
+        "tier_1_5_gpt": "NOT_APPLICABLE",
+        "tier_0_5_classifier": "NOT_APPLICABLE"
+      }
+    },
+    "daemon_cascade_wiring": {
+      "applicable": false,
+      "reason": "target root is not an Embry-style project",
+      "wired": {}
+    },
+    "skills": {
+      "total": 0,
+      "applicable": false,
+      "reason": "target root owns no skills/ tree (not a skills workspace)",
+      "path": null,
+      "missing_skill_md": [],
+      "missing_sanity": []
+    },
+    "frontend": {
+      "exists": false
+    },
+    "deploy": {
+      "systemd_units": 0,
+      "containerfile": false,
+      "docker_compose": true
+    },
+    "components": {
+      "registered": 0,
+      "projects": {},
+      "note": "No component registry found"
+    }
+  },
+  "phase_6_gaps": {
+    "gaps": [],
+    "improvements": []
+  }
+}
