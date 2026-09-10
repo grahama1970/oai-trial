@@ -19,8 +19,8 @@ sources:
   visibility: public
   required: true
   repo: grahama1970/oai-trial
-  ref: d0039613fa8acfaeba164eed9761632e2d8a5f41
-  content_sha: sha256:75b1174870b407ed1ed01550eca9b534266fcd91c11341c154516fb947215ae0
+  ref: 7a73bfa03edb0192e49f1d19019c2c400a95cdcf
+  content_sha: sha256:5d28eaa631a36a250b157b7c7b4d1fd205238ced24ed8507a409e087d025a07c
 - id: semantics
   title: build_replacements
   path: ${PROJECT_ROOT}/src/anonymization_trial/pseudonyms.py
@@ -37,8 +37,8 @@ sources:
   visibility: public
   required: true
   repo: grahama1970/oai-trial
-  ref: d0039613fa8acfaeba164eed9761632e2d8a5f41
-  content_sha: sha256:75b1174870b407ed1ed01550eca9b534266fcd91c11341c154516fb947215ae0
+  ref: 7a73bfa03edb0192e49f1d19019c2c400a95cdcf
+  content_sha: sha256:5d28eaa631a36a250b157b7c7b4d1fd205238ced24ed8507a409e087d025a07c
 - id: evidence
   title: test_json_bool_number_and_sqlite_integer_real_mutations_rejected
   path: ${PROJECT_ROOT}/security/tests/test_typed_scalar_verification.py
