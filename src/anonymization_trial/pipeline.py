@@ -171,6 +171,8 @@ def _publish(staging: Path, output_root: Path, report: RunReport, sealed_digest:
     verified bytes are re-sealed immediately before the swap (review #4); the
     report is written to a temp file, fsynced, and atomically os.replace()d LAST,
     with directory fsyncs so the rename survives power loss (review #5).
+
+    Excalidraw source: docs/explain/boards/publish-flow.excalidraw
     """
     output_corpus = output_root / "corpus"
     report_path = output_root / "report.json"
