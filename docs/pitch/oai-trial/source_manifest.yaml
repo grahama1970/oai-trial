@@ -72,7 +72,7 @@ sources:
   visibility: public
   role: evidence
   required: true
-  content_sha: sha256:d9e85775b8ef6549851f250e39015ee194ae768ed87b27affa3439ed3e7419f1
+  content_sha: sha256:5062350f77b0e41d857d9c19efd4d8aa973d0054e27779e08d296dc8b0791815
   ref: d0039613fa8acfaeba164eed9761632e2d8a5f41
 - id: format-code
   title: _transform_sqlite

@@ -23,6 +23,7 @@ from __future__ import annotations
 import csv
 import json
 import sqlite3
+import unicodedata
 from pathlib import Path
 from typing import Any
 
@@ -216,8 +217,15 @@ def _searchable(root: Path, relatives: set[Path]) -> list[str]:
 
 
 def _count(needle: str, texts: list[str], case_sensitive: bool) -> int:
-    probe = needle if case_sensitive else needle.casefold()
-    return sum((text if case_sensitive else text.casefold()).count(probe) for text in texts)
+    # Independent NFC normalization (NOT via the transform's matcher): a value
+    # stored in a different Unicode normal form is the same value, and this
+    # absence oracle must see it even if the transform's variant-pattern path
+    # regressed. NFC both sides before comparing.
+    def norm(s: str) -> str:
+        s = unicodedata.normalize("NFC", s)
+        return s if case_sensitive else s.casefold()
+    probe = norm(needle)
+    return sum(norm(text).count(probe) for text in texts)
 
 
 def verify_corpus(source_corpus: Path, staged_corpus: Path, policy: Policy) -> None:

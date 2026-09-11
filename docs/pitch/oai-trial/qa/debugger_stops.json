@@ -27,13 +27,13 @@
     "typed": {
       "slide_id": "05-evidence",
       "file": "src/anonymization_trial/verification.py",
-      "line": 154,
+      "line": 155,
       "locals": [
         "a",
         "b"
       ],
       "expected": "a=1 (mutated output), b=True (expected input); unequal types trigger rejection.",
-      "source_sha256": "d9e85775b8ef6549851f250e39015ee194ae768ed87b27affa3439ed3e7419f1",
+      "source_sha256": "5062350f77b0e41d857d9c19efd4d8aa973d0054e27779e08d296dc8b0791815",
       "source_line": "return False",
       "capture_command": "PYTHONPATH=src \"$DEBUGGER_SKILL/run.sh\" break src/anonymization_trial/verification.py:136 --local a --local b --out \"$ARTIFACT_DIR/typed-breakpoint.json\" -- python scripts/pitch_debug_demo.py typed",
       "gui_command": "DEBUGGER_LAUNCH_CONFIG=\"Pitch: typed\" \"$DEBUGGER_SKILL/run.sh\" stop src/anonymization_trial/verification.py:136 --local a --local b --workspace-artifacts",

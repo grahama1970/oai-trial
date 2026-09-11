@@ -62,7 +62,6 @@ def test_sqlite_blob_value_fails_closed() -> None:
         _run({"a.sqlite": w}, "Alice")
 
 
-@pytest.mark.xfail(strict=True, reason="NFC/NFD canonical-equivalence leak: OPEN, needs offset-safe NFC fix")
 def test_nfc_nfd_canonical_equivalence_no_leak() -> None:
     nfc = unicodedata.normalize("NFC", "José Malké")
     nfd = unicodedata.normalize("NFD", "José Malké")

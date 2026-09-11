@@ -15,6 +15,7 @@ rejected rather than silently resolved.
 from __future__ import annotations
 
 import json
+import unicodedata
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -219,9 +220,12 @@ def compile_policy(payload: object) -> Policy:
     # Group by case-folded value; within a group, two rules with different
     # identities conflict unless BOTH are case-sensitive with differing exact
     # spellings (their match sets are then disjoint).
+    # Fold NFC-equivalent values into one bucket: "Jose\u0301" (NFD) and "José"
+    # (NFC) are the same identity, so two rules that differ only by normal form
+    # must be caught as a conflict here (typed-PII sibling fix, NFC).
     domain: dict[str, list[Rule]] = {}
     for rule in rules:
-        key = ascii_lower(rule.value)
+        key = ascii_lower(unicodedata.normalize("NFC", rule.value))
         for prior in domain.get(key, ()):
             if prior.identity == rule.identity:
                 continue
@@ -242,8 +246,20 @@ def compile_policy(payload: object) -> Policy:
     rules_cs: list[tuple[str, str, str]] = []
     rules_ci: list[tuple[str, str, str]] = []
     for rule in rules_tuple:
-        triple = (rule.value, replacements[rule.identity], rule.rule_id)
-        (rules_cs if rule.case_sensitive else rules_ci).append(triple)
+        rep = replacements[rule.identity]
+        # Register NFC and NFD variants as equivalent patterns so a value stored
+        # in EITHER canonical form matches, without normalizing (and thus
+        # mutating) non-sensitive corpus bytes. Offset mapping stays 1:1 because
+        # the ORIGINAL text is matched as-is. Case-insensitive literals are
+        # ASCII-only (enforced above), so their forms collapse to one.
+        forms = {
+            rule.value,
+            unicodedata.normalize("NFC", rule.value),
+            unicodedata.normalize("NFD", rule.value),
+        }
+        for form in forms:
+            triple = (form, rep, rule.rule_id)
+            (rules_cs if rule.case_sensitive else rules_ci).append(triple)
 
     return Policy(
         version=1,
