@@ -42,6 +42,15 @@ def _expected_json(value: Any, policy: Policy) -> Any:
         return [_expected_json(item, policy) for item in value]
     if isinstance(value, dict):
         return {key: _expected_json(item, policy) for key, item in value.items()}
+    # Value-scoped recompute (typed-PII fix 2026-09-11): a sensitive numeric
+    # scalar becomes its pseudonym; mirror the transform so this independent
+    # check does not false-positive on a correctly anonymized number.
+    if isinstance(value, bool) or value is None:
+        return value
+    if isinstance(value, (int, float)):
+        token = repr(value) if isinstance(value, float) else str(value)
+        replaced, count = replace_text(token, policy)
+        return replaced if count and replaced != token else value
     return value
 
 
@@ -115,7 +124,16 @@ def _verify_sqlite_locations(source: Path, staged: Path, policy: Policy, name: s
                             f"sqlite row identity changed in {safe_ref(name)}"
                     )
                 for s_val, o_val in zip(s_row[1:], o_row[1:], strict=True):
-                    expected = replace_text(s_val, policy)[0] if isinstance(s_val, str) else s_val
+                    if isinstance(s_val, str):
+                        expected = replace_text(s_val, policy)[0]
+                    elif not isinstance(s_val, bool) and isinstance(s_val, (int, float)):
+                        # value-scoped location recompute (typed-PII fix): a
+                        # sensitive INTEGER/REAL becomes its text pseudonym.
+                        token = repr(s_val) if isinstance(s_val, float) else str(s_val)
+                        replaced, cnt = replace_text(token, policy)
+                        expected = replaced if cnt and replaced != token else s_val
+                    else:
+                        expected = s_val
                     if not _typed_equal(o_val, expected):
                         raise AnonError(
                             AnonErrorCode.VERIFICATION_FAILED,

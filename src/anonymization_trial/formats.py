@@ -204,7 +204,20 @@ def _replace_json(value: Any, policy: Policy, depth: int) -> tuple[Any, int]:
             output[key] = updated  # key preserved, never anonymized
             count += replaced
         return output, count
-    return value, 0  # bool/int/float/null unchanged
+    # Value-scoped matching (typed-PII fix 2026-09-11): a sensitive value stored
+    # as a JSON number is the SAME value as its string spelling. bool is a subclass
+    # of int and is never PII-bearing, so it is excluded. A scalar that matches is
+    # replaced with its (string) pseudonym; the type change is correct because the
+    # value was sensitive and must not survive in ANY representation.
+    if isinstance(value, bool) or value is None:
+        return value, 0
+    if isinstance(value, (int, float)):
+        token = repr(value) if isinstance(value, float) else str(value)
+        replaced_token, count = replace_text(token, policy)
+        if count and replaced_token != token:
+            return replaced_token, count
+        return value, 0
+    return value, 0
 
 
 def _transform_json(source: Path, destination: Path, policy: Policy) -> tuple[int, int]:
@@ -343,6 +356,14 @@ def _transform_sqlite(source: Path, destination: Path, policy: Policy) -> tuple[
                         replacements += count
                         if transformed != value:
                             updates[column] = transformed
+                    elif not isinstance(value, bool) and isinstance(value, (int, float)):
+                        # value-scoped: an INTEGER/REAL column carrying a sensitive
+                        # value is the same value as its text spelling (typed-PII fix).
+                        token = repr(value) if isinstance(value, float) else str(value)
+                        transformed, count = replace_text(token, policy)
+                        replacements += count
+                        if count and transformed != token:
+                            updates[column] = transformed
                 if updates:
                     assignments = ", ".join(f"{_quote(name)} = ?" for name in updates)
                     connection.execute(
@@ -382,6 +403,14 @@ def _json_strings(value: Any):
             yield from _json_strings(item)
     elif isinstance(value, str):
         yield value
+    elif isinstance(value, bool) or value is None:
+        return
+    elif isinstance(value, (int, float)):
+        # Independent value-scoped scan (typed-PII fix 2026-09-11): the verifier
+        # must see a sensitive value however it is stored, or a numeric leak the
+        # transform missed goes undetected. Stringified inline here — NOT via the
+        # transform's helper — so the two layers stay genuinely independent.
+        yield repr(value) if isinstance(value, float) else str(value)
 
 
 def iter_searchable_text(path: Path):
@@ -412,3 +441,5 @@ def iter_searchable_text(path: Path):
                     for value in row:
                         if isinstance(value, str):
                             yield value
+                        elif not isinstance(value, bool) and isinstance(value, (int, float)):
+                            yield repr(value) if isinstance(value, float) else str(value)

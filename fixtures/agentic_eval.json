@@ -71,6 +71,39 @@
           "FAILCLOSED_OK"
         ]
       }
+    },
+    {
+      "name": "typed-pii-every-representation",
+      "type": "adversarial",
+      "real_world": true,
+      "evidence_class": "deterministic",
+      "supports_claims": [
+        "anonymize.no_pii_any_representation"
+      ],
+      "command": [
+        "bash",
+        "-c",
+        "cd .. && .venv/bin/python -m pytest -q security/tests/test_typed_pii_representation.py"
+      ],
+      "expected": {
+        "exit_code": 0,
+        "stdout_contains": [
+          "1 passed"
+        ]
+      }
+    }
+  ],
+  "capability_claims": [
+    {
+      "id": "anonymize.no_pii_any_representation",
+      "description": "No PII value reaches the output in ANY representation (JSON string/integer/float, SQLite TEXT/INTEGER). Derived verbatim from the brief: 'the same identity can appear in every format.' The 2026-09-11 disqualifier was proving this at string scope only.",
+      "criticality": "critical",
+      "claim_semantics": "value_bearing",
+      "domain_profile": "json-scalar-v1",
+      "evidence_required": {
+        "deterministic": true
+      },
+      "supports_claims": []
     }
   ]
 }
