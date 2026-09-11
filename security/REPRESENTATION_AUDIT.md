@@ -24,7 +24,7 @@ is disabled and the independent verifier rejects the output.
 | JSON \uXXXX escape equivalence | P0 if present | Already correct (JSON parsed, decoded form matched) |
 | UTF-16 / invalid encoding | P0 boundary | Already correct (malformed_encoding, fail-closed) |
 | UTF-8 BOM | P0 boundary | Already correct (matched, BOM preserved) |
-| NFC/NFD canonical equivalence | P0 same-class | OPEN - xfail(strict) guard retained; needs the fix below |
+| NFC/NFD canonical equivalence | P0 same-class | FIXED - NFC/NFD variant patterns + NFC-folded policy collision + independent NFC verifier (3ca4ad7); Docker-verified |
 | Numeric precision / scientific notation | P0 refinement | Partial (int/float ok); exact-decimal + precision-boundary rule pending |
 | Policy-side canonical collisions | P0 | Pending (normalize policy literals + reject NFC collisions) |
 | Verifier protected-value scalar coverage | P1 | Pending |
