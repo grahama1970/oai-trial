@@ -267,10 +267,30 @@ def _writable_columns(connection: sqlite3.Connection, table: str, policy: Policy
     return writable
 
 
+def _harden_connection(connection: sqlite3.Connection) -> None:
+    """Defenses for processing an untrusted SQLite file (WebGPT audit 2026-09-11).
+
+    trusted_schema=OFF stops hostile schema machinery (functions embedded in
+    views/generated columns/CHECK/DEFAULT) from executing while we read; SQLite
+    recommends it for untrusted databases. cell_size_check=ON detects malformed
+    cells rather than reading out of bounds.
+    """
+    connection.execute("PRAGMA trusted_schema=OFF")
+    connection.execute("PRAGMA cell_size_check=ON")
+
+
 def _snapshot_sqlite(source: Path, destination: Path) -> None:
     """Copy a consistent snapshot via the online backup API (WAL-safe)."""
     src = sqlite3.connect(f"file:{source}?mode=ro", uri=True)
     try:
+        _harden_connection(src)
+        # Reject a malformed/hostile database BEFORE processing, not only in the
+        # post-transform verifier (fail-closed early).
+        integ = src.execute("PRAGMA integrity_check").fetchone()
+        if not integ or integ[0] != "ok":
+            raise AnonError(
+                AnonErrorCode.UNSUPPORTED_FORMAT, "SQLite integrity_check failed on input"
+            )
         dst = sqlite3.connect(destination)
         try:
             src.backup(dst)
@@ -289,6 +309,7 @@ def _transform_sqlite(source: Path, destination: Path, policy: Policy) -> tuple[
     records = 0
     replacements = 0
     with sqlite3.connect(destination) as connection:
+        _harden_connection(connection)
         connection.execute("PRAGMA foreign_keys = ON")
         for obj_name, sql in connection.execute(
             "SELECT name, sql FROM sqlite_master WHERE sql IS NOT NULL"
@@ -381,6 +402,20 @@ def _transform_sqlite(source: Path, destination: Path, policy: Policy) -> tuple[
                     )
         connection.commit()
         _verify_sqlite(connection, pre_counts)
+        # Drop pre-anonymization bytes left in freelist/overflow pages by the
+        # in-place UPDATEs, so no recoverable original value survives in the
+        # published file (WebGPT audit 2026-09-11, forensic residue).
+        connection.execute("PRAGMA secure_delete=ON")
+        connection.execute("VACUUM")
+    # No journal/WAL sidecar may accompany the published database: it is part of
+    # database state and can carry pre-anonymization content.
+    for suffix in ("-wal", "-shm", "-journal"):
+        sidecar = destination.with_name(destination.name + suffix)
+        if sidecar.exists():
+            raise AnonError(
+                AnonErrorCode.VERIFICATION_FAILED,
+                f"SQLite sidecar {safe_ref(sidecar.name)} present after publish",
+            )
     return records, replacements
 
 
