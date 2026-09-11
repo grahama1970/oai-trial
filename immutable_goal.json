@@ -4,6 +4,11 @@
   "goal_id": "oai-trial-anonymization-fail-closed-v1",
   "goal_hash": "sha256:37f5e92b43f392fe75cbff7435912dcc0e64bf9e7525f5778c78028e0e89d9cb",
   "outcome": "Harden the anonymization starter into a fail-closed, scale-aware pipeline whose unseen mounted run produces a verified releasable corpus meeting every requirement in TRIAL_BRIEF.md",
+  "spec_inputs": [
+    "TRIAL_BRIEF.md",
+    "examples/policy.json"
+  ],
+  "spec_derived_check": "The acceptance check is DERIVED FROM the delivered spec, not authored from the code: read every value in policy.json (sensitive_values[].value) and assert none appears in the decoded content of any released file, in ANY representation the format admits. Flipping a policy value MUST flip the result (dependency probe).",
   "primary_proof": {
     "command": "docker build -t anonymization-trial . && docker run --rm anonymization-trial && docker run --rm -v \"$INPUT\":/trial/input:ro -v \"$OUTPUT\":/trial/output anonymization-trial run",
     "expected": "build succeeds; bare run prints demo success across all 4 formats at >=2 sizes (largest >=10x) and exits 0 only when verification passes; mounted run writes only /trial/output/report.json and /trial/output/corpus mirroring input paths"
@@ -14,7 +19,7 @@
     "a corpus with a value that survives replacement makes the run exit non-zero and leave no release-looking /trial/output/corpus"
   ],
   "completion_criteria": [
-    "Every policy-identified value is replaced across .csv, .json, .txt, and .sqlite, with same-format valid output.",
+    "Every policy-identified value is replaced across .csv, .json, .txt, and .sqlite, IN ANY REPRESENTATION THE FORMAT ADMITS (JSON string/integer/float; SQLite TEXT/INTEGER/REAL; BLOB rejected fail-closed), with same-format valid output. Verified by scanning the decoded output for every value in policy.json, not by a hand-authored value list.",
     "Replacements are stable across files and repeated runs; one identity forms one pseudonymous profile via subject_id; distinct identities never share a type-specific replacement.",
     "protected_values are preserved even when they overlap, contain, or intersect a sensitive literal, under a documented deterministic precedence (longest-match-first, no replacement cascades).",
     "CSV headers, JSON structure, and SQLite tables/relationships/row-counts/integrity are preserved; a sensitive literal in a CSV header is transformed or rejected, never silently retained.",
