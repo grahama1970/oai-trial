@@ -577,6 +577,16 @@ def iter_searchable_text(path: Path):
         return
     if path.suffix == ".sqlite":
         with sqlite3.connect(f"file:{path}?mode=ro", uri=True) as connection:
+            # Schema DDL is part of the released .sqlite bytes: a sensitive
+            # literal in a CHECK clause, DEFAULT, object/column name, or any
+            # retained SQL is content the value scan must see, independently of
+            # the transform's own schema check (WebGPT audit round 4).
+            for schema_row in connection.execute(
+                "SELECT type, name, tbl_name, sql FROM sqlite_master"
+            ):
+                for field in schema_row:
+                    if isinstance(field, str):
+                        yield field
             # Scan base tables AND views: a view can materialize a sensitive
             # value from clean base cells (SELECT a||b), which a base-table-only
             # scan never sees (WebGPT audit 2026-09-11). Views are read-only

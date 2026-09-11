@@ -54,3 +54,14 @@ def test_non_finite_json_numbers_rejected(tmp_path: Path, token: str) -> None:
     (inp / "corpus" / "c.json").write_text('{"x": %s}' % token, encoding="utf-8")
     with pytest.raises(AnonError):
         run_pipeline(inp, out)
+
+
+def test_sqlite_schema_literal_in_check_caught(tmp_path: Path) -> None:
+    # A policy literal in a CHECK clause lives in the released schema DDL.
+    # Both the transform schema-scan and the independent verifier must catch it.
+    inp, out = _bundle(tmp_path, "5551234567")
+    con = sqlite3.connect(inp / "corpus" / "a.sqlite")
+    con.executescript("CREATE TABLE b(x TEXT, CHECK (x <> '5551234567')); INSERT INTO b(x) VALUES('safe');")
+    con.commit(); con.close()
+    with pytest.raises(AnonError):
+        run_pipeline(inp, out)
