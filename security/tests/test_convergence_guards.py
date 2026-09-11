@@ -75,3 +75,16 @@ def test_sqlite_header_field_carrying_sensitive_value_rejected(tmp_path: Path) -
     con.commit(); con.close()
     with pytest.raises(AnonError):
         run_pipeline(inp, out)
+
+
+def test_schema_version_cookie_not_leaked_via_vacuum(tmp_path: Path) -> None:
+    # S-1 -> VACUUM -> S attack: our backup-to-fresh-DB snapshot never copies the
+    # source cookie, and schema_version is a scanned header field regardless.
+    inp, out = _bundle(tmp_path, "123456789")
+    con = sqlite3.connect(inp / "corpus" / "a.sqlite")
+    con.executescript("CREATE TABLE t(v TEXT); INSERT INTO t VALUES('123456789'); PRAGMA schema_version=123456788;")
+    con.commit(); con.close()
+    run_pipeline(inp, out)  # table value anonymized; header cookie must not be the sensitive value
+    raw = (out / "corpus" / "a.sqlite").read_bytes()
+    assert int.from_bytes(raw[40:44], "big") != 123456789
+    assert b"123456789" not in raw

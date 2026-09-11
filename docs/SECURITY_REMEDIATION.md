@@ -29,6 +29,7 @@ fix. All fixes are landed on `origin/main` and covered by retained tests.
 | 11 | Numeric **scientific-notation alias**: policy `100000000000000000000` vs JSON `1e20` (str(float)=`1e+20`) | HIGH | WebGPT round 2 | numeric-token helper emits integral/decimal expansion; matched in transform + verifier | `1e20` anonymized; policy string absent | `2435e4f` |
 | 12 | Policy literal in SQLite **schema DDL** (CHECK clause, DEFAULT, object/column name) lives in released bytes | HIGH | WebGPT round 4 | transform rejects (schema scan) AND independent verifier now scans `sqlite_schema` type/name/tbl_name/sql | `CHECK (x <> '5551234567')` → fail-closed through Docker | `<round4>` |
 | 13 | SQLite **header fields** (user_version @60, application_id @68, default_cache_size @48) persist an attacker integer outside any table/view/schema | HIGH | WebGPT round 5 | reject if a header field carries a policy value (numeric tokens); verifier scans header integers independently | `PRAGMA user_version=123456789` → fail-closed through Docker | `<round5>` |
+| 14 | SQLite **schema_version cookie** (offset 40) advances on VACUUM (S-1→S attack) | HIGH | WebGPT round 6 | backup-to-fresh snapshot never copies the source cookie (released=2); schema_version added to scanned header fields as defense-in-depth | released cookie != sensitive value; `123456789` absent from output bytes | `<round6>` |
 
 ## Reviewed and confirmed already-handled (no change needed)
 

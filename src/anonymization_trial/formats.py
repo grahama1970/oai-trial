@@ -296,7 +296,11 @@ def _writable_columns(connection: sqlite3.Connection, table: str, policy: Policy
 # Persistent SQLite header integers that hold attacker-controlled values outside
 # any table/view/schema (WebGPT audit round 5): user_version (offset 60),
 # application_id (offset 68), default_cache_size (offset 48).
-_HEADER_PRAGMAS = ("user_version", "application_id", "default_cache_size")
+# schema_version (offset 40) is included because VACUUM advances it: an input
+# of S-1 becomes S after the pipeline's VACUUM, so the decisive check is the
+# post-transform verifier, which reads the staged (post-VACUUM) database
+# (WebGPT audit round 6).
+_HEADER_PRAGMAS = ("user_version", "application_id", "default_cache_size", "schema_version")
 
 
 def _sqlite_header_values(connection: sqlite3.Connection) -> list[int]:
