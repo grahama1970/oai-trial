@@ -81,3 +81,31 @@ Method: WebGPT security audit (3 rounds to convergence) + `$hack` containerized
 SAST (bandit/semgrep, 9 findings triaged: 7 false-positive SQL-injection
 mitigated by `_quote`, 2 benign subprocess) + empirical adversarial probes
 against the live pipeline. ~1-2 hours past the frozen submission.
+
+## Convergence boundary (operator decision, round 9)
+
+WebGPT's audit invariant is literal: "no policy numeric value's byte encoding
+appears anywhere in the released file." Rounds 5–9 drove this into the SQLite
+header, where several fields are **mandatory format constants** — e.g. bytes
+21–23 must be `64,32,32`, the text-encoding field is `1`, version fields hold
+fixed integers. Every documented header integer is now scanned, so a policy
+value equal to any of them **fails closed** (safe, no leak). But this means a
+degenerate policy that lists a single/double-digit format constant (`"64"`,
+`"1"`) as "PII" makes every SQLite file un-releasable.
+
+**Decision:** real PII — names, phones, emails, identifiers — is fully covered
+by (a) the value-scoped matcher across all formats and representations, (b) the
+whole-file raw-byte scan of released SQLite, and (c) the complete header-integer
+scan. A sensitive value that equals a mandatory SQLite format constant is not a
+real-world PII carrier; the pipeline fails closed on it rather than leak, and
+that residue is **documented as scoped**, not chased further. Convergence is
+declared on the real-PII confidentiality invariant.
+
+## Docker verification (all checks)
+
+`security/docker_hardening_matrix.py` runs 15 holes through the real evaluator
+command (`docker run -v IN:/trial/input:ro -v OUT:/trial/output
+anonymization-trial run`) and reads back the container output: **15/15 PASS**.
+Anonymize cases show the value absent from output; fail-closed cases exit
+non-zero with no output corpus; SQL identifier injection leaves the victim table
+intact.

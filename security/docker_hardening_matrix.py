@@ -94,6 +94,26 @@ def b11(inp):
     (inp/"policy.json").write_text(json.dumps(policy("100000000000000000000")))
     (inp/"corpus/c.json").write_text(json.dumps({"x":1e20}))
 cases.append(("11 numeric 1e20 alias", b11, anon("100000000000000000000")))
+# 12 schema DDL literal in a CHECK clause
+def b12(inp):
+    (inp/"policy.json").write_text(json.dumps(policy("5551234567")))
+    c=sqlite3.connect(inp/"corpus/a.sqlite"); c.executescript("CREATE TABLE b(x TEXT, CHECK (x <> '5551234567')); INSERT INTO b(x) VALUES('safe');"); c.commit(); c.close()
+cases.append(("12 schema DDL CHECK literal", b12, failclosed()))
+# 13 header field carrying a sensitive value
+def b13(inp):
+    (inp/"policy.json").write_text(json.dumps(policy("123456789")))
+    c=sqlite3.connect(inp/"corpus/a.sqlite"); c.executescript("CREATE TABLE h(x TEXT); INSERT INTO h VALUES('safe'); PRAGMA user_version=123456789;"); c.commit(); c.close()
+cases.append(("13 header user_version leak", b13, failclosed()))
+# 14 page_size as sensitive value
+def b14(inp):
+    (inp/"policy.json").write_text(json.dumps(policy("8192")))
+    c=sqlite3.connect(inp/"corpus/a.sqlite"); c.execute("PRAGMA page_size=8192"); c.execute("VACUUM"); c.execute("CREATE TABLE t(x TEXT)"); c.execute("INSERT INTO t VALUES('benign')"); c.commit(); c.close()
+cases.append(("14 page_size header value", b14, failclosed()))
+# 15 payload-fraction format constant collision
+def b15(inp):
+    (inp/"policy.json").write_text(json.dumps(policy("64")))
+    c=sqlite3.connect(inp/"corpus/a.sqlite"); c.execute("CREATE TABLE t(x TEXT)"); c.execute("INSERT INTO t VALUES('safe')"); c.commit(); c.close()
+cases.append(("15 header payload-constant 64", b15, failclosed()))
 
 results=[run_case(n,b,e) for n,b,e in cases]
 
