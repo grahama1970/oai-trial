@@ -80,7 +80,7 @@ sources:
   visibility: public
   role: evidence
   required: true
-  content_sha: sha256:23faca31cd050e0f9ee8c58a607818ffeaff3fb02322b7105df4d18f891c73a4
+  content_sha: sha256:68a2f0f1cff1f102cd8f90159cc0a1c139bd9f3aade9d18ba2b94a0d5c2c4759
   ref: d0039613fa8acfaeba164eed9761632e2d8a5f41
 - id: runtime-metrics
   title: Docker demo

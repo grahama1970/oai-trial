@@ -310,8 +310,11 @@ def _writable_columns(connection: sqlite3.Connection, table: str, policy: Policy
 # Structural counters are included; a policy value colliding with one is
 # degenerate (a single-digit PII value) and failing closed is safe, not a leak.
 _HEADER_INT_FIELDS = (
-    (16, 2), (28, 4), (40, 4), (44, 4), (48, 4), (52, 4),
-    (56, 4), (60, 4), (64, 4), (68, 4), (92, 4), (96, 4),
+    (16, 2),
+    (18, 1), (19, 1), (20, 1), (21, 1), (22, 1), (23, 1),
+    (24, 4), (28, 4), (32, 4), (36, 4),
+    (40, 4), (44, 4), (48, 4), (52, 4), (56, 4), (60, 4),
+    (64, 4), (68, 4), (92, 4), (96, 4),
 )
 
 

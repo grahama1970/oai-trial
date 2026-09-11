@@ -111,3 +111,15 @@ def test_all_sqlite_header_integers_scanned(tmp_path: Path) -> None:
     con.commit(); con.close()
     with pytest.raises(AnonError):
         run_pipeline(inp, out)
+
+
+def test_sqlite_header_payload_fraction_constants_scanned(tmp_path: Path) -> None:
+    # Offsets 21-23 are mandatory format constants 64,32,32; a policy value equal
+    # to one fails closed (degenerate, safe).
+    for val in ("64", "32"):
+        inp, out = _bundle(tmp_path / val, val)
+        con = sqlite3.connect(inp / "corpus" / "a.sqlite")
+        con.execute("CREATE TABLE t(x TEXT)"); con.execute("INSERT INTO t VALUES('safe')")
+        con.commit(); con.close()
+        with pytest.raises(AnonError):
+            run_pipeline(inp, out)
