@@ -439,10 +439,14 @@ def iter_searchable_text(path: Path):
         return
     if path.suffix == ".sqlite":
         with sqlite3.connect(f"file:{path}?mode=ro", uri=True) as connection:
+            # Scan base tables AND views: a view can materialize a sensitive
+            # value from clean base cells (SELECT a||b), which a base-table-only
+            # scan never sees (WebGPT audit 2026-09-11). Views are read-only
+            # SELECTs, so materializing them for verification is safe.
             tables = [
                 row[0]
                 for row in connection.execute(
-                    "SELECT name FROM sqlite_master WHERE type='table' AND name NOT GLOB 'sqlite_*'"
+                    "SELECT name FROM sqlite_master WHERE type IN ('table','view') AND name NOT GLOB 'sqlite_*'"
                 )
             ]
             for table in tables:

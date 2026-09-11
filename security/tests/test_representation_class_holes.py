@@ -86,3 +86,27 @@ def test_negative_scope_literal_contract_does_not_overmatch() -> None:
         )
         result = json.loads((out / "corpus" / "c.json").read_text())["who"]
         assert result == corpus_value, f"literal-scope creep: {policy_value!r} matched {corpus_value!r}"
+
+
+def test_sqlite_view_reconstructing_sensitive_value_fails_closed(tmp_path: Path) -> None:
+    # A view can rebuild a sensitive value from clean base cells; the row
+    # verifier only scans base tables, so an accepted view is an unscanned leak.
+    import sqlite3
+    src = tmp_path / "input"
+    out = tmp_path / "output"
+    (src / "corpus").mkdir(parents=True)
+    out.mkdir()
+    (src / "policy.json").write_text(json.dumps({
+        "version": 1, "protected_values": [],
+        "sensitive_values": [{"rule_id": "r", "subject_id": "s", "type": "name", "value": "Alice"}],
+    }), encoding="utf-8")
+    con = sqlite3.connect(src / "corpus" / "a.sqlite")
+    con.executescript("CREATE TABLE t(id INTEGER PRIMARY KEY, a TEXT, b TEXT);"
+                       "INSERT INTO t VALUES(1,'Al','ice');"
+                       "CREATE VIEW v AS SELECT a||b AS full FROM t;")
+    con.commit(); con.close()
+    import pytest as _pytest
+    from anonymization_trial.errors import AnonError
+    from anonymization_trial.pipeline import run_pipeline
+    with _pytest.raises(AnonError):
+        run_pipeline(src, out)
