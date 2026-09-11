@@ -300,7 +300,17 @@ def _writable_columns(connection: sqlite3.Connection, table: str, policy: Policy
 # of S-1 becomes S after the pipeline's VACUUM, so the decisive check is the
 # post-transform verifier, which reads the staged (post-VACUUM) database
 # (WebGPT audit round 6).
-_HEADER_PRAGMAS = ("user_version", "application_id", "default_cache_size", "schema_version")
+# All USER-SELECTABLE persistent SQLite header integers (not SQLite-generated
+# structural counters like page_count/change_counter, which are not attacker
+# values). page_size is source-selected and propagated by backup() to the fresh
+# destination (WebGPT audit round 7), so it must be scanned too.
+_HEADER_PRAGMAS = (
+    "page_size",
+    "user_version",
+    "application_id",
+    "default_cache_size",
+    "schema_version",
+)
 
 
 def _sqlite_header_values(connection: sqlite3.Connection) -> list[int]:
@@ -610,6 +620,12 @@ def iter_searchable_text(path: Path):
         yield path.read_text(encoding="utf-8")
         return
     if path.suffix == ".sqlite":
+        # General raw-byte net (WebGPT audit round 7): any sensitive value stored
+        # as text ANYWHERE in the released file -- rows, DDL, page slack, unknown
+        # regions -- is caught without enumerating surfaces one at a time. Binary
+        # integer-encoded header fields (page_size etc.) are covered separately
+        # by the numeric header scan below, since they are not ASCII in the file.
+        yield path.read_bytes().decode("latin-1")
         with sqlite3.connect(f"file:{path}?mode=ro", uri=True) as connection:
             # Schema DDL is part of the released .sqlite bytes: a sensitive
             # literal in a CHECK clause, DEFAULT, object/column name, or any

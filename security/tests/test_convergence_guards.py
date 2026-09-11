@@ -88,3 +88,14 @@ def test_schema_version_cookie_not_leaked_via_vacuum(tmp_path: Path) -> None:
     raw = (out / "corpus" / "a.sqlite").read_bytes()
     assert int.from_bytes(raw[40:44], "big") != 123456789
     assert b"123456789" not in raw
+
+
+def test_sqlite_page_size_as_sensitive_value_rejected(tmp_path: Path) -> None:
+    # page_size (bytes 16-17) is source-selected and copied by backup().
+    inp, out = _bundle(tmp_path, "8192")
+    con = sqlite3.connect(inp / "corpus" / "a.sqlite")
+    con.execute("PRAGMA page_size=8192"); con.execute("VACUUM")
+    con.execute("CREATE TABLE t(x TEXT)"); con.execute("INSERT INTO t VALUES('benign')")
+    con.commit(); con.close()
+    with pytest.raises(AnonError):
+        run_pipeline(inp, out)
