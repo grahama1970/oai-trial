@@ -28,6 +28,7 @@ fix. All fixes are landed on `origin/main` and covered by retained tests.
 | 10 | **Computed DEFAULT expression** evaluates on future inserts: empty table verifies clean yet emits the value later | CRITICAL | WebGPT round 2 | reject non-literal DEFAULTs; plain literal defaults still accepted | `DEFAULT (char(...))` → `unsupported_format` | `2435e4f` |
 | 11 | Numeric **scientific-notation alias**: policy `100000000000000000000` vs JSON `1e20` (str(float)=`1e+20`) | HIGH | WebGPT round 2 | numeric-token helper emits integral/decimal expansion; matched in transform + verifier | `1e20` anonymized; policy string absent | `2435e4f` |
 | 12 | Policy literal in SQLite **schema DDL** (CHECK clause, DEFAULT, object/column name) lives in released bytes | HIGH | WebGPT round 4 | transform rejects (schema scan) AND independent verifier now scans `sqlite_schema` type/name/tbl_name/sql | `CHECK (x <> '5551234567')` → fail-closed through Docker | `<round4>` |
+| 13 | SQLite **header fields** (user_version @60, application_id @68, default_cache_size @48) persist an attacker integer outside any table/view/schema | HIGH | WebGPT round 5 | reject if a header field carries a policy value (numeric tokens); verifier scans header integers independently | `PRAGMA user_version=123456789` → fail-closed through Docker | `<round5>` |
 
 ## Reviewed and confirmed already-handled (no change needed)
 
@@ -70,7 +71,7 @@ mounted read-only; deterministic public-namespace pseudonyms disclosed in the
 report; petabyte design separate). Round-3 re-examinations (STORED generated
 columns, top-level scalar JSON, duplicate keys, NaN/Infinity, CHECK/collation
 schema, malformed UTF-8/NUL) were each confirmed already fail-closed and are now
-retained as regression guards. Total suite: 187 passed.
+retained as regression guards. Total suite: 188 passed.
 
 Method: WebGPT security audit (3 rounds to convergence) + `$hack` containerized
 SAST (bandit/semgrep, 9 findings triaged: 7 false-positive SQL-injection

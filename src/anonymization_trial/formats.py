@@ -293,6 +293,35 @@ def _writable_columns(connection: sqlite3.Connection, table: str, policy: Policy
     return writable
 
 
+# Persistent SQLite header integers that hold attacker-controlled values outside
+# any table/view/schema (WebGPT audit round 5): user_version (offset 60),
+# application_id (offset 68), default_cache_size (offset 48).
+_HEADER_PRAGMAS = ("user_version", "application_id", "default_cache_size")
+
+
+def _sqlite_header_values(connection: sqlite3.Connection) -> list[int]:
+    values: list[int] = []
+    for pragma in _HEADER_PRAGMAS:
+        row = connection.execute(f"PRAGMA {pragma}").fetchone()
+        if row and isinstance(row[0], int):
+            values.append(row[0])
+    return values
+
+
+def _reject_sensitive_header(connection: sqlite3.Connection, policy: Policy) -> None:
+    """A sensitive value hidden in a persistent header integer reaches the
+    released bytes without appearing in any table/view/schema. Fail closed if a
+    header field carries a policy value (matched by the same numeric tokens)."""
+    for value in _sqlite_header_values(connection):
+        for token in _numeric_tokens(value):
+            _, count = replace_text(token, policy)
+            if count:
+                raise AnonError(
+                    AnonErrorCode.SENSITIVE_IN_SCHEMA,
+                    "a sensitive value occurs in a SQLite header field",
+                )
+
+
 def _harden_connection(connection: sqlite3.Connection) -> None:
     """Defenses for processing an untrusted SQLite file (WebGPT audit 2026-09-11).
 
@@ -434,6 +463,7 @@ def _transform_sqlite(source: Path, destination: Path, policy: Policy) -> tuple[
         if connection.execute("SELECT 1 FROM sqlite_master WHERE type='trigger'").fetchone():
             raise AnonError(AnonErrorCode.UNSUPPORTED_FORMAT, "triggers are not supported")
         _reject_executable_schema(connection)
+        _reject_sensitive_header(connection, policy)
         tables = connection.execute(
             "SELECT name, sql FROM sqlite_master WHERE type='table' AND name NOT GLOB 'sqlite_*'"
         ).fetchall()
@@ -587,6 +617,10 @@ def iter_searchable_text(path: Path):
                 for field in schema_row:
                     if isinstance(field, str):
                         yield field
+            # Persistent header integers are released bytes outside any table
+            # (WebGPT audit round 5); the independent scan must see them too.
+            for header_value in _sqlite_header_values(connection):
+                yield from _numeric_tokens(header_value)
             # Scan base tables AND views: a view can materialize a sensitive
             # value from clean base cells (SELECT a||b), which a base-table-only
             # scan never sees (WebGPT audit 2026-09-11). Views are read-only

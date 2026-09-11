@@ -65,3 +65,13 @@ def test_sqlite_schema_literal_in_check_caught(tmp_path: Path) -> None:
     con.commit(); con.close()
     with pytest.raises(AnonError):
         run_pipeline(inp, out)
+
+
+def test_sqlite_header_field_carrying_sensitive_value_rejected(tmp_path: Path) -> None:
+    # user_version/application_id persist attacker integers outside any table.
+    inp, out = _bundle(tmp_path, "123456789")
+    con = sqlite3.connect(inp / "corpus" / "a.sqlite")
+    con.executescript("CREATE TABLE h(x TEXT); INSERT INTO h VALUES('safe'); PRAGMA user_version=123456789;")
+    con.commit(); con.close()
+    with pytest.raises(AnonError):
+        run_pipeline(inp, out)
