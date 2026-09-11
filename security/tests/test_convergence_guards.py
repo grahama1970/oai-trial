@@ -99,3 +99,15 @@ def test_sqlite_page_size_as_sensitive_value_rejected(tmp_path: Path) -> None:
     con.commit(); con.close()
     with pytest.raises(AnonError):
         run_pipeline(inp, out)
+
+
+def test_all_sqlite_header_integers_scanned(tmp_path: Path) -> None:
+    # Any policy numeric value colliding with ANY header integer (incl the
+    # incremental-vacuum flag / encoding / structural counters) fails closed.
+    inp, out = _bundle(tmp_path, "1")
+    con = sqlite3.connect(inp / "corpus" / "a.sqlite")
+    con.execute("PRAGMA auto_vacuum=INCREMENTAL")
+    con.execute("CREATE TABLE t(x TEXT)"); con.execute("INSERT INTO t VALUES('benign')")
+    con.commit(); con.close()
+    with pytest.raises(AnonError):
+        run_pipeline(inp, out)

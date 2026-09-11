@@ -300,33 +300,38 @@ def _writable_columns(connection: sqlite3.Connection, table: str, policy: Policy
 # of S-1 becomes S after the pipeline's VACUUM, so the decisive check is the
 # post-transform verifier, which reads the staged (post-VACUUM) database
 # (WebGPT audit round 6).
-# All USER-SELECTABLE persistent SQLite header integers (not SQLite-generated
-# structural counters like page_count/change_counter, which are not attacker
-# values). page_size is source-selected and propagated by backup() to the fresh
-# destination (WebGPT audit round 7), so it must be scanned too.
-_HEADER_PRAGMAS = (
-    "page_size",
-    "user_version",
-    "application_id",
-    "default_cache_size",
-    "schema_version",
+# EVERY integer field in the 100-byte SQLite header, read directly from the
+# file (WebGPT audit round 8). Enumerating named pragmas one at a time was a
+# losing game; reading the raw header covers all of them at once:
+# page_size(16,2), db-size-in-pages(28,4), schema_cookie(40,4),
+# schema_format(44,4), default_cache_size(48,4), largest-root-page(52,4),
+# text-encoding(56,4), user_version(60,4), incremental-vacuum(64,4),
+# application_id(68,4), version-valid-for(92,4), sqlite-version(96,4).
+# Structural counters are included; a policy value colliding with one is
+# degenerate (a single-digit PII value) and failing closed is safe, not a leak.
+_HEADER_INT_FIELDS = (
+    (16, 2), (28, 4), (40, 4), (44, 4), (48, 4), (52, 4),
+    (56, 4), (60, 4), (64, 4), (68, 4), (92, 4), (96, 4),
 )
 
 
-def _sqlite_header_values(connection: sqlite3.Connection) -> list[int]:
+def _sqlite_header_values(path: Path) -> list[int]:
+    header = path.read_bytes()[:100]
     values: list[int] = []
-    for pragma in _HEADER_PRAGMAS:
-        row = connection.execute(f"PRAGMA {pragma}").fetchone()
-        if row and isinstance(row[0], int):
-            values.append(row[0])
+    for offset, width in _HEADER_INT_FIELDS:
+        if offset + width <= len(header):
+            raw = int.from_bytes(header[offset:offset + width], "big")
+            if (offset, width) == (16, 2) and raw == 1:
+                raw = 65536  # page_size 1 encodes 65536 per the SQLite format
+            values.append(raw)
     return values
 
 
-def _reject_sensitive_header(connection: sqlite3.Connection, policy: Policy) -> None:
+def _reject_sensitive_header(path: Path, policy: Policy) -> None:
     """A sensitive value hidden in a persistent header integer reaches the
     released bytes without appearing in any table/view/schema. Fail closed if a
     header field carries a policy value (matched by the same numeric tokens)."""
-    for value in _sqlite_header_values(connection):
+    for value in _sqlite_header_values(path):
         for token in _numeric_tokens(value):
             _, count = replace_text(token, policy)
             if count:
@@ -477,7 +482,7 @@ def _transform_sqlite(source: Path, destination: Path, policy: Policy) -> tuple[
         if connection.execute("SELECT 1 FROM sqlite_master WHERE type='trigger'").fetchone():
             raise AnonError(AnonErrorCode.UNSUPPORTED_FORMAT, "triggers are not supported")
         _reject_executable_schema(connection)
-        _reject_sensitive_header(connection, policy)
+        _reject_sensitive_header(destination, policy)
         tables = connection.execute(
             "SELECT name, sql FROM sqlite_master WHERE type='table' AND name NOT GLOB 'sqlite_*'"
         ).fetchall()
@@ -639,7 +644,7 @@ def iter_searchable_text(path: Path):
                         yield field
             # Persistent header integers are released bytes outside any table
             # (WebGPT audit round 5); the independent scan must see them too.
-            for header_value in _sqlite_header_values(connection):
+            for header_value in _sqlite_header_values(path):
                 yield from _numeric_tokens(header_value)
             # Scan base tables AND views: a view can materialize a sensitive
             # value from clean base cells (SELECT a||b), which a base-table-only
