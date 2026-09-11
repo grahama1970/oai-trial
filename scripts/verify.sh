@@ -14,7 +14,7 @@ fi
 "$VENV/bin/pip" install -q -e .
 
 echo "== unittest =="
-"$VENV/bin/python" -m unittest discover -s tests
+PYTHONPATH="scripts:src${PYTHONPATH:+:$PYTHONPATH}" "$VENV/bin/python" -m unittest discover -s tests
 
 echo "== demo =="
 "$VENV/bin/anonymization-trial" demo | grep -q '"demo": "success"'
@@ -26,5 +26,8 @@ trap 'rm -rf "$work"' EXIT
 "$VENV/bin/anonymization-trial" run --input "$work/input" --output "$work/output"
 test -f "$work/output/report.json"
 python3 -c "import json,sys; r=json.load(open('$work/output/report.json')); sys.exit(0 if r.get('verification_passed') else 1)"
+
+echo "== spec-derived check (reads policy.json; no policy value survives in any representation) =="
+"$VENV/bin/python" scripts/spec_derived_check.py --policy "$work/input/policy.json" --corpus "$work/output/corpus"
 
 echo "Result: PASS"

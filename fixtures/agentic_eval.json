@@ -91,6 +91,26 @@
           "1 passed"
         ]
       }
+    },
+    {
+      "name": "spec-derived-check-and-dependency-probe",
+      "type": "adversarial",
+      "real_world": true,
+      "evidence_class": "deterministic",
+      "supports_claims": [
+        "anonymize.no_pii_any_representation"
+      ],
+      "command": [
+        "bash",
+        "-c",
+        "cd .. && .venv/bin/python -m pytest -q security/tests/test_spec_derived_check.py"
+      ],
+      "expected": {
+        "exit_code": 0,
+        "stdout_contains": [
+          "2 passed"
+        ]
+      }
     }
   ],
   "capability_claims": [
