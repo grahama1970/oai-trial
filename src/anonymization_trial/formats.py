@@ -12,6 +12,7 @@ from __future__ import annotations
 import csv
 import json
 import math
+import re
 import sqlite3
 from decimal import Decimal, InvalidOperation
 from pathlib import Path
@@ -130,6 +131,31 @@ def _transform_csv(source: Path, destination: Path, policy: Policy) -> tuple[int
     return data_rows, count
 
 
+def _numeric_tokens(value: int | float) -> list[str]:
+    """Canonical string forms a numeric scalar can equal (WebGPT audit round 2).
+
+    A policy value like "100000000000000000000" and a JSON "1e20" are the same
+    number; str(float) gives "1e+20" and would miss it. Emit str/repr AND, for a
+    finite integral value, the full-precision integer/decimal expansion so the
+    match sees every representation of the same number.
+    """
+    if isinstance(value, bool):
+        return []
+    if isinstance(value, int):
+        return [str(value)]
+    if not math.isfinite(value):
+        return [repr(value)]
+    tokens = [repr(value)]
+    if value.is_integer():
+        tokens.append(str(int(value)))
+    try:
+        tokens.append(format(Decimal(value), "f"))
+    except (InvalidOperation, ValueError):
+        pass
+    seen: set[str] = set()
+    return [t for t in tokens if not (t in seen or seen.add(t))]
+
+
 _MAX_DEPTH = 200
 _MAX_STRING = 1_000_000
 
@@ -212,10 +238,10 @@ def _replace_json(value: Any, policy: Policy, depth: int) -> tuple[Any, int]:
     if isinstance(value, bool) or value is None:
         return value, 0
     if isinstance(value, (int, float)):
-        token = repr(value) if isinstance(value, float) else str(value)
-        replaced_token, count = replace_text(token, policy)
-        if count and replaced_token != token:
-            return replaced_token, count
+        for token in _numeric_tokens(value):
+            replaced_token, count = replace_text(token, policy)
+            if count and replaced_token != token:
+                return replaced_token, count
         return value, 0
     return value, 0
 
@@ -304,6 +330,81 @@ def _snapshot_sqlite(source: Path, destination: Path) -> None:
         src.close()
 
 
+# Functions that make a view/schema expression return different values across
+# evaluations, so one verification materialization is not proof of the released
+# artifact (WebGPT audit round 2). A view using any of these is rejected.
+_NONDETERMINISTIC_SQL = (
+    "random", "randomblob", "date", "time", "datetime", "julianday",
+    "strftime", "current_timestamp", "current_time", "current_date",
+    "changes", "last_insert_rowid", "sqlite_version",
+)
+
+
+_LITERAL_DEFAULT_KEYWORDS = {"null", "true", "false", "current_date", "current_time", "current_timestamp"}
+_NUMBER_DEFAULT = re.compile(r"^[+-]?(\d+\.?\d*|\.\d+)([eE][+-]?\d+)?$")
+
+
+def _is_literal_default(default: str) -> bool:
+    """True only for a plain SQLite DEFAULT literal (number, quoted string, blob
+    literal, NULL/bool, CURRENT_*). Anything else is a computed expression."""
+    d = default.strip()
+    if d.lower() in _LITERAL_DEFAULT_KEYWORDS:
+        return True
+    if _NUMBER_DEFAULT.match(d):
+        return True
+    if len(d) >= 2 and d[0] == "'" and d[-1] == "'":
+        return True
+    if (d[:2].lower() == "x'") and d[-1] == "'":
+        return True
+    return False
+
+
+def _reject_executable_schema(connection: sqlite3.Connection) -> None:
+    """Fail closed on SQLite schema that stores or later computes a value the
+    row/view scan cannot see (WebGPT audit round 2):
+
+    - Expression and partial indexes store computed values in the index B-tree
+      (e.g. INDEX ON t(char(83,...))), invisible to table/view enumeration.
+    - Computed (parenthesized) DEFAULT expressions evaluate on FUTURE inserts:
+      an empty table passes current-row verification yet can emit a value later.
+    - Non-deterministic views can return clean at verification and the sensitive
+      value afterward; one materialization is not proof.
+    """
+    for name, tbl_name, sql in connection.execute(
+        "SELECT name, tbl_name, sql FROM sqlite_master WHERE type='index'"
+    ):
+        if sql and " WHERE " in f" {sql.upper()} ":
+            raise AnonError(AnonErrorCode.UNSUPPORTED_FORMAT, "partial indexes are not supported")
+        for col in connection.execute(f"PRAGMA index_xinfo({_quote(name)})"):
+            # index_xinfo cid == -2 marks an expression key column.
+            if col[1] == -2:
+                raise AnonError(
+                    AnonErrorCode.UNSUPPORTED_FORMAT, "expression indexes are not supported"
+                )
+    for (table,) in connection.execute(
+        "SELECT name FROM sqlite_master WHERE type='table' AND name NOT GLOB 'sqlite_*'"
+    ):
+        for col in connection.execute(f"PRAGMA table_info({_quote(table)})"):
+            default = col[4]
+            # A non-literal DEFAULT is a computed expression evaluated on future
+            # inserts (SQLite strips the outer parens in table_info, so detect
+            # by what is NOT a plain literal).
+            if isinstance(default, str) and default.strip() and not _is_literal_default(default):
+                raise AnonError(
+                    AnonErrorCode.UNSUPPORTED_FORMAT,
+                    "computed DEFAULT expressions are not supported",
+                )
+    for (view_sql,) in connection.execute(
+        "SELECT sql FROM sqlite_master WHERE type='view' AND sql IS NOT NULL"
+    ):
+        lowered = view_sql.lower()
+        if any(f"{fn}(" in lowered.replace(" ", "") for fn in _NONDETERMINISTIC_SQL):
+            raise AnonError(
+                AnonErrorCode.UNSUPPORTED_FORMAT,
+                "non-deterministic views are not supported",
+            )
+
+
 def _transform_sqlite(source: Path, destination: Path, policy: Policy) -> tuple[int, int]:
     _snapshot_sqlite(source, destination)
     records = 0
@@ -332,6 +433,7 @@ def _transform_sqlite(source: Path, destination: Path, policy: Policy) -> tuple[
         # (review #14). Fail-closed on constructs the verifier cannot mirror.
         if connection.execute("SELECT 1 FROM sqlite_master WHERE type='trigger'").fetchone():
             raise AnonError(AnonErrorCode.UNSUPPORTED_FORMAT, "triggers are not supported")
+        _reject_executable_schema(connection)
         tables = connection.execute(
             "SELECT name, sql FROM sqlite_master WHERE type='table' AND name NOT GLOB 'sqlite_*'"
         ).fetchall()
@@ -380,11 +482,12 @@ def _transform_sqlite(source: Path, destination: Path, policy: Policy) -> tuple[
                     elif not isinstance(value, bool) and isinstance(value, (int, float)):
                         # value-scoped: an INTEGER/REAL column carrying a sensitive
                         # value is the same value as its text spelling (typed-PII fix).
-                        token = repr(value) if isinstance(value, float) else str(value)
-                        transformed, count = replace_text(token, policy)
-                        replacements += count
-                        if count and transformed != token:
-                            updates[column] = transformed
+                        for token in _numeric_tokens(value):
+                            transformed, count = replace_text(token, policy)
+                            if count and transformed != token:
+                                replacements += count
+                                updates[column] = transformed
+                                break
                     elif isinstance(value, (bytes, bytearray)):
                         # A BLOB is opaque to text matching: neither transform nor
                         # verifier can prove a sensitive value is absent from it.
@@ -454,7 +557,7 @@ def _json_strings(value: Any):
         # must see a sensitive value however it is stored, or a numeric leak the
         # transform missed goes undetected. Stringified inline here — NOT via the
         # transform's helper — so the two layers stay genuinely independent.
-        yield repr(value) if isinstance(value, float) else str(value)
+        yield from _numeric_tokens(value)
 
 
 def iter_searchable_text(path: Path):
@@ -490,4 +593,4 @@ def iter_searchable_text(path: Path):
                         if isinstance(value, str):
                             yield value
                         elif not isinstance(value, bool) and isinstance(value, (int, float)):
-                            yield repr(value) if isinstance(value, float) else str(value)
+                            yield from _numeric_tokens(value)

@@ -23,6 +23,10 @@ fix. All fixes are landed on `origin/main` and covered by retained tests.
 | 5 | SQLite forensic residue in freelist/overflow pages after in-place UPDATE; journal/WAL sidecars | CRITICAL | WebGPT audit | `secure_delete=ON` + `VACUUM` rebuild; assert no `-wal`/`-shm`/`-journal` sidecar in published DB | residue `'Alice'` in output = False; sidecars `[]` | `ac7917e` |
 | 6 | Hostile SQLite schema machinery (functions in views/generated columns/CHECK/DEFAULT); malformed cells | HIGH | WebGPT audit | `PRAGMA trusted_schema=OFF` + `cell_size_check=ON` on every untrusted-DB connection; `integrity_check` on the source *before* processing | landed; full suite green | `ac7917e` |
 | 7 | SQL injection via attacker-controlled table/column identifiers (bandit B608 ×7) | MEDIUM | `$hack` SAST | already mitigated by `_quote` (doubles embedded quotes) + bound params; proven, retained adversarial guard added | malicious table name `"; DROP TABLE victim; --` → victim survives | (test) |
+| 8 | SQLite **expression index** stores a computed sensitive value in the index B-tree, invisible to table/view scans | CRITICAL | WebGPT round 2 | reject expression indexes (`index_xinfo` cid −2) and partial indexes | `char(83,69,...)` index → `unsupported_format` | `<round2>` |
+| 9 | **Non-deterministic view** returns clean at verify, sensitive value later (`random()`), so one materialization is not proof | CRITICAL | WebGPT round 2 | reject views referencing non-deterministic functions | `random()` view → `unsupported_format` | `<round2>` |
+| 10 | **Computed DEFAULT expression** evaluates on future inserts: empty table verifies clean yet emits the value later | CRITICAL | WebGPT round 2 | reject non-literal DEFAULTs; plain literal defaults still accepted | `DEFAULT (char(...))` → `unsupported_format` | `<round2>` |
+| 11 | Numeric **scientific-notation alias**: policy `100000000000000000000` vs JSON `1e20` (str(float)=`1e+20`) | HIGH | WebGPT round 2 | numeric-token helper emits integral/decimal expansion; matched in transform + verifier | `1e20` anonymized; policy string absent | `<round2>` |
 
 ## Reviewed and confirmed already-handled (no change needed)
 
@@ -52,4 +56,4 @@ The check itself is now derived from the delivered spec, not the code:
 `scripts/spec_derived_check.py` reads every value from `policy.json` and asserts
 none survives in the decoded output, wired as a gate in `scripts/verify.sh` with
 a dependency probe. `$setup-project` now fails unless the brief is a declared
-input and the immutable goal carries the spec. Full test suite: 175 passed.
+input and the immutable goal carries the spec. Full test suite: 180 passed.

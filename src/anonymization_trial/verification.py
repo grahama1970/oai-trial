@@ -28,6 +28,7 @@ from pathlib import Path
 from typing import Any
 
 from .errors import AnonError, AnonErrorCode, safe_ref
+from .formats import _numeric_tokens
 from .policy import Policy, replace_text
 from .pseudonyms import build_replacements
 
@@ -49,9 +50,11 @@ def _expected_json(value: Any, policy: Policy) -> Any:
     if isinstance(value, bool) or value is None:
         return value
     if isinstance(value, (int, float)):
-        token = repr(value) if isinstance(value, float) else str(value)
-        replaced, count = replace_text(token, policy)
-        return replaced if count and replaced != token else value
+        for token in _numeric_tokens(value):
+            replaced, count = replace_text(token, policy)
+            if count and replaced != token:
+                return replaced
+        return value
     return value
 
 
@@ -130,9 +133,12 @@ def _verify_sqlite_locations(source: Path, staged: Path, policy: Policy, name: s
                     elif not isinstance(s_val, bool) and isinstance(s_val, (int, float)):
                         # value-scoped location recompute (typed-PII fix): a
                         # sensitive INTEGER/REAL becomes its text pseudonym.
-                        token = repr(s_val) if isinstance(s_val, float) else str(s_val)
-                        replaced, cnt = replace_text(token, policy)
-                        expected = replaced if cnt and replaced != token else s_val
+                        expected = s_val
+                        for token in _numeric_tokens(s_val):
+                            replaced, cnt = replace_text(token, policy)
+                            if cnt and replaced != token:
+                                expected = replaced
+                                break
                     else:
                         expected = s_val
                     if not _typed_equal(o_val, expected):
