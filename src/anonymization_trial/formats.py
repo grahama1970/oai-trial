@@ -364,6 +364,15 @@ def _transform_sqlite(source: Path, destination: Path, policy: Policy) -> tuple[
                         replacements += count
                         if count and transformed != token:
                             updates[column] = transformed
+                    elif isinstance(value, (bytes, bytearray)):
+                        # A BLOB is opaque to text matching: neither transform nor
+                        # verifier can prove a sensitive value is absent from it.
+                        # Fail closed rather than pass it through untouched
+                        # (accepted-but-opaque state; WebGPT audit 2026-09-11).
+                        raise AnonError(
+                            AnonErrorCode.UNSUPPORTED_FORMAT,
+                            "SQLite BLOB values are not supported",
+                        )
                 if updates:
                     assignments = ", ".join(f"{_quote(name)} = ?" for name in updates)
                     connection.execute(
