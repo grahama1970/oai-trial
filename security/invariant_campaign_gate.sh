@@ -18,6 +18,13 @@ SEC="$REPO/security/battle"
 echo "== resolving pinned battle evaluator =="
 BATTLE="$(python3 "$SEC/resolve_battle.py")"
 
+echo "== judge qualification (control pairs; no target execution) =="
+PYTHONPATH="$BATTLE/skills/battle/src" python3 -m battle_skill.qualify_judges \
+  --manifest "$SEC/qualification/manifest.json" \
+  --security-judge "$BATTLE/skills/battle/fixtures/reference-judges/no_data_leak_judge.py" \
+  --functional-judge "$BATTLE/skills/battle/fixtures/reference-judges/functional_anonymize_judge.py" \
+  --out "$SEC/qualification/receipt.json"
+
 echo "== building $IMAGE =="
 docker build -t "$IMAGE" "$REPO" >/dev/null
 

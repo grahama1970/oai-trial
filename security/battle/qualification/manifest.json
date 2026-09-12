@@ -1,0 +1,63 @@
+{
+  "schema": "battle.judge_qualification.v1",
+  "controls": [
+    {
+      "id": "utf16le-bomless-leak",
+      "judge": "security",
+      "observations_dir": "security/battle/qualification/utf16le-bomless-leak/out",
+      "policy": "security/battle/qualification/utf16le-bomless-leak/policy.json",
+      "params": {
+        "input_dir": "security/battle/qualification/utf16le-bomless-leak/in",
+        "output_subdir": "corpus"
+      },
+      "expected_status": "FAIL",
+      "expected_finding_substring": "Mara Ellison"
+    },
+    {
+      "id": "utf16le-bomless-benign",
+      "judge": "security",
+      "observations_dir": "security/battle/qualification/utf16le-bomless-benign/out",
+      "policy": "security/battle/qualification/utf16le-bomless-benign/policy.json",
+      "params": {
+        "input_dir": "security/battle/qualification/utf16le-bomless-benign/in",
+        "output_subdir": "corpus"
+      },
+      "expected_status": "PASS"
+    },
+    {
+      "id": "functional-blanked",
+      "judge": "functional",
+      "observations_dir": "security/battle/qualification/functional-blanked/out",
+      "policy": "security/battle/qualification/functional-blanked/policy.json",
+      "params": {
+        "input_dir": "security/battle/qualification/functional-blanked/in",
+        "output_subdir": "corpus"
+      },
+      "expected_status": "FAIL",
+      "expected_finding_substring": "literal segment"
+    },
+    {
+      "id": "functional-literal-damage",
+      "judge": "functional",
+      "observations_dir": "security/battle/qualification/functional-literal-damage/out",
+      "policy": "security/battle/qualification/functional-literal-damage/policy.json",
+      "params": {
+        "input_dir": "security/battle/qualification/functional-literal-damage/in",
+        "output_subdir": "corpus"
+      },
+      "expected_status": "FAIL",
+      "expected_finding_substring": "literal segment"
+    },
+    {
+      "id": "functional-golden",
+      "judge": "functional",
+      "observations_dir": "security/battle/qualification/functional-golden/out",
+      "policy": "security/battle/qualification/functional-golden/policy.json",
+      "params": {
+        "input_dir": "security/battle/qualification/functional-golden/in",
+        "output_subdir": "corpus"
+      },
+      "expected_status": "PASS"
+    }
+  ]
+}

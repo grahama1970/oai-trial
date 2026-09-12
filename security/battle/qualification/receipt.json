@@ -1,0 +1,64 @@
+{
+  "controls": [
+    {
+      "actual_status": "FAIL",
+      "expected_finding_substring": "Mara Ellison",
+      "expected_status": "FAIL",
+      "id": "utf16le-bomless-leak",
+      "judge": "security",
+      "status": "PASS",
+      "violations": [
+        "policy value survives in output: 'Mara Ellison'"
+      ]
+    },
+    {
+      "actual_status": "PASS",
+      "expected_finding_substring": null,
+      "expected_status": "PASS",
+      "id": "utf16le-bomless-benign",
+      "judge": "security",
+      "status": "PASS",
+      "violations": []
+    },
+    {
+      "actual_status": "FAIL",
+      "expected_finding_substring": "literal segment",
+      "expected_status": "FAIL",
+      "id": "functional-blanked",
+      "judge": "functional",
+      "status": "PASS",
+      "violations": [
+        "functional:a.txt: literal segment missing/modified in output near offset 0 ('note: ')"
+      ]
+    },
+    {
+      "actual_status": "FAIL",
+      "expected_finding_substring": "literal segment",
+      "expected_status": "FAIL",
+      "id": "functional-literal-damage",
+      "judge": "functional",
+      "status": "PASS",
+      "violations": [
+        "functional:a.txt: literal segment missing/modified in output near offset 0 ('note: ')"
+      ]
+    },
+    {
+      "actual_status": "PASS",
+      "expected_finding_substring": null,
+      "expected_status": "PASS",
+      "id": "functional-golden",
+      "judge": "functional",
+      "status": "PASS",
+      "violations": []
+    }
+  ],
+  "generated_at": "2026-09-12T05:15:33Z",
+  "judge_sha256": {
+    "functional": "sha256:f164219e944934e05213abc16b4fc03d09c2bb1694f8bebdd9a78603404653d1",
+    "security": "sha256:6e4982c75076e2533bde097eb5d187735b28cccbe63660f615128fa2c98de0aa"
+  },
+  "manifest": "/home/graham/workspace/experiments/oai-trial/security/battle/qualification/manifest.json",
+  "manifest_sha256": "sha256:2c0a56df5850e174b0937f92de34cb8f975c32261fda9da64b5c3ecaf34e6ac5",
+  "passed": true,
+  "schema": "battle.judge_qualification.v1.receipt"
+}
