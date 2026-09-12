@@ -39,11 +39,24 @@ PYTHONPATH="$BATTLE/skills/battle/src" python3 -m battle_skill.invariant_campaig
   --judge-params '{"output_subdir":"corpus"}' \
   --functional-judge "$BATTLE/skills/battle/fixtures/reference-judges/functional_anonymize_judge.py"
 
-echo "== beyond-brief campaign under the oai-trial profile =="
-PYTHONPATH="$BATTLE/skills/battle/src" python3 -m battle_skill.invariant_campaign \
-  --generator "$BATTLE/skills/battle/fixtures/reference-generators/anon_beyond_brief_matrix.py" \
-  --target-run-cmd "$run_cmd" \
-  --judge "$BATTLE/skills/battle/fixtures/reference-judges/no_data_leak_judge.py" \
-  --profile "$SEC/profile.json" \
-  --judge-params '{"output_subdir":"corpus"}' \
-  --functional-judge "$BATTLE/skills/battle/fixtures/reference-judges/functional_anonymize_judge.py"
+echo "== beyond-brief contract campaign (request -> plan -> receipt) =="
+RUN_ROOT="$SEC/runs/latest"
+docker run --rm -v "$SEC/runs:/w" --entrypoint rm "$IMAGE" -rf /w/latest >/dev/null 2>&1 || true
+mkdir -p "$RUN_ROOT"
+python3 - "$BATTLE" "$RUN_ROOT" <<'PYGATE'
+import json, sys
+from pathlib import Path
+battle, run_root = sys.argv[1], sys.argv[2]
+request = json.loads(Path("security/battle/request.template.json").read_text())
+for key in ("generator", "judge", "functional_judge"):
+    request[key] = request[key].replace("$BATTLE", battle)
+request["work_root"] = str(run_root)
+Path(run_root, "request.json").parent.mkdir(parents=True, exist_ok=True)
+Path(run_root, "request.json").write_text(json.dumps(request, indent=2))
+PYGATE
+PYTHONPATH="$BATTLE/skills/battle/src" python3 -m battle_skill.campaign_contract run \
+  --request "$RUN_ROOT/request.json"
+
+echo "== offline verification (reruns judges on retained observations) =="
+PYTHONPATH="$BATTLE/skills/battle/src" python3 -m battle_skill.campaign_contract verify \
+  --receipt "$RUN_ROOT/receipt.json"

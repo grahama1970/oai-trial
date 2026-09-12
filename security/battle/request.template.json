@@ -1,0 +1,18 @@
+{
+  "schema": "battle.campaign_request.v1",
+  "profile_path": "security/battle/profile.json",
+  "lock_path": "security/battle/battle.lock.json",
+  "generator": "$BATTLE/skills/battle/fixtures/reference-generators/anon_beyond_brief_matrix.py",
+  "judge": "$BATTLE/skills/battle/fixtures/reference-judges/no_data_leak_judge.py",
+  "functional_judge": "$BATTLE/skills/battle/fixtures/reference-judges/functional_anonymize_judge.py",
+  "target_run_cmd": "docker run --rm -v {input}/corpus:/trial/input/corpus:ro -v {input}/policy.json:/trial/input/policy.json:ro -v {output}:/trial/output anonymization-trial run",
+  "work_root": "security/battle/runs/latest",
+  "gen_params": {},
+  "judge_params": {
+    "output_subdir": "corpus"
+  },
+  "lineage": {
+    "caller": "oai-trial-pre-submission-gate",
+    "advisory": true
+  }
+}

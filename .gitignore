@@ -20,3 +20,4 @@ agent-skills
 .terraform.lock.hcl
 *.tfplan
 plan.tfplan
+security/battle/runs/
