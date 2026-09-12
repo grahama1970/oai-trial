@@ -1,20 +1,127 @@
 {
   "version": 2,
-  "skill": "oai-trial",
-  "trials": 2,
-  "live": true,
-  "proof_scope": "pre-submission adversarial gate integrity: pinned evaluator, profile contract, both campaigns green",
+  "skill": "oai-trial-anonymization",
+  "trials": 3,
+  "proof_scope": "value-representation gate + pre-submission gate integrity: pinned evaluator, profile contract, both campaigns green, tampered lock fails closed",
   "claims": {
-    "proves": "the gate runs the locked Battle evaluator under the oai-trial profile and both campaigns pass; a tampered lock fails closed",
-    "does_not_prove": "absence of all possible anonymization defects, external-linkage resistance, or provider-driven Red quality"
+    "proves": "the declared commands exit with the expected status; the representation matrix cannot leak; the gate runs the locked evaluator under the oai-trial profile",
+    "does_not_prove": "terabyte/petabyte scale, the production cloud design, overlap/protected-value precedence beyond current starter behavior, or the self-authored unit suite (that is the quality gate's job, not evidence here)."
   },
   "cases": [
+    {
+      "name": "demo-all-formats",
+      "type": "positive",
+      "real_world": true,
+      "command": [
+        "bash",
+        "-c",
+        "cd .. && .venv/bin/anonymization-trial demo"
+      ],
+      "expected": {
+        "exit_code": 0,
+        "stdout_contains": [
+          "\"demo\": \"success\""
+        ]
+      }
+    },
+    {
+      "name": "run-produces-verified-report",
+      "type": "positive",
+      "real_world": true,
+      "command": [
+        "bash",
+        "-c",
+        "cd .. && w=$(mktemp -d); .venv/bin/python scripts/gen_input.py \"$w/input\" --records 200 && .venv/bin/anonymization-trial run --input \"$w/input\" --output \"$w/output\" && python3 -c \"import json; r=json.load(open('$w/output/report.json')); print('VERIFIED' if r['verification_passed'] else 'FAILED')\""
+      ],
+      "expected": {
+        "exit_code": 0,
+        "stdout_contains": [
+          "VERIFIED"
+        ]
+      }
+    },
+    {
+      "name": "no-sensitive-value-leak",
+      "type": "adversarial",
+      "real_world": true,
+      "command": [
+        "bash",
+        "-c",
+        "cd .. && w=$(mktemp -d); .venv/bin/python scripts/gen_input.py \"$w/input\" --records 50 && .venv/bin/anonymization-trial run --input \"$w/input\" --output \"$w/output\" && if grep -rq sk_synthetic_7CWQ0JY5i2 \"$w/output/corpus\"; then echo LEAK_DETECTED; exit 1; else echo NO_LEAK; fi"
+      ],
+      "expected": {
+        "exit_code": 0,
+        "stdout_contains": [
+          "NO_LEAK"
+        ]
+      }
+    },
+    {
+      "name": "fails-closed-on-unsupported-input",
+      "type": "negative",
+      "real_world": true,
+      "command": [
+        "bash",
+        "-c",
+        "cd .. && w=$(mktemp -d); mkdir -p \"$w/input/corpus\"; echo '{}' > \"$w/input/policy.json\"; echo x > \"$w/input/corpus/bad.parquet\"; .venv/bin/anonymization-trial run --input \"$w/input\" --output \"$w/output\"; test $? -ne 0 && echo FAILCLOSED_OK"
+      ],
+      "expected": {
+        "exit_code": 0,
+        "stdout_contains": [
+          "FAILCLOSED_OK"
+        ]
+      }
+    },
+    {
+      "name": "typed-pii-every-representation",
+      "type": "adversarial",
+      "real_world": true,
+      "evidence_class": "deterministic",
+      "supports_claims": [
+        "anonymize.no_pii_any_representation"
+      ],
+      "command": [
+        "bash",
+        "-c",
+        "cd .. && .venv/bin/python -m pytest -q security/tests/test_typed_pii_representation.py"
+      ],
+      "expected": {
+        "exit_code": 0,
+        "stdout_contains": [
+          "1 passed"
+        ]
+      }
+    },
+    {
+      "name": "spec-derived-check-and-dependency-probe",
+      "type": "adversarial",
+      "real_world": true,
+      "evidence_class": "deterministic",
+      "supports_claims": [
+        "anonymize.no_pii_any_representation"
+      ],
+      "command": [
+        "bash",
+        "-c",
+        "cd .. && .venv/bin/python -m pytest -q security/tests/test_spec_derived_check.py"
+      ],
+      "expected": {
+        "exit_code": 0,
+        "stdout_contains": [
+          "2 passed"
+        ]
+      }
+    },
     {
       "name": "gate-pinned-evaluator-passes",
       "type": "positive",
       "real_world": true,
       "evidence_class": "live_e2e",
-      "command": ["bash", "-c", "cd .. && ./security/invariant_campaign_gate.sh anonymization-trial 20"],
+      "command": [
+        "bash",
+        "-c",
+        "cd .. && ./security/invariant_campaign_gate.sh anonymization-trial 20"
+      ],
       "timeout_seconds": 1500,
       "expected": {
         "exit_code": 0,
@@ -29,11 +136,34 @@
       "type": "adversarial",
       "real_world": true,
       "evidence_class": "fault_injected_deterministic",
-      "command": ["bash", "-c", "cd .. && python3 -c \"import json; d=json.load(open('security/battle/battle.lock.json')); d['bundle_manifest_sha256']=d['bundle_manifest_sha256'][:-4]+'beef'; json.dump(d, open('/tmp/oai-tampered-lock.json','w'))\" && python3 security/battle/resolve_battle.py --lock /tmp/oai-tampered-lock.json"],
+      "command": [
+        "bash",
+        "-c",
+        "cd .. && python3 -c \"import json; d=json.load(open('security/battle/battle.lock.json')); d['bundle_manifest_sha256']=d['bundle_manifest_sha256'][:-4]+'beef'; json.dump(d, open('/tmp/oai-tampered-lock.json','w'))\" && python3 security/battle/resolve_battle.py --lock /tmp/oai-tampered-lock.json"
+      ],
       "timeout_seconds": 120,
       "expected": {
         "exit_code": 1,
-        "stderr_contains": ["lock-verification-failed"]
+        "stderr_contains": [
+          "lock-verification-failed"
+        ]
+      }
+    }
+  ],
+  "capability_claims": [
+    {
+      "id": "anonymize.no_pii_any_representation",
+      "description": "No PII value reaches the output in ANY representation (JSON string/integer/float, SQLite TEXT/INTEGER). Derived verbatim from the brief: 'the same identity can appear in every format.' The 2026-09-11 disqualifier was proving this at string scope only.",
+      "criticality": "critical",
+      "claim_semantics": "value_bearing",
+      "domain_profile": "json-scalar-v1",
+      "evidence_required": {
+        "deterministic": true
+      },
+      "supports_claims": [],
+      "derived_from": {
+        "source": "TRIAL_BRIEF.md:16",
+        "requirement": "Replace every value identified by the input policy."
       }
     }
   ]
