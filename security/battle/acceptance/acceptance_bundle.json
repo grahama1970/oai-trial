@@ -1,0 +1,275 @@
+{
+  "schema": "acceptance_contract.bundle.v1",
+  "project_name": "oai-trial",
+  "source": {
+    "kind": "file",
+    "path": "/home/graham/workspace/experiments/oai-trial/TRIAL_BRIEF.md",
+    "sha256": "fb1729a24e5b10bdd10c102a563bbe1899fabb704a7228a0e9e8f604bf1a75cf",
+    "files": [
+      {
+        "path": "TRIAL_BRIEF.md",
+        "sha256": "83b1199fa7f0da86b6e0836b6634657a5ff92c6d9f8bd3014f115a3de4942bfc",
+        "bytes": 8049,
+        "lines": 145
+      }
+    ]
+  },
+  "requirements": [
+    {
+      "id": "REQ-001",
+      "kind": "must",
+      "statement": "A fictional analytics company receives customer exports. Its privacy team must anonymize each export before another internal team can use it. Exports can eventually reach terabyte or petabyte scale and contain CSV, JSON, UTF-8 text, and SQLite database files. The same synthetic identity can appear in every format.",
+      "source_path": "TRIAL_BRIEF.md",
+      "source_line": 5,
+      "evidence_text": "A fictional analytics company receives customer exports. Its privacy team must anonymize each export before another internal team can use it. Exports can eventually reach terabyte or petabyte scale and contain CSV, JSON, UTF-8 text, and SQLite database files. The same synthetic identity can appear in every format."
+    },
+    {
+      "id": "REQ-002",
+      "kind": "must",
+      "statement": "## Required behavior",
+      "source_path": "TRIAL_BRIEF.md",
+      "source_line": 11,
+      "evidence_text": "## Required behavior"
+    },
+    {
+      "id": "REQ-003",
+      "kind": "must",
+      "statement": "Every successful run must meet these requirements:",
+      "source_path": "TRIAL_BRIEF.md",
+      "source_line": 13,
+      "evidence_text": "Every successful run must meet these requirements:"
+    },
+    {
+      "id": "REQ-004",
+      "kind": "forbidden",
+      "statement": "Keep replacements stable across files and repeated runs. Distinct identities must not share a type-specific replacement; aliases of one identity may intentionally converge.",
+      "source_path": "TRIAL_BRIEF.md",
+      "source_line": 17,
+      "evidence_text": "- Keep replacements stable across files and repeated runs. Distinct identities must not share a type-specific replacement; aliases of one identity may intentionally converge."
+    },
+    {
+      "id": "REQ-005",
+      "kind": "acceptance",
+      "statement": "Verify the complete corpus before marking it ready for release.",
+      "source_path": "TRIAL_BRIEF.md",
+      "source_line": 20,
+      "evidence_text": "- Verify the complete corpus before marking it ready for release."
+    },
+    {
+      "id": "REQ-006",
+      "kind": "forbidden",
+      "statement": "`case_sensitive` defaults to `true`. `protected_values` must not be changed.",
+      "source_path": "TRIAL_BRIEF.md",
+      "source_line": 33,
+      "evidence_text": "`case_sensitive` defaults to `true`. `protected_values` must not be changed."
+    },
+    {
+      "id": "REQ-007",
+      "kind": "must",
+      "statement": "literal matching; a submission may support more, but must safely and",
+      "source_path": "TRIAL_BRIEF.md",
+      "source_line": 47,
+      "evidence_text": "literal matching; a submission may support more, but must safely and"
+    },
+    {
+      "id": "REQ-008",
+      "kind": "should",
+      "statement": "Preserve identity coherence across contexts: values known or discovered to belong to one identity should form one stable pseudonymous profile across files, formats, partitions, and retries. A policy `subject_id` supplies a known identity link. Additional entity discovery is optional. Type-appropriate profile values do not need to share a visible identifier, and you do not need to change the input schema.",
+      "source_path": "TRIAL_BRIEF.md",
+      "source_line": 51,
+      "evidence_text": "Preserve identity coherence across contexts: values known or discovered to belong to one identity should form one stable pseudonymous profile across files, formats, partitions, and retries. A policy `subject_id` supplies a known identity link. Additional entity discovery is optional. Type-appropriate profile values do not need to share a visible identifier, and you do not need to change the input schema."
+    },
+    {
+      "id": "REQ-009",
+      "kind": "must",
+      "statement": "You may install Python packages, system packages, command-line programs, or other tools needed by your solution. Include and configure every dependency in the `Dockerfile` so the final image is self-contained and the required commands work on the evaluator's Docker host without additional software.",
+      "source_path": "TRIAL_BRIEF.md",
+      "source_line": 57,
+      "evidence_text": "You may install Python packages, system packages, command-line programs, or other tools needed by your solution. Include and configure every dependency in the `Dockerfile` so the final image is self-contained and the required commands work on the evaluator's Docker host without additional software."
+    },
+    {
+      "id": "REQ-010",
+      "kind": "must",
+      "statement": "A bare run must execute a self-contained demonstration and then exit:",
+      "source_path": "TRIAL_BRIEF.md",
+      "source_line": 63,
+      "evidence_text": "A bare run must execute a self-contained demonstration and then exit:"
+    },
+    {
+      "id": "REQ-011",
+      "kind": "must",
+      "statement": "The demonstration must process all four formats at two or more synthetic workload sizes, with the largest at least 10 times the smallest. Report elapsed time, records per second, bytes per second, and peak memory when it can be measured. Exit zero only when the demonstrated outputs pass your verification.",
+      "source_path": "TRIAL_BRIEF.md",
+      "source_line": 69,
+      "evidence_text": "The demonstration must process all four formats at two or more synthetic workload sizes, with the largest at least 10 times the smallest. Report elapsed time, records per second, bytes per second, and peak memory when it can be measured. Exit zero only when the demonstrated outputs pass your verification."
+    },
+    {
+      "id": "REQ-012",
+      "kind": "must",
+      "statement": "Use `SUBMISSION.md` to describe how you would run this pipeline at terabyte and petabyte scale on a cloud provider of your choice. This is a required part of the submission. You do not need to deploy it.",
+      "source_path": "TRIAL_BRIEF.md",
+      "source_line": 121,
+      "evidence_text": "Use `SUBMISSION.md` to describe how you would run this pipeline at terabyte and petabyte scale on a cloud provider of your choice. This is a required part of the submission. You do not need to deploy it."
+    },
+    {
+      "id": "REQ-013",
+      "kind": "must",
+      "statement": "Include a repository-contained state or flow diagram showing intake, rule distribution or mapping, transformation, verification, publication, and failure/retry or quarantine paths. Its labels must agree with the prose; show durable or trust boundaries where they affect release safety.",
+      "source_path": "TRIAL_BRIEF.md",
+      "source_line": 130,
+      "evidence_text": "- Include a repository-contained state or flow diagram showing intake, rule distribution or mapping, transformation, verification, publication, and failure/retry or quarantine paths. Its labels must agree with the prose; show durable or trust boundaries where they affect release safety."
+    }
+  ],
+  "acceptance_cases": [
+    {
+      "id": "AC-001",
+      "requirement_id": "REQ-001",
+      "kind": "MUST_VERIFY",
+      "predicate": "A fictional analytics company receives customer exports. Its privacy team must anonymize each export before another internal team can use it. Exports can eventually reach terabyte or petabyte scale and contain CSV, JSON, UTF-8 text, and SQLite database files. The same synthetic identity can appear in every format.",
+      "deterministic_check": "Provide a concrete command or judge before marking this requirement accepted.",
+      "proof_artifacts": [
+        "acceptance_bundle.json",
+        "acceptance_report.md"
+      ]
+    },
+    {
+      "id": "AC-002",
+      "requirement_id": "REQ-002",
+      "kind": "MUST_VERIFY",
+      "predicate": "## Required behavior",
+      "deterministic_check": "Provide a concrete command or judge before marking this requirement accepted.",
+      "proof_artifacts": [
+        "acceptance_bundle.json",
+        "acceptance_report.md"
+      ]
+    },
+    {
+      "id": "AC-003",
+      "requirement_id": "REQ-003",
+      "kind": "MUST_VERIFY",
+      "predicate": "Every successful run must meet these requirements:",
+      "deterministic_check": "Provide a concrete command or judge before marking this requirement accepted.",
+      "proof_artifacts": [
+        "acceptance_bundle.json",
+        "acceptance_report.md"
+      ]
+    },
+    {
+      "id": "AC-004",
+      "requirement_id": "REQ-004",
+      "kind": "MUST_REJECT",
+      "predicate": "Keep replacements stable across files and repeated runs. Distinct identities must not share a type-specific replacement; aliases of one identity may intentionally converge.",
+      "deterministic_check": "Provide a concrete command or judge before marking this requirement accepted.",
+      "proof_artifacts": [
+        "acceptance_bundle.json",
+        "acceptance_report.md"
+      ]
+    },
+    {
+      "id": "AC-005",
+      "requirement_id": "REQ-005",
+      "kind": "MUST_VERIFY",
+      "predicate": "Verify the complete corpus before marking it ready for release.",
+      "deterministic_check": "Provide a concrete command or judge before marking this requirement accepted.",
+      "proof_artifacts": [
+        "acceptance_bundle.json",
+        "acceptance_report.md"
+      ]
+    },
+    {
+      "id": "AC-006",
+      "requirement_id": "REQ-006",
+      "kind": "MUST_REJECT",
+      "predicate": "`case_sensitive` defaults to `true`. `protected_values` must not be changed.",
+      "deterministic_check": "Provide a concrete command or judge before marking this requirement accepted.",
+      "proof_artifacts": [
+        "acceptance_bundle.json",
+        "acceptance_report.md"
+      ]
+    },
+    {
+      "id": "AC-007",
+      "requirement_id": "REQ-007",
+      "kind": "MUST_VERIFY",
+      "predicate": "literal matching; a submission may support more, but must safely and",
+      "deterministic_check": "Provide a concrete command or judge before marking this requirement accepted.",
+      "proof_artifacts": [
+        "acceptance_bundle.json",
+        "acceptance_report.md"
+      ]
+    },
+    {
+      "id": "AC-008",
+      "requirement_id": "REQ-008",
+      "kind": "MUST_VERIFY",
+      "predicate": "Preserve identity coherence across contexts: values known or discovered to belong to one identity should form one stable pseudonymous profile across files, formats, partitions, and retries. A policy `subject_id` supplies a known identity link. Additional entity discovery is optional. Type-appropriate profile values do not need to share a visible identifier, and you do not need to change the input schema.",
+      "deterministic_check": "Provide a concrete command or judge before marking this requirement accepted.",
+      "proof_artifacts": [
+        "acceptance_bundle.json",
+        "acceptance_report.md"
+      ]
+    },
+    {
+      "id": "AC-009",
+      "requirement_id": "REQ-009",
+      "kind": "MUST_VERIFY",
+      "predicate": "You may install Python packages, system packages, command-line programs, or other tools needed by your solution. Include and configure every dependency in the `Dockerfile` so the final image is self-contained and the required commands work on the evaluator's Docker host without additional software.",
+      "deterministic_check": "Provide a concrete command or judge before marking this requirement accepted.",
+      "proof_artifacts": [
+        "acceptance_bundle.json",
+        "acceptance_report.md"
+      ]
+    },
+    {
+      "id": "AC-010",
+      "requirement_id": "REQ-010",
+      "kind": "MUST_VERIFY",
+      "predicate": "A bare run must execute a self-contained demonstration and then exit:",
+      "deterministic_check": "Provide a concrete command or judge before marking this requirement accepted.",
+      "proof_artifacts": [
+        "acceptance_bundle.json",
+        "acceptance_report.md"
+      ]
+    },
+    {
+      "id": "AC-011",
+      "requirement_id": "REQ-011",
+      "kind": "MUST_VERIFY",
+      "predicate": "The demonstration must process all four formats at two or more synthetic workload sizes, with the largest at least 10 times the smallest. Report elapsed time, records per second, bytes per second, and peak memory when it can be measured. Exit zero only when the demonstrated outputs pass your verification.",
+      "deterministic_check": "Provide a concrete command or judge before marking this requirement accepted.",
+      "proof_artifacts": [
+        "acceptance_bundle.json",
+        "acceptance_report.md"
+      ]
+    },
+    {
+      "id": "AC-012",
+      "requirement_id": "REQ-012",
+      "kind": "MUST_VERIFY",
+      "predicate": "Use `SUBMISSION.md` to describe how you would run this pipeline at terabyte and petabyte scale on a cloud provider of your choice. This is a required part of the submission. You do not need to deploy it.",
+      "deterministic_check": "Provide a concrete command or judge before marking this requirement accepted.",
+      "proof_artifacts": [
+        "acceptance_bundle.json",
+        "acceptance_report.md"
+      ]
+    },
+    {
+      "id": "AC-013",
+      "requirement_id": "REQ-013",
+      "kind": "MUST_VERIFY",
+      "predicate": "Include a repository-contained state or flow diagram showing intake, rule distribution or mapping, transformation, verification, publication, and failure/retry or quarantine paths. Its labels must agree with the prose; show durable or trust boundaries where they affect release safety.",
+      "deterministic_check": "Provide a concrete command or judge before marking this requirement accepted.",
+      "proof_artifacts": [
+        "acceptance_bundle.json",
+        "acceptance_report.md"
+      ]
+    }
+  ],
+  "open_questions": [],
+  "immutable_goal": null,
+  "non_claims": [
+    "Extraction is source-backed but not human-approved.",
+    "No Battle campaign, implementation test, or production readiness is proven by this bundle.",
+    "Ambiguous or missing requirements remain open_questions until resolved."
+  ]
+}

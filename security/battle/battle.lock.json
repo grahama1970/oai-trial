@@ -2,8 +2,11 @@
   "schema": "battle.evaluator_lock.v1",
   "source_repo": "grahama1970/agent-skills",
   "source_repo_path": "/home/graham/workspace/experiments/agent-skills",
-  "commit": "1514ea3da36c2c21d78fe386a87fa152989642d3",
+  "commit": "e7dfa60a3c8c2a2b534ea9b448448931b0dc050f",
   "bundle_files": [
+    "skills/common/security_authorization.py",
+    "skills/battle/src/battle_skill/acceptance_floor.py",
+    "skills/battle/src/battle_skill/production_adapter.py",
     "skills/battle/src/battle_skill/invariant_campaign.py",
     "skills/battle/src/battle_skill/invariant_judge.py",
     "skills/battle/src/battle_skill/qualify_judges.py",
@@ -13,5 +16,5 @@
     "skills/battle/fixtures/reference-judges/no_data_leak_judge.py",
     "skills/battle/fixtures/reference-judges/functional_anonymize_judge.py"
   ],
-  "bundle_manifest_sha256": "sha256:7e87459942c1d7d99933e243ef1399a1ff85d43e62a98ca627de07d54f7e0164"
+  "bundle_manifest_sha256": "sha256:40c8719c17694b84bf260a24fdda1e76ef7ea6ab535cdd7dc622ce8fd89a5819"
 }

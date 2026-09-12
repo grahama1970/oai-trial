@@ -1,0 +1,174 @@
+{
+  "schema": "create_report.report.v1",
+  "report_id": "acceptance-contract-oai-trial",
+  "title": "oai-trial acceptance contract extraction",
+  "persona": "project maintainer",
+  "primary_object": "acceptance requirements bundle",
+  "decision_supported": "Decide whether to create or amend an immutable goal from the supplied brief.",
+  "overall_finding": "Partially Verified",
+  "core_conclusion": "Progress 4/6 (67%): extracted 13 clear requirement(s), 13 acceptance case(s), and 0 open question(s).",
+  "evidence_basis": "Local source files were read and requirements were selected from explicit modal/acceptance language.",
+  "highest_risk_issues": [],
+  "immediate_next_steps": [
+    "human approval before GOAL.md mutation",
+    "run Docker/Battle with acceptance_bundle.json"
+  ],
+  "scope": {
+    "reviewed": [
+      "/home/graham/workspace/experiments/oai-trial/TRIAL_BRIEF.md"
+    ],
+    "excluded": [
+      "Unprovided client context",
+      "Battle execution",
+      "Implementation correctness"
+    ],
+    "evidence_available": [
+      "TRIAL_BRIEF.md:5",
+      "TRIAL_BRIEF.md:11",
+      "TRIAL_BRIEF.md:13",
+      "TRIAL_BRIEF.md:17",
+      "TRIAL_BRIEF.md:20",
+      "TRIAL_BRIEF.md:33",
+      "TRIAL_BRIEF.md:47",
+      "TRIAL_BRIEF.md:51"
+    ]
+  },
+  "project_context": {
+    "goals": [
+      "A fictional analytics company receives customer exports. Its privacy team must anonymize each export before another internal team can use it. Exports can eventually reach terabyte or petabyte scale and contain CSV, JSON, UTF-8 text, and SQLite database files. The same synthetic identity can appear in every format.",
+      "## Required behavior",
+      "Every successful run must meet these requirements:",
+      "Keep replacements stable across files and repeated runs. Distinct identities must not share a type-specific replacement; aliases of one identity may intentionally converge.",
+      "Verify the complete corpus before marking it ready for release."
+    ],
+    "current_state": "Acceptance requirements were extracted from supplied local source only.",
+    "recent_decisions": [
+      "Do not let Battle invent requirements; Battle consumes frozen bundles."
+    ],
+    "open_questions": [],
+    "takeover_notes": [
+      "Create/amend immutable goal only after human approval."
+    ],
+    "sources": [
+      "TRIAL_BRIEF.md"
+    ]
+  },
+  "source_of_truth_inventory": [
+    {
+      "id": "S-001",
+      "kind": "source-file",
+      "path": "TRIAL_BRIEF.md",
+      "limitation": "Text extraction only; semantic approval not implied."
+    }
+  ],
+  "findings": [
+    {
+      "id": "F-001",
+      "title": "Source-backed requirements need approval before becoming immutable goal text",
+      "status": "Unverified",
+      "evidence": [
+        "TRIAL_BRIEF.md:5",
+        "TRIAL_BRIEF.md:11",
+        "TRIAL_BRIEF.md:13",
+        "TRIAL_BRIEF.md:17",
+        "TRIAL_BRIEF.md:20",
+        "TRIAL_BRIEF.md:33",
+        "TRIAL_BRIEF.md:47",
+        "TRIAL_BRIEF.md:51"
+      ],
+      "rationale": "The bundle records exact source locations, but requirement completeness still depends on the supplied material and human approval.",
+      "impact": "Freezing this before implementation prevents implementation-defined acceptance tests.",
+      "owner": "project maintainer",
+      "valid_next_actions": [
+        "approve draft",
+        "revise requirements",
+        "supply missing brief material"
+      ],
+      "acceptance_check": "acceptance_bundle.json and IMMUTABLE_GOAL.draft.md are reviewed before any GOAL.md mutation.",
+      "non_claims": [
+        "Extraction is source-backed but not human-approved.",
+        "No Battle campaign, implementation test, or production readiness is proven by this bundle.",
+        "Ambiguous or missing requirements remain open_questions until resolved."
+      ]
+    }
+  ],
+  "surface_contracts": [
+    {
+      "name": "acceptance bundle",
+      "owning_persona": "project maintainer",
+      "core_purpose": "Freeze source-backed requirements before implementation or Battle hardening.",
+      "primary_object": "acceptance_contract.bundle.v1",
+      "source_of_truth": "acceptance_bundle.json",
+      "valid_actions": [
+        "review",
+        "approve",
+        "revise",
+        "feed into Battle profile generation"
+      ],
+      "outstanding_broken_constraints": [
+        "Human approval is required before immutable-goal mutation."
+      ]
+    }
+  ],
+  "state_split": {
+    "finished": [
+      "Source bundle was read and hashed",
+      "Source-backed requirements were extracted",
+      "Executable acceptance cases were extracted",
+      "No unresolved source questions remain"
+    ],
+    "pending": [
+      "human approval before GOAL.md mutation",
+      "run Docker/Battle with acceptance_bundle.json"
+    ],
+    "outstanding": [
+      "human approval before GOAL.md mutation",
+      "run Docker/Battle with acceptance_bundle.json"
+    ],
+    "broken": [],
+    "blocked": [],
+    "unproven": [
+      "Extraction is source-backed but not human-approved.",
+      "No Battle campaign, implementation test, or production readiness is proven by this bundle.",
+      "Ambiguous or missing requirements remain open_questions until resolved."
+    ]
+  },
+  "plan_ready_next_actions": [],
+  "plan_iterate_seed": {
+    "recommended_phase_id": "acceptance-contract-review",
+    "objective": "Approve or revise the extracted contract before implementation hardening.",
+    "candidate_phases": [
+      "source review",
+      "human approval",
+      "Battle bundle/profile generation"
+    ],
+    "deterministic_evidence_gates": [
+      "create-report validate acceptance_report.json",
+      "acceptance-contract validate acceptance_bundle.json"
+    ],
+    "domain_review_loops": [
+      "create-report"
+    ],
+    "interaction_evidence": "Not applicable unless the source bundle includes UI requirements.",
+    "ask_persona_review": "Optional WebGPT review for high-stakes client briefs.",
+    "dogpile_reference_research": "Only needed if the brief relies on external standards or competitor behavior.",
+    "human_decisions": [
+      "create new immutable goal or amend existing immutable goal"
+    ],
+    "stop_conditions": [
+      "No clear requirements",
+      "Unresolved source ambiguity",
+      "Human rejects goal draft"
+    ],
+    "non_claims": [
+      "Extraction is source-backed but not human-approved.",
+      "No Battle campaign, implementation test, or production readiness is proven by this bundle.",
+      "Ambiguous or missing requirements remain open_questions until resolved."
+    ]
+  },
+  "non_claims": [
+    "Extraction is source-backed but not human-approved.",
+    "No Battle campaign, implementation test, or production readiness is proven by this bundle.",
+    "Ambiguous or missing requirements remain open_questions until resolved."
+  ]
+}

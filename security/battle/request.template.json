@@ -9,7 +9,10 @@
   "work_root": "security/battle/runs/latest",
   "gen_params": {},
   "judge_params": {
-    "output_subdir": "corpus"
+    "output_subdir": "corpus",
+    "interpretation_profile": {
+      "record_local_reconstruction": true
+    }
   },
   "lineage": {
     "caller": "oai-trial-pre-submission-gate",

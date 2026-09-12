@@ -2,7 +2,7 @@
 # Pre-submission adversarial gate: the check that would have caught the trial
 # disqualifier. Runs the PINNED Battle evaluator (verified snapshot from
 # battle.lock.json, never the mutable checkout) in two campaigns:
-#   1. the brief matrix (spec floor, no profile), and
+#   1. the frozen acceptance-contract floor via security/battle/acceptance.adapter.json, and
 #   2. the beyond-brief matrix under the oai-trial profile contract
 #      (security/battle/profile.json: frozen expectations + required inventory).
 # Fails if ANY policy value survives in ANY representation, if a required
@@ -30,14 +30,10 @@ docker build -t "$IMAGE" "$REPO" >/dev/null
 
 run_cmd="docker run --rm -v {input}/corpus:/trial/input/corpus:ro -v {input}/policy.json:/trial/input/policy.json:ro -v {output}:/trial/output $IMAGE run"
 
-echo "== brief-matrix campaign (spec floor) through the real container =="
-PYTHONPATH="$BATTLE/skills/battle/src" python3 -m battle_skill.invariant_campaign \
-  --generator "$BATTLE/skills/battle/fixtures/reference-generators/anon_brief_matrix.py" \
-  --target-run-cmd "$run_cmd" \
-  --judge "$BATTLE/skills/battle/fixtures/reference-judges/no_data_leak_judge.py" \
-  --gen-params "{\"fuzz\": $FUZZ}" \
-  --judge-params '{"output_subdir":"corpus"}' \
-  --functional-judge "$BATTLE/skills/battle/fixtures/reference-judges/functional_anonymize_judge.py"
+echo "== acceptance-contract floor through Battle production adapter =="
+PYTHONPATH="$BATTLE/skills/battle/src" python3 "$SEC/run_acceptance_floor.py" \
+  --battle "$BATTLE" \
+  --image "$IMAGE"
 
 echo "== beyond-brief contract campaign (request -> plan -> receipt) =="
 RUN_ROOT="$SEC/runs/latest"
