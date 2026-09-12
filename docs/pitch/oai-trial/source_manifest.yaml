@@ -72,7 +72,7 @@ sources:
   visibility: public
   role: evidence
   required: true
-  content_sha: sha256:ff354585714136515150624517ea276fdca0f8e0a8dded0fef38f69fee243b4c
+  content_sha: sha256:492c9519bf9f6c58dcd68f153fde0464af4bb88e983223c2deb83e70fba9e556
   ref: d0039613fa8acfaeba164eed9761632e2d8a5f41
 - id: format-code
   title: _transform_sqlite
@@ -80,7 +80,7 @@ sources:
   visibility: public
   role: evidence
   required: true
-  content_sha: sha256:cfc0790da204c84da588b47bd5a5769ef8448904811773f58dfbacfd8b41e28d
+  content_sha: sha256:7de3402012907895729c2d29a9a73d2fcb63bc0fbc2afd933b8cf9ef559aa3de
   ref: d0039613fa8acfaeba164eed9761632e2d8a5f41
 - id: runtime-metrics
   title: Docker demo
