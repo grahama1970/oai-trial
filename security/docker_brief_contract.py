@@ -23,6 +23,7 @@ INPUT (else the case is vacuous).
 """
 from __future__ import annotations
 
+import argparse
 import json
 import subprocess
 import sqlite3
@@ -147,7 +148,28 @@ def value_present(value: str, text: str, nums: set[str]) -> bool:
     return False
 
 
-def main() -> int:
+def check_acceptance_bundle(path: Path) -> None:
+    bundle = json.loads(path.read_text(encoding="utf-8"))
+    statements = "\n".join(req["statement"] for req in bundle.get("requirements", [])).lower()
+    source_files = [f.get("path") for f in bundle.get("source", {}).get("files", [])]
+    check(bundle.get("schema") == "acceptance_contract.bundle.v1", "acceptance bundle schema is acceptance_contract.bundle.v1")
+    check(source_files == ["TRIAL_BRIEF.md", "examples/policy.json", "examples/policy.schema.json"],
+          f"acceptance bundle source is only delivered spec files (got={source_files})")
+    check(all(fmt in statements for fmt in ("csv", "json", "utf-8 text", "sqlite")),
+          "acceptance bundle requires all four delivered formats")
+    check("same synthetic identity can appear in every format" in statements,
+          "acceptance bundle captures cross-format same-identity trap")
+    check("verify the complete corpus before marking it ready for release" in statements,
+          "acceptance bundle requires complete-corpus verification before release")
+
+
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description="Run Docker brief-contract verification.")
+    parser.add_argument("--acceptance-bundle", type=Path, help="Frozen acceptance_contract.bundle.v1 JSON to bind this Docker proof to.")
+    args = parser.parse_args(argv)
+    if args.acceptance_bundle is not None:
+        check_acceptance_bundle(args.acceptance_bundle)
+
     commit = subprocess.run(["git", "rev-parse", "HEAD"], cwd=REPO,
                             capture_output=True, text=True).stdout.strip()
     build = subprocess.run(["docker", "build", "-t", IMG, "."], cwd=REPO,
