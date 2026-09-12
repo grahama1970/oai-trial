@@ -132,8 +132,12 @@ def gather(root: Path) -> tuple[str, set[str]]:
     return all_text, all_nums
 
 
+def _digits(s: str) -> str:
+    return "".join(ch for ch in s if ch.isdigit())
+
+
 def value_present(value: str, text: str, nums: set[str]) -> bool:
-    """Independent representation-aware membership: NFC substring OR numeric form."""
+    """Independent representation-aware membership: NFC substring OR numeric/canonical form."""
     v_nfc = _nfc(value)
     if v_nfc in text or unicodedata.normalize("NFD", value) in unicodedata.normalize("NFD", text):
         return True
@@ -145,6 +149,12 @@ def value_present(value: str, text: str, nums: set[str]) -> bool:
             return True
     except ValueError:
         pass
+    digits = _digits(value)
+    if len(digits) >= 7:
+        for n in nums:
+            nd = _digits(n.split(".", 1)[0])
+            if nd == digits or nd == digits.lstrip("0") or nd.lstrip("0") == digits.lstrip("0"):
+                return True
     return False
 
 
@@ -161,6 +171,14 @@ def check_acceptance_bundle(path: Path) -> None:
           "acceptance bundle captures cross-format same-identity trap")
     check("verify the complete corpus before marking it ready for release" in statements,
           "acceptance bundle requires complete-corpus verification before release")
+    check("typed json or sqlite scalar" in statements,
+          "acceptance bundle requires typed-scalar PII leak coverage")
+    check("canonical equivalence" in statements and "csv cells" in statements and "utf-8 text" in statements,
+          "acceptance bundle requires all-format canonical-equivalence matching")
+    check("seeded across every in-scope format" in statements,
+          "acceptance bundle requires a cross-format representation trap fixture")
+    check("leading-zero loss" in statements and "float precision loss" in statements,
+          "acceptance bundle requires lossy numeric conversion handling")
 
 
 def main(argv: list[str] | None = None) -> int:
