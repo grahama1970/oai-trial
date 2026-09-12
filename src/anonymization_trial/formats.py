@@ -19,7 +19,7 @@ from pathlib import Path
 from typing import Any
 
 from .errors import AnonError, AnonErrorCode, safe_ref
-from .policy import Policy, replace_text
+from .policy import Policy, digit_canonical, replace_text
 
 _BOM = b"\xef\xbb\xbf"
 
@@ -142,6 +142,17 @@ def _transform_csv(source: Path, destination: Path, policy: Policy) -> tuple[int
     return data_rows, count
 
 
+def _reject_lossy_numeric_alias(value: int | float, policy: Policy) -> None:
+    tokens = set(_numeric_tokens(value))
+    for rule in policy.rules:
+        digits = digit_canonical(rule.value)
+        if len(digits) >= 7 and digits.startswith("0") and digits.lstrip("0") in tokens:
+            raise AnonError(
+                AnonErrorCode.UNSUPPORTED_FORMAT,
+                "lossy numeric representation of a leading-zero policy value",
+            )
+
+
 def _numeric_tokens(value: int | float) -> list[str]:
     """Canonical string forms a numeric scalar can equal (WebGPT audit round 2).
 
@@ -249,6 +260,7 @@ def _replace_json(value: Any, policy: Policy, depth: int) -> tuple[Any, int]:
     if isinstance(value, bool) or value is None:
         return value, 0
     if isinstance(value, (int, float)):
+        _reject_lossy_numeric_alias(value, policy)
         for token in _numeric_tokens(value):
             replaced_token, count = replace_text(token, policy)
             if count and replaced_token != token:
@@ -545,6 +557,7 @@ def _transform_sqlite(source: Path, destination: Path, policy: Policy) -> tuple[
                     elif not isinstance(value, bool) and isinstance(value, (int, float)):
                         # value-scoped: an INTEGER/REAL column carrying a sensitive
                         # value is the same value as its text spelling (typed-PII fix).
+                        _reject_lossy_numeric_alias(value, policy)
                         for token in _numeric_tokens(value):
                             transformed, count = replace_text(token, policy)
                             if count and transformed != token:

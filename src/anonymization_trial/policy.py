@@ -28,6 +28,18 @@ _ALLOWED_PROTECTED_KEYS = {"value", "reason"}
 _ALLOWED_TOP_KEYS = {"version", "sensitive_values", "protected_values"}
 
 
+def digit_canonical(value: str) -> str:
+    """Digits-only canonical form for phone/account-like policy values."""
+    return "".join(ch for ch in value if ch.isdigit())
+
+
+def numeric_policy_aliases(value: str) -> set[str]:
+    digits = digit_canonical(value)
+    if len(digits) >= 7 and digits != value:
+        return {digits}
+    return set()
+
+
 @dataclass(frozen=True, slots=True)
 class Rule:
     rule_id: str
@@ -222,20 +234,24 @@ def compile_policy(payload: object) -> Policy:
     # spellings (their match sets are then disjoint).
     # Fold NFC-equivalent values into one bucket: "Jose\u0301" (NFD) and "José"
     # (NFC) are the same identity, so two rules that differ only by normal form
-    # must be caught as a conflict here (typed-PII sibling fix, NFC).
-    domain: dict[str, list[Rule]] = {}
+    # must be caught as a conflict here (typed-PII sibling fix, NFC). Numeric
+    # aliases are part of the match domain too: "555-123-4567" and
+    # "5551234567" cannot belong to different identities.
+    domain: dict[str, list[tuple[Rule, bool]]] = {}
     for rule in rules:
-        key = ascii_lower(unicodedata.normalize("NFC", rule.value))
-        for prior in domain.get(key, ()):
-            if prior.identity == rule.identity:
-                continue
-            both_cs = rule.case_sensitive and prior.case_sensitive
-            if not both_cs or prior.value == rule.value:
-                raise AnonError(
-                    AnonErrorCode.IDENTITY_CONFLICT,
-                    f"rule {safe_ref(rule.rule_id)} shares a match domain with a conflict",
-                )
-        domain.setdefault(key, []).append(rule)
+        keys = [(ascii_lower(unicodedata.normalize("NFC", rule.value)), False)]
+        keys.extend((ascii_lower(alias), True) for alias in numeric_policy_aliases(rule.value))
+        for key, is_alias in keys:
+            for prior, prior_is_alias in domain.get(key, ()):
+                if prior.identity == rule.identity:
+                    continue
+                both_cs = rule.case_sensitive and prior.case_sensitive
+                if is_alias or prior_is_alias or not both_cs or prior.value == rule.value:
+                    raise AnonError(
+                        AnonErrorCode.IDENTITY_CONFLICT,
+                        f"rule {safe_ref(rule.rule_id)} shares a match domain with a conflict",
+                    )
+            domain.setdefault(key, []).append((rule, is_alias))
 
     rules_tuple = tuple(rules)
     protected_tuple = tuple(protected)
@@ -256,6 +272,7 @@ def compile_policy(payload: object) -> Policy:
             rule.value,
             unicodedata.normalize("NFC", rule.value),
             unicodedata.normalize("NFD", rule.value),
+            *numeric_policy_aliases(rule.value),
         }
         for form in forms:
             triple = (form, rep, rule.rule_id)

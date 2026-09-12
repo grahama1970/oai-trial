@@ -234,6 +234,10 @@ def _count(needle: str, texts: list[str], case_sensitive: bool) -> int:
     return sum(norm(text).count(probe) for text in texts)
 
 
+def _rule_present(rule_id: str, texts: list[str], policy: Policy) -> bool:
+    return any(span.rule_id == rule_id for text in texts for span in policy.matcher.find(text))
+
+
 def verify_corpus(source_corpus: Path, staged_corpus: Path, policy: Policy) -> None:
     """Fail closed unless the staged corpus is a safe release of the source."""
     from .formats import iter_searchable_text
@@ -245,14 +249,11 @@ def verify_corpus(source_corpus: Path, staged_corpus: Path, policy: Policy) -> N
 
     for rel in sorted(output_files):
         for text in iter_searchable_text(staged_corpus / rel):
-            for rule in policy.rules:
-                haystack = text if rule.case_sensitive else text.casefold()
-                needle = rule.value if rule.case_sensitive else rule.value.casefold()
-                if needle in haystack:
-                    raise AnonError(
-                        AnonErrorCode.VERIFICATION_FAILED,
-                        f"a sensitive literal survived in {safe_ref(rel.name)}",
-                    )
+            if policy.matcher.find(text):
+                raise AnonError(
+                    AnonErrorCode.VERIFICATION_FAILED,
+                    f"a sensitive literal survived in {safe_ref(rel.name)}",
+                )
 
     # Value-level skeleton for text files: independently recompute the expected
     # output from source+policy and compare. Catches swapped/wrong pseudonyms
@@ -301,7 +302,7 @@ def _verify_subject_level(policy: Policy, source_texts: list[str], output_texts:
     # double-count nested aliases ("Ada" inside "Ada Lovelace").
     present: set[tuple[str, str]] = set()
     for rule in policy.rules:
-        if _count(rule.value, source_texts, rule.case_sensitive) > 0:
+        if _rule_present(rule.rule_id, source_texts, policy):
             present.add(rule.identity)
     for identity in present:
         if _count(replacements[identity], output_texts, True) < 1:
