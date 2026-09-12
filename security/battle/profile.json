@@ -11,6 +11,8 @@
     "bb-sqlite-trigger-literal": "MUST_REJECT",
     "bb-filename-value": "MUST_REJECT"
   },
+  "required_judges": ["security", "functional"],
+  "normalization": "NFC-literal-compare (canonical equivalence only; never applied to artifact hashing)",
   "required_case_ids": [
     "bb-json-object-key",
     "bb-json-object-key-uescape",
