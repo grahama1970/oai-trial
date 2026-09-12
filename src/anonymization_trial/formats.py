@@ -50,6 +50,14 @@ def transform_file(source: Path, destination: Path, policy: Policy) -> tuple[int
     raise ValueError(f"unsupported input suffix {safe_ref(source.suffix)}")
 
 
+def _reject_nuls(text: str, kind: str) -> None:
+    # BOM-less ASCII-range UTF-16 decodes as strict UTF-8 with embedded NULs;
+    # the delivered spec admits UTF-8 text only, so NUL-laden content is a
+    # mislabeled encoding and must fail closed (battle Red win #18).
+    if "\x00" in text:
+        raise AnonError(AnonErrorCode.MALFORMED_ENCODING, f"{kind} contains NUL bytes (mislabeled non-UTF-8 encoding)")
+
+
 def _transform_text(source: Path, destination: Path, policy: Policy) -> tuple[int, int]:
     raw = source.read_bytes()
     had_bom = raw.startswith(_BOM)
@@ -58,6 +66,7 @@ def _transform_text(source: Path, destination: Path, policy: Policy) -> tuple[in
         text = body.decode("utf-8")  # strict; no normalization
     except UnicodeDecodeError as error:
         raise AnonError(AnonErrorCode.MALFORMED_ENCODING, "text file is not valid UTF-8") from error
+    _reject_nuls(text, "text file")
     transformed, count = replace_text(text, policy)
     out = ("\ufeff" if had_bom else "") + transformed
     destination.write_bytes(out.encode("utf-8"))  # exact bytes; BOM preserved
@@ -95,9 +104,11 @@ def _transform_csv(source: Path, destination: Path, policy: Policy) -> tuple[int
     encoding = "utf-8-sig" if had_bom else "utf-8"
     body = raw[len(_BOM):] if had_bom else raw
     try:
-        _reject_unsupported_csv_dialect(body.decode("utf-8"))
+        decoded_csv = body.decode("utf-8")
     except UnicodeDecodeError as error:
         raise AnonError(AnonErrorCode.MALFORMED_ENCODING, "CSV file is not valid UTF-8") from error
+    _reject_nuls(decoded_csv, "CSV file")
+    _reject_unsupported_csv_dialect(decoded_csv)
     count = 0
     data_rows = 0
     try:

@@ -41,6 +41,24 @@ def test_text_malformed_utf8_rejected(tmp_path: Path):
     assert exc.value.code == AnonErrorCode.MALFORMED_ENCODING
 
 
+def test_text_bomless_utf16le_rejected(tmp_path: Path):
+    # BOM-less ASCII-range UTF-16LE passes strict UTF-8 decode with embedded
+    # NULs; it must fail closed, not pass through un-anonymized (Red win #18).
+    src = tmp_path / "a.txt"
+    src.write_bytes("note: Ada\n".encode("utf-16-le"))
+    with pytest.raises(AnonError) as exc:
+        transform_file(src, tmp_path / "out.txt", _pol())
+    assert exc.value.code == AnonErrorCode.MALFORMED_ENCODING
+
+
+def test_csv_bomless_utf16le_rejected(tmp_path: Path):
+    src = tmp_path / "a.csv"
+    src.write_bytes("id,n\n1,x\n".encode("utf-16-le"))
+    with pytest.raises(AnonError) as exc:
+        transform_file(src, tmp_path / "out.csv", _pol())
+    assert exc.value.code == AnonErrorCode.MALFORMED_ENCODING
+
+
 def test_csv_sensitive_header_rejected(tmp_path: Path):
     src = tmp_path / "a.csv"
     src.write_text("id,Ada\n1,x\n", encoding="utf-8")
