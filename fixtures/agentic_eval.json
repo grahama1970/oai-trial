@@ -127,7 +127,7 @@
         "exit_code": 0,
         "stdout_contains": [
           "CAMPAIGN: PASS (39/39 versions clean)",
-          "\"verdict\": \"PASS\"",
+          "\"status\": \"PASS\"",
           "\"artifact_integrity\": \"PASS\"",
           "\"semantic_replay\": \"PASS\""
         ]
