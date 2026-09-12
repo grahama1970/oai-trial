@@ -34,3 +34,11 @@ detection of a leaking control.
 Codec/homoglyph expansion, arbitrary-schema functional verification, a general
 cross-project catalog service, live-provider discovery quality, and proof that
 no further anonymization defects exist.
+
+## Closure record (2026-09-12)
+
+Integration v1 closed. Evidence: /mnt/storage12tb/skills/battle/bso-closure-20260912.txt
+- BSO-1..BSO-5 evidence summarized there; cost baseline ESTABLISHED at warm median 40.2s
+  (52 target executions + 5 zero-execution controls + 1 build per gate run).
+- Honest limits: execution provenance NOT_VERIFIED (v1 boundary); 11 pre-existing battle
+  test failures from other lanes predate this integration (verified by git-stash control).
