@@ -13,6 +13,7 @@ set -euo pipefail
 IMAGE="${1:-anonymization-trial}"
 FUZZ="${2:-20}"
 REPO="$(cd "$(dirname "$0")/.." && pwd)"
+cd "$REPO"
 SEC="$REPO/security/battle"
 
 echo "== resolving pinned battle evaluator =="
