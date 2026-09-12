@@ -29,7 +29,8 @@ PYTHONPATH="$BATTLE/skills/battle/src" python3 -m battle_skill.invariant_campaig
   --target-run-cmd "$run_cmd" \
   --judge "$BATTLE/skills/battle/fixtures/reference-judges/no_data_leak_judge.py" \
   --gen-params "{\"fuzz\": $FUZZ}" \
-  --judge-params '{"output_subdir":"corpus"}'
+  --judge-params '{"output_subdir":"corpus"}' \
+  --functional-judge "$BATTLE/skills/battle/fixtures/reference-judges/functional_anonymize_judge.py"
 
 echo "== beyond-brief campaign under the oai-trial profile =="
 PYTHONPATH="$BATTLE/skills/battle/src" python3 -m battle_skill.invariant_campaign \
@@ -37,4 +38,5 @@ PYTHONPATH="$BATTLE/skills/battle/src" python3 -m battle_skill.invariant_campaig
   --target-run-cmd "$run_cmd" \
   --judge "$BATTLE/skills/battle/fixtures/reference-judges/no_data_leak_judge.py" \
   --profile "$SEC/profile.json" \
-  --judge-params '{"output_subdir":"corpus"}'
+  --judge-params '{"output_subdir":"corpus"}' \
+  --functional-judge "$BATTLE/skills/battle/fixtures/reference-judges/functional_anonymize_judge.py"

@@ -2,13 +2,14 @@
   "schema": "battle.evaluator_lock.v1",
   "source_repo": "grahama1970/agent-skills",
   "source_repo_path": "/home/graham/workspace/experiments/agent-skills",
-  "commit": "9cb51a650666ec2910b29690adc16eab5c2804a1",
+  "commit": "9a129606addb17c0b8c90ab18084bdc7aab56975",
   "bundle_files": [
     "skills/battle/src/battle_skill/invariant_campaign.py",
     "skills/battle/src/battle_skill/invariant_judge.py",
     "skills/battle/fixtures/reference-generators/anon_brief_matrix.py",
     "skills/battle/fixtures/reference-generators/anon_beyond_brief_matrix.py",
-    "skills/battle/fixtures/reference-judges/no_data_leak_judge.py"
+    "skills/battle/fixtures/reference-judges/no_data_leak_judge.py",
+    "skills/battle/fixtures/reference-judges/functional_anonymize_judge.py"
   ],
-  "bundle_manifest_sha256": "sha256:f905bb47841ba85c184b1fa51dbe524eec41c666cc3f6d3239c139752c550d94"
+  "bundle_manifest_sha256": "sha256:86377ad9c9adf977ba5c42f0d813efc53c0c80eae779e61ae2b957c9efe70453"
 }
