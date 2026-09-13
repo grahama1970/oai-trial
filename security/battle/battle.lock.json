@@ -1,8 +1,4 @@
 {
-  "schema": "battle.evaluator_lock.v1",
-  "source_repo": "grahama1970/agent-skills",
-  "source_repo_path": "/home/graham/workspace/experiments/agent-skills",
-  "commit": "e7dfa60a3c8c2a2b534ea9b448448931b0dc050f",
   "bundle_files": [
     "skills/common/security_authorization.py",
     "skills/battle/src/battle_skill/acceptance_floor.py",
@@ -14,7 +10,12 @@
     "skills/battle/fixtures/reference-generators/anon_brief_matrix.py",
     "skills/battle/fixtures/reference-generators/anon_beyond_brief_matrix.py",
     "skills/battle/fixtures/reference-judges/no_data_leak_judge.py",
-    "skills/battle/fixtures/reference-judges/functional_anonymize_judge.py"
+    "skills/battle/fixtures/reference-judges/functional_anonymize_judge.py",
+    "/home/graham/workspace/experiments/oai-trial/security/battle/acceptance_floor_generator.py"
   ],
-  "bundle_manifest_sha256": "sha256:40c8719c17694b84bf260a24fdda1e76ef7ea6ab535cdd7dc622ce8fd89a5819"
+  "bundle_manifest_sha256": "sha256:e03228be66d849e676ec88b095f9057fe3c9411807eccd5b043b69be3995f333",
+  "commit": "1615adc42aa3c5e893f68ef1a80b3b8dd342edb5",
+  "schema": "battle.evaluator_lock.v1",
+  "source_repo": "grahama1970/agent-skills",
+  "source_repo_path": "/home/graham/workspace/experiments/agent-skills"
 }

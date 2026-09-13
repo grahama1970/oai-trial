@@ -22,7 +22,8 @@
     1
   ],
   "runtime_modes": [
-    "battle"
+    "battle",
+    "docker"
   ],
   "allowed_actions": [
     "battle"

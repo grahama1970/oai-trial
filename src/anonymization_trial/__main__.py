@@ -234,7 +234,8 @@ def main(argv: list[str] | None = None) -> int:
     except (OSError, ValueError, PipelineError, AnonError) as error:
         # Privacy-safe: report the error class/code only, never raw data.
         detail = error.code.value if isinstance(error, AnonError) else type(error).__name__
-        print(f"run failed: {detail}", file=sys.stderr)
+        marker = " BATTLE_CONTRACT_REJECT" if isinstance(error, AnonError) else ""
+        print(f"run failed: {detail}{marker}", file=sys.stderr)
         return 1
 
 

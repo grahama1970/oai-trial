@@ -1,0 +1,9 @@
+{
+  "schema": "battle.project_contract_enrollment.v1",
+  "target_identity": "oai-trial@TRIAL_BRIEF.md:sha256:83b1199fa7f0da86b6e0836b6634657a5ff92c6d9f8bd3014f115a3de4942bfc",
+  "acceptance_contract": {
+    "required": true,
+    "bundle_path": "acceptance/acceptance_bundle.json",
+    "sha256": "sha256:1143e2dc05f65c87a78ac902ea755063f3b23a086f70ab602e46b76a5b6a8545"
+  }
+}

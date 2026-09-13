@@ -47,6 +47,21 @@ battle, run_root = sys.argv[1], sys.argv[2]
 request = json.loads(Path("security/battle/request.template.json").read_text())
 for key in ("generator", "judge", "functional_judge"):
     request[key] = request[key].replace("$BATTLE", battle)
+runtime_lock = json.loads(Path(request["lock_path"]).read_text())
+runtime_lock["source_repo_path"] = battle
+runtime_lock_path = Path(run_root, "battle.runtime-lock.json")
+runtime_lock_path.write_text(json.dumps(runtime_lock, indent=2) + "\n")
+adapter = json.loads(Path("security/battle/acceptance.adapter.json").read_text())
+sys.path.insert(0, str(Path(battle) / "skills"))
+from common.security_authorization import validate_target_authorization
+request["authorization_receipt"] = validate_target_authorization(
+    Path("security/battle/authorization.json"),
+    expected_target=adapter["target_identity"],
+    expected_execution_target="anonymization-trial",
+    requested_action="battle",
+    requested_runtime_mode="docker",
+)
+request["lock_path"] = str(runtime_lock_path)
 request["work_root"] = str(run_root)
 Path(run_root, "request.json").parent.mkdir(parents=True, exist_ok=True)
 Path(run_root, "request.json").write_text(json.dumps(request, indent=2))

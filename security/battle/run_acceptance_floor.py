@@ -61,11 +61,16 @@ def main() -> int:
     work_root = _repo_path(adapter["work_root"])
     shutil.rmtree(work_root, ignore_errors=True)
     work_root.mkdir(parents=True, exist_ok=True)
+    runtime_lock_path = work_root / "battle.runtime-lock.json"
+    runtime_lock = _load_json(lock_path)
+    runtime_lock["source_repo_path"] = battle
+    runtime_lock_path.write_text(json.dumps(runtime_lock, indent=2) + "\n", encoding="utf-8")
 
     request = {
         "schema": "battle.production_adapter_request.v1",
         "authorization_manifest": str((HERE / "authorization.json").resolve()),
         "expected_target": adapter["target_identity"],
+        "project_contract_enrollment": str(_repo_path(adapter.get("project_contract_enrollment", "security/battle/project-contract-enrollment.json"))),
         "acceptance_floor": {
             "bundle_path": str(bundle_path),
             "case_map": adapter["case_map"],
@@ -73,7 +78,7 @@ def main() -> int:
         "base_request": {
             "schema": "battle.campaign_request.v1",
             "profile_path": str(profile_path),
-            "lock_path": str(lock_path),
+            "lock_path": str(runtime_lock_path),
             "generator": str(generator_path) if generator_path is not None else generator_value.replace("$BATTLE", battle),
             "judge": adapter["judge"].replace("$BATTLE", battle),
             "functional_judge": adapter["functional_judge"].replace("$BATTLE", battle),
