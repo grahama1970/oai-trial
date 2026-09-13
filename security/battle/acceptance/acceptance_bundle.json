@@ -2,15 +2,27 @@
   "schema": "acceptance_contract.bundle.v1",
   "project_name": "oai-trial",
   "source": {
-    "kind": "file",
-    "path": "/home/graham/workspace/experiments/oai-trial/TRIAL_BRIEF.md",
-    "sha256": "fb1729a24e5b10bdd10c102a563bbe1899fabb704a7228a0e9e8f604bf1a75cf",
+    "kind": "directory",
+    "path": "/home/graham/workspace/experiments/oai-trial",
+    "sha256": "e1b240f5c049885575012c516dafaac55a18dec06372bcb05bb35bc704657279",
     "files": [
       {
         "path": "TRIAL_BRIEF.md",
         "sha256": "83b1199fa7f0da86b6e0836b6634657a5ff92c6d9f8bd3014f115a3de4942bfc",
         "bytes": 8049,
         "lines": 145
+      },
+      {
+        "path": "examples/policy.json",
+        "sha256": "fd1f95585097177ee4b4893065467fbe0824ce464fcf69458bc30d6541e9df7b",
+        "bytes": 720,
+        "lines": 33
+      },
+      {
+        "path": "examples/policy.schema.json",
+        "sha256": "f9c5f97c100597de87b16c52813608803af34e9029f758ec4ffb2b26e42aac1f",
+        "bytes": 1347,
+        "lines": 41
       }
     ]
   },
@@ -18,37 +30,45 @@
     {
       "id": "REQ-001",
       "kind": "must",
-      "statement": "A fictional analytics company receives customer exports. Its privacy team must anonymize each export before another internal team can use it. Exports can eventually reach terabyte or petabyte scale and contain CSV, JSON, UTF-8 text, and SQLite database files. The same synthetic identity can appear in every format.",
+      "statement": "Produce useful, valid output in the same logical format as each input.",
       "source_path": "TRIAL_BRIEF.md",
-      "source_line": 5,
-      "evidence_text": "A fictional analytics company receives customer exports. Its privacy team must anonymize each export before another internal team can use it. Exports can eventually reach terabyte or petabyte scale and contain CSV, JSON, UTF-8 text, and SQLite database files. The same synthetic identity can appear in every format."
+      "source_line": 15,
+      "evidence_text": "- Produce useful, valid output in the same logical format as each input."
     },
     {
       "id": "REQ-002",
       "kind": "must",
-      "statement": "## Required behavior",
+      "statement": "Replace every value identified by the input policy across CSV, JSON, UTF-8 text, and SQLite database files; the same synthetic identity can appear in every format, and policy-listed sensitive values must be removed even when stored as a typed JSON or SQLite scalar.",
       "source_path": "TRIAL_BRIEF.md",
-      "source_line": 11,
-      "evidence_text": "## Required behavior"
+      "source_line": 16,
+      "evidence_text": "- Replace every value identified by the input policy."
     },
     {
       "id": "REQ-003",
       "kind": "must",
-      "statement": "Every successful run must meet these requirements:",
-      "source_path": "TRIAL_BRIEF.md",
-      "source_line": 13,
-      "evidence_text": "Every successful run must meet these requirements:"
-    },
-    {
-      "id": "REQ-004",
-      "kind": "forbidden",
-      "statement": "Keep replacements stable across files and repeated runs. Distinct identities must not share a type-specific replacement; aliases of one identity may intentionally converge.",
+      "statement": "Keep replacements stable across files and repeated runs; distinct identities must not share a type-specific replacement, while aliases of one identity may intentionally converge.",
       "source_path": "TRIAL_BRIEF.md",
       "source_line": 17,
       "evidence_text": "- Keep replacements stable across files and repeated runs. Distinct identities must not share a type-specific replacement; aliases of one identity may intentionally converge."
     },
     {
+      "id": "REQ-004",
+      "kind": "must",
+      "statement": "Preserve protected values and the meaning of other non-sensitive data.",
+      "source_path": "TRIAL_BRIEF.md",
+      "source_line": 18,
+      "evidence_text": "- Preserve protected values and the meaning of other non-sensitive data."
+    },
+    {
       "id": "REQ-005",
+      "kind": "must",
+      "statement": "Preserve CSV headers and rows, JSON structure, and SQLite tables, relationships, row counts, and integrity.",
+      "source_path": "TRIAL_BRIEF.md",
+      "source_line": 19,
+      "evidence_text": "- Preserve CSV headers and rows, JSON structure, and SQLite tables, relationships, row counts, and integrity."
+    },
+    {
+      "id": "REQ-006",
       "kind": "acceptance",
       "statement": "Verify the complete corpus before marking it ready for release.",
       "source_path": "TRIAL_BRIEF.md",
@@ -56,65 +76,89 @@
       "evidence_text": "- Verify the complete corpus before marking it ready for release."
     },
     {
-      "id": "REQ-006",
-      "kind": "forbidden",
-      "statement": "`case_sensitive` defaults to `true`. `protected_values` must not be changed.",
-      "source_path": "TRIAL_BRIEF.md",
-      "source_line": 33,
-      "evidence_text": "`case_sensitive` defaults to `true`. `protected_values` must not be changed."
-    },
-    {
       "id": "REQ-007",
-      "kind": "must",
-      "statement": "literal matching; a submission may support more, but must safely and",
+      "kind": "forbidden",
+      "statement": "Keep raw inputs, replacement mappings, and quarantined content out of the release directory and logs.",
       "source_path": "TRIAL_BRIEF.md",
-      "source_line": 47,
-      "evidence_text": "literal matching; a submission may support more, but must safely and"
+      "source_line": 21,
+      "evidence_text": "- Keep raw inputs, replacement mappings, and quarantined content out of the release directory and logs."
     },
     {
       "id": "REQ-008",
-      "kind": "should",
-      "statement": "Preserve identity coherence across contexts: values known or discovered to belong to one identity should form one stable pseudonymous profile across files, formats, partitions, and retries. A policy `subject_id` supplies a known identity link. Additional entity discovery is optional. Type-appropriate profile values do not need to share a visible identifier, and you do not need to change the input schema.",
+      "kind": "forbidden",
+      "statement": "Exit non-zero after a failure and do not leave a partial corpus that looks ready for release; lossy or ambiguous numeric representations, including leading-zero loss and float precision loss, must fail closed unless a type-specific canonical rule proves safe equivalence.",
       "source_path": "TRIAL_BRIEF.md",
-      "source_line": 51,
-      "evidence_text": "Preserve identity coherence across contexts: values known or discovered to belong to one identity should form one stable pseudonymous profile across files, formats, partitions, and retries. A policy `subject_id` supplies a known identity link. Additional entity discovery is optional. Type-appropriate profile values do not need to share a visible identifier, and you do not need to change the input schema."
+      "source_line": 22,
+      "evidence_text": "- Exit non-zero after a failure. Do not leave a partial corpus that looks ready for release."
     },
     {
       "id": "REQ-009",
       "kind": "must",
-      "statement": "You may install Python packages, system packages, command-line programs, or other tools needed by your solution. Include and configure every dependency in the `Dockerfile` so the final image is self-contained and the required commands work on the evaluator's Docker host without additional software.",
+      "statement": "Honor policy schema version 1, literal matching, case_sensitive defaults, subject_id identity links, and protected_values semantics; value matching must use canonical equivalence across CSV cells, JSON scalars, UTF-8 text, SQLite values, formatted phone strings, digit-only numeric scalars, decimal forms, scientific notation, and quoted/unquoted text.",
       "source_path": "TRIAL_BRIEF.md",
-      "source_line": 57,
-      "evidence_text": "You may install Python packages, system packages, command-line programs, or other tools needed by your solution. Include and configure every dependency in the `Dockerfile` so the final image is self-contained and the required commands work on the evaluator's Docker host without additional software."
+      "source_line": 28,
+      "evidence_text": "The mounted `policy.json` uses schema version 1."
     },
     {
       "id": "REQ-010",
       "kind": "must",
-      "statement": "A bare run must execute a self-contained demonstration and then exit:",
+      "statement": "Document and enforce deterministic overlap precedence, including nested/prefix/suffix/replacement-to-source overlaps, protected/sensitive overlaps, and sensitive CSV headers.",
+      "source_path": "TRIAL_BRIEF.md",
+      "source_line": 38,
+      "evidence_text": "Document how your solution treats overlapping sensitive literals (including"
+    },
+    {
+      "id": "REQ-011",
+      "kind": "must",
+      "statement": "State and enforce an encoding and normalization policy: UTF-8 literal matching may support more, but malformed or unsupported encodings must fail closed; BOM, multibyte, and locale-sensitive case behavior must be documented.",
+      "source_path": "TRIAL_BRIEF.md",
+      "source_line": 46,
+      "evidence_text": "State an encoding and normalization policy. The starter's contract is UTF-8,"
+    },
+    {
+      "id": "REQ-012",
+      "kind": "should",
+      "statement": "Preserve identity coherence across contexts: a representation trap for a policy-listed identity must be seeded across every in-scope format (CSV, JSON, UTF-8 text, and SQLite) and removed from the complete released boundary after canonicalization across files, formats, partitions, and retries.",
+      "source_path": "TRIAL_BRIEF.md",
+      "source_line": 51,
+      "evidence_text": "Preserve identity coherence across contexts: values known or discovered to belong to one identity should form one stable pseudonymous profile across files, formats, partitions, and retries."
+    },
+    {
+      "id": "REQ-013",
+      "kind": "must",
+      "statement": "Provide a Dockerfile that builds a self-contained image and supports the evaluator docker build and mounted-run commands without host services or secrets.",
+      "source_path": "TRIAL_BRIEF.md",
+      "source_line": 55,
+      "evidence_text": "Provide a `Dockerfile` that builds without host services or secrets:"
+    },
+    {
+      "id": "REQ-014",
+      "kind": "must",
+      "statement": "A bare docker run must execute a self-contained demo, process all four formats at two or more workload sizes with at least 10x size ratio, report elapsed time, records/sec, bytes/sec, and peak memory when measurable, and exit zero only after verification passes.",
       "source_path": "TRIAL_BRIEF.md",
       "source_line": 63,
       "evidence_text": "A bare run must execute a self-contained demonstration and then exit:"
     },
     {
-      "id": "REQ-011",
+      "id": "REQ-015",
       "kind": "must",
-      "statement": "The demonstration must process all four formats at two or more synthetic workload sizes, with the largest at least 10 times the smallest. Report elapsed time, records per second, bytes per second, and peak memory when it can be measured. Exit zero only when the demonstrated outputs pass your verification.",
+      "statement": "Mounted evaluator runs must write only report.json and a mirrored releasable corpus under /trial/output, preserving the two required Docker commands.",
       "source_path": "TRIAL_BRIEF.md",
-      "source_line": 69,
-      "evidence_text": "The demonstration must process all four formats at two or more synthetic workload sizes, with the largest at least 10 times the smallest. Report elapsed time, records per second, bytes per second, and peak memory when it can be measured. Exit zero only when the demonstrated outputs pass your verification."
+      "source_line": 71,
+      "evidence_text": "The evaluator will also mount an unseen input bundle and an empty output directory:"
     },
     {
-      "id": "REQ-012",
+      "id": "REQ-016",
       "kind": "must",
-      "statement": "Use `SUBMISSION.md` to describe how you would run this pipeline at terabyte and petabyte scale on a cloud provider of your choice. This is a required part of the submission. You do not need to deploy it.",
+      "statement": "SUBMISSION.md must describe a TB/PB cloud production design covering provider/services, distribution, retries/recovery/checkpointing/replay, safe publication, security boundaries, SLA assumptions, capacity/cost arithmetic with price inputs, and local-vs-production tradeoffs.",
       "source_path": "TRIAL_BRIEF.md",
       "source_line": 121,
-      "evidence_text": "Use `SUBMISSION.md` to describe how you would run this pipeline at terabyte and petabyte scale on a cloud provider of your choice. This is a required part of the submission. You do not need to deploy it."
+      "evidence_text": "Use `SUBMISSION.md` to describe how you would run this pipeline at terabyte and petabyte scale on a cloud provider of your choice."
     },
     {
-      "id": "REQ-013",
+      "id": "REQ-017",
       "kind": "must",
-      "statement": "Include a repository-contained state or flow diagram showing intake, rule distribution or mapping, transformation, verification, publication, and failure/retry or quarantine paths. Its labels must agree with the prose; show durable or trust boundaries where they affect release safety.",
+      "statement": "The repository must contain a state or flow diagram whose labels agree with the production-design prose and show intake, rule distribution/mapping, transformation, verification, publication, failure/retry/quarantine paths, and durable/trust boundaries.",
       "source_path": "TRIAL_BRIEF.md",
       "source_line": 130,
       "evidence_text": "- Include a repository-contained state or flow diagram showing intake, rule distribution or mapping, transformation, verification, publication, and failure/retry or quarantine paths. Its labels must agree with the prose; show durable or trust boundaries where they affect release safety."
@@ -125,151 +169,200 @@
       "id": "AC-001",
       "requirement_id": "REQ-001",
       "kind": "MUST_VERIFY",
-      "predicate": "A fictional analytics company receives customer exports. Its privacy team must anonymize each export before another internal team can use it. Exports can eventually reach terabyte or petabyte scale and contain CSV, JSON, UTF-8 text, and SQLite database files. The same synthetic identity can appear in every format.",
-      "deterministic_check": "Provide a concrete command or judge before marking this requirement accepted.",
+      "predicate": "For CSV, JSON, UTF-8 text, and SQLite inputs, successful output must remain parseable in the same logical format and preserve expected paths.",
+      "deterministic_check": "Run the Battle floor cases json-string, csv-cell, utf8-text, and sqlite-text; the functional judge must report parseable format-preserving output for every case.",
       "proof_artifacts": [
-        "acceptance_bundle.json",
-        "acceptance_report.md"
+        "production-adapter-receipt.json",
+        "campaign/receipt.json",
+        "case_results.functional"
       ]
     },
     {
       "id": "AC-002",
       "requirement_id": "REQ-002",
-      "kind": "MUST_VERIFY",
-      "predicate": "## Required behavior",
-      "deterministic_check": "Provide a concrete command or judge before marking this requirement accepted.",
+      "kind": "MUST_REJECT",
+      "predicate": "A policy-listed sensitive value must not survive output across CSV, JSON, UTF-8 text, SQLite, formatted phone strings, JSON/SQLite numeric scalars, scientific notation, JSON escapes, Unicode normalization, or typed JSON or SQLite scalar representations.",
+      "deterministic_check": "Run all 21 required Battle floor cases and require the no-data-leak Judge to find no released policy value in corpus or report.json.",
       "proof_artifacts": [
-        "acceptance_bundle.json",
-        "acceptance_report.md"
+        "production-adapter-receipt.json",
+        "campaign/receipt.json",
+        "case_results.violations"
       ]
     },
     {
       "id": "AC-003",
       "requirement_id": "REQ-003",
       "kind": "MUST_VERIFY",
-      "predicate": "Every successful run must meet these requirements:",
-      "deterministic_check": "Provide a concrete command or judge before marking this requirement accepted.",
+      "predicate": "The same subject_id must map to stable non-colliding type-specific replacements across files and repeated runs, while distinct identities remain distinct.",
+      "deterministic_check": "Run adv-cross-format-same-identity-trap and adv-formatted-phone-sqlite-integer; the functional judge must verify stable replacement behavior and no type-specific collision.",
       "proof_artifacts": [
-        "acceptance_bundle.json",
-        "acceptance_report.md"
+        "production-adapter-receipt.json",
+        "case_results.functional"
       ]
     },
     {
       "id": "AC-004",
       "requirement_id": "REQ-004",
-      "kind": "MUST_REJECT",
-      "predicate": "Keep replacements stable across files and repeated runs. Distinct identities must not share a type-specific replacement; aliases of one identity may intentionally converge.",
-      "deterministic_check": "Provide a concrete command or judge before marking this requirement accepted.",
+      "kind": "MUST_VERIFY",
+      "predicate": "Protected values must remain unchanged while sensitive values are removed, including when non-sensitive structure and benign values surround them.",
+      "deterministic_check": "Run scripts/verify.sh and security/docker_brief_contract.py; proof must include preserved protected value checks and no sensitive leaks.",
       "proof_artifacts": [
-        "acceptance_bundle.json",
-        "acceptance_report.md"
+        "docker_brief_contract.log",
+        "verify.log",
+        "report.json"
       ]
     },
     {
       "id": "AC-005",
       "requirement_id": "REQ-005",
       "kind": "MUST_VERIFY",
-      "predicate": "Verify the complete corpus before marking it ready for release.",
-      "deterministic_check": "Provide a concrete command or judge before marking this requirement accepted.",
+      "predicate": "CSV headers/rows, JSON structure, SQLite tables, relationships, row counts, and integrity must be preserved or the run must fail closed.",
+      "deterministic_check": "Run Battle sqlite-text plus docker_brief_contract mounted fixture; functional judge and independent oracle must report SQLite integrity/row-count preservation and JSON/CSV structure preservation.",
       "proof_artifacts": [
-        "acceptance_bundle.json",
-        "acceptance_report.md"
+        "production-adapter-receipt.json",
+        "docker_brief_contract.log",
+        "case_results.functional"
       ]
     },
     {
       "id": "AC-006",
       "requirement_id": "REQ-006",
-      "kind": "MUST_REJECT",
-      "predicate": "`case_sensitive` defaults to `true`. `protected_values` must not be changed.",
-      "deterministic_check": "Provide a concrete command or judge before marking this requirement accepted.",
+      "kind": "MUST_VERIFY",
+      "predicate": "Release readiness must be withheld until verification has scanned the complete released boundary, including report.json and every released corpus file.",
+      "deterministic_check": "Run security/docker_brief_contract.py --acceptance-bundle security/battle/acceptance/acceptance_bundle.json and scripts/spec_derived_check.py against generated output; both must pass.",
       "proof_artifacts": [
-        "acceptance_bundle.json",
-        "acceptance_report.md"
+        "docker_brief_contract.log",
+        "spec_derived_check.json"
       ]
     },
     {
       "id": "AC-007",
       "requirement_id": "REQ-007",
-      "kind": "MUST_VERIFY",
-      "predicate": "literal matching; a submission may support more, but must safely and",
-      "deterministic_check": "Provide a concrete command or judge before marking this requirement accepted.",
+      "kind": "MUST_REJECT",
+      "predicate": "Raw inputs, replacement mappings, and quarantined content must not appear in /trial/output or logs.",
+      "deterministic_check": "Run mounted Docker acceptance and scan /trial/output plus captured stdout/stderr for raw policy values, mapping files, quarantine files, and input-path leaks; fail if any are present.",
       "proof_artifacts": [
-        "acceptance_bundle.json",
-        "acceptance_report.md"
+        "docker_brief_contract.log",
+        "release-boundary-scan.json"
       ]
     },
     {
       "id": "AC-008",
       "requirement_id": "REQ-008",
-      "kind": "MUST_VERIFY",
-      "predicate": "Preserve identity coherence across contexts: values known or discovered to belong to one identity should form one stable pseudonymous profile across files, formats, partitions, and retries. A policy `subject_id` supplies a known identity link. Additional entity discovery is optional. Type-appropriate profile values do not need to share a visible identifier, and you do not need to change the input schema.",
-      "deterministic_check": "Provide a concrete command or judge before marking this requirement accepted.",
+      "kind": "MUST_REJECT",
+      "predicate": "Lossy or ambiguous numeric representations, including leading-zero loss and float precision loss, must fail closed unless a type-specific canonical rule proves safe equivalence.",
+      "deterministic_check": "Run Battle MUST_REJECT cases adv-leading-zero-json-integer, adv-lossy-big-json-float, sqlite-check-literal and hardening matrix malformed SQLite/BLOB/view cases; each must fail closed or be leak-free according to its predicate.",
       "proof_artifacts": [
-        "acceptance_bundle.json",
-        "acceptance_report.md"
+        "production-adapter-receipt.json",
+        "docker_hardening_matrix.log"
       ]
     },
     {
       "id": "AC-009",
       "requirement_id": "REQ-009",
       "kind": "MUST_VERIFY",
-      "predicate": "You may install Python packages, system packages, command-line programs, or other tools needed by your solution. Include and configure every dependency in the `Dockerfile` so the final image is self-contained and the required commands work on the evaluator's Docker host without additional software.",
-      "deterministic_check": "Provide a concrete command or judge before marking this requirement accepted.",
+      "predicate": "Policy schema v1 must be accepted, omitted literal/case_sensitive defaults must be honored, unsupported match values must be rejected, and protected_values must not be changed.",
+      "deterministic_check": "Run scripts/verify.sh policy tests and docker_brief_contract protected-value check; unsupported policy match fixtures must exit non-zero without release corpus.",
       "proof_artifacts": [
-        "acceptance_bundle.json",
-        "acceptance_report.md"
+        "verify.log",
+        "docker_brief_contract.log"
       ]
     },
     {
       "id": "AC-010",
       "requirement_id": "REQ-010",
-      "kind": "MUST_VERIFY",
-      "predicate": "A bare run must execute a self-contained demonstration and then exit:",
-      "deterministic_check": "Provide a concrete command or judge before marking this requirement accepted.",
+      "kind": "MUST_REJECT",
+      "predicate": "Overlapping literals, replacement-to-source overlaps, exact/contained/partial protected-sensitive overlaps, and sensitive CSV headers must follow documented precedence or reject before release; sensitive headers must not be silently retained.",
+      "deterministic_check": "Run overlap/header tests from scripts/verify.sh and Battle formatted-phone cases; proof must show either deterministic safe replacement or fail-closed rejection.",
       "proof_artifacts": [
-        "acceptance_bundle.json",
-        "acceptance_report.md"
+        "verify.log",
+        "production-adapter-receipt.json"
       ]
     },
     {
       "id": "AC-011",
       "requirement_id": "REQ-011",
-      "kind": "MUST_VERIFY",
-      "predicate": "The demonstration must process all four formats at two or more synthetic workload sizes, with the largest at least 10 times the smallest. Report elapsed time, records per second, bytes per second, and peak memory when it can be measured. Exit zero only when the demonstrated outputs pass your verification.",
-      "deterministic_check": "Provide a concrete command or judge before marking this requirement accepted.",
+      "kind": "MUST_REJECT",
+      "predicate": "Unsupported encodings, malformed UTF-8, unsafe normalization, BOM handling, multibyte text, and locale-sensitive case behavior must not produce a partial release; Unicode NFC/NFD policy equivalents must be removed or rejected.",
+      "deterministic_check": "Run unicode-nfd-json, unicode-nfd-text, utf8-bom-text, json-uescape and encoding failure fixtures; all must pass Judge or fail closed.",
       "proof_artifacts": [
-        "acceptance_bundle.json",
-        "acceptance_report.md"
+        "production-adapter-receipt.json",
+        "verify.log"
       ]
     },
     {
       "id": "AC-012",
       "requirement_id": "REQ-012",
       "kind": "MUST_VERIFY",
-      "predicate": "Use `SUBMISSION.md` to describe how you would run this pipeline at terabyte and petabyte scale on a cloud provider of your choice. This is a required part of the submission. You do not need to deploy it.",
-      "deterministic_check": "Provide a concrete command or judge before marking this requirement accepted.",
+      "predicate": "A representation trap for a policy-listed identity must be seeded across every in-scope format (CSV, JSON, UTF-8 text, and SQLite) and must be absent from the complete released output boundary after canonicalization.",
+      "deterministic_check": "Run adv-cross-format-same-identity-trap twice and compare sanitized outputs/reports for stable subject_id-linked replacements.",
       "proof_artifacts": [
-        "acceptance_bundle.json",
-        "acceptance_report.md"
+        "production-adapter-receipt.json",
+        "stability-replay.json"
       ]
     },
     {
       "id": "AC-013",
       "requirement_id": "REQ-013",
       "kind": "MUST_VERIFY",
-      "predicate": "Include a repository-contained state or flow diagram showing intake, rule distribution or mapping, transformation, verification, publication, and failure/retry or quarantine paths. Its labels must agree with the prose; show durable or trust boundaries where they affect release safety.",
-      "deterministic_check": "Provide a concrete command or judge before marking this requirement accepted.",
+      "predicate": "docker build -t anonymization-trial . and docker run --rm -v \"$INPUT\":/trial/input:ro -v \"$OUTPUT\":/trial/output anonymization-trial run must work without host services or secrets.",
+      "deterministic_check": "Run security/docker_brief_contract.py; it must build the image and complete the mounted run through Docker only.",
       "proof_artifacts": [
-        "acceptance_bundle.json",
-        "acceptance_report.md"
+        "docker_brief_contract.log"
+      ]
+    },
+    {
+      "id": "AC-014",
+      "requirement_id": "REQ-014",
+      "kind": "MUST_VERIFY",
+      "predicate": "Bare docker run --rm anonymization-trial must execute the self-contained demo, cover four formats at two workload sizes with >=10x ratio, include throughput/memory metrics, and exit zero only after verification passes.",
+      "deterministic_check": "Run security/docker_brief_contract.py; demo JSON assertions for all formats, size ratio, metrics, and verification_passed must pass.",
+      "proof_artifacts": [
+        "docker_brief_contract.log",
+        "demo.stdout.json"
+      ]
+    },
+    {
+      "id": "AC-015",
+      "requirement_id": "REQ-015",
+      "kind": "MUST_VERIFY",
+      "predicate": "Mounted runs must produce exactly /trial/output/report.json and /trial/output/corpus/** with mirrored logical corpus paths; no other release files may appear.",
+      "deterministic_check": "Run security/docker_brief_contract.py; its output-tree assertion must pass.",
+      "proof_artifacts": [
+        "docker_brief_contract.log",
+        "output-tree.json"
+      ]
+    },
+    {
+      "id": "AC-016",
+      "requirement_id": "REQ-016",
+      "kind": "MUST_VERIFY",
+      "predicate": "SUBMISSION.md must contain the required cloud design sections and reproducible 1 TB / 1 PB capacity and cost arithmetic with price inputs and assumptions.",
+      "deterministic_check": "Run scripts/verify.sh and a document gate over SUBMISSION.md that checks required headings/price-date/arithmetic/source-citation fields before marking accepted.",
+      "proof_artifacts": [
+        "verify.log",
+        "SUBMISSION.md",
+        "cloud-design-check.json"
+      ]
+    },
+    {
+      "id": "AC-017",
+      "requirement_id": "REQ-017",
+      "kind": "MUST_VERIFY",
+      "predicate": "A repository-contained flow/state diagram must exist and agree with SUBMISSION.md labels for intake, rule distribution/mapping, transformation, verification, publication, failure/retry/quarantine, and trust/durable boundaries.",
+      "deterministic_check": "Run scripts/verify.sh and a diagram/prose consistency gate; the diagram file must exist in the repository and required labels must match SUBMISSION.md.",
+      "proof_artifacts": [
+        "verify.log",
+        "SUBMISSION.md",
+        "diagram-consistency-check.json"
       ]
     }
   ],
   "open_questions": [],
   "immutable_goal": null,
   "non_claims": [
-    "Extraction is source-backed but not human-approved.",
-    "No Battle campaign, implementation test, or production readiness is proven by this bundle.",
-    "Ambiguous or missing requirements remain open_questions until resolved."
+    "This bundle freezes acceptance predicates; it does not prove implementation readiness by itself.",
+    "Battle campaign pass counts only after every mapped acceptance case has predicate-specific Judge evidence.",
+    "Document and diagram acceptance cases require their named external proof artifacts; campaign replay alone is not enough for those predicates."
   ]
 }

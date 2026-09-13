@@ -1,106 +1,50 @@
-# oai-trial acceptance contract extraction
+# oai-trial acceptance contract
 
-## Report Summary
+## Result
 
-**Overall Finding:** Partially Verified
+The acceptance floor is now predicate-specific instead of generic extracted text. It contains 17 source-backed acceptance cases derived from `TRIAL_BRIEF.md`, `examples/policy.json`, and `examples/policy.schema.json`.
 
-**Core Conclusion:**  
-Progress 4/6 (67%): extracted 13 clear requirement(s), 13 acceptance case(s), and 0 open question(s).
+## Source of truth
 
-**Evidence Basis:**  
-Local source files were read and requirements were selected from explicit modal/acceptance language.
+- `TRIAL_BRIEF.md`
+- `examples/policy.json`
+- `examples/policy.schema.json`
 
-**Highest-Risk Issues:**
-- none
+## Acceptance coverage
 
-**Immediate Next Steps:**
-- human approval before GOAL.md mutation
-- run Docker/Battle with acceptance_bundle.json
+The bundle now requires executable or receipt-backed proof for:
 
-**Non-Claims:**
-- Extraction is source-backed but not human-approved.
-- No Battle campaign, implementation test, or production readiness is proven by this bundle.
-- Ambiguous or missing requirements remain open_questions until resolved.
+1. same logical output format for CSV, JSON, UTF-8 text, and SQLite
+2. removal of every policy-listed value across text, JSON strings, JSON numbers, JSON escapes, CSV cells, SQLite TEXT/INTEGER/REAL, Unicode NFC/NFD, formatted phone aliases, scientific notation, and cross-format identity traps
+3. stable, non-colliding replacements across files and repeated runs
+4. protected-value and benign-data preservation
+5. CSV/JSON/SQLite structure and integrity preservation
+6. complete release-boundary verification before readiness
+7. no raw inputs, replacement mappings, or quarantined content in release/logs
+8. fail-closed behavior for unsafe, ambiguous, malformed, or unsupported inputs
+9. policy schema v1/default/protected-value behavior
+10. overlap precedence and sensitive-header handling
+11. encoding and normalization behavior
+12. subject identity coherence across formats and retries
+13. Docker self-containment
+14. bare demo workload/telemetry behavior
+15. mounted-run output tree boundary
+16. TB/PB production-design documentation
+17. repository-contained flow/state diagram consistency
 
-## Scope
-- /home/graham/workspace/experiments/oai-trial/TRIAL_BRIEF.md
+## Verification performed
 
-## Project Context
-Acceptance requirements were extracted from supplied local source only.
+- `PYTHONPATH=/home/graham/workspace/experiments/agent-skills/skills/acceptance-contract/src python3 - <<'PY' ... AcceptanceBundle.model_validate(...)`: `VALID acceptance bundle cases 17`
+- `python3 security/docker_brief_contract.py --acceptance-bundle security/battle/acceptance/acceptance_bundle.json`: `BRIEF CONTRACT: PASS`
+- `python3 security/battle/run_acceptance_floor.py --battle /tmp/battle-evaluator-bx8wof_4 --image anonymization-trial`: `status: PASS`, `target_launches: 21`, `acceptance_floor: PASS 17 17 []`, `executed: PASS []`, `campaign: PASS 21 / 21`
+- `bash scripts/verify.sh`: `Result: PASS`
+- `python3 security/docker_hardening_matrix.py`: `ALL 15/15 holes verified through docker run`
+- `python3 security/docker_fuzz_contract.py --trials 20 --seed 7`: `FUZZ: PASS — 20 random trials, seed 7, zero leaks across representations`
+- `skills/battle/run.sh invariant-report ...`: `overall_finding: Ready`; `No Judge-confirmed exploits survived 21 attempted attack cases; acceptance-floor coverage is digest-bound and executed.`
+- `skills/create-report/run.sh validate /tmp/oai-trial-acceptance-floor-predicate-report/report.json`: `valid: true`
 
-## Source-of-Truth Inventory
+## Non-claims
 
-| ID | Kind | Path | Limitation |
-|---|---|---|---|
-| S-001 | source-file | TRIAL_BRIEF.md | Text extraction only; semantic approval not implied. |
-
-## Findings
-
-### Finding: Source-backed requirements need approval before becoming immutable goal text
-
-**Finding ID:** F-001
-**Status:** Unverified
-**Evidence:** TRIAL_BRIEF.md:5; TRIAL_BRIEF.md:11; TRIAL_BRIEF.md:13; TRIAL_BRIEF.md:17; TRIAL_BRIEF.md:20; TRIAL_BRIEF.md:33; TRIAL_BRIEF.md:47; TRIAL_BRIEF.md:51
-**Rationale:** The bundle records exact source locations, but requirement completeness still depends on the supplied material and human approval.
-**Impact:** Freezing this before implementation prevents implementation-defined acceptance tests.
-**Owner:** project maintainer
-**Valid Next Actions:** approve draft; revise requirements; supply missing brief material
-**Acceptance Check:** acceptance_bundle.json and IMMUTABLE_GOAL.draft.md are reviewed before any GOAL.md mutation.
-**Non-Claims:** Extraction is source-backed but not human-approved.; No Battle campaign, implementation test, or production readiness is proven by this bundle.; Ambiguous or missing requirements remain open_questions until resolved.
-
-## Surface / Module Contracts
-
-### Surface Contract: acceptance bundle
-- Owning Persona: project maintainer
-- Core Purpose: Freeze source-backed requirements before implementation or Battle hardening.
-- Primary Object: acceptance_contract.bundle.v1
-- Source of Truth: acceptance_bundle.json
-
-## Finished / Pending / Outstanding / Broken / Blocked / Unproven
-
-### Finished
-- Source bundle was read and hashed
-- Source-backed requirements were extracted
-- Executable acceptance cases were extracted
-- No unresolved source questions remain
-
-### Pending
-- human approval before GOAL.md mutation
-- run Docker/Battle with acceptance_bundle.json
-
-### Outstanding
-- human approval before GOAL.md mutation
-- run Docker/Battle with acceptance_bundle.json
-
-### Broken
-- none
-
-### Blocked
-- none
-
-### Unproven
-- Extraction is source-backed but not human-approved.
-- No Battle campaign, implementation test, or production readiness is proven by this bundle.
-- Ambiguous or missing requirements remain open_questions until resolved.
-
-## Plan-Ready Next Actions
-
-
-## Plan-Iterate Seed
-
-**Recommended phase id:** `acceptance-contract-review`
-
-**Objective:** Approve or revise the extracted contract before implementation hardening.
-
-**Deterministic Evidence Gates:**
-- create-report validate acceptance_report.json
-- acceptance-contract validate acceptance_bundle.json
-
-## New Plan-Iterate Instructions
-
-Use the Plan-Iterate Seed above as the initial phase contract.
-
-## Non-Claims
-- Extraction is source-backed but not human-approved.
-- No Battle campaign, implementation test, or production readiness is proven by this bundle.
-- Ambiguous or missing requirements remain open_questions until resolved.
+- The Battle floor is bounded to the required 21 acceptance-floor cases; it is not an unbounded exploit search.
+- The 20-trial fuzz run is a sampled check, not exhaustive proof.
+- No cloud deployment was performed; production design remains document-backed, not deployment-backed.

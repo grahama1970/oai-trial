@@ -4,6 +4,6 @@
   "acceptance_contract": {
     "required": true,
     "bundle_path": "acceptance/acceptance_bundle.json",
-    "sha256": "sha256:1143e2dc05f65c87a78ac902ea755063f3b23a086f70ab602e46b76a5b6a8545"
+    "sha256": "sha256:d371153c3cdf2934e67ef9545fe2e6862d1848bf959273a5372d62f0ea6ee09f"
   }
 }

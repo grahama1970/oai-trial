@@ -1,11 +1,31 @@
 {
-  "acceptance_bundle_path": "security/battle/acceptance/acceptance_bundle.json",
-  "acceptance_bundle_sha256": "sha256:1143e2dc05f65c87a78ac902ea755063f3b23a086f70ab602e46b76a5b6a8545",
+  "schema": "battle.acceptance_adapter.v1",
   "adapter_id": "oai-trial.acceptance-floor.v1",
+  "target_identity": "oai-trial@TRIAL_BRIEF.md:sha256:83b1199fa7f0da86b6e0836b6634657a5ff92c6d9f8bd3014f115a3de4942bfc",
+  "acceptance_bundle_path": "security/battle/acceptance/acceptance_bundle.json",
+  "acceptance_bundle_sha256": "sha256:d371153c3cdf2934e67ef9545fe2e6862d1848bf959273a5372d62f0ea6ee09f",
+  "project_contract_enrollment": "security/battle/project-contract-enrollment.json",
   "battle_lock_path": "security/battle/battle.lock.json",
+  "profile_path": "security/battle/floor.profile.json",
+  "profile_sha256": "sha256:1fec94e75c03e51ddcbc624c92d29377f3e5e54d14a7c13475bfe76e9b35df50",
+  "generator": "security/battle/acceptance_floor_generator.py",
+  "generator_sha256": "sha256:da8e6303820cdb4465c87e5cc07ae91247ba7e163d540cf3925324d08c996e1b",
+  "judge": "$BATTLE/skills/battle/fixtures/reference-judges/no_data_leak_judge.py",
+  "functional_judge": "$BATTLE/skills/battle/fixtures/reference-judges/functional_anonymize_judge.py",
+  "target_run_cmd": "docker run --rm -v {input}/corpus:/trial/input/corpus:ro -v {input}/policy.json:/trial/input/policy.json:ro -v {output}:/trial/output {image} run",
+  "work_root": "security/battle/runs/acceptance-floor-latest",
+  "gen_params": {
+    "fuzz": 0
+  },
+  "judge_params": {
+    "output_subdir": "corpus",
+    "interpretation_profile": {
+      "record_local_reconstruction": true
+    }
+  },
   "case_map": {
     "AC-001": {
-      "assertion": "Frozen acceptance-contract predicate is covered by these Battle campaign case receipts.",
+      "assertion": "Format-preservation predicate is checked by the JSON, CSV, UTF-8 text, and SQLite baseline Battle cases and their functional-judge receipts.",
       "case_ids": [
         "json-string",
         "csv-cell",
@@ -20,12 +40,29 @@
       ]
     },
     "AC-002": {
-      "assertion": "Frozen acceptance-contract predicate is covered by these Battle campaign case receipts.",
+      "assertion": "Policy-value removal predicate is checked across every required acceptance-floor representation case with no-data-leak Judge evidence.",
       "case_ids": [
         "json-string",
         "csv-cell",
         "utf8-text",
-        "sqlite-text"
+        "sqlite-text",
+        "json-integer",
+        "json-float",
+        "json-scientific",
+        "sqlite-integer",
+        "sqlite-real",
+        "adv-formatted-phone-json-integer",
+        "adv-formatted-phone-csv-bare",
+        "adv-formatted-phone-text-bare",
+        "adv-leading-zero-json-integer",
+        "adv-lossy-big-json-float",
+        "adv-formatted-phone-sqlite-integer",
+        "adv-cross-format-same-identity-trap",
+        "unicode-nfd-json",
+        "unicode-nfd-text",
+        "utf8-bom-text",
+        "json-uescape",
+        "sqlite-check-literal"
       ],
       "evidence_extractors": [
         "case_results.passed",
@@ -35,14 +72,11 @@
       ]
     },
     "AC-003": {
-      "assertion": "Frozen acceptance-contract predicate is covered by these Battle campaign case receipts.",
+      "assertion": "Stable replacement and non-collision predicate is checked by cross-format same-identity and formatted-phone numeric alias cases.",
       "case_ids": [
-        "json-string",
-        "csv-cell",
-        "utf8-text",
-        "sqlite-text",
-        "json-integer",
-        "sqlite-integer"
+        "adv-cross-format-same-identity-trap",
+        "adv-formatted-phone-json-integer",
+        "adv-formatted-phone-sqlite-integer"
       ],
       "evidence_extractors": [
         "case_results.passed",
@@ -52,22 +86,7 @@
       ]
     },
     "AC-004": {
-      "assertion": "Frozen acceptance-contract predicate is covered by these Battle campaign case receipts.",
-      "case_ids": [
-        "adv-cross-format-same-identity-trap",
-        "adv-formatted-phone-json-integer",
-        "adv-formatted-phone-csv-bare",
-        "adv-formatted-phone-text-bare"
-      ],
-      "evidence_extractors": [
-        "case_results.passed",
-        "case_results.execution",
-        "case_results.functional",
-        "case_results.violations"
-      ]
-    },
-    "AC-005": {
-      "assertion": "Frozen acceptance-contract predicate is covered by these Battle campaign case receipts.",
+      "assertion": "Protected/non-sensitive preservation predicate is checked by external Docker brief-contract and verify receipts; Battle baseline cases exercise surrounding benign data preservation.",
       "case_ids": [
         "json-string",
         "csv-cell",
@@ -81,8 +100,90 @@
         "case_results.violations"
       ]
     },
+    "AC-005": {
+      "assertion": "CSV/JSON/SQLite structural preservation predicate is checked by format baseline cases plus SQLite TEXT/INTEGER/REAL cases and functional-judge evidence.",
+      "case_ids": [
+        "csv-cell",
+        "json-string",
+        "json-integer",
+        "json-float",
+        "sqlite-text",
+        "sqlite-integer",
+        "sqlite-real"
+      ],
+      "evidence_extractors": [
+        "case_results.passed",
+        "case_results.execution",
+        "case_results.functional",
+        "case_results.violations"
+      ]
+    },
     "AC-006": {
-      "assertion": "Frozen acceptance-contract predicate is covered by these Battle campaign case receipts.",
+      "assertion": "Complete-release-boundary verification predicate is checked by the full acceptance-floor replay and external spec-derived/Docker oracle receipts.",
+      "case_ids": [
+        "json-string",
+        "csv-cell",
+        "utf8-text",
+        "sqlite-text",
+        "json-integer",
+        "json-float",
+        "json-scientific",
+        "sqlite-integer",
+        "sqlite-real",
+        "adv-formatted-phone-json-integer",
+        "adv-formatted-phone-csv-bare",
+        "adv-formatted-phone-text-bare",
+        "adv-leading-zero-json-integer",
+        "adv-lossy-big-json-float",
+        "adv-formatted-phone-sqlite-integer",
+        "adv-cross-format-same-identity-trap",
+        "unicode-nfd-json",
+        "unicode-nfd-text",
+        "utf8-bom-text",
+        "json-uescape",
+        "sqlite-check-literal"
+      ],
+      "evidence_extractors": [
+        "case_results.passed",
+        "case_results.execution",
+        "case_results.functional",
+        "case_results.violations"
+      ]
+    },
+    "AC-007": {
+      "assertion": "Release/log boundary predicate is checked by Battle no-leak Judge evidence and external release-boundary scan receipts.",
+      "case_ids": [
+        "json-string",
+        "csv-cell",
+        "utf8-text",
+        "sqlite-text",
+        "json-integer",
+        "json-float",
+        "json-scientific",
+        "sqlite-integer",
+        "sqlite-real",
+        "adv-formatted-phone-json-integer",
+        "adv-formatted-phone-csv-bare",
+        "adv-formatted-phone-text-bare",
+        "adv-leading-zero-json-integer",
+        "adv-lossy-big-json-float",
+        "adv-formatted-phone-sqlite-integer",
+        "adv-cross-format-same-identity-trap",
+        "unicode-nfd-json",
+        "unicode-nfd-text",
+        "utf8-bom-text",
+        "json-uescape",
+        "sqlite-check-literal"
+      ],
+      "evidence_extractors": [
+        "case_results.passed",
+        "case_results.execution",
+        "case_results.functional",
+        "case_results.violations"
+      ]
+    },
+    "AC-008": {
+      "assertion": "Fail-closed predicate is checked by invalid/ambiguous numeric and SQLite schema cases that must reject rather than release unsafe output.",
       "case_ids": [
         "adv-leading-zero-json-integer",
         "adv-lossy-big-json-float",
@@ -95,8 +196,41 @@
         "case_results.violations"
       ]
     },
-    "AC-007": {
-      "assertion": "Frozen acceptance-contract predicate is covered by these Battle campaign case receipts.",
+    "AC-009": {
+      "assertion": "Policy schema/default/protected-value predicate is checked by JSON escape, formatted literal, and external policy/protected-value receipts.",
+      "case_ids": [
+        "json-string",
+        "json-uescape",
+        "adv-formatted-phone-json-integer",
+        "adv-formatted-phone-csv-bare",
+        "adv-formatted-phone-text-bare"
+      ],
+      "evidence_extractors": [
+        "case_results.passed",
+        "case_results.execution",
+        "case_results.functional",
+        "case_results.violations"
+      ]
+    },
+    "AC-010": {
+      "assertion": "Overlap and sensitive-header predicate is checked by formatted-phone, leading-zero/lossy numeric rejection, and SQLite CHECK literal cases plus external overlap/header verify receipts.",
+      "case_ids": [
+        "adv-formatted-phone-json-integer",
+        "adv-formatted-phone-csv-bare",
+        "adv-formatted-phone-text-bare",
+        "adv-leading-zero-json-integer",
+        "adv-lossy-big-json-float",
+        "sqlite-check-literal"
+      ],
+      "evidence_extractors": [
+        "case_results.passed",
+        "case_results.execution",
+        "case_results.functional",
+        "case_results.violations"
+      ]
+    },
+    "AC-011": {
+      "assertion": "Encoding and normalization predicate is checked by Unicode NFD JSON/text, UTF-8 BOM text, and JSON unicode-escape Battle cases plus external encoding failure receipts.",
       "case_ids": [
         "unicode-nfd-json",
         "unicode-nfd-text",
@@ -110,10 +244,13 @@
         "case_results.violations"
       ]
     },
-    "AC-008": {
-      "assertion": "Frozen acceptance-contract predicate is covered by these Battle campaign case receipts.",
+    "AC-012": {
+      "assertion": "Subject identity coherence predicate is checked by cross-format same-identity and formatted-phone cases replayed through functional Judge evidence.",
       "case_ids": [
         "adv-cross-format-same-identity-trap",
+        "adv-formatted-phone-json-integer",
+        "adv-formatted-phone-csv-bare",
+        "adv-formatted-phone-text-bare",
         "adv-formatted-phone-sqlite-integer"
       ],
       "evidence_extractors": [
@@ -123,62 +260,65 @@
         "case_results.violations"
       ]
     },
-    "AC-009": {
-      "assertion": "Docker dependency self-containment remains checked by docker build in security/invariant_campaign_gate.sh.",
-      "case_ids": [
-        "json-string"
-      ],
-      "evidence_extractors": [
-        "case_results.passed",
-        "case_results.execution",
-        "case_results.functional",
-        "case_results.violations"
-      ]
-    },
-    "AC-010": {
-      "assertion": "Bare-run demo remains checked outside Battle by scripts/verify.sh / Docker demo gates.",
-      "case_ids": [
-        "json-string",
-        "csv-cell",
-        "utf8-text",
-        "sqlite-text"
-      ],
-      "evidence_extractors": [
-        "case_results.passed",
-        "case_results.execution",
-        "case_results.functional",
-        "case_results.violations"
-      ]
-    },
-    "AC-011": {
-      "assertion": "Synthetic workload-size telemetry remains checked outside this Battle floor.",
-      "case_ids": [
-        "json-string",
-        "csv-cell",
-        "utf8-text",
-        "sqlite-text"
-      ],
-      "evidence_extractors": [
-        "case_results.passed",
-        "case_results.execution",
-        "case_results.functional",
-        "case_results.violations"
-      ]
-    },
-    "AC-012": {
-      "assertion": "SUBMISSION.md cloud-scale prose remains a document review gate, not an exploit case.",
-      "case_ids": [
-        "json-string"
-      ],
-      "evidence_extractors": [
-        "case_results.passed",
-        "case_results.execution",
-        "case_results.functional",
-        "case_results.violations"
-      ]
-    },
     "AC-013": {
-      "assertion": "Repository-contained flow diagram remains a document review gate, not an exploit case.",
+      "assertion": "Docker self-containment predicate is proven by external docker build/mounted-run receipts; Battle maps to baseline mounted target cases after Docker image execution.",
+      "case_ids": [
+        "json-string",
+        "csv-cell",
+        "utf8-text",
+        "sqlite-text"
+      ],
+      "evidence_extractors": [
+        "case_results.passed",
+        "case_results.execution",
+        "case_results.functional",
+        "case_results.violations"
+      ]
+    },
+    "AC-014": {
+      "assertion": "Bare-demo workload/telemetry predicate is proven by external Docker demo receipt; Battle maps to all four baseline formats as the same image-under-test.",
+      "case_ids": [
+        "json-string",
+        "csv-cell",
+        "utf8-text",
+        "sqlite-text"
+      ],
+      "evidence_extractors": [
+        "case_results.passed",
+        "case_results.execution",
+        "case_results.functional",
+        "case_results.violations"
+      ]
+    },
+    "AC-015": {
+      "assertion": "Mounted output-tree boundary predicate is proven by external Docker brief-contract receipt and Battle baseline case execution against mounted input/output.",
+      "case_ids": [
+        "json-string",
+        "csv-cell",
+        "utf8-text",
+        "sqlite-text"
+      ],
+      "evidence_extractors": [
+        "case_results.passed",
+        "case_results.execution",
+        "case_results.functional",
+        "case_results.violations"
+      ]
+    },
+    "AC-016": {
+      "assertion": "SUBMISSION.md production-design predicate is a document gate proven by external verify/cloud-design receipts; Battle keeps one baseline case as digest-bound target linkage only.",
+      "case_ids": [
+        "json-string"
+      ],
+      "evidence_extractors": [
+        "case_results.passed",
+        "case_results.execution",
+        "case_results.functional",
+        "case_results.violations"
+      ]
+    },
+    "AC-017": {
+      "assertion": "Repository-contained diagram predicate is a document gate proven by external diagram-consistency receipts; Battle keeps sqlite-check-literal linkage to the release-safety boundary.",
       "case_ids": [
         "sqlite-check-literal"
       ],
@@ -190,30 +330,16 @@
       ]
     }
   },
-  "functional_judge": "$BATTLE/skills/battle/fixtures/reference-judges/functional_anonymize_judge.py",
-  "gen_params": {
-    "fuzz": 0
-  },
-  "generator": "security/battle/acceptance_floor_generator.py",
-  "generator_sha256": "sha256:da8e6303820cdb4465c87e5cc07ae91247ba7e163d540cf3925324d08c996e1b",
-  "judge": "$BATTLE/skills/battle/fixtures/reference-judges/no_data_leak_judge.py",
-  "judge_params": {
-    "interpretation_profile": {
-      "record_local_reconstruction": true
-    },
-    "output_subdir": "corpus"
-  },
   "non_battle_requirements": {
-    "AC-009": "Docker dependency self-containment remains checked by docker build in security/invariant_campaign_gate.sh.",
-    "AC-010": "Bare-run demo remains checked outside Battle by scripts/verify.sh / Docker demo gates.",
-    "AC-011": "Synthetic workload-size telemetry remains checked outside this Battle floor.",
-    "AC-012": "SUBMISSION.md cloud-scale prose remains a document review gate, not an exploit case.",
-    "AC-013": "Repository-contained flow diagram remains a document review gate, not an exploit case."
-  },
-  "profile_path": "security/battle/floor.profile.json",
-  "profile_sha256": "sha256:1fec94e75c03e51ddcbc624c92d29377f3e5e54d14a7c13475bfe76e9b35df50",
-  "schema": "battle.acceptance_adapter.v1",
-  "target_identity": "oai-trial@TRIAL_BRIEF.md:sha256:83b1199fa7f0da86b6e0836b6634657a5ff92c6d9f8bd3014f115a3de4942bfc",
-  "target_run_cmd": "docker run --rm -v {input}/corpus:/trial/input/corpus:ro -v {input}/policy.json:/trial/input/policy.json:ro -v {output}:/trial/output {image} run",
-  "work_root": "security/battle/runs/acceptance-floor-latest"
+    "AC-004": "Protected-value preservation requires docker_brief_contract.log / verify.log protected-value proof.",
+    "AC-006": "Complete-corpus release verification requires docker_brief_contract.log and spec_derived_check.json.",
+    "AC-007": "Raw-input/mapping/quarantine release-boundary proof requires release-boundary-scan.json or equivalent external receipt.",
+    "AC-009": "Policy schema/default/protected-value behavior requires verify.log and docker_brief_contract.log.",
+    "AC-010": "Overlap/header precedence requires verify.log coverage.",
+    "AC-013": "Docker self-containment requires docker_brief_contract.log build and mounted-run proof.",
+    "AC-014": "Bare demo telemetry requires demo.stdout.json / docker_brief_contract.log proof.",
+    "AC-015": "Mounted output tree requires docker_brief_contract.log output-tree assertion.",
+    "AC-016": "Production design requires cloud-design-check.json or equivalent document gate.",
+    "AC-017": "Flow diagram requires diagram-consistency-check.json or equivalent document gate."
+  }
 }
