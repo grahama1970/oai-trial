@@ -1,0 +1,118 @@
+{
+  "view": "flowchart",
+  "nodes": [
+    {
+      "id": "stale-marker-invalidation",
+      "label": "Remove stale report.json",
+      "kind": "action"
+    },
+    {
+      "id": "seal-digest-decision",
+      "label": "Seal digest matches?",
+      "kind": "decision",
+      "outcome_domain": [
+        "match",
+        "mismatch"
+      ]
+    },
+    {
+      "id": "seal-mismatch-rejected",
+      "label": "Reject SOURCE_CHANGED",
+      "kind": "terminal"
+    },
+    {
+      "id": "promote-corpus",
+      "label": "Promote corpus then directory fsync",
+      "kind": "action"
+    },
+    {
+      "id": "temp-report-fsync",
+      "label": "Write temp report and fsync file",
+      "kind": "action"
+    },
+    {
+      "id": "atomic-report-rename",
+      "label": "Atomic rename report.json last",
+      "kind": "action"
+    },
+    {
+      "id": "final-dir-fsync",
+      "label": "Final directory fsync",
+      "kind": "terminal"
+    }
+  ],
+  "edges": [
+    {
+      "source": "stale-marker-invalidation",
+      "target": "seal-digest-decision",
+      "routing": "orthogonal"
+    },
+    {
+      "source": "seal-digest-decision",
+      "target": "promote-corpus",
+      "branch_label": "match",
+      "outcome": "match",
+      "routing": "orthogonal"
+    },
+    {
+      "source": "seal-digest-decision",
+      "target": "seal-mismatch-rejected",
+      "branch_label": "mismatch",
+      "outcome": "mismatch",
+      "routing": "orthogonal"
+    },
+    {
+      "source": "promote-corpus",
+      "target": "temp-report-fsync",
+      "routing": "orthogonal"
+    },
+    {
+      "source": "temp-report-fsync",
+      "target": "atomic-report-rename",
+      "routing": "orthogonal"
+    },
+    {
+      "source": "atomic-report-rename",
+      "target": "final-dir-fsync",
+      "routing": "orthogonal"
+    }
+  ],
+  "gates": [
+    "seal-digest-decision"
+  ],
+  "terminal_states": [
+    "seal-mismatch-rejected",
+    "final-dir-fsync"
+  ],
+  "label_limit": 60,
+  "requirements": {
+    "intent": "report-last publication must explicitly decide whether the sealed staged digest still matches; mismatch rejects terminally and match is the only route to corpus promotion",
+    "required_order": [
+      "stale-marker-invalidation",
+      "seal-digest-decision",
+      "promote-corpus",
+      "temp-report-fsync",
+      "atomic-report-rename",
+      "final-dir-fsync"
+    ],
+    "required_preconditions": [
+      {
+        "target": "promote-corpus",
+        "gate": "seal-digest-decision",
+        "outcome": "match"
+      }
+    ],
+    "required_outcome_targets": [
+      {
+        "gate": "seal-digest-decision",
+        "outcome": "match",
+        "target": "promote-corpus"
+      },
+      {
+        "gate": "seal-digest-decision",
+        "outcome": "mismatch",
+        "target": "seal-mismatch-rejected"
+      }
+    ]
+  }
+}

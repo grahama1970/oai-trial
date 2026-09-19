@@ -4,7 +4,7 @@
  "source": "explain-project cockpit board",
  "elements": [
   {
-   "id": "preflight",
+   "id": "typed-value-match",
    "type": "rectangle",
    "x": 0,
    "y": 60,
@@ -24,7 +24,7 @@
    "groupIds": [],
    "boundElements": [
     {
-     "id": "preflight-label",
+     "id": "typed-value-match-label",
      "type": "text"
     }
    ],
@@ -33,7 +33,7 @@
    "locked": false
   },
   {
-   "id": "preflight-label",
+   "id": "typed-value-match-label",
    "type": "text",
    "x": 20,
    "y": 82,
@@ -55,16 +55,16 @@
    "updated": 1789000000000,
    "link": null,
    "locked": false,
-   "text": "Preflight\npolicy + corpus",
+   "text": "Numeric scalar\npolicy match",
    "fontSize": 16,
    "fontFamily": 1,
    "textAlign": "center",
    "verticalAlign": "middle",
-   "containerId": "preflight",
-   "originalText": "Preflight\npolicy + corpus"
+   "containerId": "typed-value-match",
+   "originalText": "Numeric scalar\npolicy match"
   },
   {
-   "id": "staging",
+   "id": "independent-location-check",
    "type": "rectangle",
    "x": 260,
    "y": 60,
@@ -84,7 +84,7 @@
    "groupIds": [],
    "boundElements": [
     {
-     "id": "staging-label",
+     "id": "independent-location-check-label",
      "type": "text"
     }
    ],
@@ -93,7 +93,7 @@
    "locked": false
   },
   {
-   "id": "staging-label",
+   "id": "independent-location-check-label",
    "type": "text",
    "x": 280,
    "y": 82,
@@ -115,16 +115,16 @@
    "updated": 1789000000000,
    "link": null,
    "locked": false,
-   "text": "Stage private\nanonymized corpus",
+   "text": "Independent\nlocation check",
    "fontSize": 16,
    "fontFamily": 1,
    "textAlign": "center",
    "verticalAlign": "middle",
-   "containerId": "staging",
-   "originalText": "Stage private\nanonymized corpus"
+   "containerId": "independent-location-check",
+   "originalText": "Independent\nlocation check"
   },
   {
-   "id": "verify",
+   "id": "absence-oracle",
    "type": "rectangle",
    "x": 520,
    "y": 60,
@@ -144,7 +144,7 @@
    "groupIds": [],
    "boundElements": [
     {
-     "id": "verify-label",
+     "id": "absence-oracle-label",
      "type": "text"
     }
    ],
@@ -153,7 +153,7 @@
    "locked": false
   },
   {
-   "id": "verify-label",
+   "id": "absence-oracle-label",
    "type": "text",
    "x": 540,
    "y": 82,
@@ -175,16 +175,16 @@
    "updated": 1789000000000,
    "link": null,
    "locked": false,
-   "text": "Verify + seal\nstaged bytes",
+   "text": "Normalized absence\noracle",
    "fontSize": 16,
    "fontFamily": 1,
    "textAlign": "center",
    "verticalAlign": "middle",
-   "containerId": "verify",
-   "originalText": "Verify + seal\nstaged bytes"
+   "containerId": "absence-oracle",
+   "originalText": "Normalized absence\noracle"
   },
   {
-   "id": "publish-corpus",
+   "id": "spec-derived-gate",
    "type": "rectangle",
    "x": 780,
    "y": 60,
@@ -204,7 +204,7 @@
    "groupIds": [],
    "boundElements": [
     {
-     "id": "publish-corpus-label",
+     "id": "spec-derived-gate-label",
      "type": "text"
     }
    ],
@@ -213,7 +213,7 @@
    "locked": false
   },
   {
-   "id": "publish-corpus-label",
+   "id": "spec-derived-gate-label",
    "type": "text",
    "x": 800,
    "y": 82,
@@ -235,76 +235,16 @@
    "updated": 1789000000000,
    "link": null,
    "locked": false,
-   "text": "Promote corpus\nfsync directory",
+   "text": "Policy-derived\nrelease gate",
    "fontSize": 16,
    "fontFamily": 1,
    "textAlign": "center",
    "verticalAlign": "middle",
-   "containerId": "publish-corpus",
-   "originalText": "Promote corpus\nfsync directory"
+   "containerId": "spec-derived-gate",
+   "originalText": "Policy-derived\nrelease gate"
   },
   {
-   "id": "publish-report",
-   "type": "rectangle",
-   "x": 1040,
-   "y": 60,
-   "width": 200,
-   "height": 84,
-   "angle": 0,
-   "strokeColor": "#0e7490",
-   "backgroundColor": "#cffafe",
-   "fillStyle": "solid",
-   "strokeWidth": 2,
-   "roughness": 1,
-   "opacity": 100,
-   "seed": 104,
-   "version": 1,
-   "versionNonce": 104,
-   "isDeleted": false,
-   "groupIds": [],
-   "boundElements": [
-    {
-     "id": "publish-report-label",
-     "type": "text"
-    }
-   ],
-   "updated": 1789000000000,
-   "link": null,
-   "locked": false
-  },
-  {
-   "id": "publish-report-label",
-   "type": "text",
-   "x": 1060,
-   "y": 82,
-   "width": 160,
-   "height": 40,
-   "angle": 0,
-   "strokeColor": "#164e63",
-   "backgroundColor": "transparent",
-   "fillStyle": "solid",
-   "strokeWidth": 1,
-   "roughness": 0,
-   "opacity": 100,
-   "seed": 204,
-   "version": 1,
-   "versionNonce": 204,
-   "isDeleted": false,
-   "groupIds": [],
-   "boundElements": [],
-   "updated": 1789000000000,
-   "link": null,
-   "locked": false,
-   "text": "Rename report.json\nlast ready marker",
-   "fontSize": 16,
-   "fontFamily": 1,
-   "textAlign": "center",
-   "verticalAlign": "middle",
-   "containerId": "publish-report",
-   "originalText": "Rename report.json\nlast ready marker"
-  },
-  {
-   "id": "arrow-preflight-staging",
+   "id": "arrow-typed-value-match-independent-location-check",
    "type": "arrow",
    "x": 200,
    "y": 102,
@@ -337,12 +277,12 @@
     ]
    ],
    "startBinding": {
-    "elementId": "preflight",
+    "elementId": "typed-value-match",
     "focus": 0,
     "gap": 1
    },
    "endBinding": {
-    "elementId": "staging",
+    "elementId": "independent-location-check",
     "focus": 0,
     "gap": 1
    },
@@ -350,7 +290,7 @@
    "endArrowhead": "arrow"
   },
   {
-   "id": "arrow-staging-verify",
+   "id": "arrow-independent-location-check-absence-oracle",
    "type": "arrow",
    "x": 460,
    "y": 102,
@@ -383,12 +323,12 @@
     ]
    ],
    "startBinding": {
-    "elementId": "staging",
+    "elementId": "independent-location-check",
     "focus": 0,
     "gap": 1
    },
    "endBinding": {
-    "elementId": "verify",
+    "elementId": "absence-oracle",
     "focus": 0,
     "gap": 1
    },
@@ -396,7 +336,7 @@
    "endArrowhead": "arrow"
   },
   {
-   "id": "arrow-verify-publish-corpus",
+   "id": "arrow-absence-oracle-spec-derived-gate",
    "type": "arrow",
    "x": 720,
    "y": 102,
@@ -429,58 +369,12 @@
     ]
    ],
    "startBinding": {
-    "elementId": "verify",
+    "elementId": "absence-oracle",
     "focus": 0,
     "gap": 1
    },
    "endBinding": {
-    "elementId": "publish-corpus",
-    "focus": 0,
-    "gap": 1
-   },
-   "startArrowhead": null,
-   "endArrowhead": "arrow"
-  },
-  {
-   "id": "arrow-publish-corpus-publish-report",
-   "type": "arrow",
-   "x": 980,
-   "y": 102,
-   "width": 60,
-   "height": 0,
-   "angle": 0,
-   "strokeColor": "#52525b",
-   "backgroundColor": "transparent",
-   "fillStyle": "solid",
-   "strokeWidth": 2,
-   "roughness": 1,
-   "opacity": 100,
-   "seed": 303,
-   "version": 1,
-   "versionNonce": 303,
-   "isDeleted": false,
-   "groupIds": [],
-   "boundElements": [],
-   "updated": 1789000000000,
-   "link": null,
-   "locked": false,
-   "points": [
-    [
-     0,
-     0
-    ],
-    [
-     60,
-     0
-    ]
-   ],
-   "startBinding": {
-    "elementId": "publish-corpus",
-    "focus": 0,
-    "gap": 1
-   },
-   "endBinding": {
-    "elementId": "publish-report",
+    "elementId": "spec-derived-gate",
     "focus": 0,
     "gap": 1
    },
