@@ -63,7 +63,7 @@
       "command": [
         "bash",
         "-c",
-        "cd .. && w=$(mktemp -d); mkdir -p \"$w/input/corpus\"; echo '{}' > \"$w/input/policy.json\"; echo x > \"$w/input/corpus/bad.parquet\"; .venv/bin/anonymization-trial run --input \"$w/input\" --output \"$w/output\"; test $? -ne 0 && echo FAILCLOSED_OK"
+        "cd .. && set -euo pipefail; w=$(mktemp -d); mkdir -p \"$w/input/corpus\"; cp examples/policy.json \"$w/input/policy.json\"; printf x >\"$w/input/corpus/bad.parquet\"; if .venv/bin/anonymization-trial run --input \"$w/input\" --output \"$w/output\" >\"$w/stdout\" 2>\"$w/stderr\"; then exit 1; else rc=$?; fi; test \"$rc\" -ne 0; grep -F 'unsupported_format BATTLE_CONTRACT_REJECT' \"$w/stderr\"; test ! -e \"$w/output/report.json\"; test ! -e \"$w/output/corpus\"; echo FAILCLOSED_OK"
       ],
       "expected": {
         "exit_code": 0,
@@ -120,16 +120,184 @@
       "command": [
         "bash",
         "-c",
-        "cd .. && ./security/invariant_campaign_gate.sh anonymization-trial 20"
+        "cd .. && ./security/invariant_campaign_gate.sh anonymization-trial 20 && python3 -c \"import json; a=json.load(open('security/battle/runs/acceptance-floor-latest/production-adapter-receipt.json')); b=json.load(open('security/battle/runs/latest/receipt.json')); assert a['status']=='PASS' and b['verdict']=='PASS'; print('BATTLE_READBACK_OK')\""
       ],
       "timeout_seconds": 1500,
       "expected": {
         "exit_code": 0,
         "stdout_contains": [
-          "CAMPAIGN: PASS (39/39 versions clean)",
+          "BATTLE_READBACK_OK",
           "\"status\": \"PASS\"",
           "\"artifact_integrity\": \"PASS\"",
           "\"semantic_replay\": \"PASS\""
+        ]
+      },
+      "readback": true
+    },
+    {
+      "name": "policy-bound-frequency-publication-gate",
+      "type": "adversarial",
+      "real_world": true,
+      "evidence_class": "live_e2e",
+      "command": [
+        "bash",
+        "-c",
+        "cd .. && .venv/bin/python scripts/eval_policy_frequency_publication_gate.py"
+      ],
+      "expected": {
+        "exit_code": 0,
+        "stdout_contains": [
+          "POLICY_FREQUENCY_PUBLICATION_BLOCKED"
+        ]
+      },
+      "readback": true
+    },
+    {
+      "name": "stable-pseudonym-frequency-risk-audit",
+      "type": "adversarial",
+      "real_world": true,
+      "evidence_class": "deterministic",
+      "command": [
+        "bash",
+        "-c",
+        "cd .. && w=$(mktemp -d); .venv/bin/python scripts/gen_input.py \"$w/input\" --records 20 && .venv/bin/anonymization-trial run --input \"$w/input\" --output \"$w/release\" >/dev/null && set +e; .venv/bin/anonymization-trial risk-audit --input \"$w/release\" --output \"$w/risk.json\"; rc=$?; set -e; test $rc -eq 2 && python3 -c \"import json; r=json.load(open('$w/risk.json')); assert r['schema']=='contextual_privacy_risk.v1' and r['verdict']=='linkage_risk' and r['raw_values_persisted'] is False; print('LINKAGE_RISK_DETECTED')\""
+      ],
+      "expected": {
+        "exit_code": 0,
+        "stdout_contains": [
+          "LINKAGE_RISK_DETECTED"
+        ]
+      }
+    },
+    {
+      "name": "declared-qi-privacy-and-attack-audit",
+      "type": "adversarial",
+      "real_world": true,
+      "evidence_class": "live_e2e",
+      "command": [
+        "bash",
+        "-c",
+        "cd .. && set -euo pipefail; w=$(mktemp -d); printf 'zip,age,condition\\n10001,30,A\\n10001,30,B\\n20002,40,A\\n' >\"$w/raw.csv\"; printf 'zip,age,condition\\n10001,30,A\\n10001,30,B\\n' >\"$w/release.csv\"; .venv/bin/anonymization-trial tabular-risk --input \"$w/release.csv\" --raw-input \"$w/raw.csv\" --quasi-identifiers zip,age --sensitive condition >\"$w/tabular.json\"; python3 -c \"import json; r=json.load(open('$w/tabular.json')); assert r['average_equivalence_class_size']==1.0 and r['suppressed_records']==1 and r['discernibility_metric']==7 and r['raw_values_persisted'] is False\"; printf 'zip,age\\n10001,30\\n' >\"$w/aux.csv\"; if .venv/bin/python security/attacks/auxiliary_inference.py --release \"$w/release.csv\" --auxiliary \"$w/aux.csv\" --quasi-identifiers zip,age --receipt \"$w/attack.json\"; then exit 1; else rc=$?; fi; test \"$rc\" -eq 2; python3 -c \"import json; r=json.load(open('$w/attack.json')); assert r['verdict']=='linkage_risk' and r['raw_values_persisted'] is False; print('TABULAR_PRIVACY_ATTACK_OK')\""
+      ],
+      "expected": {
+        "exit_code": 0,
+        "stdout_contains": [
+          "TABULAR_PRIVACY_ATTACK_OK"
+        ]
+      },
+      "readback": true
+    },
+    {
+      "name": "presidio-arx-pycanon-parity-real-path",
+      "type": "adversarial",
+      "real_world": true,
+      "evidence_class": "live_e2e",
+      "command": [
+        "bash",
+        "-c",
+        "cd .. && w=$(mktemp -d); uv run --with presidio-analyzer==2.2.364 python security/presidio_comparator.py --receipt \"$w/presidio.json\" >/dev/null && python3 -c \"import json,os; r=json.load(open('$w/presidio.json')); assert r['passed'] is True and r['presidio_analyzer_version']=='2.2.364' and r['shared_findings_equal'] is True and r['all_required_entity_types_found'] is True and len(r['shared_findings_sha256'])==64 and r['symmetric_authorized_person_policy'] is True and r['raw_values_persisted'] is False; assert os.stat('$w/presidio.json').st_mode & 0o777 == 0o600; print('PRESIDIO_PINNED_COMPARATOR_VERIFIED')\""
+      ],
+      "timeout_seconds": 300,
+      "expected": {
+        "exit_code": 0,
+        "stdout_contains": [
+          "PRESIDIO_PINNED_COMPARATOR_VERIFIED"
+        ]
+      },
+      "readback": true
+    },
+    {
+      "name": "anonymeter-two-view-linkability-real-path",
+      "type": "adversarial",
+      "real_world": true,
+      "evidence_class": "live_e2e",
+      "command": [
+        "bash",
+        "-c",
+        "cd .. && w=$(mktemp -d); printf 'age,city,income,condition\\n20,A,10,x\\n40,B,30,y\\n60,C,50,z\\n' >\"$w/release.csv\"; printf 'age,city,income,condition\\n20,Z,50,z\\n40,Z,10,x\\n60,Z,30,y\\n' >\"$w/control.csv\"; printf 'id,age,city\\np1,20,A\\np2,40,B\\np3,60,C\\n' >\"$w/a.csv\"; printf 'id,income,condition\\np1,10,x\\np2,30,y\\np3,50,z\\n' >\"$w/b.csv\"; set +e; .venv/bin/anonymization-trial two-view-linkability --release \"$w/release.csv\" --control \"$w/control.csv\" --auxiliary-a \"$w/a.csv\" --auxiliary-b \"$w/b.csv\" --subject-id id --columns-a age,city --columns-b income,condition --output \"$w/receipt.json\"; rc=$?; set -e; test $rc -eq 2 && python3 -c \"import json,os; r=json.load(open('$w/receipt.json')); assert r['schema']=='two_view_linkability.v1' and r['successful_links']==3 and r['control_linkability_rate']==0.0 and r['control_adjusted_excess']==1.0 and r['risk_threshold_kind']=='control_data' and r['raw_values_persisted'] is False; assert os.stat('$w/receipt.json').st_mode & 0o777 == 0o600; print('CONTROL_ADJUSTED_LINKABILITY_DETECTED')\""
+      ],
+      "expected": {
+        "exit_code": 0,
+        "stdout_contains": [
+          "CONTROL_ADJUSTED_LINKABILITY_DETECTED"
+        ]
+      },
+      "readback": true
+    },
+    {
+      "name": "leakpro-applicability-real-product-path",
+      "type": "adversarial",
+      "real_world": true,
+      "evidence_class": "live_e2e",
+      "command": [
+        "bash",
+        "-c",
+        "cd .. && test -f src/anonymization_trial/__main__.py && w=$(mktemp -d); .venv/bin/python -m anonymization_trial model-privacy-applicability --release-kind file_only --output \"$w/file.json\" >/dev/null && set +e; printf model >\"$w/model.bin\"; .venv/bin/python -m anonymization_trial model-privacy-applicability --release-kind learned_model --model \"$w/model.bin\" --output \"$w/model.json\" >/dev/null; rc=$?; set -e; test $rc -eq 2; printf '%s' '{\"schema\":\"affine_gradient_attack.v1\",\"authorized\":true,\"batch_size\":1,\"weight_gradient\":[0.5,-1.0],\"bias_gradient\":0.5}' >\"$w/gradients.json\"; set +e; .venv/bin/python -m anonymization_trial model-gradient-inversion --gradients \"$w/gradients.json\" --output \"$w/gradient-receipt.json\" >/dev/null; grc=$?; set -e; test $grc -eq 2 && python3 -c \"import json,os; a=json.load(open('$w/file.json')); b=json.load(open('$w/model.json')); g=json.load(open('$w/gradient-receipt.json')); assert a['verdict']=='not_applicable' and b['verdict']=='adapter_required'; assert g['verdict']=='reconstruction_signal' and g['raw_values_persisted'] is False; assert os.stat('$w/gradient-receipt.json').st_mode & 0o777 == 0o600; print('LEAKPRO_ROUTING_VERIFIED')\""
+      ],
+      "expected": {
+        "exit_code": 0,
+        "stdout_contains": [
+          "LEAKPRO_ROUTING_VERIFIED"
+        ]
+      },
+      "readback": true
+    },
+    {
+      "name": "competitor-parity-matrix-executable",
+      "type": "adversarial",
+      "real_world": true,
+      "evidence_class": "live_e2e",
+      "command": [
+        "bash",
+        "-c",
+        "cd .. && set -euo pipefail; w=$(mktemp -d); rm -f /tmp/oai-presidio-comparator-receipt.json; uv run --extra multimodal python scripts/verify_competitor_parity.py --receipt \"$w/parity.json\" >/dev/null; python3 -c \"import hashlib,json; r=json.load(open('$w/parity.json')); expected=set('microsoft-presidio-01,arx-data-anonymization-tool-02,pycanon-and-anjana-03,anonymeter-04,leakpro-05,presidio-image-redactor-document-redaction-ecosystem-06,pycanon-and-anjana-07,pycanon-and-anjana-08,anonymeter-09,leakpro-10,microsoft-presidio-11,presidio-image-document-ecosystem-12,container-release-boundary-13,pdf-structural-verification-14,anonymeter-15,anonymeter-16,anonymeter-17,pycanon-and-anjana-18,arx-data-anonymization-tool-19,arx-data-anonymization-tool-20,anonymeter-21,pycanon-and-anjana-22'.split(',')); assert r['matrix_valid'] is True and r['gap_rows']==0 and r['scoped_parity_proven'] is True and r['complete_ecosystem_parity_proven'] is False and r['release_qualified'] is False; assert r['qualification_steps']['ecosystem_inventory']=='failed' and r['release_blockers']==['ecosystem_inventory']; assert all(x['binding_complete'] for x in r['results']); presidio=next(x for x in r['results'] if x['capability_id']=='microsoft-presidio-11'); assert presidio['dependency_bindings']==[{'environment':'isolated_uv_proof_command','requirement':'presidio-analyzer==2.2.364','resolved':True}]; assert all(set(x['step_statuses'])=={'proof_execution','runtime_consumers','source_revision','package_bindings','configuration_binding'} for x in r['results']); assert set(r['capability_bindings'])==expected; assert all(r['capability_bindings'][x['capability_id']]==x['row_sha256'] for x in r['results']); assert r['matrix_sha256']==hashlib.sha256(open('security/competitor_parity_matrix.json','rb').read()).hexdigest(); d=open('$w/parity.json.sha256').read().strip().split('  '); assert d==[hashlib.sha256(open('$w/parity.json','rb').read()).hexdigest(),'parity.json']; print('PARITY_MATRIX_EXECUTED_HONESTLY')\""
+      ],
+      "timeout_seconds": 900,
+      "expected": {
+        "exit_code": 0,
+        "stdout_contains": [
+          "PARITY_MATRIX_EXECUTED_HONESTLY"
+        ]
+      },
+      "readback": true
+    },
+    {
+      "name": "group-wise-attribute-inference-real-path",
+      "type": "adversarial",
+      "real_world": true,
+      "evidence_class": "live_e2e",
+      "command": [
+        "bash",
+        "-c",
+        "cd .. && set -euo pipefail; test -f src/anonymization_trial/__main__.py; w=$(mktemp -d); printf 'age,condition,cohort\\n20,x,A\\n40,y,B\\n60,y,A\\n' >\"$w/release.csv\"; printf 'age,condition,cohort\\n21,x,A\\n39,y,A\\n59,x,B\\n' >\"$w/evaluation.csv\"; set +e; .venv/bin/python -m anonymization_trial attribute-inference-risk --release \"$w/release.csv\" --evaluation \"$w/evaluation.csv\" --quasi-identifiers age --sensitive condition --group-by cohort --output \"$w/risk.json\"; status=$?; set -e; test \"$status\" -eq 2; python3 -c \"import json,os; r=json.load(open('$w/risk.json')); assert r['group_count']==2 and r['minimum_group_accuracy']==0 and r['maximum_group_accuracy']==1; assert r['group_values_persisted'] is False and r['raw_values_persisted'] is False; assert os.stat('$w/risk.json').st_mode & 0o777 == 0o600; assert 'cohort' not in str(r) and 'A' not in str(r) and 'B' not in str(r); print('GROUP_RISK_REAL_PATH_VERIFIED')\""
+      ],
+      "timeout_seconds": 120,
+      "expected": {
+        "exit_code": 0,
+        "stdout_contains": [
+          "GROUP_RISK_REAL_PATH_VERIFIED"
+        ]
+      },
+      "readback": true,
+      "supports_claims": [
+        "anonymize.group_attribute_inference_private_receipt"
+      ]
+    },
+    {
+      "name": "multimodal-image-pdf-redaction",
+      "type": "adversarial",
+      "real_world": true,
+      "evidence_class": "deterministic",
+      "command": [
+        "bash",
+        "-c",
+        "cd .. && uv run --extra multimodal pytest -q tests/test_multimodal.py"
+      ],
+      "timeout_seconds": 300,
+      "expected": {
+        "exit_code": 0,
+        "stdout_contains": [
+          "3 passed"
         ]
       }
     },
@@ -150,6 +318,205 @@
           "lock-verification-failed"
         ]
       }
+    },
+    {
+      "name": "anonymeter-singling-out-real-product-path",
+      "type": "adversarial",
+      "real_world": true,
+      "evidence_class": "live_e2e",
+      "command": [
+        "bash",
+        "-c",
+        "cd .. && .venv/bin/python scripts/eval_predicate_singling_out.py"
+      ],
+      "expected": {
+        "exit_code": 0,
+        "stdout_contains": [
+          "PREDICATE_SINGLING_OUT_REAL_PATH_VERIFIED"
+        ]
+      },
+      "readback": true
+    },
+    {
+      "name": "anonymeter-attribute-inference-real-product-path",
+      "type": "adversarial",
+      "real_world": true,
+      "evidence_class": "live_e2e",
+      "command": [
+        "bash",
+        "-c",
+        ": 'e2e canonical module entrypoint'; cd .. && w=$(mktemp -d); printf 'age,city,condition\\n20,A,x\\n40,B,y\\n60,C,y\\n' >\"$w/release.csv\"; printf 'age,city,condition\\n21,A,x\\n39,B,y\\n' >\"$w/eval.csv\"; set +e; .venv/bin/python -m anonymization_trial attribute-inference-risk --release \"$w/release.csv\" --evaluation \"$w/eval.csv\" --quasi-identifiers age,city --sensitive condition --output \"$w/receipt.json\" >/dev/null; rc=$?; set -e; test $rc -eq 2; python3 -c \"import json,os; r=json.load(open('$w/receipt.json')); assert r['schema']=='attribute_inference_risk.v1' and r['verdict']=='attribute_inference_risk' and r['excess_over_baseline']==0.5 and r['raw_values_persisted'] is False; assert os.stat('$w/receipt.json').st_mode & 0o777 == 0o600; print('ATTRIBUTE_INFERENCE_REAL_PATH_VERIFIED')\""
+      ],
+      "expected": {
+        "exit_code": 0,
+        "stdout_contains": [
+          "ATTRIBUTE_INFERENCE_REAL_PATH_VERIFIED"
+        ]
+      },
+      "readback": true
+    },
+    {
+      "name": "anonymeter-authorized-custom-predictor-real-product-path",
+      "type": "adversarial",
+      "real_world": true,
+      "evidence_class": "live_e2e",
+      "command": [
+        "bash",
+        "-c",
+        "cd .. && .venv/bin/python scripts/eval_custom_predictor.py"
+      ],
+      "expected": {
+        "exit_code": 0,
+        "stdout_contains": [
+          "custom predictor canonical product evaluation: PASS"
+        ]
+      },
+      "readback": true
+    },
+    {
+      "name": "arx-microaggregation-coding-real-product-path",
+      "type": "adversarial",
+      "real_world": true,
+      "evidence_class": "live_e2e",
+      "command": [
+        "bash",
+        "-c",
+        "cd .. && .venv/bin/python scripts/eval_arx_microaggregation.py"
+      ],
+      "expected": {
+        "exit_code": 0,
+        "stdout_contains": [
+          "ARX_MICROAGGREGATION_REAL_PATH_VERIFIED"
+        ]
+      },
+      "readback": true
+    },
+    {
+      "name": "conditioned-multi-sensitive-real-path",
+      "type": "adversarial",
+      "real_world": true,
+      "evidence_class": "live_e2e",
+      "supports_claims": [
+        "anonymize.conditioned_multi_sensitive_metrics"
+      ],
+      "command": [
+        "bash",
+        "-c",
+        "cd .. && .venv/bin/python scripts/eval_conditioned_multi_sensitive.py"
+      ],
+      "timeout_seconds": 120,
+      "expected": {
+        "exit_code": 0,
+        "stdout_contains": [
+          "CONDITIONED_MULTI_SENSITIVE_VERIFIED"
+        ]
+      },
+      "readback": true
+    },
+    {
+      "name": "population-reidentification-real-path",
+      "type": "adversarial",
+      "real_world": true,
+      "evidence_class": "live_e2e",
+      "supports_claims": [
+        "anonymize.population_reidentification_risk"
+      ],
+      "command": [
+        "bash",
+        "-c",
+        "cd .. && .venv/bin/python scripts/eval_population_reidentification.py"
+      ],
+      "timeout_seconds": 120,
+      "expected": {
+        "exit_code": 0,
+        "stdout_contains": [
+          "POPULATION_REIDENTIFICATION_VERIFIED"
+        ]
+      },
+      "readback": true
+    },
+    {
+      "name": "advanced-privacy-transform-real-path",
+      "type": "adversarial",
+      "real_world": true,
+      "evidence_class": "live_e2e",
+      "supports_claims": [
+        "anonymize.advanced_privacy_transform"
+      ],
+      "command": [
+        "bash",
+        "-c",
+        "cd .. && .venv/bin/python scripts/eval_advanced_privacy_transform.py"
+      ],
+      "timeout_seconds": 120,
+      "expected": {
+        "exit_code": 0,
+        "stdout_contains": [
+          "ADVANCED_PRIVACY_TRANSFORM_REAL_PATH_VERIFIED"
+        ]
+      },
+      "readback": true
+    },
+    {
+      "name": "arx-local-recoding-real-product-path",
+      "type": "adversarial",
+      "real_world": true,
+      "evidence_class": "live_e2e",
+      "supports_claims": [
+        "anonymize.arx_local_recoding"
+      ],
+      "command": [
+        "bash",
+        "-c",
+        "cd .. && .venv/bin/python scripts/eval_arx_local_recoding.py"
+      ],
+      "timeout_seconds": 120,
+      "expected": {
+        "exit_code": 0,
+        "stdout_contains": [
+          "ARX_LOCAL_RECODING_REAL_PATH_VERIFIED"
+        ]
+      },
+      "readback": true
+    },
+    {
+      "name": "contextual-graph-two-hop-real-product",
+      "type": "adversarial",
+      "real_world": true,
+      "evidence_class": "live_e2e",
+      "command": [
+        "bash",
+        "-c",
+        "cd .. && set -euo pipefail; .venv/bin/python scripts/eval_contextual_graph_attack.py"
+      ],
+      "expected": {
+        "exit_code": 0,
+        "stdout_contains": [
+          "CONTEXTUAL_GRAPH_LIVE_E2E_VERIFIED"
+        ]
+      },
+      "readback": true
+    },
+    {
+      "name": "differentially-private-count-real-path",
+      "type": "adversarial",
+      "real_world": true,
+      "evidence_class": "live_e2e",
+      "supports_claims": [
+        "anonymize.single_query_epsilon_dp_count"
+      ],
+      "command": [
+        "bash",
+        "-c",
+        "cd .. && .venv/bin/python scripts/eval_dp_count.py"
+      ],
+      "expected": {
+        "exit_code": 0,
+        "stdout_contains": [
+          "DP_COUNT_REAL_PATH_VERIFIED"
+        ]
+      },
+      "readback": true
     }
   ],
   "capability_claims": [
@@ -166,6 +533,79 @@
       "derived_from": {
         "source": "TRIAL_BRIEF.md:16",
         "requirement": "Replace every value identified by the input policy."
+      }
+    },
+    {
+      "id": "anonymize.group_attribute_inference_private_receipt",
+      "description": "Group-wise attribute inference runs through the canonical product path and emits aggregate-only private risk evidence.",
+      "criticality": "important",
+      "claim_semantics": "value_bearing",
+      "evidence_required": {
+        "live_e2e": true
+      },
+      "derived_from": {
+        "source": "security/competitor_parity_matrix.json:anonymeter-21",
+        "requirement": "Bind group-wise risk capability to retained live product evidence."
+      }
+    },
+    {
+      "id": "anonymize.advanced_privacy_transform",
+      "description": "Advanced privacy bounds are enforced through the canonical transformation product path with post-transform recomputation and fail-closed publication.",
+      "criticality": "important",
+      "claim_semantics": "value_bearing",
+      "evidence_required": {
+        "live_e2e": true
+      },
+      "derived_from": {
+        "source": "security/competitor_parity_matrix.json:pycanon-and-anjana-08",
+        "requirement": "Bind advanced ANJANA-style transformation enforcement to retained live product evidence."
+      }
+    },
+    {
+      "id": "anonymize.conditioned_multi_sensitive_metrics",
+      "description": "Conditioned multiple-sensitive analysis follows declared pyCANON gen=False class-key semantics without persisting row tuples.",
+      "criticality": "important",
+      "claim_semantics": "value_bearing",
+      "evidence_required": {
+        "live_e2e": true
+      },
+      "derived_from": {
+        "source": "security/competitor_parity_matrix.json:pycanon-and-anjana-22",
+        "requirement": "Bind conditioned multi-sensitive analysis to retained live product evidence."
+      }
+    },
+    {
+      "id": "anonymize.population_reidentification_risk",
+      "description": "Population-backed prosecutor, journalist, marketer, and uniqueness risk aggregates execute through the canonical offline product path without retaining QI tuples.",
+      "criticality": "important",
+      "claim_semantics": "value_bearing",
+      "evidence_required": {
+        "live_e2e": true
+      },
+      "derived_from": {
+        "source": "security/competitor_parity_matrix.json:arx-population-risk-29",
+        "requirement": "Bind ARX-style population re-identification risk analysis to retained live product evidence."
+      }
+    },
+    {
+      "id": "anonymize.arx_local_recoding",
+      "description": "Authorized local hierarchy recoding preserves already-safe equivalence classes and independently recomputes post-transform k through the canonical product path.",
+      "criticality": "important",
+      "claim_semantics": "value_bearing",
+      "evidence_required": {
+        "live_e2e": true
+      },
+      "derived_from": {
+        "source": "security/competitor_parity_matrix.json:arx-local-recoding-24",
+        "requirement": "Bind ARX-style local recoding to retained live product evidence."
+      }
+    },
+    {
+      "id": "anonymize.single_query_epsilon_dp_count",
+      "description": "Canonical offline CLI releases one predicate count using the Laplace mechanism with declared epsilon, sensitivity-one add/remove adjacency, cryptographic randomness, and no predicate or true count in the receipt.",
+      "criticality": "important",
+      "evidence_required": {
+        "live_e2e": true
       }
     }
   ]

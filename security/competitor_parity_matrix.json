@@ -1,0 +1,934 @@
+{
+  "schema": "anonymization.competitor_parity.v2",
+  "generated_for": "oai-trial contextual privacy hardening",
+  "rows": [
+    {
+      "competitor": "Microsoft Presidio",
+      "source": "https://github.com/microsoft/presidio",
+      "source_revision": "f251c513e8aad6820e9b2a44983ebf3a93637b07",
+      "capability": "validated structured identifiers plus policy-authorized PERSON and LOCATION offsets",
+      "our_equivalent_executable_check": "checksum/range validated ITIN, card, IBAN and offset-only authorized PERSON/LOCATION catalogs",
+      "proof_command": [
+        ".venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_entity_detection.py"
+      ],
+      "expected_exit": 0,
+      "result": "pass",
+      "project_specific_advantage_or_remaining_gap": "Advantage: deterministic offline offset-only findings never persist raw values and catalogs remain policy-authorized.",
+      "runtime_consumers": [
+        "src/anonymization_trial/__main__.py",
+        "src/anonymization_trial/entity_detection.py"
+      ],
+      "semantic_assertions": [
+        "checksum/range validated ITIN, card, IBAN and offset-only authorized PERSON/LOCATION catalogs"
+      ],
+      "dependencies": [],
+      "applicability": "applicable",
+      "capability_id": "microsoft-presidio-01"
+    },
+    {
+      "competitor": "ARX Data Anonymization Tool",
+      "source": "https://github.com/arx-deidentifier/arx",
+      "source_revision": "4e0a5f5340fe9a58c44b34c2f9acd2d68f1dad5f",
+      "capability": "declared-QI metrics plus hierarchy generalization, bounded suppression, and utility-aware selection",
+      "our_equivalent_executable_check": "tabular_privacy_metrics.v1 and hierarchy_generalization.v1 with independent post-transform recomputation",
+      "proof_command": [
+        ".venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_tabular_privacy.py"
+      ],
+      "expected_exit": 0,
+      "result": "pass",
+      "project_specific_advantage_or_remaining_gap": "Advantage: approved hierarchies remain explicit and the no-overwrite transform independently recomputes k after selection.",
+      "runtime_consumers": [
+        "src/anonymization_trial/__main__.py",
+        "src/anonymization_trial/tabular_privacy.py"
+      ],
+      "semantic_assertions": [
+        "tabular_privacy_metrics.v1 and hierarchy_generalization.v1 with independent post-transform recomputation"
+      ],
+      "dependencies": [],
+      "applicability": "applicable",
+      "capability_id": "arx-data-anonymization-tool-02"
+    },
+    {
+      "competitor": "pyCANON and ANJANA",
+      "source": "https://github.com/IFCA-Advanced-Computing/pycanon ; https://github.com/IFCA-Advanced-Computing/anjana",
+      "source_revision": "pycanon@bf555a672dfa5560272864f24db24014954baaa9;anjana@5dcfc73e913824d7e918e9e9363f36a40b4abf2e",
+      "capability": "k-anonymity, distinct l-diversity, categorical and numerical EMD t-closeness, pyCANON-normalized average equivalence-class size, suppression-aware discernibility/classification, re-identification risk, entropy, and aggregate class/QI statistics",
+      "our_equivalent_executable_check": "canonical tabular-risk CLI emits tabular_privacy_metrics.v2 with pyCANON-equivalent normalization and optional authorized --raw-input suppression accounting",
+      "proof_command": [
+        "bash",
+        "-c",
+        "set -euo pipefail; w=$(mktemp -d); printf 'group,condition\\na,A\\na,B\\nb,A\\nc,B\\n' >\"$w/raw.csv\"; printf 'group,condition\\na,A\\na,B\\n' >\"$w/release.csv\"; .venv/bin/python -m anonymization_trial tabular-risk --input \"$w/release.csv\" --raw-input \"$w/raw.csv\" --quasi-identifiers group --sensitive condition >\"$w/receipt.json\"; python3 -c \"import json; r=json.load(open('$w/receipt.json')); assert r['average_equivalence_class_size']==1.0 and r['discernibility_metric']==12 and r['classification_metric']==.75 and r['raw_values_persisted'] is False; print('PYCANON_UTILITY_REAL_PATH_VERIFIED', r['equivalence_class_statistics'])\""
+      ],
+      "expected_exit": 0,
+      "result": "pass",
+      "project_specific_advantage_or_remaining_gap": "Advantage: stdlib-only aggregate metrics run through the canonical product CLI, use explicit authorized raw/release inputs for suppression penalties, and persist no values; multiple-sensitive-attribute metrics are covered by a separate executable row.",
+      "runtime_consumers": [
+        "src/anonymization_trial/__main__.py",
+        "src/anonymization_trial/tabular_privacy.py"
+      ],
+      "semantic_assertions": [
+        "average_ecsize equals anonymized records divided by equivalence-class count and k",
+        "discernibility penalizes each suppressed record by raw dataset size",
+        "classification includes suppression and non-majority sensitive values",
+        "receipt includes aggregate risk, entropy, equivalence-class, and QI statistics without values"
+      ],
+      "dependencies": [],
+      "applicability": "applicable",
+      "capability_id": "pycanon-and-anjana-03"
+    },
+    {
+      "competitor": "Anonymeter",
+      "source": "https://github.com/statice/anonymeter",
+      "source_revision": "f5c61c592e6353ed402505d7095e9a27bf1b49b9",
+      "capability": "linkability risk from repeated/equivalent released records",
+      "our_equivalent_executable_check": "manifest-bound contextual_privacy_risk.v1 stable-pseudonym frequency audit",
+      "proof_command": [
+        ".venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_privacy_risk.py"
+      ],
+      "expected_exit": 0,
+      "result": "pass",
+      "project_specific_advantage_or_remaining_gap": "Advantage: rejects stale/tampered releases and unsupported pseudonym algorithms before assessment.",
+      "runtime_consumers": [
+        "src/anonymization_trial/__main__.py",
+        "src/anonymization_trial/privacy_risk.py"
+      ],
+      "semantic_assertions": [
+        "manifest-bound contextual_privacy_risk.v1 stable-pseudonym frequency audit"
+      ],
+      "dependencies": [],
+      "applicability": "applicable",
+      "capability_id": "anonymeter-04"
+    },
+    {
+      "competitor": "LeakPro",
+      "source": "https://github.com/aidotse/LeakPro",
+      "source_revision": "8f7aa38a381457a077715cb97bad19624257de0b",
+      "capability": "bounded auxiliary-data membership and unique-linkage attack",
+      "our_equivalent_executable_check": "bounded_auxiliary_attack.v1 campaign",
+      "proof_command": [
+        ".venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "security/tests/test_auxiliary_inference.py"
+      ],
+      "expected_exit": 0,
+      "result": "pass",
+      "project_specific_advantage_or_remaining_gap": "Advantage: deterministic credential-free auxiliary attack receipts; learned-model and gradient MIA remain out of scope for a data-release engine without a supplied model.",
+      "runtime_consumers": [
+        "security/attacks/auxiliary_inference.py"
+      ],
+      "semantic_assertions": [
+        "bounded_auxiliary_attack.v1 campaign"
+      ],
+      "dependencies": [],
+      "applicability": "applicable",
+      "capability_id": "leakpro-05"
+    },
+    {
+      "competitor": "Presidio Image Redactor / document-redaction ecosystem",
+      "source": "https://github.com/microsoft/presidio",
+      "source_revision": "f251c513e8aad6820e9b2a44983ebf3a93637b07",
+      "capability": "image OCR and multimodal/document redaction",
+      "our_equivalent_executable_check": "offline Tesseract OCR image/PDF raster redaction with independent post-redaction OCR and private receipt",
+      "proof_command": [
+        "uv",
+        "run",
+        "--extra",
+        "multimodal",
+        "pytest",
+        "-q",
+        "tests/test_multimodal.py"
+      ],
+      "expected_exit": 0,
+      "result": "pass",
+      "project_specific_advantage_or_remaining_gap": "Advantage: PDF output is rebuilt from redacted raster pages, removing hidden text/object layers; output is independently re-OCRed, receipts contain rule IDs but no raw PII, and OCR recall limitations remain explicit.",
+      "runtime_consumers": [
+        "src/anonymization_trial/__main__.py",
+        "src/anonymization_trial/multimodal.py"
+      ],
+      "semantic_assertions": [
+        "offline Tesseract OCR image/PDF raster redaction with independent post-redaction OCR and private receipt"
+      ],
+      "dependencies": [],
+      "applicability": "applicable",
+      "capability_id": "presidio-image-redactor-document-redaction-ecosystem-06"
+    },
+    {
+      "competitor": "pyCANON and ANJANA",
+      "source": "https://github.com/IFCA-Advanced-Computing/pycanon ; https://github.com/IFCA-Advanced-Computing/anjana",
+      "source_revision": "pycanon@bf555a672dfa5560272864f24db24014954baaa9;anjana@5dcfc73e913824d7e918e9e9363f36a40b4abf2e",
+      "capability": "entropy l-diversity over declared quasi-identifier equivalence classes",
+      "our_equivalent_executable_check": "tabular_privacy_metrics.v1 entropy_l_diversity computed from the weakest class",
+      "proof_command": [
+        ".venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_tabular_privacy.py",
+        "-k",
+        "entropy_l_diversity"
+      ],
+      "expected_exit": 0,
+      "result": "pass",
+      "project_specific_advantage_or_remaining_gap": "Advantage: deterministic stdlib-only aggregate metric emits no raw sensitive values and shares the fail-closed declared-column boundary.",
+      "runtime_consumers": [
+        "src/anonymization_trial/__main__.py",
+        "src/anonymization_trial/tabular_privacy.py"
+      ],
+      "semantic_assertions": [
+        "tabular_privacy_metrics.v1 entropy_l_diversity computed from the weakest class"
+      ],
+      "dependencies": [],
+      "applicability": "applicable",
+      "capability_id": "pycanon-and-anjana-07"
+    },
+    {
+      "competitor": "pyCANON and ANJANA",
+      "source": "https://github.com/IFCA-Advanced-Computing/pycanon ; https://github.com/IFCA-Advanced-Computing/anjana",
+      "source_revision": "pycanon@bf555a672dfa5560272864f24db24014954baaa9;anjana@5dcfc73e913824d7e918e9e9363f36a40b4abf2e",
+      "capability": "(alpha,k)-anonymity; recursive (c,l)-diversity; basic and enhanced beta-likeness; categorical total-variation and numerical EMD t-closeness",
+      "our_equivalent_executable_check": "canonical tabular-advanced-transform CLI applies authorized hierarchies, independently recomputes metrics, and deletes output unless declared alpha-k, recursive-c-l, enhanced-beta, categorical-t, and optional numerical-EMD-t bounds hold",
+      "proof_command": [
+        ".venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_tabular_privacy.py",
+        "tests/test_cli_commands.py",
+        "-k",
+        "advanced_transform"
+      ],
+      "expected_exit": 0,
+      "result": "pass",
+      "project_specific_advantage_or_remaining_gap": "Advantage: deterministic offline product path uses no-overwrite publication and fails closed by removing unpublished output when any independently recomputed declared bound fails; enhanced beta-likeness compares each unmodified relative increase against min(beta, -ln(global probability)) before publication.",
+      "runtime_consumers": [
+        "src/anonymization_trial/__main__.py",
+        "src/anonymization_trial/tabular_privacy.py"
+      ],
+      "semantic_assertions": [
+        "tabular-advanced-transform is a canonical CLI product path",
+        "all declared advanced bounds are recomputed after transformation",
+        "failed categorical or numerical bounds delete unpublished output",
+        "each unmodified sensitive-value relative increase is bounded by min(beta, -ln(global probability))",
+        "the reproduced unsafe-acceptance case is a mandatory rejection regression",
+        "receipts contain aggregate metrics and no raw sensitive tuples"
+      ],
+      "dependencies": [],
+      "applicability": "applicable",
+      "capability_id": "pycanon-and-anjana-08"
+    },
+    {
+      "competitor": "Anonymeter",
+      "source": "https://github.com/statice/anonymeter",
+      "source_revision": "f5c61c592e6353ed402505d7095e9a27bf1b49b9",
+      "capability": "mixed-type nearest-neighbor linkability using two auxiliary views, random baseline, optional control data, uncertainty",
+      "our_equivalent_executable_check": "two_view_linkability.v1 with mixed numeric/categorical distance, tie abstention, random baseline, optional control data, control-adjusted excess risk, and Wilson uncertainty",
+      "proof_command": [
+        ".venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_tabular_privacy.py",
+        "-k",
+        "two_view_linkability"
+      ],
+      "expected_exit": 0,
+      "result": "pass",
+      "project_specific_advantage_or_remaining_gap": "Advantage: deterministic offline two-view mixed-type linkage reports both random-baseline excess and optional control-adjusted excess without persisting subject identifiers; numeric normalization is independently fitted for release and control candidates and ties abstain.",
+      "runtime_consumers": [
+        "src/anonymization_trial/__main__.py",
+        "src/anonymization_trial/tabular_privacy.py"
+      ],
+      "semantic_assertions": [
+        "two_view_linkability.v1 with mixed numeric/categorical distance, tie abstention, random baseline, optional control data, control-adjusted excess risk, and Wilson uncertainty"
+      ],
+      "dependencies": [],
+      "applicability": "applicable",
+      "capability_id": "anonymeter-09"
+    },
+    {
+      "competitor": "LeakPro",
+      "source": "https://github.com/aidotse/LeakPro",
+      "source_revision": "8f7aa38a381457a077715cb97bad19624257de0b",
+      "capability": "learned-model and gradient membership-inference attacks",
+      "our_equivalent_executable_check": "run_model_bound_membership_attack plus authorized single-example affine run_gradient_inversion_attack with aggregate-only private receipts",
+      "proof_command": [
+        ".venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_model_privacy.py"
+      ],
+      "expected_exit": 0,
+      "result": "pass",
+      "project_specific_advantage_or_remaining_gap": "Advantage: deterministic offline model-bound attacks accept exact authorized schemas, persist no reconstructed values, and explicitly bound gradient inversion to affine batch-size-one observations rather than overstating general coverage.",
+      "runtime_consumers": [
+        "src/anonymization_trial/__main__.py",
+        "src/anonymization_trial/model_privacy.py"
+      ],
+      "semantic_assertions": [
+        "run_model_bound_membership_attack plus authorized single-example affine run_gradient_inversion_attack with aggregate-only private receipts"
+      ],
+      "dependencies": [],
+      "applicability": "applicable",
+      "capability_id": "leakpro-10"
+    },
+    {
+      "competitor": "Microsoft Presidio",
+      "source": "https://github.com/microsoft/presidio",
+      "source_revision": "presidio-analyzer==2.2.364",
+      "capability": "paired structured-identifier comparator on identical controlled fixtures",
+      "our_equivalent_executable_check": "presidio_comparator_receipt.v2 requires every configured entity type and binds exact wheel RECORD, package metadata, configuration, and offset/type findings by digest under the same structured and approved-PERSON policy against presidio-analyzer 2.2.364",
+      "proof_command": [
+        "uv",
+        "run",
+        "--with",
+        "presidio-analyzer==2.2.364",
+        "python",
+        "security/presidio_comparator.py"
+      ],
+      "expected_exit": 0,
+      "result": "pass",
+      "project_specific_advantage_or_remaining_gap": "Advantage: equal policy configuration and exact offset/type comparison remain deterministic and model-free; the aggregate-only receipt binds the complete finding set by digest and is mode 0600 from creation.",
+      "dependencies": [
+        "presidio-analyzer==2.2.364"
+      ],
+      "runtime_consumers": [
+        "security/presidio_comparator.py",
+        "src/anonymization_trial/entity_detection.py"
+      ],
+      "semantic_assertions": [
+        "identical fixture and authorized entity policy",
+        "exact type/start/end finding equality",
+        "complete finding-set digest equality",
+        "exact installed wheel RECORD, package metadata source URL, and comparison configuration are digest-bound",
+        "zero mismatch implied by shared_findings_equal"
+      ],
+      "applicability": "applicable",
+      "capability_id": "microsoft-presidio-11"
+    },
+    {
+      "competitor": "Presidio image/document ecosystem",
+      "source": "https://github.com/microsoft/presidio",
+      "source_revision": "f251c513e8aad6820e9b2a44983ebf3a93637b07",
+      "capability": "OCR spans across unspecified/multiple/mixed PII, segmentation, long-window and partial-detection cases",
+      "our_equivalent_executable_check": "policy-driven unbounded OCR token-window matching plus fail-closed no-match and independent post-redaction OCR",
+      "proof_command": [
+        "uv",
+        "run",
+        "--extra",
+        "multimodal",
+        "pytest",
+        "-q",
+        "tests/test_multimodal.py"
+      ],
+      "expected_exit": 0,
+      "result": "pass",
+      "project_specific_advantage_or_remaining_gap": "Advantage: arbitrary OCR segmentation is matched against every authorized policy literal without a fixed token-window ceiling; partial detections never produce a ready output and receipts contain rule IDs rather than raw values.",
+      "runtime_consumers": [
+        "src/anonymization_trial/__main__.py",
+        "src/anonymization_trial/multimodal.py"
+      ],
+      "semantic_assertions": [
+        "policy-driven unbounded OCR token-window matching plus fail-closed no-match and independent post-redaction OCR"
+      ],
+      "dependencies": [],
+      "applicability": "applicable",
+      "capability_id": "presidio-image-document-ecosystem-12"
+    },
+    {
+      "competitor": "Container release boundary",
+      "source": "https://docs.docker.com/engine/containers/run/",
+      "source_revision": "accessed-2026-09-19",
+      "capability": "host-readable mandatory mode-0600 receipts under container execution",
+      "our_equivalent_executable_check": "ANON_HOST_UID/ANON_HOST_GID launcher drops privileges before the canonical CLI writes its private receipt; contract checks owner, mode, and JSON readback",
+      "proof_command": [
+        ".venv/bin/python",
+        "security/docker_receipt_ownership_contract.py"
+      ],
+      "expected_exit": 0,
+      "result": "pass",
+      "project_specific_advantage_or_remaining_gap": "Advantage: explicit opt-in preserves the evaluator's default-root mounted-run contract while production receipts are created directly as the invoking host identity with mode 0600; no post-hoc permissive chmod or raw-data copy is used.",
+      "runtime_consumers": [
+        "security/docker_receipt_ownership_contract.py",
+        "src/anonymization_trial/container_entrypoint.py"
+      ],
+      "semantic_assertions": [
+        "ANON_HOST_UID/ANON_HOST_GID launcher drops privileges before the canonical CLI writes its private receipt; contract checks owner, mode, and JSON readback"
+      ],
+      "dependencies": [],
+      "applicability": "applicable",
+      "capability_id": "container-release-boundary-13"
+    },
+    {
+      "competitor": "PDF structural verification",
+      "source": "https://pymupdf.readthedocs.io/",
+      "source_revision": "accessed-2026-09-19",
+      "capability": "independent metadata, attachment, annotation, hidden/non-rendered carrier oracle",
+      "our_equivalent_executable_check": "independent raw-structure marker, pdfinfo metadata, and pdftotext hidden-text oracle executed before publish",
+      "proof_command": [
+        "uv",
+        "run",
+        "--extra",
+        "multimodal",
+        "pytest",
+        "-q",
+        "tests/test_multimodal.py",
+        "-k",
+        "real_image_and_pdf_redaction_paths"
+      ],
+      "expected_exit": 0,
+      "result": "pass",
+      "project_specific_advantage_or_remaining_gap": "Advantage: raster/OCR transformation and structural verification use separate mechanisms; publication fails closed on attachments, annotations, forms, layers, scripts, metadata, or extractable hidden text.",
+      "runtime_consumers": [
+        "src/anonymization_trial/__main__.py",
+        "src/anonymization_trial/multimodal.py"
+      ],
+      "semantic_assertions": [
+        "independent raw-structure marker, pdfinfo metadata, and pdftotext hidden-text oracle executed before publish"
+      ],
+      "dependencies": [],
+      "applicability": "applicable",
+      "capability_id": "pdf-structural-verification-14"
+    },
+    {
+      "competitor": "Anonymeter",
+      "source": "https://github.com/statice/anonymeter",
+      "source_revision": "f5c61c592e6353ed402505d7095e9a27bf1b49b9",
+      "capability": "attribute inference over attacker-declared quasi-identifiers and a sensitive attribute",
+      "our_equivalent_executable_check": "attribute_inference_risk.v1 mixed-type nearest-neighbor attack through the canonical CLI with majority baseline and tie abstention",
+      "proof_command": [
+        ".venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_tabular_privacy.py",
+        "-k",
+        "attribute_inference"
+      ],
+      "expected_exit": 0,
+      "result": "pass",
+      "project_specific_advantage_or_remaining_gap": "Advantage: deterministic offline aggregate-only receipt requires explicit authorized columns, abstains on ambiguous labels, reports excess over a majority baseline, and persists no row or sensitive values; group-wise estimates are covered by anonymeter-21, while custom predictors remain an explicit gap.",
+      "runtime_consumers": [
+        "src/anonymization_trial/__main__.py",
+        "src/anonymization_trial/tabular_privacy.py"
+      ],
+      "semantic_assertions": [
+        "mixed numeric and categorical nearest-neighbor inference",
+        "majority baseline and tie abstention",
+        "receipt persists no raw values"
+      ],
+      "dependencies": [],
+      "applicability": "applicable",
+      "capability_id": "anonymeter-15"
+    },
+    {
+      "competitor": "Anonymeter",
+      "source": "https://github.com/statice/anonymeter",
+      "source_revision": "f5c61c592e6353ed402505d7095e9a27bf1b49b9",
+      "capability": "predicate-search singling-out attack over attacker-declared quasi-identifiers",
+      "our_equivalent_executable_check": "singling_out_risk.v2 bounded equality-predicate search across every authorized QI subset through the canonical CLI",
+      "proof_command": [
+        ".venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_tabular_privacy.py",
+        "-k",
+        "singling_out"
+      ],
+      "expected_exit": 0,
+      "result": "pass",
+      "project_specific_advantage_or_remaining_gap": "Advantage: deterministic offline bounded predicate search requires explicit authorized columns and persists no predicates or row values; Anonymeter baseline/control confidence semantics remain a gap.",
+      "runtime_consumers": [
+        "src/anonymization_trial/__main__.py",
+        "src/anonymization_trial/tabular_privacy.py"
+      ],
+      "semantic_assertions": [
+        "all equality predicates through the configured subset size are counted",
+        "exact successful-predicate and exposed-record accounting",
+        "missing declared columns and excessive search dimensions fail closed",
+        "receipt persists no predicates or raw values"
+      ],
+      "dependencies": [],
+      "applicability": "applicable",
+      "capability_id": "anonymeter-16"
+    },
+    {
+      "competitor": "Anonymeter",
+      "source": "https://github.com/statice/anonymeter",
+      "source_revision": "f5c61c592e6353ed402505d7095e9a27bf1b49b9",
+      "capability": "release risk assessment connected to publication authorization",
+      "our_equivalent_executable_check": "policy release_risk.max_pseudonym_frequency is enforced against staged bytes before atomic publication",
+      "proof_command": [
+        ".venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_privacy_risk.py",
+        "-k",
+        "policy_frequency_gate"
+      ],
+      "expected_exit": 0,
+      "result": "pass",
+      "project_specific_advantage_or_remaining_gap": "Advantage: an approved deterministic offline threshold is a mechanical publication gate, not an advisory score; violation leaves neither corpus nor ready report and persists no pseudonym values.",
+      "runtime_consumers": [
+        "src/anonymization_trial/pipeline.py",
+        "src/anonymization_trial/privacy_risk.py"
+      ],
+      "semantic_assertions": [
+        "risk threshold is policy-authorized",
+        "frequency is computed over staged release bytes",
+        "threshold violation prevents atomic publication"
+      ],
+      "dependencies": [],
+      "applicability": "applicable",
+      "capability_id": "anonymeter-17"
+    },
+    {
+      "competitor": "pyCANON and ANJANA",
+      "source": "https://github.com/IFCA-Advanced-Computing/pycanon ; https://github.com/IFCA-Advanced-Computing/anjana",
+      "source_revision": "pycanon@bf555a672dfa5560272864f24db24014954baaa9;anjana@5dcfc73e913824d7e918e9e9363f36a40b4abf2e",
+      "capability": "multiple-sensitive-attribute delta-disclosure and categorical/numerical t-closeness",
+      "our_equivalent_executable_check": "tabular-risk accepts multiple declared sensitive columns and emits per-attribute aggregate delta-disclosure, total-variation t-closeness, and normalized numerical EMD maxima",
+      "proof_command": [
+        ".venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_tabular_privacy.py",
+        "tests/test_cli_commands.py",
+        "-k",
+        "multiple_sensitive"
+      ],
+      "expected_exit": 0,
+      "result": "pass",
+      "project_specific_advantage_or_remaining_gap": "Advantage: the canonical offline CLI audits every explicitly authorized sensitive attribute while refusing QI overlap and never materializing or persisting cross-attribute value tuples.",
+      "runtime_consumers": [
+        "src/anonymization_trial/__main__.py",
+        "src/anonymization_trial/tabular_privacy.py"
+      ],
+      "semantic_assertions": [
+        "every declared sensitive attribute is audited independently",
+        "delta-disclosure and categorical/numerical t-closeness maxima are aggregate-only",
+        "sensitive/QI overlap fails closed",
+        "raw sensitive values and cross-attribute tuples are not persisted"
+      ],
+      "dependencies": [],
+      "applicability": "applicable",
+      "capability_id": "pycanon-and-anjana-18"
+    },
+    {
+      "competitor": "ARX Data Anonymization Tool",
+      "source": "https://github.com/arx-deidentifier/arx",
+      "source_revision": "4e0a5f5340fe9a58c44b34c2f9acd2d68f1dad5f",
+      "capability": "numeric microaggregation with top and bottom coding",
+      "our_equivalent_executable_check": "tabular-microaggregate applies explicit numeric bounds, fixed-size deterministic aggregation, and independently recomputes declared-QI k-anonymity before retaining output",
+      "proof_command": [
+        "bash",
+        "-c",
+        "set -euo pipefail; w=$(mktemp -d); printf 'age,condition\\n10,A\\n20,B\\n90,A\\n100,B\\n' >\"$w/in.csv\"; printf '{\"age\":[15,95]}\\n' >\"$w/bounds.json\"; .venv/bin/python -m anonymization_trial tabular-microaggregate --input \"$w/in.csv\" --output \"$w/out.csv\" --quasi-identifiers age --sensitive condition --numeric-columns age --minimum-k 2 --bounds \"$w/bounds.json\" >\"$w/receipt.json\"; python3 -c \"import json; r=json.load(open('$w/receipt.json')); assert r['privacy_recomputed']['k_anonymity']==2 and r['raw_values_persisted_in_receipt'] is False; assert open('$w/out.csv').read().splitlines()[1:]==['17.5,A','17.5,B','92.5,A','92.5,B']\""
+      ],
+      "expected_exit": 0,
+      "result": "pass",
+      "project_specific_advantage_or_remaining_gap": "Advantage: deterministic stdlib-only transformation requires operator-declared columns and bounds, refuses overwrite, persists no source values in its receipt, and deletes output when independent post-transform k recomputation fails.",
+      "runtime_consumers": [
+        "src/anonymization_trial/__main__.py",
+        "src/anonymization_trial/tabular_privacy.py"
+      ],
+      "semantic_assertions": [
+        "top and bottom coding occurs before microaggregation",
+        "remainder records merge into the preceding cluster rather than forming a class below k",
+        "all declared quasi-identifiers are independently audited after transformation",
+        "unsafe output is deleted before release"
+      ],
+      "dependencies": [],
+      "applicability": "applicable",
+      "capability_id": "arx-data-anonymization-tool-19"
+    },
+    {
+      "competitor": "ARX Data Anonymization Tool",
+      "source": "https://github.com/arx-deidentifier/arx",
+      "source_revision": "4e0a5f5340fe9a58c44b34c2f9acd2d68f1dad5f",
+      "capability": "delta-presence risk bounds against an authorized reference population",
+      "our_equivalent_executable_check": "canonical delta-presence-risk CLI computes aggregate minimum/maximum QI-class sample probabilities and rejects releases outside the population",
+      "proof_command": [
+        "bash",
+        "-c",
+        "set -euo pipefail; w=$(mktemp -d); printf 'zip,age\\na,20\\na,20\\nb,30\\n' >\"$w/release.csv\"; printf 'zip,age\\na,20\\na,20\\na,20\\na,20\\nb,30\\nb,30\\n' >\"$w/population.csv\"; .venv/bin/python -m anonymization_trial delta-presence-risk --release \"$w/release.csv\" --population \"$w/population.csv\" --quasi-identifiers zip,age >\"$w/receipt.json\"; python3 -c \"import json; r=json.load(open('$w/receipt.json')); assert r['minimum_delta_presence']==.5 and r['maximum_delta_presence']==.5 and r['raw_values_persisted'] is False; print('DELTA_PRESENCE_REAL_PATH_VERIFIED')\""
+      ],
+      "expected_exit": 0,
+      "result": "pass",
+      "project_specific_advantage_or_remaining_gap": "Advantage: deterministic offline product path emits aggregate-only bounds, requires explicit QIs, and fails closed when release classes exceed the authorized population.",
+      "runtime_consumers": [
+        "src/anonymization_trial/__main__.py",
+        "src/anonymization_trial/tabular_privacy.py"
+      ],
+      "semantic_assertions": [
+        "minimum and maximum delta-presence equal release QI-class frequency divided by population QI-class frequency",
+        "release classes absent from or more frequent than the population are rejected",
+        "receipt persists no QI values"
+      ],
+      "dependencies": [],
+      "applicability": "applicable",
+      "capability_id": "arx-data-anonymization-tool-20"
+    },
+    {
+      "competitor": "Anonymeter",
+      "source": "https://github.com/statice/anonymeter",
+      "source_revision": "f5c61c592e6353ed402505d7095e9a27bf1b49b9",
+      "capability": "predicate-search singling-out with random baseline, optional control comparison, and uncertainty interval",
+      "our_equivalent_executable_check": "singling_out_risk.v3 bounded equality-predicate search with baseline/control-adjusted excess and Wilson 95% interval through the canonical CLI",
+      "proof_command": [
+        "bash",
+        "-c",
+        "set -euo pipefail; w=$(mktemp -d); printf 'age,city\\n20,a\\n30,b\\n40,c\\n' >\"$w/synthetic.csv\"; printf 'age,city\\n21,a\\n31,b\\n41,c\\n' >\"$w/control.csv\"; set +e; .venv/bin/python -m anonymization_trial singling-out-risk --input \"$w/synthetic.csv\" --quasi-identifiers age,city --control \"$w/control.csv\" --output \"$w/risk.json\"; status=$?; set -e; test \"$status\" -eq 0; python3 -c \"import json,os; r=json.load(open('$w/risk.json')); assert r['schema']=='singling_out_risk.v3' and r['predicates_evaluated']>0 and r['control_singling_out_rate'] is not None and len(r['confidence_interval_95'])==2 and r['raw_values_persisted'] is False; assert os.stat('$w/risk.json').st_mode & 0o777 == 0o600; print('SINGLING_OUT_V3_REAL_PATH_VERIFIED')\""
+      ],
+      "expected_exit": 0,
+      "result": "pass",
+      "project_specific_advantage_or_remaining_gap": "Advantage: deterministic offline search requires explicit authorized columns, accepts optional authorized control data, and persists aggregate uncertainty without predicates or row values.",
+      "runtime_consumers": [
+        "src/anonymization_trial/__main__.py",
+        "src/anonymization_trial/tabular_privacy.py"
+      ],
+      "semantic_assertions": [
+        "canonical singling-out command executes predicate search, never attribute inference",
+        "random baseline and baseline-adjusted excess are emitted",
+        "same-QI control evaluation selects a control-adjusted threshold",
+        "Wilson 95% uncertainty interval is emitted",
+        "receipt contains no predicates or source values"
+      ],
+      "dependencies": [],
+      "applicability": "applicable",
+      "capability_id": "anonymeter-21"
+    },
+    {
+      "competitor": "pyCANON/ANJANA",
+      "source": "https://github.com/IFCA-Advanced-Computing/pycanon ; https://github.com/IFCA-Advanced-Computing/anjana",
+      "source_revision": "pycanon@bf555a672dfa5560272864f24db24014954baaa9;anjana@5dcfc73e913824d7e918e9e9363f36a40b4abf2e",
+      "capability": "conditioned multiple-sensitive-attribute privacy analysis (pyCANON gen=False semantics)",
+      "our_equivalent_executable_check": "canonical tabular-risk CLI adds every other declared sensitive attribute to the equivalence-class key while auditing each target attribute; retained evaluator checks exact attribute cardinality, per-attribute conditioned metrics, aggregate maxima, receipt mode, and no-raw output",
+      "proof_command": [
+        ".venv/bin/python",
+        "scripts/eval_conditioned_multi_sensitive.py"
+      ],
+      "expected_exit": 0,
+      "result": "pass",
+      "project_specific_advantage_or_remaining_gap": "Advantage: deterministic offline conditioned analysis exposes aggregate metrics only and requires explicit operator-declared sensitive columns.",
+      "runtime_consumers": [
+        "src/anonymization_trial/__main__.py",
+        "src/anonymization_trial/tabular_privacy.py"
+      ],
+      "semantic_assertions": [
+        "each target sensitive attribute is audited with all other sensitive attributes included in its class key",
+        "aggregate output persists no row tuples or sensitive values",
+        "unconditioned behavior remains the default"
+      ],
+      "dependencies": [],
+      "applicability": "applicable",
+      "capability_id": "pycanon-and-anjana-22"
+    },
+    {
+      "competitor": "ANJANA",
+      "source": "https://github.com/IFCA-Advanced-Computing/anjana",
+      "source_revision": "5dcfc73e913824d7e918e9e9363f36a40b4abf2e",
+      "capability": "hierarchy transformation with k, alpha-k, recursive-c-l, beta-likeness, entropy-l-diversity, delta-disclosure, and t-closeness release bounds",
+      "our_equivalent_executable_check": "canonical tabular-advanced-transform applies approved hierarchies, recomputes every declared bound, and deletes output when any bound fails",
+      "proof_command": [
+        "bash",
+        "-c",
+        "set -euo pipefail; w=$(mktemp -d); printf 'group,condition\\na,A\\na,B\\nb,A\\nb,B\\n' >\"$w/input.csv\"; printf '%s' '{\"group\":{\"a\":[\"*\"],\"b\":[\"*\"]}}' >\"$w/hierarchy.json\"; .venv/bin/python -m anonymization_trial tabular-advanced-transform --input \"$w/input.csv\" --output \"$w/output.csv\" --quasi-identifiers group --sensitive condition --hierarchy \"$w/hierarchy.json\" --minimum-k 2 --maximum-alpha .5 --recursive-l 2 --maximum-recursive-c 1 --maximum-beta 0 --maximum-t 0 --minimum-entropy-l 2 --maximum-delta-disclosure 0 >\"$w/receipt.json\"; python3 -c \"import json; r=json.load(open('$w/receipt.json')); assert r['bounds']['minimum_entropy_l']==2 and r['bounds']['maximum_delta_disclosure']==0 and r['transformation']['privacy_recomputed']['raw_values_persisted'] is False; print('ANJANA_BOUNDS_REAL_PATH_VERIFIED')\""
+      ],
+      "expected_exit": 0,
+      "result": "pass",
+      "project_specific_advantage_or_remaining_gap": "Advantage: one deterministic offline release boundary recomputes all declared privacy bounds after transformation and deletes unsafe output; broader ANJANA algorithms remain explicitly unclaimed.",
+      "runtime_consumers": [
+        "src/anonymization_trial/__main__.py",
+        "src/anonymization_trial/tabular_privacy.py"
+      ],
+      "semantic_assertions": [
+        "entropy effective-l and delta-disclosure are enforced after hierarchy transformation",
+        "failed bounds delete unpublished output",
+        "receipt persists aggregate metrics, never sensitive values"
+      ],
+      "dependencies": [],
+      "applicability": "applicable",
+      "capability_id": "anjana-advanced-transform-23"
+    },
+    {
+      "competitor": "ARX Data Anonymization Tool",
+      "source": "https://github.com/arx-deidentifier/arx",
+      "source_revision": "4e0a5f5340fe9a58c44b34c2f9acd2d68f1dad5f",
+      "capability": "local recoding preserves safe equivalence classes while generalizing unsafe records",
+      "our_equivalent_executable_check": "canonical tabular-local-generalize applies authorized hierarchies only to unsafe records and independently recomputes k",
+      "proof_command": [
+        ".venv/bin/python",
+        "scripts/eval_arx_local_recoding.py"
+      ],
+      "expected_exit": 0,
+      "result": "pass",
+      "project_specific_advantage_or_remaining_gap": "Advantage: deterministic offline local recoding preserves already-safe exact classes and emits aggregate-only receipts; ARX differential privacy remains a gap.",
+      "runtime_consumers": [
+        "src/anonymization_trial/__main__.py",
+        "src/anonymization_trial/tabular_privacy.py"
+      ],
+      "semantic_assertions": [
+        "already-safe classes remain unchanged",
+        "unsafe records are generalized until minimum k holds",
+        "independent post-transform audit reaches minimum k"
+      ],
+      "dependencies": [],
+      "applicability": "applicable",
+      "capability_id": "arx-local-recoding-24"
+    },
+    {
+      "competitor": "ARX / pyCANON / ANJANA / Anonymeter / LeakPro / Microsoft Presidio",
+      "source": "https://github.com/arx-deidentifier/arx ; https://github.com/IFCA-Advanced-Computing/pycanon ; https://github.com/IFCA-Advanced-Computing/anjana ; https://github.com/statice/anonymeter ; https://github.com/aidotse/LeakPro ; https://github.com/microsoft/presidio",
+      "source_revision": "arx@4e0a5f5340fe9a58c44b34c2f9acd2d68f1dad5f;pycanon@bf555a672dfa5560272864f24db24014954baaa9;anjana@5dcfc73e913824d7e918e9e9363f36a40b4abf2e;anonymeter@f5c61c592e6353ed402505d7095e9a27bf1b49b9;leakpro@8f7aa38a381457a077715cb97bad19624257de0b;presidio@f251c513e8aad6820e9b2a44983ebf3a93637b07",
+      "capability": "cross-record contextual re-identification through two-hop subject-to-clue-to-identity traversal",
+      "our_equivalent_executable_check": "authorized contextual_graph_attack.v1 extracts exact policy-authorized clues from local TXT/CSV/JSON and OCR image/rasterized PDF carriers, runs the canonical two-hop CLI, and enforces a policy-bound atomic publication gate with risky and safe-control cases",
+      "proof_command": [
+        "bash",
+        "-c",
+        "set -euo pipefail; .venv/bin/python -m pytest -q tests/test_contextual_graph.py tests/test_pipeline.py; .venv/bin/python scripts/eval_contextual_graph_attack.py"
+      ],
+      "expected_exit": 0,
+      "result": "pass",
+      "project_specific_advantage_or_remaining_gap": "Advantage: deterministic offline extraction from surrounding text, structured, image, and rasterized PDF carriers feeds an aggregate-only two-hop attack bound to atomic publication; unique and ambiguous linkage block while safe controls publish, and canary checks cover CLI stdout, stderr, private receipts, rejected outputs, staging residue, and released report/identifier surfaces. Remaining gap: OCR recall is bounded by local Tesseract and does not establish semantic visual identity recognition or complete ecosystem superiority.",
+      "runtime_consumers": [
+        "src/anonymization_trial/__main__.py",
+        "src/anonymization_trial/contextual_graph.py"
+      ],
+      "semantic_assertions": [
+        "unique best match above threshold blocks",
+        "tied best matches above threshold block as ambiguous",
+        "below-threshold safe control clears and atomically publishes",
+        "risky or ambiguous graph leaves no corpus or readiness report",
+        "published receipt binds the contextual graph digest and aggregate counts without input identifiers or clue values",
+        "authorized exact clue catalogs are extracted from local TXT/CSV/JSON and OCR image/rasterized PDF carriers without persisting derived subject graphs",
+        "missing OCR or PDF tooling and failed rasterization fail closed",
+        "raw clue and identifier canaries do not leak through CLI stdout, stderr, receipts, rejected publication surfaces, staging residue, or released report/identifier surfaces"
+      ],
+      "dependencies": [
+        "Pillow==11.3.0"
+      ],
+      "applicability": "applicable",
+      "capability_id": "cross-ecosystem-contextual-graph-25"
+    },
+    {
+      "competitor": "Microsoft Presidio",
+      "source": "https://github.com/microsoft/presidio",
+      "source_revision": "f251c513e8aad6820e9b2a44983ebf3a93637b07",
+      "capability": "contextual identity inference from relationships among separately detected authorized clues",
+      "our_equivalent_executable_check": "symmetric pinned Presidio 2.2.364 comparison gives both systems the identical fixture, exact authorized patterns, policy, ground truth, permitted information, and model-free configuration; the canonical graph path resolves the two-hop identity while Presidio returns unlinked entity findings",
+      "proof_command": [
+        "uv",
+        "run",
+        "--with",
+        "presidio-analyzer==2.2.364",
+        "python",
+        "security/contextual_graph_presidio_comparator.py"
+      ],
+      "expected_exit": 0,
+      "result": "pass",
+      "project_specific_advantage_or_remaining_gap": "Advantage proven only on the pinned shared fixture: Presidio detects the supplied entities but exposes no subject-to-clue-to-identity linkage, while the canonical contextual graph infers the ground-truth identity and blocks. This is not complete Presidio ecosystem superiority.",
+      "runtime_consumers": [
+        "security/contextual_graph_presidio_comparator.py",
+        "src/anonymization_trial/contextual_graph.py"
+      ],
+      "semantic_assertions": [
+        "identical fixture, policy, ground truth, permitted information, and exact-pattern configuration",
+        "pinned presidio-analyzer 2.2.364 produces entity findings but no relationship-linked identity",
+        "canonical contextual graph produces the correct two-hop identity inference and block verdict",
+        "receipt contains only digests and aggregate counts, not fixture values or identifiers"
+      ],
+      "dependencies": [
+        "presidio-analyzer==2.2.364"
+      ],
+      "applicability": "applicable",
+      "capability_id": "presidio-contextual-graph-comparator-26"
+    },
+    {
+      "competitor": "Anonymeter",
+      "source": "https://github.com/statice/anonymeter",
+      "source_revision": "f5c61c592e6353ed402505d7095e9a27bf1b49b9",
+      "capability": "control-calibrated re-identification risk estimate with uncertainty",
+      "our_equivalent_executable_check": "contextual_graph_attack.v2 computes a score-matched empirical re-identification probability and Wilson 95% interval from at least ten explicitly labeled authorized controls, through the canonical product CLI",
+      "proof_command": [
+        "bash",
+        "-c",
+        "set -euo pipefail; .venv/bin/python -m pytest -q tests/test_contextual_graph.py; .venv/bin/python scripts/eval_contextual_graph_attack.py"
+      ],
+      "expected_exit": 0,
+      "result": "pass",
+      "project_specific_advantage_or_remaining_gap": "Advantage: local mixed-carrier multi-hop attacks can be calibrated to authorized score-matched controls without persisting labels or raw clues. Gap: the estimate is fixture/population-specific and does not establish generalization to unprovided auxiliary information.",
+      "runtime_consumers": [
+        "src/anonymization_trial/__main__.py",
+        "src/anonymization_trial/contextual_graph.py",
+        "src/anonymization_trial/pipeline.py"
+      ],
+      "semantic_assertions": [
+        "at least ten labeled controls exactly match the observed shared-clue score",
+        "receipt reports empirical probability and Wilson 95% interval without raw labels, identifiers, or clues",
+        "underpowered score bins fail closed",
+        "missing controls retain an explicit calibrated-probability non-claim"
+      ],
+      "dependencies": [],
+      "applicability": "applicable",
+      "capability_id": "anonymeter-contextual-control-calibration-27"
+    },
+    {
+      "competitor": "Anonymeter",
+      "source": "https://github.com/statice/anonymeter",
+      "source_revision": "f5c61c592e6353ed402505d7095e9a27bf1b49b9",
+      "capability": "custom predictor selection for attribute-inference attacks",
+      "our_equivalent_executable_check": "canonical attribute-inference-risk accepts an explicitly authorized built-in predictor and persists only aggregate results",
+      "proof_command": [
+        "bash",
+        "-c",
+        "set -euo pipefail; .venv/bin/python scripts/eval_custom_predictor.py; .venv/bin/python -m pytest -q tests/test_tabular_privacy.py"
+      ],
+      "expected_exit": 0,
+      "result": "pass",
+      "project_specific_advantage_or_remaining_gap": "Advantage: predictor choice remains deterministic, offline, allowlisted, and cannot load arbitrary client code. Gap: unlike Anonymeter, arbitrary estimator plugins are deliberately unsupported at this trust boundary.",
+      "runtime_consumers": [
+        "src/anonymization_trial/__main__.py",
+        "src/anonymization_trial/tabular_privacy.py",
+        "scripts/eval_custom_predictor.py"
+      ],
+      "semantic_assertions": [
+        "exact_match predictor executes through canonical CLI",
+        "unmatched records abstain",
+        "unsupported plugin names fail closed",
+        "mode-0600 receipt contains no raw values"
+      ],
+      "dependencies": [],
+      "applicability": "applicable",
+      "capability_id": "anonymeter-authorized-predictor-28"
+    },
+    {
+      "competitor": "ARX Data Anonymization Tool",
+      "source": "https://github.com/arx-deidentifier/arx",
+      "source_revision": "4e0a5f5340fe9a58c44b34c2f9acd2d68f1dad5f",
+      "capability": "population-backed prosecutor, journalist, marketer, and uniqueness re-identification risk analysis",
+      "our_equivalent_executable_check": "canonical population-reidentification-risk validates the release as a QI-class subset of an authorized population and emits aggregate risk extrema and rates without QI tuples",
+      "proof_command": [
+        "bash",
+        "-c",
+        "set -euo pipefail; .venv/bin/python scripts/eval_population_reidentification.py; .venv/bin/python -m pytest -q tests/test_tabular_privacy.py"
+      ],
+      "expected_exit": 0,
+      "result": "pass",
+      "project_specific_advantage_or_remaining_gap": "Advantage: deterministic offline population-risk analysis shares the canonical declared-QI boundary and emits no row values or QI tuples. Gap: ARX differential privacy remains unimplemented.",
+      "runtime_consumers": [
+        "src/anonymization_trial/__main__.py",
+        "src/anonymization_trial/tabular_privacy.py",
+        "scripts/eval_population_reidentification.py"
+      ],
+      "semantic_assertions": [
+        "release multiplicities cannot exceed the authorized population",
+        "prosecutor, journalist, marketer, sample-uniqueness, and population-uniqueness aggregates are exact on the retained fixture",
+        "receipt contains no QI tuples or raw row values"
+      ],
+      "dependencies": [],
+      "applicability": "applicable",
+      "capability_id": "arx-population-risk-29"
+    },
+    {
+      "competitor": "ARX Data Anonymization Tool",
+      "source": "https://github.com/arx-deidentifier/arx",
+      "source_revision": "4e0a5f5340fe9a58c44b34c2f9acd2d68f1dad5f",
+      "capability": "single-query epsilon-differentially-private count release using the Laplace mechanism",
+      "our_equivalent_executable_check": "canonical dp-count CLI releases a cryptographically randomized, nonnegative noisy predicate count with declared add/remove adjacency, sensitivity one, epsilon, and single-query composition scope",
+      "proof_command": [
+        "bash",
+        "-c",
+        "set -euo pipefail; .venv/bin/python scripts/eval_dp_count.py; .venv/bin/python -m pytest -q tests/test_tabular_privacy.py -k dp_count"
+      ],
+      "expected_exit": 0,
+      "result": "pass",
+      "project_specific_advantage_or_remaining_gap": "Advantage: dependency-free offline one-query epsilon-DP release emits no predicate or true count and makes its adjacency/composition ceiling explicit. Gap: multi-query privacy-budget accounting and ARX multi-dimensional DP synthesis remain unimplemented.",
+      "runtime_consumers": [
+        "src/anonymization_trial/__main__.py",
+        "src/anonymization_trial/tabular_privacy.py",
+        "scripts/eval_dp_count.py"
+      ],
+      "semantic_assertions": [
+        "Laplace scale equals sensitivity/epsilon for add/remove adjacency",
+        "production path uses operating-system-backed cryptographic randomness",
+        "receipt omits predicate and true count and declares single-query composition scope"
+      ],
+      "dependencies": [],
+      "applicability": "applicable",
+      "capability_id": "arx-differential-privacy-30"
+    }
+  ],
+  "applicability_dispositions": [
+    {
+      "ecosystem": "pyCANON/ANJANA",
+      "capabilities": [
+        "independent and conditioned multiple-sensitive-attribute delta-disclosure and t-closeness",
+        "hierarchy transformation with alpha-k, recursive-c-l, beta-likeness, entropy-l-diversity, delta-disclosure, and t-closeness bounds"
+      ],
+      "disposition": "applicable",
+      "reason": "Conditioned multi-sensitive audits and hierarchy transformation with post-transform advanced-bound enforcement run through canonical product paths; broader ANJANA algorithms remain unclaimed in separate not-implemented dispositions where applicable."
+    },
+    {
+      "ecosystem": "ARX",
+      "capabilities": [
+        "multi-query privacy-budget accounting",
+        "multi-dimensional differential privacy synthesis"
+      ],
+      "disposition": "not_implemented",
+      "reason": "A single-query epsilon-DP predicate count with the Laplace mechanism is implemented separately; composed-query accounting and broader ARX DP synthesis remain unclaimed."
+    },
+    {
+      "ecosystem": "Anonymeter",
+      "capabilities": [
+        "custom predictors"
+      ],
+      "disposition": "applicable",
+      "reason": "Authorized built-in predictor selection is implemented through the canonical product path; arbitrary estimator plugins remain deliberately unsupported at this trust boundary."
+    },
+    {
+      "ecosystem": "LeakPro",
+      "capabilities": [
+        "general neural gradient inversion",
+        "model inversion"
+      ],
+      "disposition": "not_implemented",
+      "reason": "Only trained-score membership inference and bounded affine batch-size-one inversion are claimed."
+    },
+    {
+      "ecosystem": "Presidio image/document",
+      "capabilities": [
+        "DICOM",
+        "office-document native carriers"
+      ],
+      "disposition": "not_implemented",
+      "reason": "Canonical publication supports standard raster images and rasterized PDF only and rejects unsupported carriers."
+    },
+    {
+      "ecosystem": "Presidio image/document",
+      "capabilities": [
+        "standard image",
+        "PDF"
+      ],
+      "disposition": "applicable",
+      "reason": "Connected redact-document product path verifies residual OCR and PDF structural carriers before publication."
+    }
+  ]
+}

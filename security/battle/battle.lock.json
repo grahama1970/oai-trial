@@ -11,9 +11,10 @@
     "skills/battle/fixtures/reference-generators/anon_beyond_brief_matrix.py",
     "skills/battle/fixtures/reference-judges/no_data_leak_judge.py",
     "skills/battle/fixtures/reference-judges/functional_anonymize_judge.py",
-    "/home/graham/workspace/experiments/oai-trial/security/battle/acceptance_floor_generator.py"
+    "/home/graham/workspace/experiments/oai-trial/security/battle/acceptance_floor_generator.py",
+    "/home/graham/workspace/experiments/oai-trial/security/battle/contextual_graph_generator.py"
   ],
-  "bundle_manifest_sha256": "sha256:e03228be66d849e676ec88b095f9057fe3c9411807eccd5b043b69be3995f333",
+  "bundle_manifest_sha256": "sha256:9944eec43771f4f0cfdec8cf76923acb64365f61fd18f4cf60e8728973e0b4d5",
   "commit": "1615adc42aa3c5e893f68ef1a80b3b8dd342edb5",
   "schema": "battle.evaluator_lock.v1",
   "source_repo": "grahama1970/agent-skills",
