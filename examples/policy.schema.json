@@ -24,6 +24,15 @@
         }
       }
     },
+    "release_risk": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": false,
+      "properties": {
+        "max_pseudonym_frequency": {"type": "integer", "minimum": 1},
+        "contextual_graph_min_shared_clues": {"type": "integer", "minimum": 2}
+      }
+    },
     "protected_values": {
       "type": "array",
       "items": {

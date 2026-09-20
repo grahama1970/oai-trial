@@ -71,6 +71,10 @@ class RunReport:
     run_id: str = ""
     source_manifest_sha256: str = ""
     verification_sha256: str = ""
+    contextual_graph_verdict: str = "not_requested"
+    contextual_graph_inferred_subjects: int = 0
+    contextual_graph_ambiguous_subjects: int = 0
+    contextual_graph_input_sha256: str = ""
 
 
 def _reject(code: AnonErrorCode, message: str) -> None:
@@ -226,6 +230,17 @@ def run_pipeline(input_root: Path, output_root: Path) -> RunReport:
     policy = load_policy(policy_file)
     files = _preflight(input_root, output_root, policy)
 
+    contextual_graph_path: Path | None = None
+    contextual_graph_digest = ""
+    if policy.contextual_graph_min_shared_clues is not None:
+        contextual_graph_path = input_root / "contextual_graph.json"
+        if contextual_graph_path.is_symlink() or not contextual_graph_path.is_file():
+            _reject(
+                AnonErrorCode.UNSAFE_INPUT,
+                "contextual graph risk policy requires a regular contextual_graph.json",
+            )
+        contextual_graph_digest = hashlib.sha256(contextual_graph_path.read_bytes()).hexdigest()
+
     inventory = _source_digests(files)
     output_root.mkdir(parents=True, exist_ok=True)
     # Remove any crashed run's staging tree before creating our own, so a stale
@@ -248,6 +263,34 @@ def run_pipeline(input_root: Path, output_root: Path) -> RunReport:
             bytes_read += source.stat().st_size
 
         verify_corpus(input_root / "corpus", staged_corpus, policy)
+        contextual_graph_result = None
+        if contextual_graph_path is not None:
+            from .contextual_graph import audit_contextual_graph
+
+            contextual_graph_result = audit_contextual_graph(
+                contextual_graph_path,
+                policy.contextual_graph_min_shared_clues or 2,
+            )
+            current_graph_digest = hashlib.sha256(
+                contextual_graph_path.read_bytes()
+            ).hexdigest()
+            if current_graph_digest != contextual_graph_digest:
+                _reject(AnonErrorCode.SOURCE_CHANGED, "contextual graph changed during processing")
+            if contextual_graph_result["verdict"] != "clear":
+                _reject(
+                    AnonErrorCode.VERIFICATION_FAILED,
+                    "contextual graph re-identification risk blocks release",
+                )
+        if policy.max_pseudonym_frequency is not None:
+            # Local import avoids privacy_risk's release-manifest dependency cycle.
+            from .privacy_risk import max_stable_pseudonym_frequency
+
+            observed_frequency = max_stable_pseudonym_frequency(staged_corpus)
+            if observed_frequency > policy.max_pseudonym_frequency:
+                _reject(
+                    AnonErrorCode.VERIFICATION_FAILED,
+                    "release exceeds the authorized stable-pseudonym frequency",
+                )
         # Source-snapshot / TOCTOU gate: reject if any source file changed between
         # inventory and this point (detects content mutation even if mtime is
         # preserved). Publishing a corpus derived from a mutated source is unsafe.
@@ -276,6 +319,22 @@ def run_pipeline(input_root: Path, output_root: Path) -> RunReport:
             ).hexdigest(),
             source_manifest_sha256=source_manifest_sha256,
             verification_sha256=sealed_digest,
+            contextual_graph_verdict=(
+                contextual_graph_result["verdict"]
+                if contextual_graph_result is not None
+                else "not_requested"
+            ),
+            contextual_graph_inferred_subjects=(
+                contextual_graph_result["inferred_subjects"]
+                if contextual_graph_result is not None
+                else 0
+            ),
+            contextual_graph_ambiguous_subjects=(
+                contextual_graph_result["ambiguous_subjects"]
+                if contextual_graph_result is not None
+                else 0
+            ),
+            contextual_graph_input_sha256=contextual_graph_digest,
         )
         _publish(staging, output_root, report, sealed_digest)
         return report

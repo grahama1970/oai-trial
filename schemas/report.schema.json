@@ -22,31 +22,105 @@
     "report_schema",
     "run_id",
     "source_manifest_sha256",
-    "verification_sha256"
+    "verification_sha256",
+    "contextual_graph_verdict",
+    "contextual_graph_inferred_subjects",
+    "contextual_graph_ambiguous_subjects",
+    "contextual_graph_input_sha256"
   ],
   "additionalProperties": false,
   "properties": {
-    "status": {"const": "ready"},
-    "files_processed": {"type": "integer", "minimum": 0},
-    "records_processed": {"type": "integer", "minimum": 0},
-    "bytes_read": {"type": "integer", "minimum": 0},
-    "bytes_written": {"type": "integer", "minimum": 0},
-    "replacements_applied": {"type": "integer", "minimum": 0},
-    "verification_passed": {"type": "boolean"},
-    "elapsed_seconds": {"type": "number", "minimum": 0},
-    "policy_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
-    "corpus_manifest_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
-    "algorithm_version": {"type": "string", "minLength": 1},
-    "scope_id": {"type": "string", "minLength": 1},
-    "key_mode": {"type": "string", "minLength": 1},
+    "status": {
+      "const": "ready"
+    },
+    "files_processed": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "records_processed": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "bytes_read": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "bytes_written": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "replacements_applied": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "verification_passed": {
+      "type": "boolean"
+    },
+    "elapsed_seconds": {
+      "type": "number",
+      "minimum": 0
+    },
+    "policy_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "corpus_manifest_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "algorithm_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "scope_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "key_mode": {
+      "type": "string",
+      "minLength": 1
+    },
     "does_not_establish": {
       "type": "array",
-      "items": {"type": "string", "minLength": 1},
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
       "minItems": 1
     },
-    "report_schema": {"const": "anon.run_report.v1"},
-    "run_id": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
-    "source_manifest_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
-    "verification_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+    "report_schema": {
+      "const": "anon.run_report.v1"
+    },
+    "run_id": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "source_manifest_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "verification_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "contextual_graph_verdict": {
+      "type": "string",
+      "enum": [
+        "not_requested",
+        "clear"
+      ]
+    },
+    "contextual_graph_inferred_subjects": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "contextual_graph_ambiguous_subjects": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "contextual_graph_input_sha256": {
+      "type": "string",
+      "pattern": "^$|^[0-9a-f]{64}$"
+    }
   }
 }

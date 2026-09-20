@@ -25,7 +25,11 @@ from .pseudonyms import CanonicalIdentity, build_replacements
 
 _ALLOWED_RULE_KEYS = {"rule_id", "subject_id", "type", "value", "match", "case_sensitive"}
 _ALLOWED_PROTECTED_KEYS = {"value", "reason"}
-_ALLOWED_TOP_KEYS = {"version", "sensitive_values", "protected_values"}
+_ALLOWED_TOP_KEYS = {"version", "sensitive_values", "protected_values", "release_risk"}
+_ALLOWED_RELEASE_RISK_KEYS = {
+    "max_pseudonym_frequency",
+    "contextual_graph_min_shared_clues",
+}
 
 
 def digit_canonical(value: str) -> str:
@@ -59,6 +63,8 @@ class Policy:
     rules: tuple[Rule, ...]
     protected_values: tuple[str, ...]
     matcher: Matcher
+    max_pseudonym_frequency: int | None = None
+    contextual_graph_min_shared_clues: int | None = None
 
 
 def _require(condition: bool, code: AnonErrorCode, message: str) -> None:
@@ -170,6 +176,50 @@ def compile_policy(payload: object) -> Policy:
     )
     raw_sensitive = payload["sensitive_values"]
     raw_protected = payload["protected_values"]
+    release_risk = payload.get("release_risk")
+    _require(
+        release_risk is None or isinstance(release_risk, dict),
+        AnonErrorCode.INVALID_POLICY,
+        "release_risk must be an object when present",
+    )
+    if release_risk is not None:
+        _require(
+            bool(release_risk),
+            AnonErrorCode.INVALID_POLICY,
+            "release_risk must not be empty",
+        )
+        _require(
+            set(release_risk) <= _ALLOWED_RELEASE_RISK_KEYS,
+            AnonErrorCode.INVALID_POLICY,
+            "release_risk has unknown fields",
+        )
+        max_frequency = release_risk.get("max_pseudonym_frequency")
+        _require(
+            max_frequency is None
+            or (
+                isinstance(max_frequency, int)
+                and not isinstance(max_frequency, bool)
+                and max_frequency >= 1
+            ),
+            AnonErrorCode.INVALID_POLICY,
+            "release_risk.max_pseudonym_frequency must be a positive integer",
+        )
+        contextual_graph_min_shared_clues = release_risk.get(
+            "contextual_graph_min_shared_clues"
+        )
+        _require(
+            contextual_graph_min_shared_clues is None
+            or (
+                isinstance(contextual_graph_min_shared_clues, int)
+                and not isinstance(contextual_graph_min_shared_clues, bool)
+                and contextual_graph_min_shared_clues >= 2
+            ),
+            AnonErrorCode.INVALID_POLICY,
+            "release_risk.contextual_graph_min_shared_clues must be an integer >= 2",
+        )
+    else:
+        max_frequency = None
+        contextual_graph_min_shared_clues = None
     _require(
         isinstance(raw_sensitive, list),
         AnonErrorCode.INVALID_POLICY,
@@ -283,6 +333,8 @@ def compile_policy(payload: object) -> Policy:
         rules=rules_tuple,
         protected_values=protected_tuple,
         matcher=build_matcher(rules_cs, rules_ci),
+        max_pseudonym_frequency=max_frequency,
+        contextual_graph_min_shared_clues=contextual_graph_min_shared_clues,
     )
 
 
