@@ -15,6 +15,7 @@ import math
 import os
 import secrets
 import stat
+import tempfile
 from collections import Counter, defaultdict
 from decimal import Decimal, InvalidOperation
 from fractions import Fraction
@@ -258,7 +259,7 @@ def release_dp_count(
     The predicate is deliberately omitted because it may itself be sensitive.
     """
     epsilon_decimal = _validated_epsilon(epsilon)
-    fields, rows = _read_csv(path)
+    fields, rows = _read_csv(path, allow_empty=True)
     if column not in fields:
         raise ValueError("missing declared predicate column")
     noise = _sample_two_sided_geometric(random_below or secrets.randbelow)
@@ -326,29 +327,24 @@ def release_dp_counts(
     }
 
 
-def release_dp_counts_persistent(
-    path: Path,
-    queries: list[dict[str, object]],
-    maximum_epsilon: float | Decimal | str,
+def _spend_persistent_epsilon(
     ledger_path: Path,
     budget_id: str,
-    *,
-    random_below: Callable[[int], int] | None = None,
-) -> dict:
-    """Atomically reserve and spend a privacy budget across CLI invocations."""
+    maximum_epsilon: float | Decimal | str,
+    requested_epsilon: float | Decimal | str | Fraction,
+    producer: Callable[[], dict],
+) -> tuple[dict, str, Fraction, Fraction]:
+    """Atomically spend epsilon before any producer can publish release bytes."""
     if not budget_id:
         raise ValueError("budget_id must be non-empty")
     maximum = Fraction(_validated_epsilon(maximum_epsilon, "maximum_epsilon"))
-    requested = sum(
-        (
-            Fraction(_validated_epsilon(query.get("epsilon"), "query epsilon"))
-            for query in queries
-            if isinstance(query, dict)
-        ),
-        Fraction(0),
+    requested = (
+        requested_epsilon
+        if isinstance(requested_epsilon, Fraction)
+        else Fraction(_validated_epsilon(requested_epsilon, "requested_epsilon"))
     )
-    if len(queries) == 0 or requested <= 0:
-        raise ValueError("queries must be a non-empty list")
+    if requested <= 0:
+        raise ValueError("requested_epsilon must be positive")
     budget_hash = hashlib.sha256(budget_id.encode("utf-8")).hexdigest()
     ledger_path.parent.mkdir(parents=True, exist_ok=True)
     flags = os.O_RDWR | os.O_CREAT | getattr(os, "O_NOFOLLOW", 0)
@@ -371,9 +367,6 @@ def release_dp_counts_persistent(
             spent = Fraction(state["spent_numerator"], state["spent_denominator"])
         if spent + requested > maximum:
             raise ValueError("persistent composed epsilon exceeds maximum_epsilon")
-        result = release_dp_counts(
-            path, queries, maximum_epsilon, random_below=random_below
-        )
         cumulative = spent + requested
         persisted = {
             "schema": "dp_budget_ledger.v1",
@@ -388,6 +381,37 @@ def release_dp_counts_persistent(
         ledger.truncate()
         ledger.flush()
         os.fsync(ledger.fileno())
+        result = producer()
+    return result, budget_hash, cumulative, maximum
+
+
+def release_dp_counts_persistent(
+    path: Path,
+    queries: list[dict[str, object]],
+    maximum_epsilon: float | Decimal | str,
+    ledger_path: Path,
+    budget_id: str,
+    *,
+    random_below: Callable[[int], int] | None = None,
+) -> dict:
+    """Atomically reserve and spend a privacy budget across CLI invocations."""
+    requested = sum(
+        (
+            Fraction(_validated_epsilon(query.get("epsilon"), "query epsilon"))
+            for query in queries
+            if isinstance(query, dict)
+        ),
+        Fraction(0),
+    )
+    if len(queries) == 0 or requested <= 0:
+        raise ValueError("queries must be a non-empty list")
+    result, budget_hash, cumulative, maximum = _spend_persistent_epsilon(
+        ledger_path,
+        budget_id,
+        maximum_epsilon,
+        requested,
+        lambda: release_dp_counts(path, queries, maximum_epsilon, random_below=random_below),
+    )
     result.update(
         {
             "schema": "differentially_private_count_persistent_batch.v1",
@@ -395,6 +419,133 @@ def release_dp_counts_persistent(
             "cumulative_epsilon": float(cumulative),
             "persistent_remaining_epsilon": float(maximum - cumulative),
             "budget_ledger_contains_predicates": False,
+        }
+    )
+    return result
+
+
+def release_dp_synthetic_histogram(
+    path: Path,
+    output: Path,
+    dimensions: list[str],
+    domains: dict[str, list[str]],
+    epsilon: float | Decimal | str,
+    *,
+    random_below: Callable[[int], int] | None = None,
+) -> dict:
+    """Release a noisy multidimensional categorical histogram as synthetic rows.
+
+    Domains are explicit operator-approved public categories. The receipt keeps
+    only aggregate dimensions and sizes; the synthetic CSV is the release.
+    """
+    if output.exists():
+        raise FileExistsError("output already exists")
+    if not dimensions or len(set(dimensions)) != len(dimensions):
+        raise ValueError("dimensions must be a non-empty unique list")
+    epsilon_decimal = _validated_epsilon(epsilon)
+    fields, rows = _read_csv(path, allow_empty=True)
+    missing = [name for name in dimensions if name not in fields]
+    if missing:
+        raise ValueError(f"missing declared dimensions: {', '.join(missing)}")
+    normalized_domains: dict[str, list[str]] = {}
+    for dimension in dimensions:
+        values = domains.get(dimension)
+        if (
+            not isinstance(values, list)
+            or not values
+            or any(not isinstance(value, str) or value == "" for value in values)
+            or len(set(values)) != len(values)
+        ):
+            raise ValueError(f"domain must declare unique string values for {dimension}")
+        normalized_domains[dimension] = values
+    allowed = {name: set(values) for name, values in normalized_domains.items()}
+    for row in rows:
+        for dimension in dimensions:
+            if row[dimension] not in allowed[dimension]:
+                raise ValueError("input contains a value outside the declared public domain")
+
+    counts = Counter(tuple(row[dimension] for dimension in dimensions) for row in rows)
+    cells = list(itertools.product(*(normalized_domains[name] for name in dimensions)))
+    synthetic_rows: list[dict[str, str]] = []
+    for cell in cells:
+        noisy = max(
+            0,
+            counts[cell]
+            + _sample_two_sided_geometric(random_below or secrets.randbelow),
+        )
+        synthetic_rows.extend(
+            dict(zip(dimensions, cell, strict=True)) for _ in range(noisy)
+        )
+
+    output.parent.mkdir(parents=True, exist_ok=True)
+    fd, temporary = tempfile.mkstemp(prefix=f".{output.name}.", dir=output.parent)
+    try:
+        with os.fdopen(fd, "w", newline="", encoding="utf-8") as handle:
+            writer = csv.DictWriter(handle, fieldnames=dimensions, lineterminator="\n")
+            writer.writeheader()
+            writer.writerows(synthetic_rows)
+            handle.flush()
+            os.fsync(handle.fileno())
+        os.replace(temporary, output)
+    except BaseException:
+        try:
+            os.close(fd)
+        except OSError:
+            pass
+        Path(temporary).unlink(missing_ok=True)
+        output.unlink(missing_ok=True)
+        raise
+    return {
+        "schema": "differentially_private_synthetic_histogram.v1",
+        "mechanism": "exact_two_sided_geometric_p_half_multidimensional_histogram",
+        "privacy_guarantee": "pure_epsilon_differential_privacy",
+        "formal_epsilon_upper_bound": float(_FORMAL_EPSILON_UPPER_BOUND),
+        "adjacency": "add_remove_one_record",
+        "epsilon": float(epsilon_decimal),
+        "sensitivity": 1,
+        "composition": "histogram_parallel_cells_one_record_one_cell",
+        "dimension_count": len(dimensions),
+        "domain_cell_count": len(cells),
+        "domain_sizes": [len(normalized_domains[name]) for name in dimensions],
+        "source_records": len(rows),
+        "synthetic_records": len(synthetic_rows),
+        "cryptographic_randomness": random_below is None,
+        "receipt_contains_domain_values": False,
+        "raw_values_persisted": False,
+    }
+
+
+def release_dp_synthetic_histogram_persistent(
+    path: Path,
+    output: Path,
+    dimensions: list[str],
+    domains: dict[str, list[str]],
+    epsilon: float | Decimal | str,
+    maximum_epsilon: float | Decimal | str,
+    ledger_path: Path,
+    budget_id: str,
+    *,
+    random_below: Callable[[int], int] | None = None,
+) -> dict:
+    """Release a synthetic histogram while composing epsilon across invocations."""
+    result, budget_hash, cumulative, maximum = _spend_persistent_epsilon(
+        ledger_path,
+        budget_id,
+        maximum_epsilon,
+        epsilon,
+        lambda: release_dp_synthetic_histogram(
+            path, output, dimensions, domains, epsilon, random_below=random_below
+        ),
+    )
+    result.update(
+        {
+            "schema": "differentially_private_synthetic_histogram_persistent.v1",
+            "composition": "basic_sequential_composition_persistent_ledger",
+            "budget_id_sha256": budget_hash,
+            "cumulative_epsilon": float(cumulative),
+            "persistent_remaining_epsilon": float(maximum - cumulative),
+            "budget_ledger_contains_domain_values": False,
+            "budget_ledger_contains_raw_values": False,
         }
     )
     return result
@@ -899,12 +1050,12 @@ def _satisfies_enhanced_beta_likeness(
     return True
 
 
-def _read_csv(path: Path) -> tuple[list[str], list[dict[str, str]]]:
+def _read_csv(path: Path, *, allow_empty: bool = False) -> tuple[list[str], list[dict[str, str]]]:
     with path.open(newline="", encoding="utf-8") as handle:
         reader = csv.DictReader(handle)
         fields = reader.fieldnames or []
         rows = list(reader)
-    if not fields or not rows:
+    if not fields or (not rows and not allow_empty):
         raise ValueError("linkability inputs require headers and records")
     return fields, rows
 

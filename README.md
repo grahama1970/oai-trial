@@ -82,21 +82,24 @@ revisions, commands, and explicit omissions live in
 | Image/PDF redaction and hidden-carrier verification | Partial: raster images/PDF | **Strong** for supported image flows | — | — | — | Modality-dependent |
 | k-anonymity, l-diversity, t-closeness and disclosure metrics | **Verified, scoped** | — | **Strong** | **Strong** | — | — |
 | Hierarchies, suppression, microaggregation and local recoding | **Verified, scoped** | — | **Strong** | **Strong** | — | — |
-| Differential privacy, k-map and broad utility/profit optimization | **Pure epsilon-DP count release and exact in-process sequential accounting; multidimensional synthesis, persistent budgets, k-map and broad optimization remain gaps** | — | **Strong** | Partial | — | — |
+| Differential privacy, k-map and broad utility/profit optimization | **Pure epsilon-DP counts, exact composition, persistent budgets, and scoped multidimensional categorical synthetic histograms; k-map and broad optimization remain gaps** | — | **Strong** | Partial | — | — |
 | Linkability, inference and singling-out attacks | **Verified, bounded** | — | Risk models | Risk metrics | **Strong** | Partial |
 | Membership inference and model/gradient inversion | Partial: bounded attacks | — | — | — | — | **Strong** |
-| Contextual multi-hop graph re-identification across text, records and images | **Priority / not yet proven** | Gap | Gap | Gap | Gap | Gap |
+| Contextual multi-hop graph re-identification across text, records and images | **Verified, bounded** for authorized exact-clue graph attacks plus one pinned Presidio comparator | Span detection only in comparator | Gap | Gap | Gap | Gap |
 | Fail-closed atomic publication bound to risk evidence | **Verified for selected gates** | Integration-dependent | Integration-dependent | Integration-dependent | Analysis library | Analysis library |
 | Offline deterministic operation with aggregate-only private receipts | **Verified, scoped** | Partial | Partial | Partial | Partial | Partial |
 | DICOM and native Office carriers | **Gap** | Partial / component-specific | — | — | — | Modality-dependent |
 
 The intended differentiator is the contextual graph row: an isolated run-scoped
-graph should connect entities from surrounding text, structured records, images,
-and documents, attempt two-or-more-hop re-identification, and block publication
+graph connects entities from surrounding text, structured records, images, and
+documents, attempts two-or-more-hop re-identification, and blocks publication
 when inference succeeds or remains ambiguous. Raw client spans, images,
 identifiers, reversible pseudonyms, and client-derived embeddings must not be
-persisted to durable Memory/Qdrant. This claim remains **not proven** until the
-canonical attack, safe control, cleanup audit, and symmetric comparator all pass.
+persisted to durable Memory/Qdrant. The Presidio comparison is **proven only for
+one pinned exact-clue fixture**: Presidio detects permitted spans, while the
+canonical graph validates the ground-truth subject-to-identity inference and
+blocks. This is not complete Presidio ecosystem superiority or semantic visual
+identity recognition.
 
 ### Future optimizations (designed, not built)
 
@@ -210,4 +213,8 @@ Preserve the baseline git history and the two required `docker run` commands.
 
 ### Persistent differential-privacy budget
 
-`dp-count-batch` accepts `--budget-ledger PATH --budget-id ID` together. The private local ledger uses an exclusive OS lock and exact rational expenditure to reject budget reuse across invocations. It stores only a hash of the authorization-domain ID and aggregate budget state—never predicates or source values. This is scoped count-query composition, not ARX multidimensional DP synthesis.
+`dp-count-batch` accepts `--budget-ledger PATH --budget-id ID` together. The private local ledger uses an exclusive OS lock and exact rational expenditure to reject budget reuse across invocations. It stores only a hash of the authorization-domain ID and aggregate budget state—never predicates or source values.
+
+### Multidimensional DP synthetic histograms
+
+`dp-synthesize` releases a categorical synthetic histogram from operator-declared public domains. One record contributes to one multidimensional cell, header-only empty datasets and singleton neighbors both run through the same mechanism, exact integer noise is added without floating-point support truncation, and the private receipt records only aggregate dimensions and sizes. The CSV and private receipt are staged before release paths are published, output/receipt aliases are rejected before publication, and optional `--budget-ledger`, `--budget-id`, and `--maximum-epsilon` compose repeated synthesis invocations without storing domain values or raw records. This is scoped ARX-style DP synthesis; k-map and broad utility/profit optimization remain unclaimed.

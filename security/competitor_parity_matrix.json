@@ -733,7 +733,7 @@
       "source": "https://github.com/microsoft/presidio",
       "source_revision": "f251c513e8aad6820e9b2a44983ebf3a93637b07",
       "capability": "contextual identity inference from relationships among separately detected authorized clues",
-      "our_equivalent_executable_check": "symmetric pinned Presidio 2.2.364 comparison gives both systems the identical fixture, exact authorized patterns, policy, ground truth, permitted information, and model-free configuration; the canonical graph path resolves the two-hop identity while Presidio returns unlinked entity findings",
+      "our_equivalent_executable_check": "contextual_graph_presidio_comparator.v2 uses the same pinned fixture, permitted strings, exact recognizers, and ground-truth subject->identity outcome; Presidio span findings and oai-trial graph inference are measured in one receipt without raw values",
       "proof_command": [
         "uv",
         "run",
@@ -744,15 +744,16 @@
       ],
       "expected_exit": 0,
       "result": "pass",
-      "project_specific_advantage_or_remaining_gap": "Advantage proven only on the pinned shared fixture: Presidio detects the supplied entities but exposes no subject-to-clue-to-identity linkage, while the canonical contextual graph infers the ground-truth identity and blocks. This is not complete Presidio ecosystem superiority.",
+      "project_specific_advantage_or_remaining_gap": "Advantage proven only on the pinned shared fixture: Presidio detects all supplied permitted values as spans but emits zero ground-truth subject-to-identity matches, while the canonical contextual graph blocks and validates the correct ground-truth identity. This is not complete Presidio ecosystem superiority.",
       "runtime_consumers": [
         "security/contextual_graph_presidio_comparator.py",
         "src/anonymization_trial/contextual_graph.py"
       ],
       "semantic_assertions": [
-        "identical fixture, policy, ground truth, permitted information, and exact-pattern configuration",
-        "pinned presidio-analyzer 2.2.364 produces entity findings but no relationship-linked identity",
-        "canonical contextual graph produces the correct two-hop identity inference and block verdict",
+        "identical fixture, permitted information, and ground-truth outcome are digest-bound",
+        "pinned presidio-analyzer 2.2.364 detects every supplied permitted value under exact recognizers",
+        "common measured outcome is subject_identity_reidentification, not mere entity-span detection",
+        "canonical contextual graph produces one correct ground-truth identity match and block verdict",
         "receipt contains only digests and aggregate counts, not fixture values or identifiers"
       ],
       "dependencies": [
@@ -832,7 +833,7 @@
       ],
       "expected_exit": 0,
       "result": "pass",
-      "project_specific_advantage_or_remaining_gap": "Advantage: deterministic offline population-risk analysis shares the canonical declared-QI boundary and emits no row values or QI tuples. Gap: ARX differential privacy remains unimplemented.",
+      "project_specific_advantage_or_remaining_gap": "Advantage: deterministic offline population-risk analysis shares the canonical declared-QI boundary and emits no row values or QI tuples. Gap: broader ARX k-map and utility/profit optimization remain unimplemented.",
       "runtime_consumers": [
         "src/anonymization_trial/__main__.py",
         "src/anonymization_trial/tabular_privacy.py",
@@ -860,7 +861,7 @@
       ],
       "expected_exit": 0,
       "result": "pass",
-      "project_specific_advantage_or_remaining_gap": "Scoped parity: exact integer noise avoids floating-point support truncation and receipts omit predicates and true counts; ARX multi-dimensional DP synthesis remains unimplemented.",
+      "project_specific_advantage_or_remaining_gap": "Scoped parity: exact integer noise avoids floating-point support truncation and receipts omit predicates and true counts; ARX DP synthesis is scoped to explicit public-domain categorical histograms; broader ARX k-map and utility/profit optimization remain unimplemented.",
       "runtime_consumers": [
         "src/anonymization_trial/__main__.py",
         "src/anonymization_trial/tabular_privacy.py",
@@ -868,6 +869,7 @@
       ],
       "semantic_assertions": [
         "exact geometric probabilities have adjacent likelihood ratio at most two",
+        "header-only empty datasets and singleton neighbors both publish through the same count mechanism",
         "declared epsilon is at least 0.7, conservatively above ln(2)",
         "parameter bounds and strict JSON prevent non-finite output"
       ],
@@ -888,7 +890,7 @@
       ],
       "expected_exit": 0,
       "result": "pass",
-      "project_specific_advantage_or_remaining_gap": "Scoped parity: exact rational in-process accounting and exact finite integer sampling support basic sequential composition; persistent cross-invocation accounting and ARX multi-dimensional synthesis remain unimplemented.",
+      "project_specific_advantage_or_remaining_gap": "Scoped parity: exact rational in-process accounting and exact finite integer sampling support basic sequential composition; persistent cross-invocation accounting is covered separately; ARX DP synthesis is scoped to explicit public-domain categorical histograms.",
       "runtime_consumers": [
         "src/anonymization_trial/__main__.py",
         "src/anonymization_trial/tabular_privacy.py",
@@ -896,6 +898,7 @@
       ],
       "semantic_assertions": [
         "budget accounting is exact and fails closed before release",
+        "header-only empty datasets and singleton neighbors both publish through the same batch-count mechanism",
         "every component mechanism has privacy loss at most its declared epsilon",
         "basic sequential composition is bounded by the exact sum of declared epsilons"
       ],
@@ -915,7 +918,7 @@
       ],
       "expected_exit": 0,
       "result": "pass",
-      "project_specific_advantage_or_remaining_gap": "Advantage: stdlib-only offline locking, exact rational accounting, hashed authorization-domain identifier, and no predicates in the private ledger. Remaining gap: ARX multidimensional DP synthesis.",
+      "project_specific_advantage_or_remaining_gap": "Advantage: stdlib-only offline locking, exact rational accounting, hashed authorization-domain identifier, and no predicates in the private ledger. Synthesis-specific persistent budget composition is covered by arx-dp-synthetic-histogram-33.",
       "runtime_consumers": [
         "src/anonymization_trial/__main__.py",
         "src/anonymization_trial/tabular_privacy.py"
@@ -928,6 +931,38 @@
       "dependencies": [],
       "applicability": "applicable",
       "capability_id": "arx-dp-persistent-budget-32"
+    },
+    {
+      "competitor": "ARX Data Anonymization Tool",
+      "source": "https://github.com/arx-deidentifier/arx",
+      "source_revision": "4e0a5f5340fe9a58c44b34c2f9acd2d68f1dad5f",
+      "capability": "multidimensional differentially-private categorical synthetic histogram release",
+      "our_equivalent_executable_check": "dp-synthesize emits an exact-geometric epsilon-DP multidimensional histogram as synthetic rows from explicit public domains with aggregate-only private receipts",
+      "proof_command": [
+        ".venv/bin/python",
+        "scripts/eval_dp_synthesis.py"
+      ],
+      "expected_exit": 0,
+      "result": "pass",
+      "project_specific_advantage_or_remaining_gap": "Scoped parity: stdlib-only offline synthetic categorical histograms require explicit public domains, use exact integer noise without floating-point support truncation, reject output/receipt/ledger path aliases before publication, compose repeated synthesis invocations through a hashed persistent ledger, and keep domain values out of private receipts. Remaining gap: ARX k-map and broad utility/profit optimization remain unimplemented.",
+      "runtime_consumers": [
+        "src/anonymization_trial/__main__.py",
+        "src/anonymization_trial/tabular_privacy.py"
+      ],
+      "semantic_assertions": [
+        "one input row contributes to exactly one multidimensional histogram cell",
+        "receipt omits public domain values and raw cell counts",
+        "output synthetic rows contain only declared public-domain dimensions",
+        "header-only empty datasets and singleton neighbors both publish through the same mechanism",
+        "CSV and private receipt are staged before release paths are published",
+        "output and receipt destinations must not be identical or filesystem-equivalent",
+        "persistent synthesis budget ledger contains no raw budget identifier, domain values, or raw records",
+        "budget ledger must be separate from output and receipt paths",
+        "persistent budget is spent before lower-level synthesis bytes can be published"
+      ],
+      "dependencies": [],
+      "applicability": "applicable",
+      "capability_id": "arx-dp-synthetic-histogram-33"
     }
   ],
   "applicability_dispositions": [
@@ -945,8 +980,8 @@
       "capabilities": [
         "multi-dimensional differential privacy synthesis"
       ],
-      "disposition": "not_implemented",
-      "reason": "Single-query epsilon-DP counts and basic sequential multi-query budget accounting are implemented separately; broader ARX multi-dimensional DP synthesis remains unclaimed."
+      "disposition": "applicable",
+      "reason": "Scoped multidimensional categorical DP synthetic histogram release is implemented through dp-synthesize, including persistent composition and alias-safe publication; broader ARX k-map and utility/profit optimization remain unclaimed."
     },
     {
       "ecosystem": "Anonymeter",

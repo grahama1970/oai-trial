@@ -1,6 +1,9 @@
+import json
 from pathlib import Path
 
 import pytest
+
+import anonymization_trial.tabular_privacy as tabular_privacy
 
 from anonymization_trial.tabular_privacy import (
     audit_attribute_inference,
@@ -17,6 +20,8 @@ from anonymization_trial.tabular_privacy import (
     release_dp_count,
     release_dp_counts,
     release_dp_counts_persistent,
+    release_dp_synthetic_histogram,
+    release_dp_synthetic_histogram_persistent,
     suppress_small_classes,
 )
 
@@ -89,6 +94,20 @@ def test_dp_count_uses_exact_geometric_noise_without_persisting_predicate(tmp_pa
     assert "condition" not in str(result) and "A" not in str(result)
 
 
+def test_dp_count_accepts_header_only_dataset_for_add_remove_adjacency(tmp_path: Path) -> None:
+    empty = tmp_path / "empty.csv"
+    singleton = tmp_path / "singleton.csv"
+    empty.write_text("condition\n", encoding="utf-8")
+    singleton.write_text("condition\nA\n", encoding="utf-8")
+
+    empty_result = release_dp_count(empty, "condition", "A", "0.7", random_below=_randbelow(0))
+    singleton_result = release_dp_count(singleton, "condition", "A", "0.7", random_below=_randbelow(0))
+
+    assert empty_result["noisy_count"] == 0
+    assert singleton_result["noisy_count"] == 1
+    assert empty_result["adjacency"] == singleton_result["adjacency"] == "add_remove_one_record"
+
+
 def test_dp_count_rejects_invalid_epsilon(tmp_path: Path) -> None:
     source = tmp_path / "people.csv"
     source.write_text("condition\nA\n", encoding="utf-8")
@@ -126,6 +145,25 @@ def test_dp_count_batch_accounts_for_composed_budget_without_predicates(tmp_path
         "raw_values_persisted": False,
     }
     assert "condition" not in str(result) and "A" not in str(result) and "B" not in str(result)
+
+
+def test_dp_count_batch_accepts_header_only_dataset_for_add_remove_adjacency(tmp_path: Path) -> None:
+    source = tmp_path / "people.csv"
+    source.write_text("condition\n", encoding="utf-8")
+
+    result = release_dp_counts(
+        source,
+        [
+            {"column": "condition", "equals": "A", "epsilon": "0.7"},
+            {"column": "condition", "equals": "B", "epsilon": "0.7"},
+        ],
+        "1.4",
+        random_below=_randbelow(0, 0),
+    )
+
+    assert result["noisy_counts"] == [0, 0]
+    assert result["adjacency"] == "add_remove_one_record"
+    assert result["query_count"] == 2
 
 
 def test_dp_count_batch_rejects_budget_overspend(tmp_path: Path) -> None:
@@ -184,6 +222,237 @@ def test_dp_count_rejects_domain_that_can_overflow_noise(tmp_path: Path) -> None
     source.write_text("condition\nA\n", encoding="utf-8")
     with pytest.raises(ValueError, match="between"):
         release_dp_count(source, "condition", "A", "1e-320")
+
+
+def test_dp_synthetic_histogram_writes_multidimensional_release_without_value_receipt(
+    tmp_path: Path,
+) -> None:
+    source = tmp_path / "people.csv"
+    output = tmp_path / "synthetic.csv"
+    source.write_text(
+        "region,condition\nurban,A\nurban,A\nrural,B\n",
+        encoding="utf-8",
+    )
+
+    result = release_dp_synthetic_histogram(
+        source,
+        output,
+        ["region", "condition"],
+        {"region": ["urban", "rural"], "condition": ["A", "B"]},
+        "0.7",
+        random_below=_randbelow(0, 0, 0, 0),
+    )
+
+    assert result == {
+        "schema": "differentially_private_synthetic_histogram.v1",
+        "mechanism": "exact_two_sided_geometric_p_half_multidimensional_histogram",
+        "privacy_guarantee": "pure_epsilon_differential_privacy",
+        "formal_epsilon_upper_bound": 0.7,
+        "adjacency": "add_remove_one_record",
+        "epsilon": 0.7,
+        "sensitivity": 1,
+        "composition": "histogram_parallel_cells_one_record_one_cell",
+        "dimension_count": 2,
+        "domain_cell_count": 4,
+        "domain_sizes": [2, 2],
+        "source_records": 3,
+        "synthetic_records": 3,
+        "cryptographic_randomness": False,
+        "receipt_contains_domain_values": False,
+        "raw_values_persisted": False,
+    }
+    assert output.read_text(encoding="utf-8") == (
+        "region,condition\nurban,A\nurban,A\nrural,B\n"
+    )
+    assert "urban" not in str(result) and "A" not in str(result)
+
+
+def test_dp_synthetic_histogram_accepts_header_only_dataset_for_add_remove_adjacency(
+    tmp_path: Path,
+) -> None:
+    empty = tmp_path / "empty.csv"
+    singleton = tmp_path / "singleton.csv"
+    empty_output = tmp_path / "empty.synthetic.csv"
+    singleton_output = tmp_path / "singleton.synthetic.csv"
+    empty.write_text("region,condition\n", encoding="utf-8")
+    singleton.write_text("region,condition\nurban,A\n", encoding="utf-8")
+    domains = {"region": ["urban", "rural"], "condition": ["A", "B"]}
+
+    empty_result = release_dp_synthetic_histogram(
+        empty,
+        empty_output,
+        ["region", "condition"],
+        domains,
+        "0.7",
+        random_below=_randbelow(0, 0, 0, 0),
+    )
+    singleton_result = release_dp_synthetic_histogram(
+        singleton,
+        singleton_output,
+        ["region", "condition"],
+        domains,
+        "0.7",
+        random_below=_randbelow(0, 0, 0, 0),
+    )
+
+    assert empty_result["synthetic_records"] == 0
+    assert singleton_result["synthetic_records"] == 1
+    assert empty_output.read_text(encoding="utf-8") == "region,condition\n"
+    assert singleton_output.read_text(encoding="utf-8") == "region,condition\nurban,A\n"
+
+
+def test_dp_synthetic_histogram_persistent_budget_composes_invocations(tmp_path: Path) -> None:
+    source = tmp_path / "people.csv"
+    first_output = tmp_path / "first.csv"
+    second_output = tmp_path / "second.csv"
+    ledger = tmp_path / "budget.json"
+    source.write_text("region,condition\nurban,A\n", encoding="utf-8")
+    domains = {"region": ["urban", "rural"], "condition": ["A", "B"]}
+
+    first = release_dp_synthetic_histogram_persistent(
+        source,
+        first_output,
+        ["region", "condition"],
+        domains,
+        "0.7",
+        "1.4",
+        ledger,
+        "release-authorization",
+        random_below=_randbelow(0, 0, 0, 0),
+    )
+    second = release_dp_synthetic_histogram_persistent(
+        source,
+        second_output,
+        ["region", "condition"],
+        domains,
+        "0.7",
+        "1.4",
+        ledger,
+        "release-authorization",
+        random_below=_randbelow(0, 0, 0, 0),
+    )
+
+    assert first["schema"] == "differentially_private_synthetic_histogram_persistent.v1"
+    assert first["cumulative_epsilon"] == 0.7
+    assert second["cumulative_epsilon"] == 1.4
+    assert second["persistent_remaining_epsilon"] == 0.0
+    assert second["budget_ledger_contains_domain_values"] is False
+    assert second["budget_ledger_contains_raw_values"] is False
+    persisted = ledger.read_text(encoding="utf-8")
+    assert "urban" not in persisted and "release-authorization" not in persisted
+    with pytest.raises(ValueError, match="persistent composed epsilon exceeds"):
+        release_dp_synthetic_histogram_persistent(
+            source,
+            tmp_path / "third.csv",
+            ["region", "condition"],
+            domains,
+            "0.7",
+            "1.4",
+            ledger,
+            "release-authorization",
+        )
+
+
+def test_dp_synthetic_histogram_persistent_spends_before_lower_level_publish_failure(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    source = tmp_path / "people.csv"
+    output = tmp_path / "synthetic.csv"
+    ledger = tmp_path / "budget.json"
+    source.write_text("region,condition\nurban,A\n", encoding="utf-8")
+    original_writer = tabular_privacy.csv.DictWriter
+
+    class FailingWriter:
+        def __init__(self, *args, **kwargs):
+            self._delegate = original_writer(*args, **kwargs)
+
+        def writeheader(self):
+            return self._delegate.writeheader()
+
+        def writerows(self, rows):
+            raise OSError("simulated persistent write failure")
+
+    monkeypatch.setattr(tabular_privacy.csv, "DictWriter", FailingWriter)
+
+    with pytest.raises(OSError, match="simulated persistent write failure"):
+        release_dp_synthetic_histogram_persistent(
+            source,
+            output,
+            ["region", "condition"],
+            {"region": ["urban", "rural"], "condition": ["A", "B"]},
+            "0.7",
+            "0.7",
+            ledger,
+            "release-authorization",
+            random_below=_randbelow(0, 0, 0, 0),
+        )
+
+    assert not output.exists()
+    persisted = json.loads(ledger.read_text(encoding="utf-8"))
+    assert persisted["spent_numerator"] == 7
+    assert persisted["spent_denominator"] == 10
+
+    monkeypatch.setattr(tabular_privacy.csv, "DictWriter", original_writer)
+    with pytest.raises(ValueError, match="persistent composed epsilon exceeds"):
+        release_dp_synthetic_histogram_persistent(
+            source,
+            output,
+            ["region", "condition"],
+            {"region": ["urban", "rural"], "condition": ["A", "B"]},
+            "0.7",
+            "0.7",
+            ledger,
+            "release-authorization",
+            random_below=_randbelow(0, 0, 0, 0),
+        )
+    assert not output.exists()
+
+
+def test_dp_synthetic_histogram_cleans_partial_output_when_write_fails(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    source = tmp_path / "people.csv"
+    output = tmp_path / "synthetic.csv"
+    source.write_text("region,condition\nurban,A\n", encoding="utf-8")
+    original_writer = tabular_privacy.csv.DictWriter
+
+    class FailingWriter:
+        def __init__(self, *args, **kwargs):
+            self._delegate = original_writer(*args, **kwargs)
+
+        def writeheader(self):
+            return self._delegate.writeheader()
+
+        def writerows(self, rows):
+            raise OSError("simulated write failure")
+
+    monkeypatch.setattr(tabular_privacy.csv, "DictWriter", FailingWriter)
+
+    with pytest.raises(OSError, match="simulated write failure"):
+        release_dp_synthetic_histogram(
+            source,
+            output,
+            ["region", "condition"],
+            {"region": ["urban", "rural"], "condition": ["A", "B"]},
+            "0.7",
+            random_below=_randbelow(0, 0, 0, 0),
+        )
+    assert not output.exists()
+
+
+def test_dp_synthetic_histogram_rejects_values_outside_public_domain(
+    tmp_path: Path,
+) -> None:
+    source = tmp_path / "people.csv"
+    source.write_text("region,condition\nsecret,A\n", encoding="utf-8")
+    with pytest.raises(ValueError, match="outside the declared public domain"):
+        release_dp_synthetic_histogram(
+            source,
+            tmp_path / "synthetic.csv",
+            ["region", "condition"],
+            {"region": ["urban", "rural"], "condition": ["A", "B"]},
+            "0.7",
+        )
 
 
 def test_delta_presence_reports_aggregate_bounds_without_values(tmp_path: Path) -> None:

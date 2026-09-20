@@ -14,12 +14,113 @@ def _capture(capsys, argv):
     return code, out.out, out.err
 
 
+def test_tabular_advanced_transform_real_cli_path(tmp_path: Path, capsys):
+    source = tmp_path / "source.csv"
+    source.write_text("group,condition\na,A\na,B\nb,A\nb,B\n", encoding="utf-8")
+    hierarchy = tmp_path / "hierarchy.json"
+    hierarchy.write_text(json.dumps({"group": {"a": ["*"], "b": ["*"]}}))
+    output = tmp_path / "release.csv"
+    code, stdout, stderr = _capture(
+        capsys,
+        [
+            "tabular-advanced-transform",
+            "--input", str(source),
+            "--output", str(output),
+            "--quasi-identifiers", "group",
+            "--sensitive", "condition",
+            "--hierarchy", str(hierarchy),
+            "--minimum-k", "2",
+            "--maximum-alpha", "0.5",
+            "--recursive-l", "2",
+            "--maximum-recursive-c", "1",
+            "--maximum-beta", "0",
+            "--maximum-t", "0",
+        ],
+    )
+    receipt = json.loads(stdout)
+    assert code == 0 and not stderr
+    assert receipt["transformation"]["privacy_recomputed"]["k_anonymity"] == 2
+    assert receipt["raw_values_persisted_in_receipt"] is False
+    assert receipt["transformation"]["selected_levels"] == {"group": 0}
+    assert len(output.read_text(encoding="utf-8").splitlines()) == 5
+
+
 def test_explain(capsys):
     code, out, _ = _capture(capsys, ["explain"])
     data = json.loads(out)
     assert code == 0
     assert "leftmost -> longest -> stable rule_id tie-break" in data["matching"]
     assert data["does_not_establish"]
+
+
+def test_dp_synthesize_rejects_output_receipt_alias_before_publication(tmp_path: Path, capsys):
+    source = tmp_path / "people.csv"
+    domain = tmp_path / "domain.json"
+    alias = tmp_path / "release.csv"
+    source.write_text("region,condition\nurban,A\n", encoding="utf-8")
+    domain.write_text(json.dumps({"region": ["urban"], "condition": ["A"]}), encoding="utf-8")
+
+    code, _, err = _capture(
+        capsys,
+        [
+            "dp-synthesize",
+            "--input", str(source),
+            "--output", str(alias),
+            "--domain", str(domain),
+            "--dimensions", "region,condition",
+            "--epsilon", "0.7",
+            "--receipt", str(alias),
+        ],
+    )
+
+    assert code == 1
+    assert "ValueError" in err
+    assert not alias.exists()
+
+    real_dir = tmp_path / "real"
+    real_dir.mkdir()
+    link_dir = tmp_path / "link"
+    link_dir.symlink_to(real_dir, target_is_directory=True)
+    equivalent = real_dir / "same.csv"
+    code, _, err = _capture(
+        capsys,
+        [
+            "dp-synthesize",
+            "--input", str(source),
+            "--output", str(link_dir / "same.csv"),
+            "--domain", str(domain),
+            "--dimensions", "region,condition",
+            "--epsilon", "0.7",
+            "--receipt", str(equivalent),
+        ],
+    )
+    assert code == 1
+    assert "ValueError" in err
+    assert not equivalent.exists()
+
+    output = tmp_path / "synthetic.csv"
+    receipt = tmp_path / "receipt.json"
+    ledger_aliases = [(output, "output"), (receipt, "receipt")]
+    for ledger, _name in ledger_aliases:
+        code, _, err = _capture(
+            capsys,
+            [
+                "dp-synthesize",
+                "--input", str(source),
+                "--output", str(output),
+                "--domain", str(domain),
+                "--dimensions", "region,condition",
+                "--epsilon", "0.7",
+                "--receipt", str(receipt),
+                "--budget-ledger", str(ledger),
+                "--budget-id", "release-authorization",
+                "--maximum-epsilon", "1.4",
+            ],
+        )
+        assert code == 1
+        assert "ValueError" in err
+        assert not output.exists()
+        assert not receipt.exists()
 
 
 def test_preflight_pass(tmp_path: Path, capsys):
@@ -51,6 +152,49 @@ def test_run_then_verify_and_inspect(tmp_path: Path, capsys):
     idata = json.loads(iout)
     assert icode == 0 and idata["status"] == "ready"
     assert idata["key_mode"] == "public-deterministic-trial-namespace"
+
+
+def test_tabular_risk_cli_runs_multiple_sensitive_real_path(tmp_path: Path, capsys):
+    source = tmp_path / "people.csv"
+    source.write_text(
+        "group,condition,income\na,A,10\na,B,20\nb,A,10\nb,A,30\n",
+        encoding="utf-8",
+    )
+    code, out, _ = _capture(
+        capsys,
+        [
+            "tabular-risk", "--input", str(source),
+            "--quasi-identifiers", "group", "--sensitive", "condition,income",
+        ],
+    )
+    receipt = json.loads(out)
+    assert code == 0
+    assert receipt["schema"] == "multiple_sensitive_privacy_metrics.v1"
+    assert receipt["sensitive_attribute_count"] == 2
+    assert receipt["raw_values_persisted"] is False
+
+
+def test_tabular_generalize_cli_runs_real_path(tmp_path: Path, capsys):
+    source = tmp_path / "people.csv"
+    source.write_text("zip,condition\n10001,A\n10002,B\n", encoding="utf-8")
+    hierarchy = tmp_path / "hierarchy.json"
+    hierarchy.write_text(
+        json.dumps({"zip": {"10001": ["1000*"], "10002": ["1000*"]}}),
+        encoding="utf-8",
+    )
+    output = tmp_path / "generalized.csv"
+    code, out, _ = _capture(
+        capsys,
+        [
+            "tabular-generalize", "--input", str(source), "--output", str(output),
+            "--quasi-identifiers", "zip", "--sensitive", "condition",
+            "--hierarchy", str(hierarchy), "--minimum-k", "2",
+        ],
+    )
+    receipt = json.loads(out)
+    assert code == 0
+    assert receipt["privacy_recomputed"]["k_anonymity"] == 2
+    assert output.read_text(encoding="utf-8") == "zip,condition\n1000*,A\n1000*,B\n"
 
 
 def test_verify_detects_tampered_output(tmp_path: Path, capsys):

@@ -556,6 +556,27 @@
         ]
       },
       "readback": true
+    },
+    {
+      "name": "dp-synthetic-histogram-real-path",
+      "type": "adversarial",
+      "real_world": true,
+      "evidence_class": "live_e2e",
+      "supports_claims": [
+        "anonymize.dp_synthetic_histogram"
+      ],
+      "command": [
+        "bash",
+        "-c",
+        "cd .. && .venv/bin/python scripts/eval_dp_synthesis.py"
+      ],
+      "expected": {
+        "exit_code": 0,
+        "stdout_contains": [
+          "DP_SYNTHESIS_REAL_PATH_VERIFIED"
+        ]
+      },
+      "readback": true
     }
   ],
   "capability_claims": [
@@ -641,7 +662,7 @@
     },
     {
       "id": "anonymize.single_query_epsilon_dp_count",
-      "description": "Canonical offline CLI releases one bounded finite-precision noisy count, rejects unsafe epsilon domains, emits no predicate or true count, and explicitly does not claim formal pure epsilon differential privacy.",
+      "description": "Canonical offline CLI releases one exact-geometric noisy count for add/remove-one-record adjacency, including header-only empty datasets and singleton neighbors, rejects unsafe epsilon domains, and emits no predicate or true count.",
       "criticality": "important",
       "evidence_required": {
         "live_e2e": true
@@ -649,10 +670,22 @@
     },
     {
       "id": "anonymize.composed_epsilon_dp_counts",
-      "description": "Canonical offline CLI releases multiple bounded finite-precision noisy counts only when exact budget accounting fits an explicit ceiling, without retaining predicates or true counts and without claiming formal pure epsilon differential privacy.",
+      "description": "Canonical offline CLI releases multiple exact-geometric noisy counts for add/remove-one-record adjacency, including header-only empty datasets and singleton neighbors, only when exact budget accounting fits an explicit ceiling, without retaining predicates or true counts.",
       "criticality": "important",
       "evidence_required": {
         "live_e2e": true
+      }
+    },
+    {
+      "id": "anonymize.dp_synthetic_histogram",
+      "description": "Canonical offline CLI releases an epsilon-DP multidimensional categorical synthetic histogram from explicit public domains, with aggregate-only private receipts.",
+      "criticality": "important",
+      "evidence_required": {
+        "live_e2e": true
+      },
+      "derived_from": {
+        "source": "security/competitor_parity_matrix.json:arx-dp-synthetic-histogram-33",
+        "requirement": "Bind scoped ARX-style multidimensional DP synthesis to retained live product evidence."
       }
     }
   ]

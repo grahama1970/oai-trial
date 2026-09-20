@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import resource
 import subprocess
 import sys
@@ -44,6 +45,8 @@ from .tabular_privacy import (
     release_dp_count,
     release_dp_counts,
     release_dp_counts_persistent,
+    release_dp_synthetic_histogram,
+    release_dp_synthetic_histogram_persistent,
     suppress_small_classes,
 )
 from .verification import verify_corpus
@@ -217,6 +220,84 @@ def _dp_count_batch_cmd(
         else release_dp_counts(input_path, queries, maximum_epsilon)
     )
     print(json.dumps(result, sort_keys=True, allow_nan=False))
+    return 0
+
+
+def _dp_synthesize_cmd(
+    input_path: Path,
+    output: Path,
+    domain_path: Path,
+    dimensions: str,
+    epsilon: Decimal,
+    receipt: Path,
+    budget_ledger: Path | None = None,
+    budget_id: str | None = None,
+    maximum_epsilon: Decimal | None = None,
+) -> int:
+    dims = [value for value in dimensions.split(",") if value]
+    domains = json.loads(domain_path.read_text(encoding="utf-8"))
+    if not isinstance(domains, dict):
+        raise ValueError("domain must be a JSON object")
+    resolved_output = output.resolve(strict=False)
+    resolved_receipt = receipt.resolve(strict=False)
+    if resolved_output == resolved_receipt:
+        raise ValueError("output and receipt must be separate paths")
+    persistent_args = (budget_ledger, budget_id, maximum_epsilon)
+    if any(value is not None for value in persistent_args) and not all(
+        value is not None for value in persistent_args
+    ):
+        raise ValueError("--budget-ledger, --budget-id, and --maximum-epsilon must be supplied together")
+    if budget_ledger is not None:
+        resolved_ledger = budget_ledger.resolve(strict=False)
+        if resolved_ledger in {resolved_output, resolved_receipt}:
+            raise ValueError("budget ledger must be separate from output and receipt paths")
+    if output.exists():
+        raise FileExistsError("output already exists")
+    if receipt.exists():
+        raise FileExistsError("receipt already exists")
+    output.parent.mkdir(parents=True, exist_ok=True)
+    receipt.parent.mkdir(parents=True, exist_ok=True)
+    output_fd, staged_output_name = tempfile.mkstemp(prefix=f".{output.name}.", dir=output.parent)
+    os.close(output_fd)
+    staged_output = Path(staged_output_name)
+    staged_output.unlink()
+    receipt_fd, staged_receipt_name = tempfile.mkstemp(prefix=f".{receipt.name}.", dir=receipt.parent)
+    os.close(receipt_fd)
+    staged_receipt = Path(staged_receipt_name)
+    staged_receipt.unlink()
+    try:
+        result = (
+            release_dp_synthetic_histogram_persistent(
+                input_path,
+                staged_output,
+                dims,
+                domains,
+                epsilon,
+                maximum_epsilon,
+                budget_ledger,
+                budget_id,
+            )
+            if budget_ledger is not None and budget_id is not None and maximum_epsilon is not None
+            else release_dp_synthetic_histogram(input_path, staged_output, dims, domains, epsilon)
+        )
+        result["publication_atomicity"] = "staged_csv_and_private_receipt_before_release_path"
+        write_private_report(staged_receipt, result)
+        os.replace(staged_receipt, receipt)
+        try:
+            os.replace(staged_output, output)
+        except BaseException:
+            receipt.unlink(missing_ok=True)
+            raise
+    except BaseException:
+        staged_output.unlink(missing_ok=True)
+        staged_receipt.unlink(missing_ok=True)
+        raise
+    print(
+        json.dumps(
+            {"schema": result["schema"], "output": str(output), "receipt": str(receipt)},
+            sort_keys=True,
+        )
+    )
     return 0
 
 
@@ -588,6 +669,19 @@ def _parser() -> argparse.ArgumentParser:
     dp_count_batch.add_argument(
         "--budget-id", help="authorization-domain identifier (only its SHA-256 is persisted)"
     )
+    dp_synthesize = subparsers.add_parser(
+        "dp-synthesize",
+        help="release an epsilon-DP multidimensional categorical synthetic histogram",
+    )
+    dp_synthesize.add_argument("--input", type=Path, required=True)
+    dp_synthesize.add_argument("--output", type=Path, required=True)
+    dp_synthesize.add_argument("--domain", type=Path, required=True)
+    dp_synthesize.add_argument("--dimensions", required=True)
+    dp_synthesize.add_argument("--epsilon", type=Decimal, required=True)
+    dp_synthesize.add_argument("--receipt", type=Path, required=True)
+    dp_synthesize.add_argument("--budget-ledger", type=Path)
+    dp_synthesize.add_argument("--budget-id")
+    dp_synthesize.add_argument("--maximum-epsilon", type=Decimal)
     delta_presence = subparsers.add_parser(
         "delta-presence-risk", help="measure authorized QI sample presence against a population"
     )
@@ -773,6 +867,18 @@ def main(argv: list[str] | None = None) -> int:
                 args.maximum_epsilon,
                 args.budget_ledger,
                 args.budget_id,
+            )
+        if args.command == "dp-synthesize":
+            return _dp_synthesize_cmd(
+                args.input,
+                args.output,
+                args.domain,
+                args.dimensions,
+                args.epsilon,
+                args.receipt,
+                args.budget_ledger,
+                args.budget_id,
+                args.maximum_epsilon,
             )
         if args.command == "delta-presence-risk":
             return _delta_presence_cmd(
