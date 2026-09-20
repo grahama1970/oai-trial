@@ -30,7 +30,8 @@
   ],
   "allowed_probe_classes": [
     "invariant-campaign",
-    "acceptance-floor"
+    "acceptance-floor",
+    "adaptive-invariant"
   ],
   "denied_probe_classes": [],
   "network_policy": "local-docker-only",
