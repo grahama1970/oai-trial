@@ -18,6 +18,7 @@ import sys
 import tempfile
 import time
 from dataclasses import asdict
+from decimal import Decimal
 from pathlib import Path
 
 from .contextual_graph import audit_contextual_graph
@@ -41,6 +42,8 @@ from .tabular_privacy import (
     locally_generalize_with_hierarchies,
     microaggregate_and_code,
     release_dp_count,
+    release_dp_counts,
+    release_dp_counts_persistent,
     suppress_small_classes,
 )
 from .verification import verify_corpus
@@ -183,13 +186,37 @@ def _contextual_graph_cmd(input_path: Path, output: Path, min_shared_clues: int)
     return 2 if result["verdict"] == "block" else 0
 
 
-def _dp_count_cmd(input_path: Path, column: str, equals: str, epsilon: float) -> int:
+def _dp_count_cmd(input_path: Path, column: str, equals: str, epsilon: Decimal) -> int:
     print(
         json.dumps(
             release_dp_count(input_path, column, equals, epsilon),
             sort_keys=True,
+            allow_nan=False,
         )
     )
+    return 0
+
+
+def _dp_count_batch_cmd(
+    input_path: Path,
+    query_plan: Path,
+    maximum_epsilon: Decimal,
+    budget_ledger: Path | None,
+    budget_id: str | None,
+) -> int:
+    queries = json.loads(query_plan.read_text(encoding="utf-8"), parse_float=Decimal)
+    if not isinstance(queries, list):
+        raise ValueError("query plan must be a JSON list")
+    if (budget_ledger is None) != (budget_id is None):
+        raise ValueError("--budget-ledger and --budget-id must be supplied together")
+    result = (
+        release_dp_counts_persistent(
+            input_path, queries, maximum_epsilon, budget_ledger, budget_id
+        )
+        if budget_ledger is not None and budget_id is not None
+        else release_dp_counts(input_path, queries, maximum_epsilon)
+    )
+    print(json.dumps(result, sort_keys=True, allow_nan=False))
     return 0
 
 
@@ -543,12 +570,24 @@ def _parser() -> argparse.ArgumentParser:
         help="match pyCANON gen=False by adding other sensitive columns to each audit key",
     )
     dp_count = subparsers.add_parser(
-        "dp-count", help="release one epsilon-DP predicate count with Laplace noise"
+        "dp-count", help="release one epsilon-DP predicate count with exact geometric noise"
     )
     dp_count.add_argument("--input", type=Path, required=True)
     dp_count.add_argument("--column", required=True)
     dp_count.add_argument("--equals", required=True)
-    dp_count.add_argument("--epsilon", type=float, required=True)
+    dp_count.add_argument("--epsilon", type=Decimal, required=True)
+    dp_count_batch = subparsers.add_parser(
+        "dp-count-batch", help="release composed exact-geometric epsilon-DP counts within one privacy budget"
+    )
+    dp_count_batch.add_argument("--input", type=Path, required=True)
+    dp_count_batch.add_argument("--query-plan", type=Path, required=True)
+    dp_count_batch.add_argument("--maximum-epsilon", type=Decimal, required=True)
+    dp_count_batch.add_argument(
+        "--budget-ledger", type=Path, help="private local ledger for cross-invocation accounting"
+    )
+    dp_count_batch.add_argument(
+        "--budget-id", help="authorization-domain identifier (only its SHA-256 is persisted)"
+    )
     delta_presence = subparsers.add_parser(
         "delta-presence-risk", help="measure authorized QI sample presence against a population"
     )
@@ -727,6 +766,14 @@ def main(argv: list[str] | None = None) -> int:
             )
         if args.command == "dp-count":
             return _dp_count_cmd(args.input, args.column, args.equals, args.epsilon)
+        if args.command == "dp-count-batch":
+            return _dp_count_batch_cmd(
+                args.input,
+                args.query_plan,
+                args.maximum_epsilon,
+                args.budget_ledger,
+                args.budget_id,
+            )
         if args.command == "delta-presence-risk":
             return _delta_presence_cmd(
                 args.release, args.population, args.quasi_identifiers

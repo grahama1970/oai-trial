@@ -7,10 +7,17 @@ columns, keeping transformation authority with the approved policy/operator.
 from __future__ import annotations
 
 import csv
+import fcntl
+import hashlib
 import itertools
+import json
 import math
+import os
 import secrets
+import stat
 from collections import Counter, defaultdict
+from decimal import Decimal, InvalidOperation
+from fractions import Fraction
 from collections.abc import Callable
 from pathlib import Path
 
@@ -203,48 +210,194 @@ def audit_csv(
     return metrics
 
 
+# The exact sampler below has privacy loss ln(2). Requiring a declared epsilon
+# of at least 0.7 is conservative because ln(2) < 0.7.
+_MIN_NOISE_EPSILON = Decimal("0.7")
+_MAX_NOISE_EPSILON = Decimal("100")
+_FORMAL_EPSILON_UPPER_BOUND = Decimal("0.7")
+
+
+def _validated_epsilon(value: object, label: str = "epsilon") -> Decimal:
+    if isinstance(value, bool) or not isinstance(value, (int, float, str, Decimal)):
+        raise ValueError(f"{label} must be numeric")
+    try:
+        epsilon = Decimal(str(value))
+    except InvalidOperation as error:
+        raise ValueError(f"{label} must be numeric") from error
+    if not epsilon.is_finite() or not _MIN_NOISE_EPSILON <= epsilon <= _MAX_NOISE_EPSILON:
+        raise ValueError(
+            f"{label} must be finite and between {_MIN_NOISE_EPSILON} and {_MAX_NOISE_EPSILON}"
+        )
+    return epsilon
+
+
+def _sample_two_sided_geometric(randbelow: Callable[[int], int]) -> int:
+    """Sample P(0)=1/3 and P(±m)=1/(3*2**m) using exact fair bits."""
+    while (branch := randbelow(4)) == 3:
+        pass
+    if branch == 0:
+        return 0
+    magnitude = 1
+    while randbelow(2) == 0:
+        magnitude += 1
+    return magnitude if branch == 1 else -magnitude
+
+
 def release_dp_count(
     path: Path,
     column: str,
     equals: str,
-    epsilon: float,
+    epsilon: float | Decimal | str,
     *,
-    random_unit: Callable[[], float] | None = None,
+    random_below: Callable[[int], int] | None = None,
 ) -> dict:
-    """Release one predicate count with the Laplace mechanism.
+    """Release a sensitivity-one count with exact two-sided geometric noise.
 
-    The add/remove adjacency sensitivity is one. The predicate is deliberately
-    omitted from the receipt because it may itself be sensitive. Callers own
-    composition across receipts; this function proves only one-query epsilon-DP.
+    The exact integer distribution has adjacent likelihood ratio at most 2,
+    hence privacy loss ln(2), conservatively bounded by declared epsilon >= 0.7.
+    The predicate is deliberately omitted because it may itself be sensitive.
     """
-    if not math.isfinite(epsilon) or epsilon <= 0:
-        raise ValueError("epsilon must be finite and greater than zero")
+    epsilon_decimal = _validated_epsilon(epsilon)
     fields, rows = _read_csv(path)
     if column not in fields:
         raise ValueError("missing declared predicate column")
-    sample = (random_unit or secrets.SystemRandom().random)()
-    if not math.isfinite(sample) or not 0 < sample < 1:
-        raise ValueError("random sample must be strictly between zero and one")
-    centered = sample - 0.5
-    noise = (
-        -math.copysign(1.0, centered)
-        * math.log1p(-2 * abs(centered))
-        / epsilon
-    )
-    noisy_count = max(0.0, sum(row[column] == equals for row in rows) + noise)
+    noise = _sample_two_sided_geometric(random_below or secrets.randbelow)
+    noisy_count = max(0, sum(row[column] == equals for row in rows) + noise)
     return {
         "schema": "differentially_private_count.v1",
-        "mechanism": "laplace",
+        "mechanism": "exact_two_sided_geometric_p_half",
         "privacy_guarantee": "pure_epsilon_differential_privacy",
+        "formal_epsilon_upper_bound": float(_FORMAL_EPSILON_UPPER_BOUND),
         "adjacency": "add_remove_one_record",
-        "epsilon": epsilon,
+        "epsilon": float(epsilon_decimal),
         "sensitivity": 1,
-        "noisy_count": round(noisy_count, 12),
+        "noisy_count": noisy_count,
         "clamped_to_nonnegative": True,
         "composition": "single_query_only",
-        "cryptographic_randomness": random_unit is None,
+        "cryptographic_randomness": random_below is None,
         "raw_values_persisted": False,
     }
+
+
+def release_dp_counts(
+    path: Path,
+    queries: list[dict[str, object]],
+    maximum_epsilon: float | Decimal | str,
+    *,
+    random_below: Callable[[int], int] | None = None,
+) -> dict:
+    """Release multiple noisy counts with exact, fail-closed budget accounting."""
+    maximum_decimal = _validated_epsilon(maximum_epsilon, "maximum_epsilon")
+    maximum_fraction = Fraction(maximum_decimal)
+    if not queries:
+        raise ValueError("queries must be a non-empty list")
+    normalized: list[tuple[str, str, Decimal]] = []
+    epsilon_values: list[Decimal] = []
+    for query in queries:
+        if set(query) != {"column", "equals", "epsilon"}:
+            raise ValueError("each query must contain only column, equals, and epsilon")
+        column, equals, epsilon = query["column"], query["equals"], query["epsilon"]
+        if not isinstance(column, str) or not column or not isinstance(equals, str):
+            raise ValueError("query column and equals must be strings")
+        epsilon_decimal = _validated_epsilon(epsilon, "query epsilon")
+        normalized.append((column, equals, epsilon_decimal))
+        epsilon_values.append(epsilon_decimal)
+    total_fraction = sum((Fraction(value) for value in epsilon_values), Fraction(0))
+    if total_fraction > maximum_fraction:
+        raise ValueError("composed epsilon exceeds maximum_epsilon")
+    releases = [
+        release_dp_count(path, column, equals, epsilon, random_below=random_below)
+        for column, equals, epsilon in normalized
+    ]
+    return {
+        "schema": "differentially_private_count_batch.v1",
+        "mechanism": "exact_two_sided_geometric_p_half",
+        "privacy_guarantee": "pure_epsilon_differential_privacy",
+        "formal_epsilon_upper_bound_per_query": float(_FORMAL_EPSILON_UPPER_BOUND),
+        "adjacency": "add_remove_one_record",
+        "composition": "basic_sequential_composition",
+        "query_count": len(releases),
+        "total_epsilon": float(total_fraction),
+        "maximum_epsilon": float(maximum_fraction),
+        "remaining_epsilon": float(maximum_fraction - total_fraction),
+        "noisy_counts": [release["noisy_count"] for release in releases],
+        "cryptographic_randomness": random_below is None,
+        "raw_values_persisted": False,
+    }
+
+
+def release_dp_counts_persistent(
+    path: Path,
+    queries: list[dict[str, object]],
+    maximum_epsilon: float | Decimal | str,
+    ledger_path: Path,
+    budget_id: str,
+    *,
+    random_below: Callable[[int], int] | None = None,
+) -> dict:
+    """Atomically reserve and spend a privacy budget across CLI invocations."""
+    if not budget_id:
+        raise ValueError("budget_id must be non-empty")
+    maximum = Fraction(_validated_epsilon(maximum_epsilon, "maximum_epsilon"))
+    requested = sum(
+        (
+            Fraction(_validated_epsilon(query.get("epsilon"), "query epsilon"))
+            for query in queries
+            if isinstance(query, dict)
+        ),
+        Fraction(0),
+    )
+    if len(queries) == 0 or requested <= 0:
+        raise ValueError("queries must be a non-empty list")
+    budget_hash = hashlib.sha256(budget_id.encode("utf-8")).hexdigest()
+    ledger_path.parent.mkdir(parents=True, exist_ok=True)
+    flags = os.O_RDWR | os.O_CREAT | getattr(os, "O_NOFOLLOW", 0)
+    descriptor = os.open(ledger_path, flags, 0o600)
+    with os.fdopen(descriptor, "r+", encoding="utf-8") as ledger:
+        if not stat.S_ISREG(os.fstat(ledger.fileno()).st_mode):
+            raise ValueError("budget ledger must be a regular file")
+        fcntl.flock(ledger, fcntl.LOCK_EX)
+        content = ledger.read()
+        state = json.loads(content) if content else None
+        if state is None:
+            spent = Fraction(0)
+        else:
+            if (
+                state.get("schema") != "dp_budget_ledger.v1"
+                or state.get("budget_id_sha256") != budget_hash
+                or Fraction(state["maximum_numerator"], state["maximum_denominator"]) != maximum
+            ):
+                raise ValueError("budget ledger identity or maximum_epsilon mismatch")
+            spent = Fraction(state["spent_numerator"], state["spent_denominator"])
+        if spent + requested > maximum:
+            raise ValueError("persistent composed epsilon exceeds maximum_epsilon")
+        result = release_dp_counts(
+            path, queries, maximum_epsilon, random_below=random_below
+        )
+        cumulative = spent + requested
+        persisted = {
+            "schema": "dp_budget_ledger.v1",
+            "budget_id_sha256": budget_hash,
+            "maximum_numerator": maximum.numerator,
+            "maximum_denominator": maximum.denominator,
+            "spent_numerator": cumulative.numerator,
+            "spent_denominator": cumulative.denominator,
+        }
+        ledger.seek(0)
+        json.dump(persisted, ledger, sort_keys=True, separators=(",", ":"))
+        ledger.truncate()
+        ledger.flush()
+        os.fsync(ledger.fileno())
+    result.update(
+        {
+            "schema": "differentially_private_count_persistent_batch.v1",
+            "budget_id_sha256": budget_hash,
+            "cumulative_epsilon": float(cumulative),
+            "persistent_remaining_epsilon": float(maximum - cumulative),
+            "budget_ledger_contains_predicates": False,
+        }
+    )
+    return result
 
 
 def audit_delta_presence(

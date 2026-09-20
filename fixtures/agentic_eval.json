@@ -250,7 +250,7 @@
       "command": [
         "bash",
         "-c",
-        "cd .. && set -euo pipefail; w=$(mktemp -d); rm -f /tmp/oai-presidio-comparator-receipt.json; uv run --extra multimodal python scripts/verify_competitor_parity.py --receipt \"$w/parity.json\" >/dev/null; python3 -c \"import hashlib,json; r=json.load(open('$w/parity.json')); expected=set('microsoft-presidio-01,arx-data-anonymization-tool-02,pycanon-and-anjana-03,anonymeter-04,leakpro-05,presidio-image-redactor-document-redaction-ecosystem-06,pycanon-and-anjana-07,pycanon-and-anjana-08,anonymeter-09,leakpro-10,microsoft-presidio-11,presidio-image-document-ecosystem-12,container-release-boundary-13,pdf-structural-verification-14,anonymeter-15,anonymeter-16,anonymeter-17,pycanon-and-anjana-18,arx-data-anonymization-tool-19,arx-data-anonymization-tool-20,anonymeter-21,pycanon-and-anjana-22'.split(',')); assert r['matrix_valid'] is True and r['gap_rows']==0 and r['scoped_parity_proven'] is True and r['complete_ecosystem_parity_proven'] is False and r['release_qualified'] is False; assert r['qualification_steps']['ecosystem_inventory']=='failed' and r['release_blockers']==['ecosystem_inventory']; assert all(x['binding_complete'] for x in r['results']); presidio=next(x for x in r['results'] if x['capability_id']=='microsoft-presidio-11'); assert presidio['dependency_bindings']==[{'environment':'isolated_uv_proof_command','requirement':'presidio-analyzer==2.2.364','resolved':True}]; assert all(set(x['step_statuses'])=={'proof_execution','runtime_consumers','source_revision','package_bindings','configuration_binding'} for x in r['results']); assert set(r['capability_bindings'])==expected; assert all(r['capability_bindings'][x['capability_id']]==x['row_sha256'] for x in r['results']); assert r['matrix_sha256']==hashlib.sha256(open('security/competitor_parity_matrix.json','rb').read()).hexdigest(); d=open('$w/parity.json.sha256').read().strip().split('  '); assert d==[hashlib.sha256(open('$w/parity.json','rb').read()).hexdigest(),'parity.json']; print('PARITY_MATRIX_EXECUTED_HONESTLY')\""
+        "cd .. && set -euo pipefail; w=$(mktemp -d); rm -f /tmp/oai-presidio-comparator-receipt.json; uv run --extra multimodal python scripts/verify_competitor_parity.py --receipt \"$w/parity.json\" >/dev/null; python3 -c \"import hashlib,json; r=json.load(open('$w/parity.json')); expected={x['capability_id'] for x in json.load(open('security/competitor_parity_matrix.json'))['rows']}; assert r['matrix_valid'] is True and r['gap_rows']==2 and r['scoped_parity_proven'] is False and r['complete_ecosystem_parity_proven'] is False and r['release_qualified'] is False; assert r['qualification_steps']['ecosystem_inventory']=='failed' and set(r['release_blockers'])=={'ecosystem_inventory','capability_results'}; assert all(x['binding_complete'] for x in r['results']); presidio=next(x for x in r['results'] if x['capability_id']=='microsoft-presidio-11'); assert presidio['dependency_bindings']==[{'environment':'isolated_uv_proof_command','requirement':'presidio-analyzer==2.2.364','resolved':True}]; assert all(set(x['step_statuses'])=={'proof_execution','runtime_consumers','source_revision','package_bindings','configuration_binding'} for x in r['results']); assert set(r['capability_bindings'])==expected; assert all(r['capability_bindings'][x['capability_id']]==x['row_sha256'] for x in r['results']); assert r['matrix_sha256']==hashlib.sha256(open('security/competitor_parity_matrix.json','rb').read()).hexdigest(); d=open('$w/parity.json.sha256').read().strip().split('  '); assert d==[hashlib.sha256(open('$w/parity.json','rb').read()).hexdigest(),'parity.json']; print('PARITY_MATRIX_EXECUTED_HONESTLY')\""
       ],
       "timeout_seconds": 900,
       "expected": {
@@ -517,6 +517,45 @@
         ]
       },
       "readback": true
+    },
+    {
+      "name": "differentially-private-count-batch-real-path",
+      "type": "adversarial",
+      "real_world": true,
+      "evidence_class": "live_e2e",
+      "supports_claims": [
+        "anonymize.composed_epsilon_dp_counts"
+      ],
+      "command": [
+        "bash",
+        "-c",
+        "cd .. && .venv/bin/python scripts/eval_dp_count_batch.py"
+      ],
+      "expected": {
+        "exit_code": 0,
+        "stdout_contains": [
+          "DP_COUNT_BATCH_REAL_PATH_VERIFIED"
+        ]
+      },
+      "readback": true
+    },
+    {
+      "name": "persistent-dp-budget-real-path",
+      "type": "adversarial",
+      "real_world": true,
+      "evidence_class": "live_e2e",
+      "command": [
+        "bash",
+        "-c",
+        "cd .. && .venv/bin/python scripts/eval_dp_persistent_budget.py"
+      ],
+      "expected": {
+        "exit_code": 0,
+        "stdout_contains": [
+          "DP_PERSISTENT_BUDGET_REAL_PATH_VERIFIED"
+        ]
+      },
+      "readback": true
     }
   ],
   "capability_claims": [
@@ -602,7 +641,15 @@
     },
     {
       "id": "anonymize.single_query_epsilon_dp_count",
-      "description": "Canonical offline CLI releases one predicate count using the Laplace mechanism with declared epsilon, sensitivity-one add/remove adjacency, cryptographic randomness, and no predicate or true count in the receipt.",
+      "description": "Canonical offline CLI releases one bounded finite-precision noisy count, rejects unsafe epsilon domains, emits no predicate or true count, and explicitly does not claim formal pure epsilon differential privacy.",
+      "criticality": "important",
+      "evidence_required": {
+        "live_e2e": true
+      }
+    },
+    {
+      "id": "anonymize.composed_epsilon_dp_counts",
+      "description": "Canonical offline CLI releases multiple bounded finite-precision noisy counts only when exact budget accounting fits an explicit ceiling, without retaining predicates or true counts and without claiming formal pure epsilon differential privacy.",
       "criticality": "important",
       "evidence_required": {
         "live_e2e": true

@@ -15,6 +15,8 @@ from anonymization_trial.tabular_privacy import (
     locally_generalize_with_hierarchies,
     microaggregate_and_code,
     release_dp_count,
+    release_dp_counts,
+    release_dp_counts_persistent,
     suppress_small_classes,
 )
 
@@ -51,22 +53,34 @@ def test_local_recoding_preserves_safe_classes_and_recomputes_k(tmp_path: Path) 
     assert result["raw_values_persisted_in_receipt"] is False
 
 
-def test_dp_count_uses_laplace_noise_without_persisting_predicate(tmp_path: Path) -> None:
+def _randbelow(*values: int):
+    iterator = iter(values)
+
+    def draw(limit: int) -> int:
+        value = next(iterator)
+        assert 0 <= value < limit
+        return value
+
+    return draw
+
+
+def test_dp_count_uses_exact_geometric_noise_without_persisting_predicate(tmp_path: Path) -> None:
     source = tmp_path / "people.csv"
     source.write_text("condition\nA\nA\nB\n", encoding="utf-8")
 
     result = release_dp_count(
-        source, "condition", "A", 1.0, random_unit=lambda: 0.75
+        source, "condition", "A", "0.7", random_below=_randbelow(1, 1)
     )
 
     assert result == {
         "schema": "differentially_private_count.v1",
-        "mechanism": "laplace",
+        "mechanism": "exact_two_sided_geometric_p_half",
         "privacy_guarantee": "pure_epsilon_differential_privacy",
+        "formal_epsilon_upper_bound": 0.7,
         "adjacency": "add_remove_one_record",
-        "epsilon": 1.0,
+        "epsilon": 0.7,
         "sensitivity": 1,
-        "noisy_count": 2.69314718056,
+        "noisy_count": 3,
         "clamped_to_nonnegative": True,
         "composition": "single_query_only",
         "cryptographic_randomness": False,
@@ -80,6 +94,96 @@ def test_dp_count_rejects_invalid_epsilon(tmp_path: Path) -> None:
     source.write_text("condition\nA\n", encoding="utf-8")
     with pytest.raises(ValueError, match="epsilon"):
         release_dp_count(source, "condition", "A", 0)
+
+
+def test_dp_count_batch_accounts_for_composed_budget_without_predicates(tmp_path: Path) -> None:
+    source = tmp_path / "people.csv"
+    source.write_text("condition\nA\nA\nB\n", encoding="utf-8")
+
+    result = release_dp_counts(
+        source,
+        [
+            {"column": "condition", "equals": "A", "epsilon": "0.7"},
+            {"column": "condition", "equals": "B", "epsilon": "0.7"},
+        ],
+        "1.4",
+        random_below=_randbelow(1, 1, 2, 1),
+    )
+
+    assert result == {
+        "schema": "differentially_private_count_batch.v1",
+        "mechanism": "exact_two_sided_geometric_p_half",
+        "privacy_guarantee": "pure_epsilon_differential_privacy",
+        "formal_epsilon_upper_bound_per_query": 0.7,
+        "adjacency": "add_remove_one_record",
+        "composition": "basic_sequential_composition",
+        "query_count": 2,
+        "total_epsilon": 1.4,
+        "maximum_epsilon": 1.4,
+        "remaining_epsilon": 0.0,
+        "noisy_counts": [3, 0],
+        "cryptographic_randomness": False,
+        "raw_values_persisted": False,
+    }
+    assert "condition" not in str(result) and "A" not in str(result) and "B" not in str(result)
+
+
+def test_dp_count_batch_rejects_budget_overspend(tmp_path: Path) -> None:
+    source = tmp_path / "people.csv"
+    source.write_text("condition\nA\n", encoding="utf-8")
+    with pytest.raises(ValueError, match="exceeds"):
+        release_dp_counts(
+            source,
+            [
+                {"column": "condition", "equals": "A", "epsilon": "0.7"},
+                {"column": "condition", "equals": "B", "epsilon": "0.7"},
+            ],
+            "1.0",
+        )
+
+
+def test_dp_count_batch_rejects_epsilon_hidden_below_decimal_precision(tmp_path: Path) -> None:
+    source = tmp_path / "people.csv"
+    source.write_text("condition\nA\n", encoding="utf-8")
+    with pytest.raises(ValueError, match="query epsilon"):
+        release_dp_counts(
+            source,
+            [
+                {"column": "condition", "equals": "A", "epsilon": "1.0"},
+                {"column": "condition", "equals": "B", "epsilon": "1e-30"},
+            ],
+            "1.0",
+        )
+
+
+def test_dp_count_persistent_budget_survives_invocations_without_predicates(tmp_path: Path) -> None:
+    source = tmp_path / "people.csv"
+    ledger = tmp_path / "budget.json"
+    source.write_text("condition\nA\nB\n", encoding="utf-8")
+    query = [{"column": "condition", "equals": "A", "epsilon": "0.7"}]
+
+    first = release_dp_counts_persistent(
+        source, query, "1.4", ledger, "release-authorization", random_below=_randbelow(0)
+    )
+    second = release_dp_counts_persistent(
+        source, query, "1.4", ledger, "release-authorization", random_below=_randbelow(0)
+    )
+
+    assert first["cumulative_epsilon"] == 0.7
+    assert second["cumulative_epsilon"] == 1.4
+    assert second["persistent_remaining_epsilon"] == 0.0
+    assert second["budget_ledger_contains_predicates"] is False
+    persisted = ledger.read_text(encoding="utf-8")
+    assert "condition" not in persisted and "release-authorization" not in persisted
+    with pytest.raises(ValueError, match="persistent composed epsilon exceeds"):
+        release_dp_counts_persistent(source, query, "1.4", ledger, "release-authorization")
+
+
+def test_dp_count_rejects_domain_that_can_overflow_noise(tmp_path: Path) -> None:
+    source = tmp_path / "people.csv"
+    source.write_text("condition\nA\n", encoding="utf-8")
+    with pytest.raises(ValueError, match="between"):
+        release_dp_count(source, "condition", "A", "1e-320")
 
 
 def test_delta_presence_reports_aggregate_bounds_without_values(tmp_path: Path) -> None:

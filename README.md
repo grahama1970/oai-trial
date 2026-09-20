@@ -67,6 +67,37 @@ beyond the brief; `designed` = specified but not run/built (an explicit non-clai
 | Opt-in RapidFuzz name proposals → explicit approval → exact policy | `discovery.py`, `tests/test_discovery*.py`, `fixtures/discovery_eval.json` |
 | Presentation briefing deck (projection of this repo, for the walkthrough) | `docs/pitch/oai-trial/` |
 
+## Competitor capability matrix
+
+This table tracks product-level capability, not package-name or row-count parity.
+`Verified` means an executable check exists for the declared scope; it does **not**
+mean complete ecosystem parity. The machine-readable source, pinned competitor
+revisions, commands, and explicit omissions live in
+[`security/competitor_parity_matrix.json`](security/competitor_parity_matrix.json).
+
+| Capability family | oai-trial | Presidio | ARX | pyCANON / ANJANA | Anonymeter | LeakPro |
+|---|---|---|---|---|---|---|
+| Exact cross-format policy replacement and independent whole-release verification | **Verified** | Partial | Partial | — | — | — |
+| Contextual text entity discovery | Partial: policy-authorized catalogs | **Strong** | Identifier classification | — | — | — |
+| Image/PDF redaction and hidden-carrier verification | Partial: raster images/PDF | **Strong** for supported image flows | — | — | — | Modality-dependent |
+| k-anonymity, l-diversity, t-closeness and disclosure metrics | **Verified, scoped** | — | **Strong** | **Strong** | — | — |
+| Hierarchies, suppression, microaggregation and local recoding | **Verified, scoped** | — | **Strong** | **Strong** | — | — |
+| Differential privacy, k-map and broad utility/profit optimization | **Pure epsilon-DP count release and exact in-process sequential accounting; multidimensional synthesis, persistent budgets, k-map and broad optimization remain gaps** | — | **Strong** | Partial | — | — |
+| Linkability, inference and singling-out attacks | **Verified, bounded** | — | Risk models | Risk metrics | **Strong** | Partial |
+| Membership inference and model/gradient inversion | Partial: bounded attacks | — | — | — | — | **Strong** |
+| Contextual multi-hop graph re-identification across text, records and images | **Priority / not yet proven** | Gap | Gap | Gap | Gap | Gap |
+| Fail-closed atomic publication bound to risk evidence | **Verified for selected gates** | Integration-dependent | Integration-dependent | Integration-dependent | Analysis library | Analysis library |
+| Offline deterministic operation with aggregate-only private receipts | **Verified, scoped** | Partial | Partial | Partial | Partial | Partial |
+| DICOM and native Office carriers | **Gap** | Partial / component-specific | — | — | — | Modality-dependent |
+
+The intended differentiator is the contextual graph row: an isolated run-scoped
+graph should connect entities from surrounding text, structured records, images,
+and documents, attempt two-or-more-hop re-identification, and block publication
+when inference succeeds or remains ambiguous. Raw client spans, images,
+identifiers, reversible pseudonyms, and client-derived embeddings must not be
+persisted to durable Memory/Qdrant. This claim remains **not proven** until the
+canonical attack, safe control, cleanup audit, and symmetric comparator all pass.
+
 ### Future optimizations (designed, not built)
 
 | Optimization | Trigger to build it |
@@ -176,3 +207,7 @@ docker run --rm \
 
 Preserve the baseline git history and the two required `docker run` commands.
 `.env` is gitignored; no real personal data or credentials belong in the repo.
+
+### Persistent differential-privacy budget
+
+`dp-count-batch` accepts `--budget-ledger PATH --budget-id ID` together. The private local ledger uses an exclusive OS lock and exact rational expenditure to reject budget reuse across invocations. It stores only a hash of the authorization-domain ID and aggregate budget state—never predicates or source values. This is scoped count-query composition, not ARX multidimensional DP synthesis.

@@ -851,8 +851,8 @@
       "competitor": "ARX Data Anonymization Tool",
       "source": "https://github.com/arx-deidentifier/arx",
       "source_revision": "4e0a5f5340fe9a58c44b34c2f9acd2d68f1dad5f",
-      "capability": "single-query epsilon-differentially-private count release using the Laplace mechanism",
-      "our_equivalent_executable_check": "canonical dp-count CLI releases a cryptographically randomized, nonnegative noisy predicate count with declared add/remove adjacency, sensitivity one, epsilon, and single-query composition scope",
+      "capability": "single-query pure epsilon-DP count release for sensitivity-one predicates",
+      "our_equivalent_executable_check": "canonical dp-count CLI uses an exact two-sided geometric distribution with likelihood ratio two, cryptographic fair-bit sampling, add/remove adjacency, and a conservative declared epsilon floor of 0.7",
       "proof_command": [
         "bash",
         "-c",
@@ -860,20 +860,74 @@
       ],
       "expected_exit": 0,
       "result": "pass",
-      "project_specific_advantage_or_remaining_gap": "Advantage: dependency-free offline one-query epsilon-DP release emits no predicate or true count and makes its adjacency/composition ceiling explicit. Gap: multi-query privacy-budget accounting and ARX multi-dimensional DP synthesis remain unimplemented.",
+      "project_specific_advantage_or_remaining_gap": "Scoped parity: exact integer noise avoids floating-point support truncation and receipts omit predicates and true counts; ARX multi-dimensional DP synthesis remains unimplemented.",
       "runtime_consumers": [
         "src/anonymization_trial/__main__.py",
         "src/anonymization_trial/tabular_privacy.py",
         "scripts/eval_dp_count.py"
       ],
       "semantic_assertions": [
-        "Laplace scale equals sensitivity/epsilon for add/remove adjacency",
-        "production path uses operating-system-backed cryptographic randomness",
-        "receipt omits predicate and true count and declares single-query composition scope"
+        "exact geometric probabilities have adjacent likelihood ratio at most two",
+        "declared epsilon is at least 0.7, conservatively above ln(2)",
+        "parameter bounds and strict JSON prevent non-finite output"
       ],
       "dependencies": [],
       "applicability": "applicable",
       "capability_id": "arx-differential-privacy-30"
+    },
+    {
+      "competitor": "ARX Data Anonymization Tool",
+      "source": "https://github.com/arx-deidentifier/arx",
+      "source_revision": "4e0a5f5340fe9a58c44b34c2f9acd2d68f1dad5f",
+      "capability": "basic sequential composition for multiple pure epsilon-DP count queries",
+      "our_equivalent_executable_check": "canonical dp-count-batch CLI composes exact two-sided geometric count releases, rejects exact rational budget overspend before release, and emits only noisy counts plus aggregate budget metadata",
+      "proof_command": [
+        "bash",
+        "-c",
+        "set -euo pipefail; .venv/bin/python scripts/eval_dp_count_batch.py; .venv/bin/python -m pytest -q tests/test_tabular_privacy.py -k dp_count_batch"
+      ],
+      "expected_exit": 0,
+      "result": "pass",
+      "project_specific_advantage_or_remaining_gap": "Scoped parity: exact rational in-process accounting and exact finite integer sampling support basic sequential composition; persistent cross-invocation accounting and ARX multi-dimensional synthesis remain unimplemented.",
+      "runtime_consumers": [
+        "src/anonymization_trial/__main__.py",
+        "src/anonymization_trial/tabular_privacy.py",
+        "scripts/eval_dp_count_batch.py"
+      ],
+      "semantic_assertions": [
+        "budget accounting is exact and fails closed before release",
+        "every component mechanism has privacy loss at most its declared epsilon",
+        "basic sequential composition is bounded by the exact sum of declared epsilons"
+      ],
+      "dependencies": [],
+      "applicability": "applicable",
+      "capability_id": "arx-dp-composition-31"
+    },
+    {
+      "competitor": "ARX Data Anonymization Tool",
+      "source": "https://github.com/arx-deidentifier/arx",
+      "source_revision": "4e0a5f5340fe9a58c44b34c2f9acd2d68f1dad5f",
+      "capability": "persistent cross-invocation differential-privacy budget accounting",
+      "our_equivalent_executable_check": "dp-count-batch optional private local ledger atomically composes exact epsilon expenditure across invocations",
+      "proof_command": [
+        ".venv/bin/python",
+        "scripts/eval_dp_persistent_budget.py"
+      ],
+      "expected_exit": 0,
+      "result": "pass",
+      "project_specific_advantage_or_remaining_gap": "Advantage: stdlib-only offline locking, exact rational accounting, hashed authorization-domain identifier, and no predicates in the private ledger. Remaining gap: ARX multidimensional DP synthesis.",
+      "runtime_consumers": [
+        "src/anonymization_trial/__main__.py",
+        "src/anonymization_trial/tabular_privacy.py"
+      ],
+      "semantic_assertions": [
+        "third invocation exceeding the persistent budget fails closed",
+        "ledger contains no predicate values or raw budget identifier",
+        "single-process and persistent accounting use exact decimal-derived fractions"
+      ],
+      "dependencies": [],
+      "applicability": "applicable",
+      "capability_id": "arx-dp-persistent-budget-32"
     }
   ],
   "applicability_dispositions": [
@@ -889,11 +943,10 @@
     {
       "ecosystem": "ARX",
       "capabilities": [
-        "multi-query privacy-budget accounting",
         "multi-dimensional differential privacy synthesis"
       ],
       "disposition": "not_implemented",
-      "reason": "A single-query epsilon-DP predicate count with the Laplace mechanism is implemented separately; composed-query accounting and broader ARX DP synthesis remain unclaimed."
+      "reason": "Single-query epsilon-DP counts and basic sequential multi-query budget accounting are implemented separately; broader ARX multi-dimensional DP synthesis remains unclaimed."
     },
     {
       "ecosystem": "Anonymeter",
