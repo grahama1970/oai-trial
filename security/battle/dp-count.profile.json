@@ -1,0 +1,13 @@
+{
+  "schema": "battle.campaign_profile.v1",
+  "profile_id": "oai-trial.dp-count-release-gate.v1",
+  "expectation_overrides": {},
+  "required_case_ids": [
+    "dp-count-populated",
+    "dp-count-header-only",
+    "dp-count-singleton-neighbor"
+  ],
+  "required_judges": [
+    "security"
+  ]
+}

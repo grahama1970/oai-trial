@@ -12,9 +12,13 @@
     "skills/battle/fixtures/reference-judges/no_data_leak_judge.py",
     "skills/battle/fixtures/reference-judges/functional_anonymize_judge.py",
     "/home/graham/workspace/experiments/oai-trial/security/battle/acceptance_floor_generator.py",
-    "/home/graham/workspace/experiments/oai-trial/security/battle/contextual_graph_generator.py"
+    "/home/graham/workspace/experiments/oai-trial/security/battle/contextual_graph_generator.py",
+    "/home/graham/workspace/experiments/oai-trial/security/battle/dp_count_generator.py",
+    "/home/graham/workspace/experiments/oai-trial/security/battle/dp_count_judge.py",
+    "/home/graham/workspace/experiments/oai-trial/security/battle/dp-count.profile.json",
+    "/home/graham/workspace/experiments/oai-trial/security/battle/dp-count.arena.json"
   ],
-  "bundle_manifest_sha256": "sha256:9944eec43771f4f0cfdec8cf76923acb64365f61fd18f4cf60e8728973e0b4d5",
+  "bundle_manifest_sha256": "sha256:4b3eea39b5ad53921b08e20032fcc09463ac3cb6c2cdc6b4b5363333dc691473",
   "commit": "1615adc42aa3c5e893f68ef1a80b3b8dd342edb5",
   "schema": "battle.evaluator_lock.v1",
   "source_repo": "grahama1970/agent-skills",

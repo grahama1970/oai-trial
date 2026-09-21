@@ -90,8 +90,50 @@ def test_dp_count_uses_exact_geometric_noise_without_persisting_predicate(tmp_pa
         "clamped_to_nonnegative": True,
         "composition": "single_query_only",
         "cryptographic_randomness": False,
+        "sampling_contract": {
+            "noise_family": "two_sided_geometric",
+            "parameterization": "p_half",
+            "support": "all_integers",
+            "zero_noise_allowed": True,
+            "postprocessing": "clamp_to_nonnegative",
+            "privacy_loss_upper_bound": 0.7,
+        },
         "raw_values_persisted": False,
     }
+    assert "condition" not in str(result) and "A" not in str(result)
+
+
+
+def test_dp_count_receipt_carries_sampling_contract_without_raw_values(tmp_path: Path) -> None:
+    source = tmp_path / "people.csv"
+    source.write_text("condition\nA\nA\nB\n", encoding="utf-8")
+
+    result = release_dp_count(source, "condition", "A", "0.7", random_below=_randbelow(0))
+
+    assert result["sampling_contract"] == {
+        "noise_family": "two_sided_geometric",
+        "parameterization": "p_half",
+        "support": "all_integers",
+        "zero_noise_allowed": True,
+        "postprocessing": "clamp_to_nonnegative",
+        "privacy_loss_upper_bound": 0.7,
+    }
+    assert "condition" not in str(result) and "A" not in str(result)
+
+def test_dp_count_can_match_hashed_predicate_without_raw_value(tmp_path: Path) -> None:
+    source = tmp_path / "people.csv"
+    source.write_text("condition\nA\nA\nB\n", encoding="utf-8")
+
+    result = release_dp_count(
+        source,
+        "condition",
+        None,
+        "0.7",
+        equals_sha256="559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd",
+        random_below=_randbelow(0),
+    )
+
+    assert result["noisy_count"] == 2
     assert "condition" not in str(result) and "A" not in str(result)
 
 

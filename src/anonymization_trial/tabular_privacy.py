@@ -247,9 +247,10 @@ def _sample_two_sided_geometric(randbelow: Callable[[int], int]) -> int:
 def release_dp_count(
     path: Path,
     column: str,
-    equals: str,
+    equals: str | None,
     epsilon: float | Decimal | str,
     *,
+    equals_sha256: str | None = None,
     random_below: Callable[[int], int] | None = None,
 ) -> dict:
     """Release a sensitivity-one count with exact two-sided geometric noise.
@@ -259,11 +260,24 @@ def release_dp_count(
     The predicate is deliberately omitted because it may itself be sensitive.
     """
     epsilon_decimal = _validated_epsilon(epsilon)
+    if (equals is None) == (equals_sha256 is None):
+        raise ValueError("supply exactly one predicate value form")
+    if equals_sha256 is not None and (
+        len(equals_sha256) != 64 or any(char not in "0123456789abcdef" for char in equals_sha256)
+    ):
+        raise ValueError("equals_sha256 must be lowercase sha256 hex")
     fields, rows = _read_csv(path, allow_empty=True)
     if column not in fields:
         raise ValueError("missing declared predicate column")
     noise = _sample_two_sided_geometric(random_below or secrets.randbelow)
-    noisy_count = max(0, sum(row[column] == equals for row in rows) + noise)
+    if equals_sha256 is None:
+        true_count = sum(row[column] == equals for row in rows)
+    else:
+        true_count = sum(
+            hashlib.sha256(row[column].encode("utf-8")).hexdigest() == equals_sha256
+            for row in rows
+        )
+    noisy_count = max(0, true_count + noise)
     return {
         "schema": "differentially_private_count.v1",
         "mechanism": "exact_two_sided_geometric_p_half",
@@ -276,6 +290,14 @@ def release_dp_count(
         "clamped_to_nonnegative": True,
         "composition": "single_query_only",
         "cryptographic_randomness": random_below is None,
+        "sampling_contract": {
+            "noise_family": "two_sided_geometric",
+            "parameterization": "p_half",
+            "support": "all_integers",
+            "zero_noise_allowed": True,
+            "postprocessing": "clamp_to_nonnegative",
+            "privacy_loss_upper_bound": float(_FORMAL_EPSILON_UPPER_BOUND),
+        },
         "raw_values_persisted": False,
     }
 

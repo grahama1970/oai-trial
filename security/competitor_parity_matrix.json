@@ -856,30 +856,35 @@
       "competitor": "ARX Data Anonymization Tool",
       "source": "https://github.com/arx-deidentifier/arx",
       "source_revision": "4e0a5f5340fe9a58c44b34c2f9acd2d68f1dad5f",
-      "capability": "single-query pure epsilon-DP count release for sensitivity-one predicates",
-      "our_equivalent_executable_check": "canonical dp-count CLI uses an exact two-sided geometric distribution with likelihood ratio two, cryptographic fair-bit sampling, add/remove adjacency, and a conservative declared epsilon floor of 0.7",
+      "capability": "source-backed ARX differential-privacy comparison for the declared single-query pure-epsilon count-release contract",
+      "our_equivalent_executable_check": "No matching ARX executable count-release contract is claimed: the proof command executes the project dp-count CLI, validates its sampler contract and DP-count Battle judge controls, and records that the pinned ARX source comparison does not match this pure-epsilon count contract.",
       "proof_command": [
-        "bash",
-        "-c",
-        "set -euo pipefail; .venv/bin/python scripts/eval_dp_count.py; .venv/bin/python -m pytest -q tests/test_tabular_privacy.py -k dp_count"
+        ".venv/bin/python",
+        "scripts/eval_arx_dp_count_correspondence.py"
       ],
       "expected_exit": 0,
       "result": "pass",
-      "project_specific_advantage_or_remaining_gap": "Scoped parity: exact integer noise avoids floating-point support truncation and receipts omit predicates and true counts; ARX DP synthesis is scoped to explicit public-domain categorical histograms; broader ARX probabilistic population models, k-map variants, and utility/profit optimization remain unimplemented.",
+      "project_specific_advantage_or_remaining_gap": "Project-specific advantage: oai-trial exposes a deterministic offline aggregate-only pure-epsilon count-release CLI with hashed predicates, header-only/singleton add-remove adjacency coverage, replayable Battle judge controls, and no predicate/true-count persistence. Remaining gap: this is not complete ARX DP parity; the pinned ARX source comparison is SafePub-style epsilon-delta DP rather than a matched pure-epsilon count executable.",
       "runtime_consumers": [
         "src/anonymization_trial/__main__.py",
         "src/anonymization_trial/tabular_privacy.py",
-        "scripts/eval_dp_count.py"
+        "security/battle/dp_count_judge.py",
+        "scripts/eval_arx_dp_count_correspondence.py",
+        "scripts/eval_dp_count_battle_replay.py"
       ],
       "semantic_assertions": [
-        "exact geometric probabilities have adjacent likelihood ratio at most two",
-        "header-only empty datasets and singleton neighbors both publish through the same count mechanism",
-        "declared epsilon is at least 0.7, conservatively above ln(2)",
-        "parameter bounds and strict JSON prevent non-finite output"
+        "project dp-count executes through the canonical CLI and emits a sanitized receipt",
+        "receipt sampling_contract binds the exact two-sided geometric p=1/2 mechanism and permits zero noise",
+        "Battle judge rejects JSON boolean noisy_count values",
+        "Battle judge recomputes the frozen control count and rejects unnoised labeled counts without the sampling contract",
+        "pinned ARX comparison is recorded as not a matching pure-epsilon count-release executable contract",
+        "retained stdout JSON contains no raw predicate values or true counts"
       ],
       "dependencies": [],
       "applicability": "applicable",
-      "capability_id": "arx-differential-privacy-30"
+      "capability_id": "arx-differential-privacy-30",
+      "retain_stdout_json": true,
+      "stdout_retention_policy": "sanitized_json_no_raw_values"
     },
     {
       "competitor": "ARX Data Anonymization Tool",

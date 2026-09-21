@@ -620,6 +620,28 @@
         ]
       },
       "readback": true
+    },
+    {
+      "name": "arx-dp-count-correspondence-real-path",
+      "type": "adversarial",
+      "real_world": true,
+      "evidence_class": "live_e2e",
+      "supports_claims": [
+        "anonymize.single_query_epsilon_dp_count"
+      ],
+      "command": [
+        "bash",
+        "-c",
+        "cd .. && set -euo pipefail; w=$(mktemp -d); .venv/bin/python scripts/verify_competitor_parity.py --capability-id arx-differential-privacy-30 --receipt \"$w/receipt.json\"; python3 -c 'import json,sys; r=json.load(open(sys.argv[1])); j=r[\"results\"][0][\"retained_stdout_json\"]; assert r[\"focused\"] is True and r[\"executed_rows\"]==1; assert j[\"project_runtime_observation\"][\"product_cli_executed\"] is True; assert j[\"project_runtime_observation\"][\"sampling_contract_verified\"] is True; assert j[\"battle_judge_controls\"][\"boolean_noisy_count_rejected\"] is True; assert j[\"battle_judge_controls\"][\"unnoised_without_sampling_contract_rejected\"] is True; assert j[\"arx_pinned_source_observation\"][\"matching_single_query_pure_epsilon_count_contract_found\"] is False; assert j[\"project_advantage_proven_for_scoped_contract\"] is True; assert j[\"receipt_contains_raw_values\"] is False and j[\"raw_values_persisted\"] is False; print(\"ARX_DP_COUNT_CORRESPONDENCE_VERIFIED\")' \"$w/receipt.json\""
+      ],
+      "timeout_seconds": 180,
+      "expected": {
+        "exit_code": 0,
+        "stdout_contains": [
+          "ARX_DP_COUNT_CORRESPONDENCE_VERIFIED"
+        ]
+      },
+      "readback": true
     }
   ],
   "capability_claims": [
@@ -705,10 +727,14 @@
     },
     {
       "id": "anonymize.single_query_epsilon_dp_count",
-      "description": "Canonical offline CLI releases one exact-geometric noisy count for add/remove-one-record adjacency, including header-only empty datasets and singleton neighbors, rejects unsafe epsilon domains, and emits no predicate or true count.",
+      "description": "Canonical offline CLI releases one exact-geometric noisy count for add/remove-one-record adjacency, including header-only empty datasets and singleton neighbors, rejects unsafe epsilon domains, emits no predicate or true count, and binds the retained ARX comparison/Judge-control evidence for the scoped contract.",
       "criticality": "important",
       "evidence_required": {
         "live_e2e": true
+      },
+      "derived_from": {
+        "source": "security/competitor_parity_matrix.json:arx-differential-privacy-30",
+        "requirement": "Bind DP-count runtime, source-backed ARX correspondence, and replayable Battle judge controls to retained live product evidence."
       }
     },
     {

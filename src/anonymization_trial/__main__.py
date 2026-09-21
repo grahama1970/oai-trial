@@ -190,10 +190,12 @@ def _contextual_graph_cmd(input_path: Path, output: Path, min_shared_clues: int)
     return 2 if result["verdict"] == "block" else 0
 
 
-def _dp_count_cmd(input_path: Path, column: str, equals: str, epsilon: Decimal) -> int:
+def _dp_count_cmd(
+    input_path: Path, column: str, equals: str | None, equals_sha256: str | None, epsilon: Decimal
+) -> int:
     print(
         json.dumps(
-            release_dp_count(input_path, column, equals, epsilon),
+            release_dp_count(input_path, column, equals, epsilon, equals_sha256=equals_sha256),
             sort_keys=True,
             allow_nan=False,
         )
@@ -666,7 +668,9 @@ def _parser() -> argparse.ArgumentParser:
     )
     dp_count.add_argument("--input", type=Path, required=True)
     dp_count.add_argument("--column", required=True)
-    dp_count.add_argument("--equals", required=True)
+    predicate = dp_count.add_mutually_exclusive_group(required=True)
+    predicate.add_argument("--equals")
+    predicate.add_argument("--equals-sha256")
     dp_count.add_argument("--epsilon", type=Decimal, required=True)
     dp_count_batch = subparsers.add_parser(
         "dp-count-batch", help="release composed exact-geometric epsilon-DP counts within one privacy budget"
@@ -878,7 +882,7 @@ def main(argv: list[str] | None = None) -> int:
                 args.condition_on_other_sensitive,
             )
         if args.command == "dp-count":
-            return _dp_count_cmd(args.input, args.column, args.equals, args.epsilon)
+            return _dp_count_cmd(args.input, args.column, args.equals, args.equals_sha256, args.epsilon)
         if args.command == "dp-count-batch":
             return _dp_count_batch_cmd(
                 args.input,

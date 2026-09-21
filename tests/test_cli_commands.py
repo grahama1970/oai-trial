@@ -73,6 +73,21 @@ def test_dp_count_cli_omits_predicate_and_accepts_empty_neighbor(tmp_path: Path,
     assert receipt["raw_values_persisted"] is False
     assert "condition" not in out and '"A"' not in out
 
+    code, out, err = _capture(
+        capsys,
+        [
+            "dp-count",
+            "--input", str(source),
+            "--column", "condition",
+            "--equals-sha256", "559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd",
+            "--epsilon", "0.7",
+        ],
+    )
+    receipt = json.loads(out)
+    assert code == 0 and not err
+    assert receipt["schema"] == "differentially_private_count.v1"
+    assert "condition" not in out and '"A"' not in out
+
     empty = tmp_path / "empty.csv"
     empty.write_text("condition\n", encoding="utf-8")
     code, out, err = _capture(

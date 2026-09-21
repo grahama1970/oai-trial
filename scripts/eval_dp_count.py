@@ -23,8 +23,8 @@ with tempfile.TemporaryDirectory(prefix="dp-count-eval-") as directory:
             str(source),
             "--column",
             "condition",
-            "--equals",
-            "A",
+            "--equals-sha256",
+            "559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd",
             "--epsilon",
             "1",
         ],
@@ -41,8 +41,16 @@ with tempfile.TemporaryDirectory(prefix="dp-count-eval-") as directory:
     assert receipt["epsilon"] == 1.0 and receipt["sensitivity"] == 1
     assert receipt["composition"] == "single_query_only"
     assert receipt["cryptographic_randomness"] is True
+    assert receipt["sampling_contract"] == {
+        "noise_family": "two_sided_geometric",
+        "parameterization": "p_half",
+        "support": "all_integers",
+        "zero_noise_allowed": True,
+        "postprocessing": "clamp_to_nonnegative",
+        "privacy_loss_upper_bound": 0.7,
+    }
     assert receipt["raw_values_persisted"] is False
-    assert receipt["noisy_count"] >= 0
+    assert type(receipt["noisy_count"]) is int and receipt["noisy_count"] >= 0
     assert "condition" not in process.stdout and '"A"' not in process.stdout
 
     empty = Path(directory) / "empty.csv"
@@ -55,8 +63,8 @@ with tempfile.TemporaryDirectory(prefix="dp-count-eval-") as directory:
             str(empty),
             "--column",
             "condition",
-            "--equals",
-            "A",
+            "--equals-sha256",
+            "559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd",
             "--epsilon",
             "0.7",
         ],
@@ -67,6 +75,7 @@ with tempfile.TemporaryDirectory(prefix="dp-count-eval-") as directory:
     empty_receipt = json.loads(empty_process.stdout)
     assert empty_receipt["schema"] == "differentially_private_count.v1"
     assert empty_receipt["adjacency"] == "add_remove_one_record"
-    assert empty_receipt["noisy_count"] >= 0
+    assert empty_receipt["sampling_contract"]["zero_noise_allowed"] is True
+    assert type(empty_receipt["noisy_count"]) is int and empty_receipt["noisy_count"] >= 0
     assert "condition" not in empty_process.stdout and '"A"' not in empty_process.stdout
 print("DP_COUNT_REAL_PATH_VERIFIED")
