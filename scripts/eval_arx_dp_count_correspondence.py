@@ -2,6 +2,7 @@
 """Source-backed ARX comparison for the scoped DP-count contract."""
 from __future__ import annotations
 
+import hashlib
 import json
 import subprocess
 import tempfile
@@ -9,12 +10,35 @@ from pathlib import Path
 
 
 ARX_REVISION = "4e0a5f5340fe9a58c44b34c2f9acd2d68f1dad5f"
+ARX_FIXTURE = Path("security/competitor_sources/arx") / ARX_REVISION
 
 
 def require(condition: bool, message: str) -> None:
     if not condition:
         raise RuntimeError(message)
 
+
+def _load_arx_fixture() -> dict:
+    manifest = json.loads((ARX_FIXTURE / "manifest.json").read_text(encoding="utf-8"))
+    require(manifest["revision"] == ARX_REVISION, "wrong ARX fixture revision")
+    texts: dict[str, str] = {}
+    for item in manifest["files"]:
+        rel = item["path"]
+        data = (ARX_FIXTURE / rel).read_bytes()
+        require("sha256:" + hashlib.sha256(data).hexdigest() == item["sha256"], f"ARX fixture digest mismatch: {rel}")
+        texts[rel] = data.decode("utf-8")
+    edp = texts["src/main/org/deidentifier/arx/criteria/EDDifferentialPrivacy.java"]
+    anonymizer = texts["src/main/org/deidentifier/arx/ARXAnonymizer.java"]
+    require("SafePub" in edp and "(e,d)-Differential Privacy" in edp, "ARX DP source no longer proves SafePub epsilon-delta semantics")
+    require("private final double             delta" in edp, "ARX DP source missing delta parameter")
+    require("public EDDifferentialPrivacy(double epsilon, double delta)" in edp, "ARX DP constructor is not epsilon-delta")
+    require("edpModel.getDelta() <= 0d || edpModel.getDelta() >= 1" in anonymizer, "ARX anonymizer no longer validates delta in (0,1)")
+    require("exact_two_sided_geometric" not in edp + anonymizer, "ARX fixture unexpectedly names the project count mechanism")
+    require("noisy_count" not in edp + anonymizer, "ARX fixture unexpectedly names the project count receipt field")
+    return manifest
+
+
+arx_manifest = _load_arx_fixture()
 
 with tempfile.TemporaryDirectory(prefix="arx-dp-count-correspondence-") as directory:
     source = Path(directory) / "people.csv"
@@ -65,9 +89,13 @@ print(
         {
             "schema": "arx_dp_count_correspondence.v1",
             "arx_source_revision": ARX_REVISION,
+            "arx_source_fixture_verified": True,
+            "arx_source_fixture_manifest_sha256": "sha256:" + hashlib.sha256((ARX_FIXTURE / "manifest.json").read_bytes()).hexdigest(),
             "arx_pinned_source_observation": {
                 "matching_single_query_pure_epsilon_count_contract_found": False,
                 "observed_dp_family": "SafePub epsilon-delta differential privacy, not this pure-epsilon count-release contract",
+                "requires_delta_in_open_interval": True,
+                "source_files_verified": [item["path"] for item in arx_manifest["files"]],
             },
             "project_runtime_observation": {
                 "product_cli_executed": True,
@@ -76,7 +104,7 @@ print(
                 "header_only_adjacency_covered_elsewhere": "scripts/eval_dp_count.py",
             },
             "battle_judge_controls": battle_control_receipt["judge_controls"],
-            "symmetric_advantage_statement": "Project exposes a deterministic offline aggregate-only count-release contract that the pinned ARX source comparison does not match; this is project advantage, not complete ARX parity.",
+            "symmetric_advantage_statement": "Pinned ARX source verifies an epsilon-delta SafePub anonymization model and no matching pure-epsilon count receipt contract; the project executes the project-needed offline pure-epsilon count release with predicate-free receipts and replayable Battle controls.",
             "competitor_parity_proven": False,
             "project_advantage_proven_for_scoped_contract": True,
             "receipt_contains_raw_values": False,

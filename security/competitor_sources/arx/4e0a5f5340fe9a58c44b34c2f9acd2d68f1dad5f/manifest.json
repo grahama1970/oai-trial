@@ -1,0 +1,18 @@
+{
+  "competitor": "ARX Data Anonymization Tool",
+  "files": [
+    {
+      "bytes": 9936,
+      "path": "src/main/org/deidentifier/arx/criteria/EDDifferentialPrivacy.java",
+      "sha256": "sha256:f63a99b6536ad3b2acda09891a835fedddfbaf8f08da237ee3a8cf1c0d34366b"
+    },
+    {
+      "bytes": 35919,
+      "path": "src/main/org/deidentifier/arx/ARXAnonymizer.java",
+      "sha256": "sha256:25fa4c51957aef621d503a4d3cf2506f529176e4afd8fe36ae45358e52ff6fcd"
+    }
+  ],
+  "revision": "4e0a5f5340fe9a58c44b34c2f9acd2d68f1dad5f",
+  "schema": "competitor_source_fixture.v1",
+  "source": "https://github.com/arx-deidentifier/arx"
+}

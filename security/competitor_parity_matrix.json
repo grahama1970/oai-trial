@@ -857,20 +857,23 @@
       "source": "https://github.com/arx-deidentifier/arx",
       "source_revision": "4e0a5f5340fe9a58c44b34c2f9acd2d68f1dad5f",
       "capability": "source-backed ARX differential-privacy comparison for the declared single-query pure-epsilon count-release contract",
-      "our_equivalent_executable_check": "No matching ARX executable count-release contract is claimed: the proof command executes the project dp-count CLI, validates its sampler contract and DP-count Battle judge controls, and records that the pinned ARX source comparison does not match this pure-epsilon count contract.",
+      "our_equivalent_executable_check": "No matching ARX executable count-release contract is claimed: the proof command verifies the pinned ARX source fixture at the cited revision, observes SafePub epsilon-delta DP with required delta, executes the project dp-count CLI, validates its sampler contract and DP-count Battle judge controls, and records that ARX does not match this pure-epsilon count contract.",
       "proof_command": [
         ".venv/bin/python",
         "scripts/eval_arx_dp_count_correspondence.py"
       ],
       "expected_exit": 0,
       "result": "pass",
-      "project_specific_advantage_or_remaining_gap": "Project-specific advantage: oai-trial exposes a deterministic offline aggregate-only pure-epsilon count-release CLI with hashed predicates, header-only/singleton add-remove adjacency coverage, replayable Battle judge controls, and no predicate/true-count persistence. Remaining gap: this is not complete ARX DP parity; the pinned ARX source comparison is SafePub-style epsilon-delta DP rather than a matched pure-epsilon count executable.",
+      "project_specific_advantage_or_remaining_gap": "Project-specific advantage: oai-trial exposes the project-needed deterministic offline aggregate-only pure-epsilon count-release CLI with hashed predicates, header-only/singleton add-remove adjacency coverage, replayable Battle judge controls, and no predicate/true-count persistence; the pinned ARX source fixture verifies a SafePub epsilon-delta anonymization model instead. Remaining gap: this is not complete ARX DP parity and no ARX pure-epsilon count executable is claimed.",
       "runtime_consumers": [
         "src/anonymization_trial/__main__.py",
         "src/anonymization_trial/tabular_privacy.py",
         "security/battle/dp_count_judge.py",
         "scripts/eval_arx_dp_count_correspondence.py",
-        "scripts/eval_dp_count_battle_replay.py"
+        "scripts/eval_dp_count_battle_replay.py",
+        "security/competitor_sources/arx/4e0a5f5340fe9a58c44b34c2f9acd2d68f1dad5f/manifest.json",
+        "security/competitor_sources/arx/4e0a5f5340fe9a58c44b34c2f9acd2d68f1dad5f/src/main/org/deidentifier/arx/criteria/EDDifferentialPrivacy.java",
+        "security/competitor_sources/arx/4e0a5f5340fe9a58c44b34c2f9acd2d68f1dad5f/src/main/org/deidentifier/arx/ARXAnonymizer.java"
       ],
       "semantic_assertions": [
         "project dp-count executes through the canonical CLI and emits a sanitized receipt",
@@ -878,7 +881,10 @@
         "Battle judge rejects JSON boolean noisy_count values",
         "Battle judge recomputes the frozen control count and rejects unnoised labeled counts without the sampling contract",
         "pinned ARX comparison is recorded as not a matching pure-epsilon count-release executable contract",
-        "retained stdout JSON contains no raw predicate values or true counts"
+        "retained stdout JSON contains no raw predicate values or true counts",
+        "pinned ARX source fixture digests must match the manifest before comparison",
+        "ARX EDDifferentialPrivacy source must identify SafePub epsilon-delta semantics and a delta parameter",
+        "ARXAnonymizer source must require delta in the open interval (0,1)"
       ],
       "dependencies": [],
       "applicability": "applicable",
