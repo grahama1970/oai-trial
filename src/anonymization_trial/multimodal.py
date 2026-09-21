@@ -289,6 +289,12 @@ def verify_docx_structural_release(path: Path, policy: Policy) -> dict[str, bool
 
 _DICOM_TEXT_VRS = {"AE", "AS", "CS", "DA", "DS", "DT", "LO", "LT", "PN", "SH", "ST", "TM", "UC", "UI", "UR", "UT"}
 _DICOM_LONG_LENGTH_VRS = {"OB", "OD", "OF", "OL", "OW", "SQ", "UC", "UN", "UR", "UT"}
+_DICOM_TRANSFER_SYNTAX_TAG = (0x0002, 0x0010)
+_DICOM_PIXEL_DATA_TAG = (0x7FE0, 0x0010)
+_DICOM_COMPRESSED_TRANSFER_SYNTAX_MARKERS = (
+    "1.2.840.10008.1.2.4.",  # JPEG/JPEG-LS/JPEG 2000 families
+    "1.2.840.10008.1.2.5",  # RLE lossless
+)
 
 
 def _dicom_elements(data: bytes):
@@ -330,10 +336,45 @@ def _dicom_with_length_header(group: int, element: int, vr: str, value: bytes) -
     return prefix + len(value).to_bytes(2, "little") + value
 
 
+def _dicom_transfer_syntax(data: bytes) -> str:
+    for _start, group, element, vr, value_offset, length, _header_len in _dicom_elements(data):
+        if (group, element) == _DICOM_TRANSFER_SYNTAX_TAG and vr in _DICOM_TEXT_VRS:
+            return data[value_offset : value_offset + length].rstrip(b" \x00").decode(
+                "ascii", errors="ignore"
+            )
+    return ""
+
+
+def _dicom_is_compressed_transfer_syntax(uid: str) -> bool:
+    return any(uid.startswith(marker) for marker in _DICOM_COMPRESSED_TRANSFER_SYNTAX_MARKERS)
+
+
+def _redact_dicom_compressed_pixel(raw: bytes, policy: Policy) -> tuple[bytes, int, set[str]]:
+    try:
+        from PIL import Image
+    except ImportError as error:
+        raise MultimodalError("MULTIMODAL_DEPENDENCY_UNAVAILABLE") from error
+    with tempfile.TemporaryDirectory(prefix="anon-dicom-pixel-") as directory:
+        root = Path(directory)
+        source = root / "pixel.jpg"
+        redacted = root / "pixel-redacted.jpg"
+        source.write_bytes(raw)
+        try:
+            with Image.open(source) as image:
+                image.verify()
+        except Exception as error:  # Pillow raises several format-specific exceptions.
+            raise MultimodalError("MULTIMODAL_DICOM_COMPRESSED_PIXEL_UNSUPPORTED") from error
+        count, matched = _redact_image(source, redacted, policy)
+        return redacted.read_bytes(), count, matched
+
+
 def _redact_dicom(source: Path, destination: Path, policy: Policy) -> tuple[int, set[str]]:
     data = source.read_bytes()
     replacements = 0
     matched: set[str] = set()
+    literal_bytes = _policy_literal_bytes(policy)
+    transfer_syntax = _dicom_transfer_syntax(data)
+    compressed_pixels = _dicom_is_compressed_transfer_syntax(transfer_syntax)
     chunks: list[bytes] = [data[:132]]
     last = 132
     for start, group, element, vr, value_offset, length, _header_len in _dicom_elements(data):
@@ -354,7 +395,14 @@ def _redact_dicom(source: Path, destination: Path, policy: Policy) -> tuple[int,
                 chunks.append(_dicom_with_length_header(group, element, vr, transformed.encode("utf-8")))
             else:
                 chunks.append(data[start : value_offset + length])
+        elif (group, element) == _DICOM_PIXEL_DATA_TAG and compressed_pixels:
+            redacted_pixel, count, pixel_matches = _redact_dicom_compressed_pixel(raw, policy)
+            replacements += count
+            matched.update(pixel_matches)
+            chunks.append(_dicom_with_length_header(group, element, vr, redacted_pixel))
         else:
+            if group % 2 == 1 and any(value in raw for value in literal_bytes):
+                raise MultimodalError("MULTIMODAL_DICOM_PRIVATE_BINARY_TAG_UNSUPPORTED")
             chunks.append(data[start : value_offset + length])
         last = value_offset + length
     chunks.append(data[last:])
@@ -369,16 +417,28 @@ def verify_dicom_structural_release(path: Path, policy: Policy) -> dict[str, boo
     if any(value in data for value in literal_bytes):
         raise MultimodalError("MULTIMODAL_DICOM_VERIFICATION_FAILED")
     text_elements_checked = 0
-    for _start, _group, _element, vr, value_offset, length, _header_len in _dicom_elements(data):
+    private_binary_elements_checked = 0
+    compressed_pixel_elements_checked = 0
+    transfer_syntax = _dicom_transfer_syntax(data)
+    compressed_pixels = _dicom_is_compressed_transfer_syntax(transfer_syntax)
+    for _start, group, element, vr, value_offset, length, _header_len in _dicom_elements(data):
+        raw = data[value_offset : value_offset + length]
         if vr in _DICOM_TEXT_VRS:
             text_elements_checked += 1
-            text = data[value_offset : value_offset + length].decode("utf-8", errors="ignore")
+            text = raw.decode("utf-8", errors="ignore")
             if _contains_policy_literal_text(text, policy):
                 raise MultimodalError("MULTIMODAL_DICOM_VERIFICATION_FAILED")
+        elif (group, element) == _DICOM_PIXEL_DATA_TAG and compressed_pixels:
+            compressed_pixel_elements_checked += 1
+        elif group % 2 == 1:
+            private_binary_elements_checked += 1
     return {
         "dicom_preamble_present": True,
         "policy_literals_absent": True,
         "text_elements_checked": text_elements_checked,
+        "compressed_pixel_elements_checked": compressed_pixel_elements_checked,
+        "private_binary_elements_checked": private_binary_elements_checked,
+        "unsupported_private_binary_policy_literals_fail_closed": True,
     }
 
 
@@ -571,7 +631,7 @@ def redact_document(source: Path, policy_path: Path, output: Path, receipt: Path
             "does_not_establish": [
                 "OCR recall for policy values not detected by Tesseract",
                 "DOCX text split across multiple XML runs outside exact literal matching",
-                "DICOM compressed pixel OCR or private binary tag semantic interpretation",
+                "full DICOM de-identification profiles and semantic interpretation of private binary tags beyond literal fail-closed controls",
                 "general semantic anonymity or resistance to visual re-identification",
             ],
         }

@@ -306,6 +306,19 @@ def _dicom_elem(group: int, element: int, vr: str, value: bytes) -> bytes:
     return group.to_bytes(2, "little") + element.to_bytes(2, "little") + vr.encode("ascii") + len(value).to_bytes(2, "little") + value
 
 
+def _dicom_long_elem(group: int, element: int, vr: str, value: bytes) -> bytes:
+    if len(value) % 2:
+        value += b"\0"
+    return (
+        group.to_bytes(2, "little")
+        + element.to_bytes(2, "little")
+        + vr.encode("ascii")
+        + b"\0\0"
+        + len(value).to_bytes(4, "little")
+        + value
+    )
+
+
 def _write_dicom(path: Path, patient: bytes = b"Alice Example") -> None:
     path.write_bytes(
         b"\0" * 128
@@ -350,3 +363,54 @@ def test_native_dicom_rejects_bad_preamble(tmp_path: Path) -> None:
     bad.write_bytes(b"not-dicom")
     with pytest.raises(MultimodalError, match="MULTIMODAL_DICOM_INVALID"):
         verify_dicom_structural_release(bad, compile_policy(_policy()))
+
+
+def test_native_dicom_redacts_compressed_pixel_ocr_without_receipt_leak(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    Image = pytest.importorskip("PIL.Image")
+    source = tmp_path / "source.dcm"
+    output = tmp_path / "out.dcm"
+    receipt = tmp_path / "receipt.json"
+    policy_path = tmp_path / "policy.json"
+    policy_path.write_text(json.dumps(_policy()), encoding="utf-8")
+    jpeg = tmp_path / "pixel.jpg"
+    Image.new("RGB", (200, 80), "white").save(jpeg, "JPEG")
+
+    def fake_ocr(path: Path) -> list[OCRWord]:
+        if "redacted" in path.name:
+            return []
+        return [OCRWord("alice@example.com", 10, 10, 140, 20)]
+
+    monkeypatch.setattr("anonymization_trial.multimodal._ocr_words", fake_ocr)
+    source.write_bytes(
+        b"\0" * 128
+        + b"DICM"
+        + _dicom_elem(0x0002, 0x0010, "UI", b"1.2.840.10008.1.2.4.50")
+        + _dicom_elem(0x0008, 0x1030, "LO", b"Chest")
+        + _dicom_long_elem(0x7FE0, 0x0010, "OB", jpeg.read_bytes())
+    )
+
+    result = redact_document(source, policy_path, output, receipt)
+
+    assert result["redaction_boxes"] == 1
+    assert result["matched_rule_ids"] == ["email"]
+    assert result["structural_verification"]["compressed_pixel_elements_checked"] == 1
+    assert "alice@example.com" not in receipt.read_text(encoding="utf-8")
+
+
+def test_native_dicom_private_binary_policy_literals_fail_closed(tmp_path: Path) -> None:
+    source = tmp_path / "source.dcm"
+    policy_path = tmp_path / "policy.json"
+    policy_path.write_text(json.dumps(_policy()), encoding="utf-8")
+    source.write_bytes(
+        b"\0" * 128
+        + b"DICM"
+        + _dicom_elem(0x0008, 0x1030, "LO", b"Chest")
+        + _dicom_long_elem(0x0011, 0x1010, "OB", b"binary alice@example.com carrier")
+    )
+
+    with pytest.raises(MultimodalError, match="MULTIMODAL_DICOM_PRIVATE_BINARY_TAG_UNSUPPORTED"):
+        redact_document(source, policy_path, tmp_path / "out.dcm", tmp_path / "receipt.json")
+    assert not (tmp_path / "out.dcm").exists()
+    assert not (tmp_path / "receipt.json").exists()

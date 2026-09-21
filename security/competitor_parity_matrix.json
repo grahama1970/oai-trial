@@ -1048,8 +1048,8 @@
       "competitor": "Microsoft Presidio / DICOM de-identification ecosystem",
       "source": "https://github.com/microsoft/presidio",
       "source_revision": "f251c513e8aad6820e9b2a44983ebf3a93637b07",
-      "capability": "native DICOM text-metadata de-identification for policy-authorized textual tags",
-      "our_equivalent_executable_check": "redact-document rewrites explicit-VR little-endian DICOM text metadata elements, verifies the DICOM preamble and all parsed text VRs, rejects malformed DICOM and no-match inputs, and emits aggregate-only private receipts",
+      "capability": "native DICOM text-metadata de-identification plus compressed-pixel OCR redaction and private-binary literal fail-closed controls for policy-authorized values",
+      "our_equivalent_executable_check": "redact-document rewrites explicit-VR little-endian DICOM text metadata, OCR-redacts JPEG-family compressed pixel payloads, rejects private binary tags that contain policy literals, verifies the DICOM preamble plus parsed text/pixel/private carriers, and emits aggregate-only private receipts",
       "proof_command": [
         "uv",
         "run",
@@ -1058,7 +1058,7 @@
       ],
       "expected_exit": 0,
       "result": "pass",
-      "project_specific_advantage_or_remaining_gap": "Scoped parity for deterministic offline textual DICOM metadata redaction without raw patient values in receipts. Remaining gaps: compressed pixel OCR, private binary tag semantic interpretation, full DICOM de-identification profiles, and complete Presidio/DICOM ecosystem parity.",
+      "project_specific_advantage_or_remaining_gap": "Scoped parity for deterministic offline textual DICOM metadata redaction, JPEG-family compressed-pixel OCR redaction, and fail-closed private binary literal controls without raw patient values in receipts. Remaining gaps: semantic interpretation of arbitrary private binary tags beyond literal fail-closed controls, full DICOM de-identification profiles, and complete Presidio/DICOM ecosystem parity.",
       "runtime_consumers": [
         "src/anonymization_trial/__main__.py",
         "src/anonymization_trial/multimodal.py"
@@ -1066,6 +1066,8 @@
       "semantic_assertions": [
         "DICOM preamble must be present",
         "explicit-VR text metadata elements are parsed and policy literals are replaced",
+        "JPEG-family compressed pixel payloads are OCR-redacted and residual OCR is checked before embedding",
+        "private binary tags containing policy literals fail closed without publishing output or receipts",
         "output and receipt omit raw policy literals",
         "malformed DICOM and no-policy-match inputs fail closed"
       ],
@@ -1115,7 +1117,7 @@
         "DICOM"
       ],
       "disposition": "applicable",
-      "reason": "Scoped native DICOM textual metadata redaction is implemented through redact-document; compressed pixel OCR, private binary tag semantic interpretation, and full DICOM de-identification profiles remain explicit gaps."
+      "reason": "Scoped native DICOM textual metadata redaction, JPEG-family compressed-pixel OCR redaction, and private binary literal fail-closed controls are implemented through redact-document; semantic interpretation of arbitrary private binary tags, full DICOM de-identification profiles, and complete Presidio/DICOM ecosystem parity remain explicit gaps."
     },
     {
       "ecosystem": "Presidio image/document",

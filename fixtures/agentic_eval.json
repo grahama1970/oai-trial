@@ -684,7 +684,8 @@
           "DICOM_REDACTION_REAL_PATH_VERIFIED"
         ]
       },
-      "readback": true
+      "readback": true,
+      "description": "Real product path covers native DICOM text metadata redaction, compressed-pixel OCR redaction when local OCR is available, and fail-closed private binary policy-literal carriers."
     }
   ],
   "capability_claims": [
@@ -841,7 +842,7 @@
     },
     {
       "id": "anonymize.dicom_redaction",
-      "description": "Canonical offline redact-document rewrites explicit-VR DICOM text metadata, verifies policy literals are absent, and fails closed for malformed/no-match DICOM without retaining raw patient values.",
+      "description": "Canonical offline redact-document rewrites explicit-VR DICOM text metadata, OCR-redacts JPEG-family compressed pixel payloads, rejects private binary tags containing policy literals, verifies policy literals are absent, and fails closed for malformed/no-match/private-binary DICOM without retaining raw patient values.",
       "criticality": "important",
       "claim_semantics": "value_bearing",
       "evidence_required": {
@@ -849,7 +850,7 @@
       },
       "derived_from": {
         "source": "security/competitor_parity_matrix.json:presidio-dicom-redaction-36",
-        "requirement": "Bind scoped DICOM metadata redaction to retained live product evidence."
+        "requirement": "Bind scoped DICOM metadata, compressed pixel, and private binary fail-closed controls to retained live product evidence."
       }
     }
   ]
