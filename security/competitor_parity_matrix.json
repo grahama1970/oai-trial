@@ -837,7 +837,7 @@
       ],
       "expected_exit": 0,
       "result": "pass",
-      "project_specific_advantage_or_remaining_gap": "Advantage: deterministic offline population-risk analysis shares the canonical declared-QI boundary and emits no row values or QI tuples. Gap: broader ARX k-map and utility/profit optimization remain unimplemented.",
+      "project_specific_advantage_or_remaining_gap": "Advantage: deterministic offline population-risk analysis shares the canonical declared-QI boundary and emits no row values or QI tuples. Gap: broader ARX probabilistic population models, k-map variants, and utility/profit optimization remain unimplemented.",
       "runtime_consumers": [
         "src/anonymization_trial/__main__.py",
         "src/anonymization_trial/tabular_privacy.py",
@@ -865,7 +865,7 @@
       ],
       "expected_exit": 0,
       "result": "pass",
-      "project_specific_advantage_or_remaining_gap": "Scoped parity: exact integer noise avoids floating-point support truncation and receipts omit predicates and true counts; ARX DP synthesis is scoped to explicit public-domain categorical histograms; broader ARX k-map and utility/profit optimization remain unimplemented.",
+      "project_specific_advantage_or_remaining_gap": "Scoped parity: exact integer noise avoids floating-point support truncation and receipts omit predicates and true counts; ARX DP synthesis is scoped to explicit public-domain categorical histograms; broader ARX probabilistic population models, k-map variants, and utility/profit optimization remain unimplemented.",
       "runtime_consumers": [
         "src/anonymization_trial/__main__.py",
         "src/anonymization_trial/tabular_privacy.py",
@@ -948,7 +948,7 @@
       ],
       "expected_exit": 0,
       "result": "pass",
-      "project_specific_advantage_or_remaining_gap": "Scoped parity: stdlib-only offline synthetic categorical histograms require explicit public domains, use exact integer noise without floating-point support truncation, reject output/receipt/ledger path aliases before publication, compose repeated synthesis invocations through a hashed persistent ledger, and keep domain values out of private receipts. Remaining gap: ARX k-map and broad utility/profit optimization remain unimplemented.",
+      "project_specific_advantage_or_remaining_gap": "Scoped parity: stdlib-only offline synthetic categorical histograms require explicit public domains, use exact integer noise without floating-point support truncation, reject output/receipt/ledger path aliases before publication, compose repeated synthesis invocations through a hashed persistent ledger, and keep domain values out of private receipts. Remaining gap: exact reference-population k-map is implemented separately; broader ARX probabilistic population models, k-map variants, and utility/profit optimization remain unimplemented.",
       "runtime_consumers": [
         "src/anonymization_trial/__main__.py",
         "src/anonymization_trial/tabular_privacy.py"
@@ -967,6 +967,37 @@
       "dependencies": [],
       "applicability": "applicable",
       "capability_id": "arx-dp-synthetic-histogram-33"
+    },
+    {
+      "competitor": "ARX",
+      "source": "https://github.com/arx-deidentifier/arx",
+      "source_revision": "conceptual-scope-no-runtime-arx-comparator",
+      "capability": "conceptual ARX-style population k-map lower-bound check against an authorized reference population",
+      "our_equivalent_executable_check": "population_k_map.v1 computes release equivalence classes over declared quasi-identifiers, rejects duplicate CSV headers/incomplete rows/missing QI cells, looks up matching authorized population class sizes, and fails closed when any release class has population support below minimum-k",
+      "proof_command": [
+        "uv",
+        "run",
+        "python",
+        "scripts/eval_population_k_map.py"
+      ],
+      "expected_exit": 0,
+      "result": "pass",
+      "project_specific_advantage_or_remaining_gap": "Scoped conceptual parity for an offline aggregate-only exact reference-population k-map lower-bound gate. No pinned ARX runtime comparator is claimed here; remaining gaps include probabilistic population models, k-map variants, and broad ARX utility/profit optimization.",
+      "runtime_consumers": [
+        "src/anonymization_trial/__main__.py",
+        "src/anonymization_trial/tabular_privacy.py"
+      ],
+      "semantic_assertions": [
+        "release and population use the same declared quasi-identifier columns",
+        "minimum and maximum matched population class sizes are aggregate-only",
+        "a population class below minimum-k fails closed",
+        "receipts contain no quasi-identifier tuples or raw values",
+        "duplicate CSV headers are rejected before class construction",
+        "incomplete CSV rows and missing quasi-identifier cells fail closed without raw-value output"
+      ],
+      "dependencies": [],
+      "applicability": "applicable",
+      "capability_id": "arx-population-k-map-34"
     }
   ],
   "applicability_dispositions": [
@@ -982,10 +1013,11 @@
     {
       "ecosystem": "ARX",
       "capabilities": [
-        "multi-dimensional differential privacy synthesis"
+        "multi-dimensional differential privacy synthesis",
+        "population k-map lower-bound analysis"
       ],
       "disposition": "applicable",
-      "reason": "Scoped multidimensional categorical DP synthetic histogram release is implemented through dp-synthesize, including persistent composition and alias-safe publication; broader ARX k-map and utility/profit optimization remain unclaimed."
+      "reason": "Scoped multidimensional categorical DP synthesis and aggregate-only population k-map lower-bound analysis are implemented; broader probabilistic population models and utility/profit optimization remain unclaimed."
     },
     {
       "ecosystem": "Anonymeter",

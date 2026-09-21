@@ -1,13 +1,15 @@
 #!/usr/bin/env python3
-"""Retained real-path check for the one-query ARX-style DP count release."""
+"""Retained real-product-path check for the one-query ARX-style DP count release."""
 
 from __future__ import annotations
 
 import json
 import subprocess
-import sys
 import tempfile
 from pathlib import Path
+
+
+CLI = Path(".venv/bin/anonymization-trial")
 
 
 with tempfile.TemporaryDirectory(prefix="dp-count-eval-") as directory:
@@ -15,9 +17,7 @@ with tempfile.TemporaryDirectory(prefix="dp-count-eval-") as directory:
     source.write_text("condition\nA\nA\nB\n", encoding="utf-8")
     process = subprocess.run(
         [
-            sys.executable,
-            "-m",
-            "anonymization_trial",
+            str(CLI),
             "dp-count",
             "--input",
             str(source),
@@ -49,9 +49,7 @@ with tempfile.TemporaryDirectory(prefix="dp-count-eval-") as directory:
     empty.write_text("condition\n", encoding="utf-8")
     empty_process = subprocess.run(
         [
-            sys.executable,
-            "-m",
-            "anonymization_trial",
+            str(CLI),
             "dp-count",
             "--input",
             str(empty),

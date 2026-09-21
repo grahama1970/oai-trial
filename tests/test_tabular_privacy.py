@@ -10,6 +10,7 @@ from anonymization_trial.tabular_privacy import (
     audit_csv,
     audit_delta_presence,
     audit_multiple_sensitive_attributes,
+    audit_population_k_map,
     audit_population_reidentification,
     audit_singling_out,
     audit_two_view_linkability,
@@ -515,6 +516,72 @@ def test_population_reidentification_reports_aggregate_risk_without_qi_values(
         "raw_values_persisted": False,
     }
     assert "20" not in str(result) and "30" not in str(result)
+
+
+def test_population_k_map_reports_bounds_without_qi_values(tmp_path: Path) -> None:
+    release = tmp_path / "release.csv"
+    population = tmp_path / "population.csv"
+    release.write_text("zip,age\na,20\na,20\nb,30\n", encoding="utf-8")
+    population.write_text(
+        "zip,age\na,20\na,20\na,20\na,20\nb,30\nb,30\n", encoding="utf-8"
+    )
+
+    result = audit_population_k_map(release, population, ["zip", "age"], 2)
+
+    assert result == {
+        "schema": "population_k_map.v1",
+        "release_records": 3,
+        "population_records": 6,
+        "quasi_identifier_count": 2,
+        "release_equivalence_classes": 2,
+        "minimum_k": 2,
+        "minimum_population_class_size": 2,
+        "maximum_population_class_size": 4,
+        "violating_release_classes": 0,
+        "absent_release_classes": 0,
+        "k_map_satisfied": True,
+        "verdict": "pass",
+        "receipt_contains_qi_values": False,
+        "raw_values_persisted": False,
+    }
+    assert "20" not in str(result) and "30" not in str(result)
+
+
+def test_population_k_map_flags_absent_or_small_population_classes(tmp_path: Path) -> None:
+    release = tmp_path / "release.csv"
+    population = tmp_path / "population.csv"
+    release.write_text("zip,age\na,20\nb,30\n", encoding="utf-8")
+    population.write_text("zip,age\na,20\n", encoding="utf-8")
+
+    result = audit_population_k_map(release, population, ["zip", "age"], 2)
+
+    assert result["k_map_satisfied"] is False
+    assert result["verdict"] == "k_map_violation"
+    assert result["violating_release_classes"] == 2
+    assert result["absent_release_classes"] == 1
+    assert "20" not in json.dumps(result) and "30" not in json.dumps(result)
+
+
+@pytest.mark.parametrize(
+    ("release_text", "population_text", "message"),
+    [
+        ("zip,zip\na,20\n", "zip,age\na,20\na,20\n", "headers must be unique"),
+        ("zip,age\na\n", "zip,age\na,20\na,20\n", "exactly the declared header"),
+        ("zip,age\na,\n", "zip,age\na,20\na,20\n", "missing quasi-identifier cell"),
+        ("zip,age\na,20\n", "zip,age\na\na,20\n", "exactly the declared header"),
+        ("zip,age\na,20\n", "zip,age\na,\na,20\n", "missing quasi-identifier cell"),
+    ],
+)
+def test_population_k_map_rejects_ambiguous_or_incomplete_csv(
+    tmp_path: Path, release_text: str, population_text: str, message: str
+) -> None:
+    release = tmp_path / "release.csv"
+    population = tmp_path / "population.csv"
+    release.write_text(release_text, encoding="utf-8")
+    population.write_text(population_text, encoding="utf-8")
+
+    with pytest.raises(ValueError, match=message):
+        audit_population_k_map(release, population, ["zip", "age"], 2)
 
 
 def test_population_reidentification_rejects_non_subset(tmp_path: Path) -> None:

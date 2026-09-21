@@ -53,6 +53,45 @@ def test_explain(capsys):
     assert data["does_not_establish"]
 
 
+def test_dp_count_cli_omits_predicate_and_accepts_empty_neighbor(tmp_path: Path, capsys):
+    source = tmp_path / "people.csv"
+    source.write_text("condition\nA\nA\nB\n", encoding="utf-8")
+    code, out, err = _capture(
+        capsys,
+        [
+            "dp-count",
+            "--input", str(source),
+            "--column", "condition",
+            "--equals", "A",
+            "--epsilon", "0.7",
+        ],
+    )
+    receipt = json.loads(out)
+    assert code == 0 and not err
+    assert receipt["schema"] == "differentially_private_count.v1"
+    assert receipt["adjacency"] == "add_remove_one_record"
+    assert receipt["raw_values_persisted"] is False
+    assert "condition" not in out and '"A"' not in out
+
+    empty = tmp_path / "empty.csv"
+    empty.write_text("condition\n", encoding="utf-8")
+    code, out, err = _capture(
+        capsys,
+        [
+            "dp-count",
+            "--input", str(empty),
+            "--column", "condition",
+            "--equals", "A",
+            "--epsilon", "0.7",
+        ],
+    )
+    receipt = json.loads(out)
+    assert code == 0 and not err
+    assert receipt["adjacency"] == "add_remove_one_record"
+    assert receipt["noisy_count"] >= 0
+    assert "condition" not in out and '"A"' not in out
+
+
 def test_dp_synthesize_rejects_output_receipt_alias_before_publication(tmp_path: Path, capsys):
     source = tmp_path / "people.csv"
     domain = tmp_path / "domain.json"
@@ -172,6 +211,53 @@ def test_tabular_risk_cli_runs_multiple_sensitive_real_path(tmp_path: Path, caps
     assert receipt["schema"] == "multiple_sensitive_privacy_metrics.v1"
     assert receipt["sensitive_attribute_count"] == 2
     assert receipt["raw_values_persisted"] is False
+
+
+def test_population_k_map_cli_fails_closed_without_raw_values(tmp_path: Path, capsys):
+    release = tmp_path / "release.csv"
+    population = tmp_path / "population.csv"
+    release.write_text("zip,age\na,20\nb,30\n", encoding="utf-8")
+    population.write_text("zip,age\na,20\na,20\nb,30\nb,30\n", encoding="utf-8")
+
+    code, out, _ = _capture(
+        capsys,
+        [
+            "population-k-map", "--release", str(release), "--population", str(population),
+            "--quasi-identifiers", "zip,age", "--minimum-k", "2",
+        ],
+    )
+    receipt = json.loads(out)
+    assert code == 0
+    assert receipt["schema"] == "population_k_map.v1"
+    assert receipt["k_map_satisfied"] is True
+    assert "20" not in out and "30" not in out
+
+    population.write_text("zip,age\na,20\n", encoding="utf-8")
+    code, out, _ = _capture(
+        capsys,
+        [
+            "population-k-map", "--release", str(release), "--population", str(population),
+            "--quasi-identifiers", "zip,age", "--minimum-k", "2",
+        ],
+    )
+    receipt = json.loads(out)
+    assert code == 2
+    assert receipt["verdict"] == "k_map_violation"
+    assert receipt["receipt_contains_qi_values"] is False
+    assert "20" not in out and "30" not in out
+
+    release.write_text("zip,zip\na,20\n", encoding="utf-8")
+    code, out, err = _capture(
+        capsys,
+        [
+            "population-k-map", "--release", str(release), "--population", str(population),
+            "--quasi-identifiers", "zip,age", "--minimum-k", "2",
+        ],
+    )
+    assert code == 1
+    assert out == ""
+    assert err.strip() == "run failed: ValueError"
+    assert "20" not in err and "30" not in err
 
 
 def test_tabular_generalize_cli_runs_real_path(tmp_path: Path, capsys):

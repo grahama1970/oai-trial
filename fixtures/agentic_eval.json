@@ -599,6 +599,27 @@
         ]
       },
       "readback": true
+    },
+    {
+      "name": "population-k-map-real-path",
+      "type": "adversarial",
+      "real_world": true,
+      "evidence_class": "live_e2e",
+      "supports_claims": [
+        "anonymize.population_k_map"
+      ],
+      "command": [
+        "bash",
+        "-c",
+        "cd .. && .venv/bin/python scripts/eval_population_k_map.py"
+      ],
+      "expected": {
+        "exit_code": 0,
+        "stdout_contains": [
+          "POPULATION_K_MAP_REAL_PATH_VERIFIED"
+        ]
+      },
+      "readback": true
     }
   ],
   "capability_claims": [
@@ -721,6 +742,19 @@
       "derived_from": {
         "source": "security/competitor_parity_matrix.json:presidio-contextual-graph-comparator-26",
         "requirement": "Bind the scoped Presidio contextual-graph advantage to retained readable paired outcomes."
+      }
+    },
+    {
+      "id": "anonymize.population_k_map",
+      "description": "Canonical offline CLI computes aggregate-only ARX-style population k-map lower bounds against an authorized population and fails closed on duplicate headers, incomplete rows, missing QI cells, or below-minimum-k classes without retaining QI tuples.",
+      "criticality": "important",
+      "claim_semantics": "value_bearing",
+      "evidence_required": {
+        "live_e2e": true
+      },
+      "derived_from": {
+        "source": "security/competitor_parity_matrix.json:arx-population-k-map-34",
+        "requirement": "Bind population k-map analysis to retained live product evidence."
       }
     }
   ]

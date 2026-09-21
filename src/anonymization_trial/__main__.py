@@ -35,6 +35,7 @@ from .tabular_privacy import (
     audit_csv,
     audit_delta_presence,
     audit_multiple_sensitive_attributes,
+    audit_population_k_map,
     audit_population_reidentification,
     audit_singling_out,
     audit_two_view_linkability,
@@ -320,6 +321,16 @@ def _population_risk_cmd(
         )
     )
     return 0
+
+
+def _population_k_map_cmd(
+    release: Path, population: Path, quasi_identifiers: str, minimum_k: int
+) -> int:
+    result = audit_population_k_map(
+        release, population, [value for value in quasi_identifiers.split(",") if value], minimum_k
+    )
+    print(json.dumps(result, sort_keys=True))
+    return 0 if result["k_map_satisfied"] else 2
 
 
 def _tabular_risk_cmd(
@@ -695,6 +706,14 @@ def _parser() -> argparse.ArgumentParser:
     population_risk.add_argument("--release", type=Path, required=True)
     population_risk.add_argument("--population", type=Path, required=True)
     population_risk.add_argument("--quasi-identifiers", required=True)
+    k_map = subparsers.add_parser(
+        "population-k-map",
+        help="verify ARX-style population k-map bounds for released QI classes",
+    )
+    k_map.add_argument("--release", type=Path, required=True)
+    k_map.add_argument("--population", type=Path, required=True)
+    k_map.add_argument("--quasi-identifiers", required=True)
+    k_map.add_argument("--minimum-k", type=int, required=True)
     attribute_inference = subparsers.add_parser(
         "attribute-inference-risk", help="measure authorized sensitive-attribute inference"
     )
@@ -887,6 +906,10 @@ def main(argv: list[str] | None = None) -> int:
         if args.command == "population-reidentification-risk":
             return _population_risk_cmd(
                 args.release, args.population, args.quasi_identifiers
+            )
+        if args.command == "population-k-map":
+            return _population_k_map_cmd(
+                args.release, args.population, args.quasi_identifiers, args.minimum_k
             )
         if args.command == "attribute-inference-risk":
             return _attribute_inference_cmd(

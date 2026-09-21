@@ -598,6 +598,72 @@ def audit_delta_presence(
     }
 
 
+def _population_qi_counts(
+    release_path: Path, population_path: Path, quasi_identifiers: list[str], label: str
+) -> tuple[list[dict[str, str]], list[dict[str, str]], Counter[tuple[str, ...]], Counter[tuple[str, ...]]]:
+    if not quasi_identifiers or len(set(quasi_identifiers)) != len(quasi_identifiers):
+        raise ValueError("quasi_identifiers must be a non-empty unique list")
+    release_fields, release_rows = _read_csv(release_path)
+    population_fields, population_rows = _read_csv(population_path)
+    if not release_rows or not population_rows:
+        raise ValueError(f"{label} audit requires non-empty release and population")
+    for side, fields, rows in (
+        ("release", release_fields, release_rows),
+        ("population", population_fields, population_rows),
+    ):
+        missing = [name for name in quasi_identifiers if name not in fields]
+        if missing:
+            raise ValueError(f"{side} missing declared columns: {', '.join(missing)}")
+        for row in rows:
+            if any(row[name] == "" for name in quasi_identifiers):
+                raise ValueError(f"{side} missing quasi-identifier cell")
+    release_counts = Counter(
+        tuple(row[name] for name in quasi_identifiers) for row in release_rows
+    )
+    population_counts = Counter(
+        tuple(row[name] for name in quasi_identifiers) for row in population_rows
+    )
+    return release_rows, population_rows, release_counts, population_counts
+
+
+def audit_population_k_map(
+    release_path: Path,
+    population_path: Path,
+    quasi_identifiers: list[str],
+    minimum_k: int,
+) -> dict:
+    """Verify ARX-style population k-map for declared QI classes.
+
+    Each released QI class must map to at least ``minimum_k`` records in the
+    authorized population. Only aggregate counts and bounds are returned; QI
+    tuples never leave process memory.
+    """
+    if minimum_k < 2:
+        raise ValueError("minimum_k must be at least 2")
+    release_rows, population_rows, release_counts, population_counts = _population_qi_counts(
+        release_path, population_path, quasi_identifiers, "k-map"
+    )
+    population_class_sizes = [population_counts.get(group, 0) for group in release_counts]
+    violating_classes = sum(size < minimum_k for size in population_class_sizes)
+    absent_classes = sum(size == 0 for size in population_class_sizes)
+    return {
+        "schema": "population_k_map.v1",
+        "release_records": len(release_rows),
+        "population_records": len(population_rows),
+        "quasi_identifier_count": len(quasi_identifiers),
+        "release_equivalence_classes": len(release_counts),
+        "minimum_k": minimum_k,
+        "minimum_population_class_size": min(population_class_sizes),
+        "maximum_population_class_size": max(population_class_sizes),
+        "violating_release_classes": violating_classes,
+        "absent_release_classes": absent_classes,
+        "k_map_satisfied": violating_classes == 0,
+        "verdict": "pass" if violating_classes == 0 else "k_map_violation",
+        "receipt_contains_qi_values": False,
+        "raw_values_persisted": False,
+    }
+
+
 def audit_population_reidentification(
     release_path: Path, population_path: Path, quasi_identifiers: list[str]
 ) -> dict:
@@ -606,21 +672,8 @@ def audit_population_reidentification(
     The population must contain every released QI class with at least the released
     multiplicity. Only counts and extrema leave this function; QI tuples do not.
     """
-    if not quasi_identifiers or len(set(quasi_identifiers)) != len(quasi_identifiers):
-        raise ValueError("quasi_identifiers must be a non-empty unique list")
-    release_fields, release_rows = _read_csv(release_path)
-    population_fields, population_rows = _read_csv(population_path)
-    if not release_rows or not population_rows:
-        raise ValueError("population risk audit requires non-empty release and population")
-    for label, fields in (("release", release_fields), ("population", population_fields)):
-        missing = [name for name in quasi_identifiers if name not in fields]
-        if missing:
-            raise ValueError(f"{label} missing declared columns: {', '.join(missing)}")
-    release_counts = Counter(
-        tuple(row[name] for name in quasi_identifiers) for row in release_rows
-    )
-    population_counts = Counter(
-        tuple(row[name] for name in quasi_identifiers) for row in population_rows
+    release_rows, population_rows, release_counts, population_counts = _population_qi_counts(
+        release_path, population_path, quasi_identifiers, "population risk"
     )
     if any(count > population_counts.get(group, 0) for group, count in release_counts.items()):
         raise ValueError("release is not a QI-class subset of the reference population")
@@ -1052,9 +1105,20 @@ def _satisfies_enhanced_beta_likeness(
 
 def _read_csv(path: Path, *, allow_empty: bool = False) -> tuple[list[str], list[dict[str, str]]]:
     with path.open(newline="", encoding="utf-8") as handle:
-        reader = csv.DictReader(handle)
-        fields = reader.fieldnames or []
-        rows = list(reader)
+        reader = csv.reader(handle)
+        try:
+            fields = next(reader)
+        except StopIteration:
+            fields = []
+        if len(fields) != len(set(fields)):
+            raise ValueError("CSV headers must be unique")
+        if any(field == "" for field in fields):
+            raise ValueError("CSV headers must be non-empty")
+        rows = []
+        for row in reader:
+            if len(row) != len(fields):
+                raise ValueError("CSV rows must have exactly the declared header columns")
+            rows.append(dict(zip(fields, row, strict=True)))
     if not fields or (not rows and not allow_empty):
         raise ValueError("linkability inputs require headers and records")
     return fields, rows
