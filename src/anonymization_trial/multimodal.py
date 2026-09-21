@@ -14,12 +14,46 @@ import os
 import shutil
 import subprocess
 import tempfile
+import zipfile
+import xml.etree.ElementTree as ET
 from dataclasses import dataclass
 from pathlib import Path
 
-from .policy import Policy, load_policy
+from .policy import Policy, load_policy, replace_text
 
 _IMAGE_SUFFIXES = {".png", ".jpg", ".jpeg", ".tif", ".tiff", ".bmp"}
+_DOCX_FORBIDDEN_PARTS = (
+    "vbaProject",
+    "embeddings/",
+    "activeX/",
+    "externalLinks/",
+    "oleObject",
+)
+_DOCX_FORBIDDEN_RELATIONSHIP_MARKERS = (
+    "vbaProject",
+    "oleObject",
+    "package",
+    "activeX",
+    "externalLink",
+    "attachedTemplate",
+)
+_DOCX_FORBIDDEN_CONTENT_TYPE_MARKERS = (
+    "vbaProject",
+    "macroEnabled",
+    "oleObject",
+    "activeX",
+    "externalLink",
+)
+_DOCX_TEXT_PARTS = (
+    "word/document.xml",
+    "word/header",
+    "word/footer",
+    "word/footnotes.xml",
+    "word/endnotes.xml",
+    "docProps/core.xml",
+    "docProps/app.xml",
+    "docProps/custom.xml",
+)
 
 
 class MultimodalError(RuntimeError):
@@ -107,6 +141,98 @@ def _matching_boxes(
     return boxes, matched
 
 
+def _policy_literal_bytes(policy: Policy) -> list[bytes]:
+    return [rule.value.encode("utf-8") for rule in policy.rules if rule.value]
+
+
+def _policy_literal_texts(policy: Policy) -> list[str]:
+    return [rule.value for rule in policy.rules if rule.value]
+
+
+def _normalized_policy_literal_texts(policy: Policy) -> list[str]:
+    return [_canonical(rule.value) for rule in policy.rules if _canonical(rule.value)]
+
+
+def _contains_policy_literal_text(text: str, policy: Policy) -> bool:
+    if any(value in text for value in _policy_literal_texts(policy)):
+        return True
+    normalized = _canonical(text)
+    return any(value in normalized for value in _normalized_policy_literal_texts(policy))
+
+
+def _xml_root(data: bytes) -> ET.Element:
+    try:
+        return ET.fromstring(data)
+    except (ET.ParseError, UnicodeDecodeError) as error:
+        raise MultimodalError("MULTIMODAL_DOCX_XML_INVALID") from error
+
+
+def _docx_active_carrier_present(archive: zipfile.ZipFile) -> bool:
+    names = archive.namelist()
+    if any(part in name for name in names for part in _DOCX_FORBIDDEN_PARTS):
+        return True
+    for name in names:
+        if name == "[Content_Types].xml" or name.endswith(".rels") or name.endswith(".xml"):
+            root = _xml_root(archive.read(name))
+            for element in root.iter():
+                content_type = element.attrib.get("ContentType", "")
+                rel_type = element.attrib.get("Type", "")
+                target_mode = element.attrib.get("TargetMode", "")
+                if any(marker in content_type for marker in _DOCX_FORBIDDEN_CONTENT_TYPE_MARKERS):
+                    return True
+                if any(marker in rel_type for marker in _DOCX_FORBIDDEN_RELATIONSHIP_MARKERS):
+                    return True
+                if target_mode.casefold() == "external":
+                    return True
+    return False
+
+
+def _docx_metadata_has_policy_literal(archive: zipfile.ZipFile, policy: Policy) -> bool:
+    if archive.comment and _contains_policy_literal_text(
+        archive.comment.decode("utf-8", errors="ignore"), policy
+    ):
+        return True
+    for item in archive.infolist():
+        if _contains_policy_literal_text(item.filename, policy):
+            return True
+        if item.comment and _contains_policy_literal_text(
+            item.comment.decode("utf-8", errors="ignore"), policy
+        ):
+            return True
+    return False
+
+
+def verify_docx_structural_release(path: Path, policy: Policy) -> dict[str, bool | int]:
+    """Reject native DOCX releases retaining active carriers or policy literals."""
+    literal_bytes = _policy_literal_bytes(policy)
+    checked_parts = 0
+    xml_parts_checked = 0
+    try:
+        with zipfile.ZipFile(path) as archive:
+            if _docx_active_carrier_present(archive) or _docx_metadata_has_policy_literal(archive, policy):
+                raise MultimodalError("MULTIMODAL_DOCX_STRUCTURAL_VERIFICATION_FAILED")
+            for name in archive.namelist():
+                data = archive.read(name)
+                checked_parts += 1
+                if any(value in data for value in literal_bytes):
+                    raise MultimodalError("MULTIMODAL_DOCX_STRUCTURAL_VERIFICATION_FAILED")
+                if name.endswith((".xml", ".rels")) or name == "[Content_Types].xml":
+                    root = _xml_root(data)
+                    xml_parts_checked += 1
+                    decoded_text = "".join(root.itertext())
+                    if _contains_policy_literal_text(decoded_text, policy):
+                        raise MultimodalError("MULTIMODAL_DOCX_STRUCTURAL_VERIFICATION_FAILED")
+    except zipfile.BadZipFile as error:
+        raise MultimodalError("MULTIMODAL_DOCX_STRUCTURAL_VERIFICATION_FAILED") from error
+    return {
+        "forbidden_structures_absent": True,
+        "policy_literals_absent": True,
+        "checked_parts": checked_parts,
+        "xml_parts_valid": xml_parts_checked,
+        "zip_metadata_policy_literals_absent": True,
+    }
+
+
 def verify_pdf_structural_release(path: Path) -> dict[str, bool]:
     """Independently reject non-rendered PDF carriers after raster rebuilding."""
     data = path.read_bytes()
@@ -150,6 +276,38 @@ def verify_pdf_structural_release(path: Path) -> dict[str, bool]:
     }
 
 
+def _redact_docx(source: Path, destination: Path, policy: Policy) -> tuple[int, set[str]]:
+    replacements = 0
+    matched: set[str] = set()
+    try:
+        with zipfile.ZipFile(source, "r") as src, zipfile.ZipFile(
+            destination, "w", compression=zipfile.ZIP_DEFLATED
+        ) as dst:
+            if _docx_active_carrier_present(src) or _docx_metadata_has_policy_literal(src, policy):
+                raise MultimodalError("MULTIMODAL_DOCX_UNSUPPORTED_ACTIVE_CONTENT")
+            for item in src.infolist():
+                data = src.read(item.filename)
+                if item.filename.endswith((".xml", ".rels")) or item.filename == "[Content_Types].xml":
+                    _xml_root(data)
+                if item.filename.endswith(".xml") and item.filename.startswith(_DOCX_TEXT_PARTS):
+                    try:
+                        text = data.decode("utf-8")
+                    except UnicodeDecodeError as error:
+                        raise MultimodalError("MULTIMODAL_DOCX_XML_INVALID") from error
+                    transformed, count = replace_text(text, policy)
+                    if count:
+                        replacements += count
+                        for rule in policy.rules:
+                            if rule.value in text and rule.value not in transformed:
+                                matched.add(rule.rule_id)
+                    data = transformed.encode("utf-8")
+                    _xml_root(data)
+                dst.writestr(item, data)
+    except zipfile.BadZipFile as error:
+        raise MultimodalError("MULTIMODAL_DOCX_INVALID") from error
+    return replacements, matched
+
+
 def _redact_image(source: Path, destination: Path, policy: Policy) -> tuple[int, set[str]]:
     try:
         from PIL import Image, ImageDraw
@@ -191,6 +349,10 @@ def redact_document(source: Path, policy_path: Path, output: Path, receipt: Path
             if output.suffix.lower() not in _IMAGE_SUFFIXES:
                 raise MultimodalError("MULTIMODAL_OUTPUT_FORMAT_INVALID")
             boxes, matched = _redact_image(source, temporary_output, policy)
+        elif source.suffix.lower() == ".docx":
+            if output.suffix.lower() != ".docx":
+                raise MultimodalError("MULTIMODAL_OUTPUT_FORMAT_INVALID")
+            boxes, matched = _redact_docx(source, temporary_output, policy)
         elif source.suffix.lower() == ".pdf":
             pdftoppm = shutil.which("pdftoppm")
             if output.suffix.lower() != ".pdf" or pdftoppm is None:
@@ -238,6 +400,8 @@ def redact_document(source: Path, policy_path: Path, output: Path, receipt: Path
         structural_verification = None
         if output.suffix.lower() == ".pdf":
             structural_verification = verify_pdf_structural_release(temporary_output)
+        elif output.suffix.lower() == ".docx":
+            structural_verification = verify_docx_structural_release(temporary_output, policy)
         os.replace(temporary_output, output)
         output_hash = hashlib.sha256(output.read_bytes()).hexdigest()
         report = {
@@ -251,6 +415,7 @@ def redact_document(source: Path, policy_path: Path, output: Path, receipt: Path
             "structural_verification": structural_verification,
             "does_not_establish": [
                 "OCR recall for policy values not detected by Tesseract",
+                "DOCX text split across multiple XML runs outside exact literal matching",
                 "general semantic anonymity or resistance to visual re-identification",
             ],
         }

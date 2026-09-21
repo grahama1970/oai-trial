@@ -1009,6 +1009,37 @@
       "dependencies": [],
       "applicability": "applicable",
       "capability_id": "arx-population-k-map-34"
+    },
+    {
+      "competitor": "Microsoft Presidio / native Office document redaction ecosystem",
+      "source": "https://github.com/microsoft/presidio",
+      "source_revision": "f251c513e8aad6820e9b2a44983ebf3a93637b07",
+      "capability": "native DOCX text-carrier redaction with structural active-content rejection",
+      "our_equivalent_executable_check": "canonical redact-document accepts .docx input/output, rewrites Office XML text parts through the same policy matcher, rejects active carriers by ZIP member name, relationship type, content-type declaration, and external relationship mode, verifies decoded XML text/XML validity plus ZIP payload/member-name/comment metadata contains no policy literal, and writes a private no-raw receipt",
+      "proof_command": [
+        "bash",
+        "-c",
+        "set -euo pipefail; .venv/bin/python scripts/eval_office_docx_redaction.py; .venv/bin/python -m pytest -q tests/test_multimodal.py -k docx security/tests/test_docx_battle_judge.py"
+      ],
+      "expected_exit": 0,
+      "result": "pass",
+      "project_specific_advantage_or_remaining_gap": "Scoped advantage: deterministic offline DOCX redaction is stdlib-only, rejects active content using package relationships/content types instead of filename substring matching alone, validates decoded XML text and XML well-formedness before publication, scans ZIP member names/comments/archive comments plus payloads for policy literals, and persists only aggregate receipt evidence. Remaining gap: split-across-run matching, DICOM, XLSX, PPTX, legacy binary Office, and complete Presidio/Office ecosystem parity remain unclaimed.",
+      "runtime_consumers": [
+        "src/anonymization_trial/__main__.py",
+        "src/anonymization_trial/multimodal.py",
+        "scripts/eval_office_docx_redaction.py"
+      ],
+      "semantic_assertions": [
+        "DOCX XML text parts are transformed through the canonical policy matcher",
+        "active content and embedded/native carriers fail closed when declared by member name, relationship type, content type, or external relationship mode",
+        "post-redaction verification parses XML, checks decoded XML text, and validates package XML before atomic release",
+        "ZIP archive comments, member names, member comments, and payload bytes/text are checked for policy literals",
+        "private receipt omits raw policy values and original text",
+        "scoped DOCX Battle cases exercise clean release plus active-relationship, ZIP-comment, and decoded-XML rejects"
+      ],
+      "dependencies": [],
+      "applicability": "applicable",
+      "capability_id": "presidio-native-docx-redaction-35"
     }
   ],
   "applicability_dispositions": [
@@ -1050,20 +1081,20 @@
     {
       "ecosystem": "Presidio image/document",
       "capabilities": [
-        "DICOM",
-        "office-document native carriers"
+        "DICOM"
       ],
       "disposition": "not_implemented",
-      "reason": "Canonical publication supports standard raster images and rasterized PDF only and rejects unsupported carriers."
+      "reason": "Canonical publication still does not claim DICOM carriers."
     },
     {
       "ecosystem": "Presidio image/document",
       "capabilities": [
         "standard image",
-        "PDF"
+        "PDF",
+        "native DOCX"
       ],
       "disposition": "applicable",
-      "reason": "Connected redact-document product path verifies residual OCR and PDF structural carriers before publication."
+      "reason": "Connected redact-document product path verifies residual OCR/PDF structural carriers for images/PDF and native DOCX XML/ZIP carriers before publication; other Office formats remain unclaimed."
     }
   ]
 }

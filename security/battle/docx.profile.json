@@ -1,0 +1,12 @@
+{
+  "schema": "battle.campaign_profile.v1",
+  "profile_id": "oai-trial.native-docx-release-gate.v1",
+  "expectation_overrides": {},
+  "required_case_ids": [
+    "docx-clean-redaction",
+    "docx-active-relationship-rejected",
+    "docx-zip-comment-literal-rejected",
+    "docx-decoded-xml-literal-rejected"
+  ],
+  "required_judges": ["security"]
+}

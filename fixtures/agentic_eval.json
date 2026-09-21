@@ -642,6 +642,28 @@
         ]
       },
       "readback": true
+    },
+    {
+      "name": "office-docx-redaction-real-path",
+      "type": "adversarial",
+      "real_world": true,
+      "evidence_class": "live_e2e",
+      "supports_claims": [
+        "anonymize.office_docx_redaction"
+      ],
+      "command": [
+        "bash",
+        "-c",
+        "cd .. && .venv/bin/python scripts/eval_office_docx_redaction.py"
+      ],
+      "expected": {
+        "exit_code": 0,
+        "stdout_contains": [
+          "OFFICE_DOCX_REDACTION_REAL_PATH_VERIFIED"
+        ]
+      },
+      "readback": true,
+      "description": "Real product path covers clean native DOCX redaction plus fail-closed active relationship and ZIP metadata policy-literal cases."
     }
   ],
   "capability_claims": [
@@ -781,6 +803,19 @@
       "derived_from": {
         "source": "security/competitor_parity_matrix.json:arx-population-k-map-34",
         "requirement": "Bind population k-map analysis to retained live product evidence."
+      }
+    },
+    {
+      "id": "anonymize.office_docx_redaction",
+      "description": "Canonical offline redact-document supports native DOCX XML text redaction with relationship/content-type active-carrier rejection, ZIP metadata/payload residual literal verification, decoded XML text/XML validity checks, and private aggregate receipts.",
+      "criticality": "important",
+      "claim_semantics": "value_bearing",
+      "evidence_required": {
+        "live_e2e": true
+      },
+      "derived_from": {
+        "source": "security/competitor_parity_matrix.json:presidio-native-docx-redaction-35",
+        "requirement": "Bind native DOCX redaction to retained live product evidence."
       }
     }
   ]
