@@ -9,16 +9,22 @@ import tempfile
 from pathlib import Path
 
 
-def elem(group: int, element: int, vr: str, value: bytes) -> bytes:
+def elem(group: int, element: int, vr: str, value: bytes, *, byteorder: str = "little") -> bytes:
     if len(value) % 2:
         value += b" "
-    return group.to_bytes(2, "little") + element.to_bytes(2, "little") + vr.encode("ascii") + len(value).to_bytes(2, "little") + value
+    return group.to_bytes(2, byteorder) + element.to_bytes(2, byteorder) + vr.encode("ascii") + len(value).to_bytes(2, byteorder) + value
 
 
-def long_elem(group: int, element: int, vr: str, value: bytes) -> bytes:
+def implicit_elem(group: int, element: int, value: bytes) -> bytes:
+    if len(value) % 2:
+        value += b" "
+    return group.to_bytes(2, "little") + element.to_bytes(2, "little") + len(value).to_bytes(4, "little") + value
+
+
+def long_elem(group: int, element: int, vr: str, value: bytes, *, byteorder: str = "little") -> bytes:
     if len(value) % 2:
         value += b"\0"
-    return group.to_bytes(2, "little") + element.to_bytes(2, "little") + vr.encode("ascii") + b"\0\0" + len(value).to_bytes(4, "little") + value
+    return group.to_bytes(2, byteorder) + element.to_bytes(2, byteorder) + vr.encode("ascii") + b"\0\0" + len(value).to_bytes(4, byteorder) + value
 
 
 def write_dicom(path: Path, patient: bytes = b"Alice Example", study: bytes = b"Chest") -> None:
@@ -86,6 +92,45 @@ with tempfile.TemporaryDirectory(prefix="dicom-redaction-") as directory:
     require(structural["text_elements_checked"] >= 2, "text elements not checked")
     require(b"Alice Example" not in output.read_bytes(), "output retained raw patient name")
     require("Alice Example" not in receipt.read_text(encoding="utf-8"), "receipt leaked raw patient name")
+
+    syntax_cases = {
+        "implicit": elem(0x0002, 0x0010, "UI", b"1.2.840.10008.1.2")
+        + implicit_elem(0x0010, 0x0010, b"Alice Example")
+        + implicit_elem(0x0008, 0x1030, b"Chest"),
+        "big": elem(0x0002, 0x0010, "UI", b"1.2.840.10008.1.2.2")
+        + elem(0x0010, 0x0010, "PN", b"Alice Example", byteorder="big")
+        + elem(0x0008, 0x1030, "LO", b"Chest", byteorder="big"),
+    }
+    for name, body in syntax_cases.items():
+        syntax_source = root / f"{name}.dcm"
+        syntax_output = root / f"{name}-out.dcm"
+        syntax_receipt = root / f"{name}-receipt.json"
+        syntax_source.write_bytes(b"\0" * 128 + b"DICM" + body)
+        syntax_completed = subprocess.run(  # noqa: S603 - fixed project CLI argv
+            [
+                ".venv/bin/anonymization-trial",
+                "redact-document",
+                "--input",
+                str(syntax_source),
+                "--policy",
+                str(policy),
+                "--output",
+                str(syntax_output),
+                "--receipt",
+                str(syntax_receipt),
+            ],
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        syntax_result = json.loads(syntax_completed.stdout)
+        require(syntax_result["redaction_boxes"] == 1, f"{name} syntax was not redacted")
+        require(
+            syntax_result["structural_verification"]["text_elements_checked"] >= 2,
+            f"{name} syntax structural text check missing",
+        )
+        require(b"Alice Example" not in syntax_output.read_bytes(), f"{name} output leaked raw patient")
+        require("Alice Example" not in syntax_receipt.read_text(encoding="utf-8"), f"{name} receipt leaked raw patient")
 
     bad = root / "bad.dcm"
     write_dicom(bad, b"Bob Patient")

@@ -291,34 +291,112 @@ _DICOM_TEXT_VRS = {"AE", "AS", "CS", "DA", "DS", "DT", "LO", "LT", "PN", "SH", "
 _DICOM_LONG_LENGTH_VRS = {"OB", "OD", "OF", "OL", "OW", "SQ", "UC", "UN", "UR", "UT"}
 _DICOM_TRANSFER_SYNTAX_TAG = (0x0002, 0x0010)
 _DICOM_PIXEL_DATA_TAG = (0x7FE0, 0x0010)
+_DICOM_IMPLICIT_VR_LITTLE_ENDIAN = "1.2.840.10008.1.2"
+_DICOM_EXPLICIT_VR_BIG_ENDIAN = "1.2.840.10008.1.2.2"
 _DICOM_COMPRESSED_TRANSFER_SYNTAX_MARKERS = (
     "1.2.840.10008.1.2.4.",  # JPEG/JPEG-LS/JPEG 2000 families
     "1.2.840.10008.1.2.5",  # RLE lossless
 )
+_DICOM_KNOWN_VRS = {
+    (0x0002, 0x0010): "UI",
+    (0x0008, 0x0020): "DA",
+    (0x0008, 0x0050): "SH",
+    (0x0008, 0x1030): "LO",
+    (0x0010, 0x0010): "PN",
+    (0x0010, 0x0020): "LO",
+    (0x7FE0, 0x0010): "OB",
+}
+
+
+def _dicom_validate_preamble(data: bytes) -> None:
+    if len(data) < 132 or data[128:132] != b"DICM":
+        raise MultimodalError("MULTIMODAL_DICOM_INVALID")
+
+
+def _dicom_explicit_little_element(data: bytes, offset: int):
+    if offset + 8 > len(data):
+        raise MultimodalError("MULTIMODAL_DICOM_INVALID")
+    start = offset
+    group = int.from_bytes(data[offset : offset + 2], "little")
+    element = int.from_bytes(data[offset + 2 : offset + 4], "little")
+    vr = data[offset + 4 : offset + 6].decode("ascii", errors="strict")
+    offset += 6
+    if vr in _DICOM_LONG_LENGTH_VRS:
+        if offset + 6 > len(data) or data[offset : offset + 2] != b"\x00\x00":
+            raise MultimodalError("MULTIMODAL_DICOM_INVALID")
+        length = int.from_bytes(data[offset + 2 : offset + 6], "little")
+        header_len = 12
+        offset += 6
+    else:
+        if offset + 2 > len(data):
+            raise MultimodalError("MULTIMODAL_DICOM_INVALID")
+        length = int.from_bytes(data[offset : offset + 2], "little")
+        header_len = 8
+        offset += 2
+    return start, group, element, vr, offset, length, header_len
+
+
+def _dicom_transfer_syntax(data: bytes) -> str:
+    _dicom_validate_preamble(data)
+    offset = 132
+    while offset + 8 <= len(data):
+        start, group, element, vr, value_offset, length, _header_len = _dicom_explicit_little_element(data, offset)
+        if length == 0xFFFFFFFF or value_offset + length > len(data):
+            raise MultimodalError("MULTIMODAL_DICOM_UNSUPPORTED")
+        if group != 0x0002:
+            return ""
+        if (group, element) == _DICOM_TRANSFER_SYNTAX_TAG and vr in _DICOM_TEXT_VRS:
+            return data[value_offset : value_offset + length].rstrip(b" \x00").decode(
+                "ascii", errors="ignore"
+            )
+        offset = value_offset + length
+    return ""
+
+
+def _dicom_encoding(group: int, transfer_syntax: str) -> tuple[str, bool]:
+    if group == 0x0002:
+        return "little", True
+    if transfer_syntax == _DICOM_EXPLICIT_VR_BIG_ENDIAN:
+        return "big", True
+    return "little", transfer_syntax != _DICOM_IMPLICIT_VR_LITTLE_ENDIAN
 
 
 def _dicom_elements(data: bytes):
-    if len(data) < 132 or data[128:132] != b"DICM":
-        raise MultimodalError("MULTIMODAL_DICOM_INVALID")
+    _dicom_validate_preamble(data)
+    transfer_syntax = _dicom_transfer_syntax(data)
     offset = 132
     while offset + 8 <= len(data):
         start = offset
-        group = int.from_bytes(data[offset : offset + 2], "little")
-        element = int.from_bytes(data[offset + 2 : offset + 4], "little")
-        vr = data[offset + 4 : offset + 6].decode("ascii", errors="strict")
-        offset += 6
-        if vr in _DICOM_LONG_LENGTH_VRS:
-            if offset + 6 > len(data) or data[offset : offset + 2] != b"\x00\x00":
+        little_group = int.from_bytes(data[offset : offset + 2], "little")
+        byteorder, explicit_vr = _dicom_encoding(little_group, transfer_syntax)
+        group = int.from_bytes(data[offset : offset + 2], byteorder)
+        byteorder, explicit_vr = _dicom_encoding(group, transfer_syntax)
+        element = int.from_bytes(data[offset + 2 : offset + 4], byteorder)
+        offset += 4
+        if explicit_vr:
+            if offset + 4 > len(data):
                 raise MultimodalError("MULTIMODAL_DICOM_INVALID")
-            length = int.from_bytes(data[offset + 2 : offset + 6], "little")
-            header_len = 12
-            offset += 6
-        else:
-            if offset + 2 > len(data):
-                raise MultimodalError("MULTIMODAL_DICOM_INVALID")
-            length = int.from_bytes(data[offset : offset + 2], "little")
-            header_len = 8
+            vr = data[offset : offset + 2].decode("ascii", errors="strict")
             offset += 2
+            if vr in _DICOM_LONG_LENGTH_VRS:
+                if offset + 6 > len(data) or data[offset : offset + 2] != b"\x00\x00":
+                    raise MultimodalError("MULTIMODAL_DICOM_INVALID")
+                length = int.from_bytes(data[offset + 2 : offset + 6], byteorder)
+                header_len = 12
+                offset += 6
+            else:
+                if offset + 2 > len(data):
+                    raise MultimodalError("MULTIMODAL_DICOM_INVALID")
+                length = int.from_bytes(data[offset : offset + 2], byteorder)
+                header_len = 8
+                offset += 2
+        else:
+            if offset + 4 > len(data):
+                raise MultimodalError("MULTIMODAL_DICOM_INVALID")
+            vr = _DICOM_KNOWN_VRS.get((group, element), "UN")
+            length = int.from_bytes(data[offset : offset + 4], byteorder)
+            header_len = 8
+            offset += 4
         if length == 0xFFFFFFFF or offset + length > len(data):
             raise MultimodalError("MULTIMODAL_DICOM_UNSUPPORTED")
         yield start, group, element, vr, offset, length, header_len
@@ -327,22 +405,24 @@ def _dicom_elements(data: bytes):
         raise MultimodalError("MULTIMODAL_DICOM_INVALID")
 
 
-def _dicom_with_length_header(group: int, element: int, vr: str, value: bytes) -> bytes:
+def _dicom_with_length_header(
+    group: int,
+    element: int,
+    vr: str,
+    value: bytes,
+    *,
+    byteorder: str = "little",
+    explicit_vr: bool = True,
+) -> bytes:
     if len(value) % 2:
-        value += b" "
-    prefix = group.to_bytes(2, "little") + element.to_bytes(2, "little") + vr.encode("ascii")
+        value += b" " if vr in _DICOM_TEXT_VRS else b"\0"
+    prefix = group.to_bytes(2, byteorder) + element.to_bytes(2, byteorder)
+    if not explicit_vr:
+        return prefix + len(value).to_bytes(4, byteorder) + value
+    prefix += vr.encode("ascii")
     if vr in _DICOM_LONG_LENGTH_VRS:
-        return prefix + b"\x00\x00" + len(value).to_bytes(4, "little") + value
-    return prefix + len(value).to_bytes(2, "little") + value
-
-
-def _dicom_transfer_syntax(data: bytes) -> str:
-    for _start, group, element, vr, value_offset, length, _header_len in _dicom_elements(data):
-        if (group, element) == _DICOM_TRANSFER_SYNTAX_TAG and vr in _DICOM_TEXT_VRS:
-            return data[value_offset : value_offset + length].rstrip(b" \x00").decode(
-                "ascii", errors="ignore"
-            )
-    return ""
+        return prefix + b"\x00\x00" + len(value).to_bytes(4, byteorder) + value
+    return prefix + len(value).to_bytes(2, byteorder) + value
 
 
 def _dicom_is_compressed_transfer_syntax(uid: str) -> bool:
@@ -378,6 +458,7 @@ def _redact_dicom(source: Path, destination: Path, policy: Policy) -> tuple[int,
     chunks: list[bytes] = [data[:132]]
     last = 132
     for start, group, element, vr, value_offset, length, _header_len in _dicom_elements(data):
+        byteorder, explicit_vr = _dicom_encoding(group, transfer_syntax)
         chunks.append(data[last:start])
         raw = data[value_offset : value_offset + length]
         value = raw.rstrip(b" \x00")
@@ -392,14 +473,32 @@ def _redact_dicom(source: Path, destination: Path, policy: Policy) -> tuple[int,
                 for rule in policy.rules:
                     if rule.value in text and rule.value not in transformed:
                         matched.add(rule.rule_id)
-                chunks.append(_dicom_with_length_header(group, element, vr, transformed.encode("utf-8")))
+                chunks.append(
+                    _dicom_with_length_header(
+                        group,
+                        element,
+                        vr,
+                        transformed.encode("utf-8"),
+                        byteorder=byteorder,
+                        explicit_vr=explicit_vr,
+                    )
+                )
             else:
                 chunks.append(data[start : value_offset + length])
         elif (group, element) == _DICOM_PIXEL_DATA_TAG and compressed_pixels:
             redacted_pixel, count, pixel_matches = _redact_dicom_compressed_pixel(raw, policy)
             replacements += count
             matched.update(pixel_matches)
-            chunks.append(_dicom_with_length_header(group, element, vr, redacted_pixel))
+            chunks.append(
+                _dicom_with_length_header(
+                    group,
+                    element,
+                    vr,
+                    redacted_pixel,
+                    byteorder=byteorder,
+                    explicit_vr=explicit_vr,
+                )
+            )
         else:
             if group % 2 == 1 and any(value in raw for value in literal_bytes):
                 raise MultimodalError("MULTIMODAL_DICOM_PRIVATE_BINARY_TAG_UNSUPPORTED")

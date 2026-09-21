@@ -1,0 +1,18 @@
+{
+  "competitor": "Microsoft Presidio",
+  "files": [
+    {
+      "bytes": 11615,
+      "path": "presidio-image-redactor/presidio_image_redactor/dicom_image_pii_verify_engine.py",
+      "sha256": "32ecaa1af4675840e1506cab3142872f137f3b2520883a65033891e65d954d4e"
+    },
+    {
+      "bytes": 42382,
+      "path": "presidio-image-redactor/presidio_image_redactor/dicom_image_redactor_engine.py",
+      "sha256": "1e60a1d695db85163ca3d8cb2a540653e90a43b69ba70bfdb5711da542bf3f44"
+    }
+  ],
+  "schema": "competitor_source_snapshot.v1",
+  "source": "https://github.com/microsoft/presidio",
+  "source_revision": "f251c513e8aad6820e9b2a44983ebf3a93637b07"
+}

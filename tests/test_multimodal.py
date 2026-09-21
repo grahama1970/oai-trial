@@ -300,21 +300,27 @@ def test_native_docx_rejects_active_content_and_cli_writes_private_receipt(tmp_p
     assert (tmp_path / "cli-receipt.json").stat().st_mode & 0o777 == 0o600
 
 
-def _dicom_elem(group: int, element: int, vr: str, value: bytes) -> bytes:
+def _dicom_elem(group: int, element: int, vr: str, value: bytes, *, byteorder: str = "little") -> bytes:
     if len(value) % 2:
         value += b" "
-    return group.to_bytes(2, "little") + element.to_bytes(2, "little") + vr.encode("ascii") + len(value).to_bytes(2, "little") + value
+    return group.to_bytes(2, byteorder) + element.to_bytes(2, byteorder) + vr.encode("ascii") + len(value).to_bytes(2, byteorder) + value
 
 
-def _dicom_long_elem(group: int, element: int, vr: str, value: bytes) -> bytes:
+def _dicom_implicit_elem(group: int, element: int, value: bytes) -> bytes:
+    if len(value) % 2:
+        value += b" "
+    return group.to_bytes(2, "little") + element.to_bytes(2, "little") + len(value).to_bytes(4, "little") + value
+
+
+def _dicom_long_elem(group: int, element: int, vr: str, value: bytes, *, byteorder: str = "little") -> bytes:
     if len(value) % 2:
         value += b"\0"
     return (
-        group.to_bytes(2, "little")
-        + element.to_bytes(2, "little")
+        group.to_bytes(2, byteorder)
+        + element.to_bytes(2, byteorder)
         + vr.encode("ascii")
         + b"\0\0"
-        + len(value).to_bytes(4, "little")
+        + len(value).to_bytes(4, byteorder)
         + value
     )
 
@@ -356,6 +362,43 @@ def test_native_dicom_metadata_redaction_and_verification(tmp_path: Path) -> Non
     assert b"Alice Example" not in output.read_bytes()
     assert "Alice Example" not in receipt.read_text(encoding="utf-8")
     assert verify_dicom_structural_release(output, compile_policy(policy))["text_elements_checked"] >= 2
+
+
+def test_native_dicom_redacts_implicit_vr_and_explicit_big_endian(tmp_path: Path) -> None:
+    policy = {
+        "version": 1,
+        "sensitive_values": [
+            {"rule_id": "patient", "subject_id": "person-1", "type": "name", "value": "Alice Example"}
+        ],
+        "protected_values": [],
+    }
+    policy_path = tmp_path / "policy.json"
+    policy_path.write_text(json.dumps(policy), encoding="utf-8")
+    cases = {
+        "implicit": (
+            _dicom_elem(0x0002, 0x0010, "UI", b"1.2.840.10008.1.2")
+            + _dicom_implicit_elem(0x0010, 0x0010, b"Alice Example")
+            + _dicom_implicit_elem(0x0008, 0x1030, b"Chest")
+        ),
+        "big": (
+            _dicom_elem(0x0002, 0x0010, "UI", b"1.2.840.10008.1.2.2")
+            + _dicom_elem(0x0010, 0x0010, "PN", b"Alice Example", byteorder="big")
+            + _dicom_elem(0x0008, 0x1030, "LO", b"Chest", byteorder="big")
+        ),
+    }
+    for name, body in cases.items():
+        source = tmp_path / f"{name}.dcm"
+        output = tmp_path / f"{name}-out.dcm"
+        receipt = tmp_path / f"{name}-receipt.json"
+        source.write_bytes(b"\0" * 128 + b"DICM" + body)
+
+        result = redact_document(source, policy_path, output, receipt)
+
+        assert result["redaction_boxes"] == 1
+        assert result["matched_rule_ids"] == ["patient"]
+        assert b"Alice Example" not in output.read_bytes()
+        assert "Alice Example" not in receipt.read_text(encoding="utf-8")
+        assert verify_dicom_structural_release(output, compile_policy(policy))["text_elements_checked"] >= 2
 
 
 def test_native_dicom_rejects_bad_preamble(tmp_path: Path) -> None:

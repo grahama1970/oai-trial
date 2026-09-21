@@ -686,6 +686,27 @@
       },
       "readback": true,
       "description": "Real product path covers native DICOM text metadata redaction, compressed-pixel OCR redaction when local OCR is available, and fail-closed private binary policy-literal carriers."
+    },
+    {
+      "name": "presidio-dicom-source-comparator-real-path",
+      "type": "adversarial",
+      "real_world": true,
+      "evidence_class": "live_e2e",
+      "supports_claims": [
+        "anonymize.dicom_redaction"
+      ],
+      "command": [
+        "bash",
+        "-c",
+        "cd .. && .venv/bin/python scripts/eval_presidio_dicom_source_comparator.py"
+      ],
+      "expected": {
+        "exit_code": 0,
+        "stdout_contains": [
+          "presidio_dicom_source_comparator.v1"
+        ]
+      },
+      "readback": true
     }
   ],
   "capability_claims": [
@@ -842,7 +863,7 @@
     },
     {
       "id": "anonymize.dicom_redaction",
-      "description": "Canonical offline redact-document rewrites explicit-VR DICOM text metadata, OCR-redacts JPEG-family compressed pixel payloads, rejects private binary tags containing policy literals, verifies policy literals are absent, and fails closed for malformed/no-match/private-binary DICOM without retaining raw patient values.",
+      "description": "Canonical offline redact-document rewrites explicit-VR DICOM text metadata, OCR-redacts JPEG-family compressed pixel payloads, rejects private binary tags containing policy literals, verifies policy literals are absent, and binds source-backed Presidio DICOM comparison evidence without retaining raw patient values.",
       "criticality": "important",
       "claim_semantics": "value_bearing",
       "evidence_required": {
@@ -850,7 +871,7 @@
       },
       "derived_from": {
         "source": "security/competitor_parity_matrix.json:presidio-dicom-redaction-36",
-        "requirement": "Bind scoped DICOM metadata, compressed pixel, and private binary fail-closed controls to retained live product evidence."
+        "requirement": "Bind scoped DICOM metadata, compressed pixel, private binary fail-closed controls, and source-backed Presidio comparison to retained live product evidence."
       }
     }
   ]
