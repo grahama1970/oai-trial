@@ -22,7 +22,14 @@ BODY = """<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 <w:document xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><w:body><w:p><w:r><w:t>Contact alice@example.com today</w:t></w:r></w:p></w:body></w:document>"""
 
 
-def _write_docx(path: Path, body: str = BODY, extra: dict[str, str] | None = None, *, comment: bytes = b"") -> None:
+def _write_docx(
+    path: Path,
+    body: str = BODY,
+    extra: dict[str, str] | None = None,
+    *,
+    comment: bytes = b"",
+    member_comments: dict[str, bytes] | None = None,
+) -> None:
     parts = {
         "[Content_Types].xml": """<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 <Types xmlns=\"http://schemas.openxmlformats.org/package/2006/content-types\"><Default Extension=\"rels\" ContentType=\"application/vnd.openxmlformats-package.relationships+xml\"/><Default Extension=\"xml\" ContentType=\"application/xml\"/><Override PartName=\"/word/document.xml\" ContentType=\"application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml\"/></Types>""",
@@ -35,7 +42,12 @@ def _write_docx(path: Path, body: str = BODY, extra: dict[str, str] | None = Non
     with zipfile.ZipFile(path, "w", compression=zipfile.ZIP_DEFLATED) as archive:
         archive.comment = comment
         for name, text in parts.items():
-            archive.writestr(name, text)
+            if member_comments and name in member_comments:
+                item = zipfile.ZipInfo(name)
+                item.comment = member_comments[name]
+                archive.writestr(item, text)
+            else:
+                archive.writestr(name, text)
 
 
 def _case(root: Path, case_id: str, expectation: str, **kwargs: object) -> tuple[str, str, str]:
@@ -65,8 +77,21 @@ def generate(work_dir, params):
     yield _case(root, "docx-zip-comment-literal-rejected", "MUST_REJECT", comment=b"alice@example.com")
     yield _case(
         root,
+        "docx-member-name-literal-rejected",
+        "MUST_REJECT",
+        extra={"word/alice@example.com.xml": "<safe />"},
+    )
+    yield _case(
+        root,
+        "docx-member-comment-literal-rejected",
+        "MUST_REJECT",
+        member_comments={"word/document.xml": b"alice@example.com"},
+    )
+    yield _case(
+        root,
         "docx-decoded-xml-literal-rejected",
         "MUST_REJECT",
         body="""<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 <w:document xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><w:body><w:p><w:r><w:t>alice&#64;example.com</w:t></w:r></w:p></w:body></w:document>""",
     )
+    yield _case(root, "docx-malformed-xml-rejected", "MUST_REJECT", body="<w:document>")

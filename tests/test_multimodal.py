@@ -155,6 +155,9 @@ def test_native_docx_redaction_is_offline_verified_and_private(tmp_path: Path) -
     assert result["redaction_boxes"] == 1
     assert result["matched_rule_ids"] == ["email"]
     assert result["structural_verification"]["policy_literals_absent"] is True
+    assert result["structural_verification"]["required_parts_present"] is True
+    assert result["structural_verification"]["office_document_relationship_valid"] is True
+    assert result["structural_verification"]["main_document_xml_valid"] is True
     assert "alice@example.com" not in receipt.read_text(encoding="utf-8")
     with zipfile.ZipFile(output) as archive:
         assert "alice@example.com" not in b"".join(archive.read(name) for name in archive.namelist()).decode("utf-8", errors="ignore")
@@ -202,6 +205,26 @@ def test_docx_verifier_rejects_policy_literals_in_zip_metadata_and_decoded_xml(t
     with pytest.raises(MultimodalError, match="MULTIMODAL_DOCX_STRUCTURAL_VERIFICATION_FAILED"):
         verify_docx_structural_release(metadata, policy)
 
+    member_comment = tmp_path / "member-comment.docx"
+    _write_docx(
+        member_comment,
+        """<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+<w:document xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><w:body><w:p><w:r><w:t>safe</w:t></w:r></w:p></w:body></w:document>""",
+        member_comments={"word/document.xml": b"alice@example.com"},
+    )
+    with pytest.raises(MultimodalError, match="MULTIMODAL_DOCX_STRUCTURAL_VERIFICATION_FAILED"):
+        verify_docx_structural_release(member_comment, policy)
+
+    member_name = tmp_path / "member-name.docx"
+    _write_docx(
+        member_name,
+        """<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+<w:document xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><w:body><w:p><w:r><w:t>safe</w:t></w:r></w:p></w:body></w:document>""",
+        {"word/alice@example.com.xml": "<safe />"},
+    )
+    with pytest.raises(MultimodalError, match="MULTIMODAL_DOCX_STRUCTURAL_VERIFICATION_FAILED"):
+        verify_docx_structural_release(member_name, policy)
+
     decoded = tmp_path / "decoded.docx"
     _write_docx(
         decoded,
@@ -215,6 +238,29 @@ def test_docx_verifier_rejects_policy_literals_in_zip_metadata_and_decoded_xml(t
     _write_docx(invalid, "<w:document>")
     with pytest.raises(MultimodalError, match="MULTIMODAL_DOCX_XML_INVALID"):
         verify_docx_structural_release(invalid, policy)
+
+
+def test_docx_verifier_requires_minimal_valid_office_package(tmp_path: Path) -> None:
+    policy = compile_policy(_policy())
+    missing_relationship = tmp_path / "missing-relationship.docx"
+    _write_docx(
+        missing_relationship,
+        """<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+<w:document xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><w:body><w:p><w:r><w:t>safe</w:t></w:r></w:p></w:body></w:document>""",
+        {"_rels/.rels": """<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+<Relationships xmlns=\"http://schemas.openxmlformats.org/package/2006/relationships\"/>"""},
+    )
+    with pytest.raises(MultimodalError, match="MULTIMODAL_DOCX_STRUCTURAL_VERIFICATION_FAILED"):
+        verify_docx_structural_release(missing_relationship, policy)
+
+    no_body = tmp_path / "no-body.docx"
+    _write_docx(
+        no_body,
+        """<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+<w:document xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"/>""",
+    )
+    with pytest.raises(MultimodalError, match="MULTIMODAL_DOCX_STRUCTURAL_VERIFICATION_FAILED"):
+        verify_docx_structural_release(no_body, policy)
 
 
 def test_native_docx_rejects_active_content_and_cli_writes_private_receipt(tmp_path: Path) -> None:

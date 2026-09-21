@@ -20,6 +20,7 @@ def write_docx(
     extra: dict[str, str] | None = None,
     *,
     archive_comment: bytes = b"",
+    member_comments: dict[str, bytes] | None = None,
 ) -> None:
     parts = {
         "[Content_Types].xml": """<?xml version=\"1.0\" encoding=\"UTF-8\"?>
@@ -39,7 +40,12 @@ def write_docx(
     with zipfile.ZipFile(path, "w", compression=zipfile.ZIP_DEFLATED) as archive:
         archive.comment = archive_comment
         for name, data in parts.items():
-            archive.writestr(name, data)
+            if member_comments and name in member_comments:
+                item = zipfile.ZipInfo(name)
+                item.comment = member_comments[name]
+                archive.writestr(item, data)
+            else:
+                archive.writestr(name, data)
 
 
 with tempfile.TemporaryDirectory(prefix="docx-redaction-") as directory:
@@ -124,6 +130,79 @@ with tempfile.TemporaryDirectory(prefix="docx-redaction-") as directory:
     )
     require(metadata_rejected.returncode != 0, "metadata policy literal must fail closed")
 
+    member_name = root / "member-name.docx"
+    write_docx(
+        member_name,
+        """<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+<w:document xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><w:body><w:p><w:r><w:t>alice@example.com</w:t></w:r></w:p></w:body></w:document>""",
+        {"word/alice@example.com.xml": "<safe />"},
+    )
+    member_name_rejected = subprocess.run(
+        [
+            ".venv/bin/anonymization-trial",
+            "redact-document",
+            "--input",
+            str(member_name),
+            "--policy",
+            str(policy),
+            "--output",
+            str(root / "member-name-out.docx"),
+            "--receipt",
+            str(root / "member-name-receipt.json"),
+        ],
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+    require(member_name_rejected.returncode != 0, "member-name policy literal must fail closed")
+
+    member_comment = root / "member-comment.docx"
+    write_docx(
+        member_comment,
+        """<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+<w:document xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><w:body><w:p><w:r><w:t>alice@example.com</w:t></w:r></w:p></w:body></w:document>""",
+        member_comments={"word/document.xml": b"alice@example.com"},
+    )
+    member_comment_rejected = subprocess.run(
+        [
+            ".venv/bin/anonymization-trial",
+            "redact-document",
+            "--input",
+            str(member_comment),
+            "--policy",
+            str(policy),
+            "--output",
+            str(root / "member-comment-out.docx"),
+            "--receipt",
+            str(root / "member-comment-receipt.json"),
+        ],
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+    require(member_comment_rejected.returncode != 0, "member-comment policy literal must fail closed")
+
+    malformed = root / "malformed.docx"
+    write_docx(malformed, "<w:document>")
+    malformed_rejected = subprocess.run(
+        [
+            ".venv/bin/anonymization-trial",
+            "redact-document",
+            "--input",
+            str(malformed),
+            "--policy",
+            str(policy),
+            "--output",
+            str(root / "malformed-out.docx"),
+            "--receipt",
+            str(root / "malformed-receipt.json"),
+        ],
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+    require(malformed_rejected.returncode != 0, "malformed XML must fail closed")
+
     completed = subprocess.run(
         [
             ".venv/bin/anonymization-trial",
@@ -151,6 +230,12 @@ with tempfile.TemporaryDirectory(prefix="docx-redaction-") as directory:
         result["structural_verification"]["zip_metadata_policy_literals_absent"] is True,
         "ZIP metadata verification missing",
     )
+    require(result["structural_verification"]["required_parts_present"] is True, "required DOCX part check missing")
+    require(
+        result["structural_verification"]["office_document_relationship_valid"] is True,
+        "office document relationship check missing",
+    )
+    require(result["structural_verification"]["main_document_xml_valid"] is True, "main document check missing")
     require(receipt.stat().st_mode & 0o777 == 0o600, "private receipt mode")
     receipt_text = receipt.read_text(encoding="utf-8")
     require("alice@example.com" not in receipt_text, "receipt leaked raw literal")

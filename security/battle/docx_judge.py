@@ -23,6 +23,11 @@ def _zip_text(value: bytes) -> str:
     return value.decode("utf-8", errors="ignore")
 
 
+def _marker_in(value: str, markers: tuple[str, ...]) -> bool:
+    lowered = value.casefold()
+    return any(marker.casefold() in lowered for marker in markers)
+
+
 def judge(target_dir: str, params: dict) -> dict:
     root = Path(target_dir)
     output = root / "out.docx"
@@ -58,6 +63,9 @@ def judge(target_dir: str, params: dict) -> dict:
             "forbidden_structures_absent",
             "policy_literals_absent",
             "zip_metadata_policy_literals_absent",
+            "required_parts_present",
+            "office_document_relationship_valid",
+            "main_document_xml_valid",
         ):
             if structural.get(key) is not True:
                 violations.append(f"structural verification missing {key}")
@@ -66,6 +74,11 @@ def judge(target_dir: str, params: dict) -> dict:
     try:
         with zipfile.ZipFile(output) as archive:
             evidence["member_count"] = len(archive.infolist())
+            names = archive.namelist()
+            if not {"[Content_Types].xml", "_rels/.rels", "word/document.xml"}.issubset(names):
+                violations.append("DOCX required package parts missing")
+            if len(names) != len(set(names)):
+                violations.append("DOCX contains duplicate ZIP members")
             metadata_text = _zip_text(archive.comment) + "\n" + "\n".join(
                 item.filename + "\n" + _zip_text(item.comment) for item in archive.infolist()
             )
@@ -85,9 +98,9 @@ def judge(target_dir: str, params: dict) -> dict:
                         content_type = element.attrib.get("ContentType", "")
                         rel_type = element.attrib.get("Type", "")
                         target_mode = element.attrib.get("TargetMode", "")
-                        if any(marker in content_type for marker in FORBIDDEN_CT_MARKERS):
+                        if _marker_in(content_type, FORBIDDEN_CT_MARKERS):
                             violations.append(f"active content type:{name}")
-                        if any(marker in rel_type for marker in FORBIDDEN_REL_MARKERS):
+                        if _marker_in(rel_type, FORBIDDEN_REL_MARKERS):
                             violations.append(f"active relationship:{name}")
                         if target_mode.casefold() == "external":
                             violations.append(f"external relationship:{name}")

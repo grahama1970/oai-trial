@@ -167,9 +167,18 @@ def _xml_root(data: bytes) -> ET.Element:
         raise MultimodalError("MULTIMODAL_DOCX_XML_INVALID") from error
 
 
+def _xml_local_name(tag: str) -> str:
+    return tag.rsplit("}", 1)[-1]
+
+
+def _marker_in(value: str, markers: tuple[str, ...]) -> bool:
+    lowered = value.casefold()
+    return any(marker.casefold() in lowered for marker in markers)
+
+
 def _docx_active_carrier_present(archive: zipfile.ZipFile) -> bool:
     names = archive.namelist()
-    if any(part in name for name in names for part in _DOCX_FORBIDDEN_PARTS):
+    if any(_marker_in(name, _DOCX_FORBIDDEN_PARTS) for name in names):
         return True
     for name in names:
         if name == "[Content_Types].xml" or name.endswith(".rels") or name.endswith(".xml"):
@@ -178,13 +187,56 @@ def _docx_active_carrier_present(archive: zipfile.ZipFile) -> bool:
                 content_type = element.attrib.get("ContentType", "")
                 rel_type = element.attrib.get("Type", "")
                 target_mode = element.attrib.get("TargetMode", "")
-                if any(marker in content_type for marker in _DOCX_FORBIDDEN_CONTENT_TYPE_MARKERS):
+                if _marker_in(content_type, _DOCX_FORBIDDEN_CONTENT_TYPE_MARKERS):
                     return True
-                if any(marker in rel_type for marker in _DOCX_FORBIDDEN_RELATIONSHIP_MARKERS):
+                if _marker_in(rel_type, _DOCX_FORBIDDEN_RELATIONSHIP_MARKERS):
                     return True
                 if target_mode.casefold() == "external":
                     return True
     return False
+
+
+def _validate_docx_package(archive: zipfile.ZipFile) -> dict[str, bool]:
+    names = archive.namelist()
+    required = {"[Content_Types].xml", "_rels/.rels", "word/document.xml"}
+    if not required.issubset(names) or len(names) != len(set(names)):
+        raise MultimodalError("MULTIMODAL_DOCX_STRUCTURAL_VERIFICATION_FAILED")
+
+    content_root = _xml_root(archive.read("[Content_Types].xml"))
+    if _xml_local_name(content_root.tag) != "Types":
+        raise MultimodalError("MULTIMODAL_DOCX_STRUCTURAL_VERIFICATION_FAILED")
+    has_document_override = any(
+        element.attrib.get("PartName") == "/word/document.xml"
+        and element.attrib.get("ContentType")
+        == "application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"
+        for element in content_root.iter()
+    )
+    if not has_document_override:
+        raise MultimodalError("MULTIMODAL_DOCX_STRUCTURAL_VERIFICATION_FAILED")
+
+    rel_root = _xml_root(archive.read("_rels/.rels"))
+    if _xml_local_name(rel_root.tag) != "Relationships":
+        raise MultimodalError("MULTIMODAL_DOCX_STRUCTURAL_VERIFICATION_FAILED")
+    has_main_relationship = any(
+        element.attrib.get("Type")
+        == "http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument"
+        and element.attrib.get("Target") == "word/document.xml"
+        and element.attrib.get("TargetMode", "").casefold() != "external"
+        for element in rel_root.iter()
+    )
+    if not has_main_relationship:
+        raise MultimodalError("MULTIMODAL_DOCX_STRUCTURAL_VERIFICATION_FAILED")
+
+    document_root = _xml_root(archive.read("word/document.xml"))
+    if _xml_local_name(document_root.tag) != "document":
+        raise MultimodalError("MULTIMODAL_DOCX_STRUCTURAL_VERIFICATION_FAILED")
+    if not any(_xml_local_name(element.tag) == "body" for element in document_root.iter()):
+        raise MultimodalError("MULTIMODAL_DOCX_STRUCTURAL_VERIFICATION_FAILED")
+    return {
+        "required_parts_present": True,
+        "office_document_relationship_valid": True,
+        "main_document_xml_valid": True,
+    }
 
 
 def _docx_metadata_has_policy_literal(archive: zipfile.ZipFile, policy: Policy) -> bool:
@@ -209,6 +261,7 @@ def verify_docx_structural_release(path: Path, policy: Policy) -> dict[str, bool
     xml_parts_checked = 0
     try:
         with zipfile.ZipFile(path) as archive:
+            package_verification = _validate_docx_package(archive)
             if _docx_active_carrier_present(archive) or _docx_metadata_has_policy_literal(archive, policy):
                 raise MultimodalError("MULTIMODAL_DOCX_STRUCTURAL_VERIFICATION_FAILED")
             for name in archive.namelist():
@@ -230,6 +283,7 @@ def verify_docx_structural_release(path: Path, policy: Policy) -> dict[str, bool
         "checked_parts": checked_parts,
         "xml_parts_valid": xml_parts_checked,
         "zip_metadata_policy_literals_absent": True,
+        **package_verification,
     }
 
 

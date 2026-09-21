@@ -33,6 +33,9 @@ def _receipt(path: Path) -> None:
                     "forbidden_structures_absent": True,
                     "policy_literals_absent": True,
                     "zip_metadata_policy_literals_absent": True,
+                    "required_parts_present": True,
+                    "office_document_relationship_valid": True,
+                    "main_document_xml_valid": True,
                     "xml_parts_valid": 3,
                 },
             }

@@ -1015,7 +1015,7 @@
       "source": "https://github.com/microsoft/presidio",
       "source_revision": "f251c513e8aad6820e9b2a44983ebf3a93637b07",
       "capability": "native DOCX text-carrier redaction with structural active-content rejection",
-      "our_equivalent_executable_check": "canonical redact-document accepts .docx input/output, rewrites Office XML text parts through the same policy matcher, rejects active carriers by ZIP member name, relationship type, content-type declaration, and external relationship mode, verifies decoded XML text/XML validity plus ZIP payload/member-name/comment metadata contains no policy literal, and writes a private no-raw receipt",
+      "our_equivalent_executable_check": "canonical redact-document accepts .docx input/output, rewrites Office XML text parts through the same policy matcher, rejects active carriers by ZIP member name, relationship type, content-type declaration, and external relationship mode, verifies decoded XML text/XML validity, requires a minimal valid Office package relationship/content-type/document-body structure, scans ZIP payload/member-name/member-comment/archive-comment metadata for policy literals, and writes a private no-raw receipt",
       "proof_command": [
         "bash",
         "-c",
@@ -1023,7 +1023,7 @@
       ],
       "expected_exit": 0,
       "result": "pass",
-      "project_specific_advantage_or_remaining_gap": "Scoped advantage: deterministic offline DOCX redaction is stdlib-only, rejects active content using package relationships/content types instead of filename substring matching alone, validates decoded XML text and XML well-formedness before publication, scans ZIP member names/comments/archive comments plus payloads for policy literals, and persists only aggregate receipt evidence. Remaining gap: split-across-run matching, DICOM, XLSX, PPTX, legacy binary Office, and complete Presidio/Office ecosystem parity remain unclaimed.",
+      "project_specific_advantage_or_remaining_gap": "Scoped implemented capability: deterministic offline DOCX redaction is stdlib-only, rejects active content using package relationships/content types instead of filename substring matching alone, validates decoded XML text, XML well-formedness, and minimal OOXML package structure before publication, scans ZIP member names/comments/archive comments plus payloads for policy literals, and persists only aggregate receipt evidence. Remaining gap: no same-input native-DOCX Presidio adapter comparison is claimed; split-across-run matching, DICOM, XLSX, PPTX, legacy binary Office, and complete Presidio/Office ecosystem parity remain unclaimed.",
       "runtime_consumers": [
         "src/anonymization_trial/__main__.py",
         "src/anonymization_trial/multimodal.py",
@@ -1035,7 +1035,9 @@
         "post-redaction verification parses XML, checks decoded XML text, and validates package XML before atomic release",
         "ZIP archive comments, member names, member comments, and payload bytes/text are checked for policy literals",
         "private receipt omits raw policy values and original text",
-        "scoped DOCX Battle cases exercise clean release plus active-relationship, ZIP-comment, and decoded-XML rejects"
+        "scoped DOCX Battle cases exercise clean release plus active-relationship, ZIP-comment, and decoded-XML rejects",
+        "post-redaction verification requires content-types, package relationship, main document XML, and document body structure",
+        "scoped DOCX Battle cases exercise clean release plus active-relationship, ZIP-comment, member-name, member-comment, decoded-XML, and malformed-XML rejects"
       ],
       "dependencies": [],
       "applicability": "applicable",
