@@ -1,0 +1,19 @@
+{
+  "schema": "battle.arena_protocol.v1",
+  "arena_id": "oai-trial.native-dicom.v1",
+  "fixture_validation": {
+    "kind": "json_files",
+    "required_files": ["case.json", "policy.json"]
+  },
+  "observations": {
+    "output_subdir": "."
+  },
+  "applicable_judges": ["security"],
+  "expectations": ["MUST_ACCEPT", "MUST_REJECT"],
+  "reset_behavior": {
+    "mode": "fresh_output_dir_per_case"
+  },
+  "expectation_semantics": {
+    "MUST_REJECT": "contract_reject"
+  }
+}

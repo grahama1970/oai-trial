@@ -664,6 +664,27 @@
       },
       "readback": true,
       "description": "Real product path covers clean native DOCX redaction plus fail-closed active relationship and ZIP metadata policy-literal cases."
+    },
+    {
+      "name": "dicom-redaction-real-path",
+      "type": "adversarial",
+      "real_world": true,
+      "evidence_class": "live_e2e",
+      "supports_claims": [
+        "anonymize.dicom_redaction"
+      ],
+      "command": [
+        "bash",
+        "-c",
+        "cd .. && .venv/bin/python scripts/eval_dicom_redaction.py"
+      ],
+      "expected": {
+        "exit_code": 0,
+        "stdout_contains": [
+          "DICOM_REDACTION_REAL_PATH_VERIFIED"
+        ]
+      },
+      "readback": true
     }
   ],
   "capability_claims": [
@@ -816,6 +837,19 @@
       "derived_from": {
         "source": "security/competitor_parity_matrix.json:presidio-native-docx-redaction-35",
         "requirement": "Bind native DOCX redaction to retained live product evidence."
+      }
+    },
+    {
+      "id": "anonymize.dicom_redaction",
+      "description": "Canonical offline redact-document rewrites explicit-VR DICOM text metadata, verifies policy literals are absent, and fails closed for malformed/no-match DICOM without retaining raw patient values.",
+      "criticality": "important",
+      "claim_semantics": "value_bearing",
+      "evidence_required": {
+        "live_e2e": true
+      },
+      "derived_from": {
+        "source": "security/competitor_parity_matrix.json:presidio-dicom-redaction-36",
+        "requirement": "Bind scoped DICOM metadata redaction to retained live product evidence."
       }
     }
   ]

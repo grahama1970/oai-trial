@@ -1,0 +1,11 @@
+{
+  "schema": "battle.campaign_profile.v1",
+  "profile_id": "oai-trial.native-dicom-release-gate.v1",
+  "expectation_overrides": {},
+  "required_case_ids": [
+    "dicom-clean-redaction",
+    "dicom-no-policy-match-rejected",
+    "dicom-invalid-preamble-rejected"
+  ],
+  "required_judges": ["security"]
+}

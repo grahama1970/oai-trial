@@ -20,9 +20,13 @@
     "/home/graham/workspace/experiments/oai-trial/security/battle/docx_generator.py",
     "/home/graham/workspace/experiments/oai-trial/security/battle/docx_judge.py",
     "/home/graham/workspace/experiments/oai-trial/security/battle/docx.profile.json",
-    "/home/graham/workspace/experiments/oai-trial/security/battle/docx.arena.json"
+    "/home/graham/workspace/experiments/oai-trial/security/battle/docx.arena.json",
+    "/home/graham/workspace/experiments/oai-trial/security/battle/dicom_generator.py",
+    "/home/graham/workspace/experiments/oai-trial/security/battle/dicom_judge.py",
+    "/home/graham/workspace/experiments/oai-trial/security/battle/dicom.profile.json",
+    "/home/graham/workspace/experiments/oai-trial/security/battle/dicom.arena.json"
   ],
-  "bundle_manifest_sha256": "sha256:b98abe95eb4b3569b401efd133e5d4fb3327bfcc279c85c8d873d1d4bdc7f784",
+  "bundle_manifest_sha256": "sha256:139f24a97dc03f3140beb1d9902751b592751300dbcbcb3edf96ab23ef1c4c05",
   "commit": "1615adc42aa3c5e893f68ef1a80b3b8dd342edb5",
   "schema": "battle.evaluator_lock.v1",
   "source_repo": "grahama1970/agent-skills",

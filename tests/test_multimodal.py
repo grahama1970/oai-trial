@@ -13,6 +13,7 @@ from anonymization_trial.multimodal import (
     OCRWord,
     _matching_boxes,
     redact_document,
+    verify_dicom_structural_release,
     verify_docx_structural_release,
     verify_pdf_structural_release,
 )
@@ -297,3 +298,55 @@ def test_native_docx_rejects_active_content_and_cli_writes_private_receipt(tmp_p
     )
     assert json.loads(completed.stdout)["structural_verification"]["policy_literals_absent"] is True
     assert (tmp_path / "cli-receipt.json").stat().st_mode & 0o777 == 0o600
+
+
+def _dicom_elem(group: int, element: int, vr: str, value: bytes) -> bytes:
+    if len(value) % 2:
+        value += b" "
+    return group.to_bytes(2, "little") + element.to_bytes(2, "little") + vr.encode("ascii") + len(value).to_bytes(2, "little") + value
+
+
+def _write_dicom(path: Path, patient: bytes = b"Alice Example") -> None:
+    path.write_bytes(
+        b"\0" * 128
+        + b"DICM"
+        + _dicom_elem(0x0008, 0x0020, "DA", b"20260921")
+        + _dicom_elem(0x0010, 0x0010, "PN", patient)
+        + _dicom_elem(0x0008, 0x1030, "LO", b"Chest")
+    )
+
+
+def test_native_dicom_metadata_redaction_and_verification(tmp_path: Path) -> None:
+    source = tmp_path / "source.dcm"
+    output = tmp_path / "out.dcm"
+    receipt = tmp_path / "receipt.json"
+    policy_path = tmp_path / "policy.json"
+    policy = {
+        "version": 1,
+        "sensitive_values": [
+            {
+                "rule_id": "patient",
+                "subject_id": "person-1",
+                "type": "name",
+                "value": "Alice Example",
+            }
+        ],
+        "protected_values": [],
+    }
+    _write_dicom(source)
+    policy_path.write_text(json.dumps(policy), encoding="utf-8")
+
+    report = redact_document(source, policy_path, output, receipt)
+
+    assert report["structural_verification"]["dicom_preamble_present"] is True
+    assert report["structural_verification"]["policy_literals_absent"] is True
+    assert b"Alice Example" not in output.read_bytes()
+    assert "Alice Example" not in receipt.read_text(encoding="utf-8")
+    assert verify_dicom_structural_release(output, compile_policy(policy))["text_elements_checked"] >= 2
+
+
+def test_native_dicom_rejects_bad_preamble(tmp_path: Path) -> None:
+    bad = tmp_path / "bad.dcm"
+    bad.write_bytes(b"not-dicom")
+    with pytest.raises(MultimodalError, match="MULTIMODAL_DICOM_INVALID"):
+        verify_dicom_structural_release(bad, compile_policy(_policy()))

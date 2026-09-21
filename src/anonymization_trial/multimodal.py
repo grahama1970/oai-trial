@@ -287,6 +287,101 @@ def verify_docx_structural_release(path: Path, policy: Policy) -> dict[str, bool
     }
 
 
+_DICOM_TEXT_VRS = {"AE", "AS", "CS", "DA", "DS", "DT", "LO", "LT", "PN", "SH", "ST", "TM", "UC", "UI", "UR", "UT"}
+_DICOM_LONG_LENGTH_VRS = {"OB", "OD", "OF", "OL", "OW", "SQ", "UC", "UN", "UR", "UT"}
+
+
+def _dicom_elements(data: bytes):
+    if len(data) < 132 or data[128:132] != b"DICM":
+        raise MultimodalError("MULTIMODAL_DICOM_INVALID")
+    offset = 132
+    while offset + 8 <= len(data):
+        start = offset
+        group = int.from_bytes(data[offset : offset + 2], "little")
+        element = int.from_bytes(data[offset + 2 : offset + 4], "little")
+        vr = data[offset + 4 : offset + 6].decode("ascii", errors="strict")
+        offset += 6
+        if vr in _DICOM_LONG_LENGTH_VRS:
+            if offset + 6 > len(data) or data[offset : offset + 2] != b"\x00\x00":
+                raise MultimodalError("MULTIMODAL_DICOM_INVALID")
+            length = int.from_bytes(data[offset + 2 : offset + 6], "little")
+            header_len = 12
+            offset += 6
+        else:
+            if offset + 2 > len(data):
+                raise MultimodalError("MULTIMODAL_DICOM_INVALID")
+            length = int.from_bytes(data[offset : offset + 2], "little")
+            header_len = 8
+            offset += 2
+        if length == 0xFFFFFFFF or offset + length > len(data):
+            raise MultimodalError("MULTIMODAL_DICOM_UNSUPPORTED")
+        yield start, group, element, vr, offset, length, header_len
+        offset += length
+    if offset != len(data):
+        raise MultimodalError("MULTIMODAL_DICOM_INVALID")
+
+
+def _dicom_with_length_header(group: int, element: int, vr: str, value: bytes) -> bytes:
+    if len(value) % 2:
+        value += b" "
+    prefix = group.to_bytes(2, "little") + element.to_bytes(2, "little") + vr.encode("ascii")
+    if vr in _DICOM_LONG_LENGTH_VRS:
+        return prefix + b"\x00\x00" + len(value).to_bytes(4, "little") + value
+    return prefix + len(value).to_bytes(2, "little") + value
+
+
+def _redact_dicom(source: Path, destination: Path, policy: Policy) -> tuple[int, set[str]]:
+    data = source.read_bytes()
+    replacements = 0
+    matched: set[str] = set()
+    chunks: list[bytes] = [data[:132]]
+    last = 132
+    for start, group, element, vr, value_offset, length, _header_len in _dicom_elements(data):
+        chunks.append(data[last:start])
+        raw = data[value_offset : value_offset + length]
+        value = raw.rstrip(b" \x00")
+        if vr in _DICOM_TEXT_VRS:
+            try:
+                text = value.decode("utf-8")
+            except UnicodeDecodeError as error:
+                raise MultimodalError("MULTIMODAL_DICOM_TEXT_INVALID") from error
+            transformed, count = replace_text(text, policy)
+            if count:
+                replacements += count
+                for rule in policy.rules:
+                    if rule.value in text and rule.value not in transformed:
+                        matched.add(rule.rule_id)
+                chunks.append(_dicom_with_length_header(group, element, vr, transformed.encode("utf-8")))
+            else:
+                chunks.append(data[start : value_offset + length])
+        else:
+            chunks.append(data[start : value_offset + length])
+        last = value_offset + length
+    chunks.append(data[last:])
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    destination.write_bytes(b"".join(chunks))
+    return replacements, matched
+
+
+def verify_dicom_structural_release(path: Path, policy: Policy) -> dict[str, bool | int]:
+    data = path.read_bytes()
+    literal_bytes = _policy_literal_bytes(policy)
+    if any(value in data for value in literal_bytes):
+        raise MultimodalError("MULTIMODAL_DICOM_VERIFICATION_FAILED")
+    text_elements_checked = 0
+    for _start, _group, _element, vr, value_offset, length, _header_len in _dicom_elements(data):
+        if vr in _DICOM_TEXT_VRS:
+            text_elements_checked += 1
+            text = data[value_offset : value_offset + length].decode("utf-8", errors="ignore")
+            if _contains_policy_literal_text(text, policy):
+                raise MultimodalError("MULTIMODAL_DICOM_VERIFICATION_FAILED")
+    return {
+        "dicom_preamble_present": True,
+        "policy_literals_absent": True,
+        "text_elements_checked": text_elements_checked,
+    }
+
+
 def verify_pdf_structural_release(path: Path) -> dict[str, bool]:
     """Independently reject non-rendered PDF carriers after raster rebuilding."""
     data = path.read_bytes()
@@ -407,6 +502,10 @@ def redact_document(source: Path, policy_path: Path, output: Path, receipt: Path
             if output.suffix.lower() != ".docx":
                 raise MultimodalError("MULTIMODAL_OUTPUT_FORMAT_INVALID")
             boxes, matched = _redact_docx(source, temporary_output, policy)
+        elif source.suffix.lower() == ".dcm":
+            if output.suffix.lower() != ".dcm":
+                raise MultimodalError("MULTIMODAL_OUTPUT_FORMAT_INVALID")
+            boxes, matched = _redact_dicom(source, temporary_output, policy)
         elif source.suffix.lower() == ".pdf":
             pdftoppm = shutil.which("pdftoppm")
             if output.suffix.lower() != ".pdf" or pdftoppm is None:
@@ -456,6 +555,8 @@ def redact_document(source: Path, policy_path: Path, output: Path, receipt: Path
             structural_verification = verify_pdf_structural_release(temporary_output)
         elif output.suffix.lower() == ".docx":
             structural_verification = verify_docx_structural_release(temporary_output, policy)
+        elif output.suffix.lower() == ".dcm":
+            structural_verification = verify_dicom_structural_release(temporary_output, policy)
         os.replace(temporary_output, output)
         output_hash = hashlib.sha256(output.read_bytes()).hexdigest()
         report = {
@@ -470,6 +571,7 @@ def redact_document(source: Path, policy_path: Path, output: Path, receipt: Path
             "does_not_establish": [
                 "OCR recall for policy values not detected by Tesseract",
                 "DOCX text split across multiple XML runs outside exact literal matching",
+                "DICOM compressed pixel OCR or private binary tag semantic interpretation",
                 "general semantic anonymity or resistance to visual re-identification",
             ],
         }

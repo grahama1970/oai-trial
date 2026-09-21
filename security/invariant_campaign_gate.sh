@@ -204,3 +204,47 @@ PYTHONPATH="$BATTLE/skills/battle/src" python3 -m battle_skill.campaign_contract
   --request "$DOCX_RUN_ROOT/request.json"
 PYTHONPATH="$BATTLE/skills/battle/src" python3 -m battle_skill.campaign_contract verify \
   --receipt "$DOCX_RUN_ROOT/receipt.json"
+
+echo "== native DICOM release-gate campaign =="
+DICOM_RUN_ROOT="$SEC/runs/dicom-latest"
+docker build --build-arg INCLUDE_MULTIMODAL=1 -t "$IMAGE" "$REPO" >/dev/null
+docker run --rm -v "$SEC/runs:/w" --entrypoint rm "$IMAGE" -rf /w/dicom-latest >/dev/null 2>&1 || true
+mkdir -p "$DICOM_RUN_ROOT"
+python3 - "$BATTLE" "$DICOM_RUN_ROOT" "$IMAGE" "$(id -u)" "$(id -g)" <<'PYDICOM'
+import json, sys
+from pathlib import Path
+battle, run_root, image, uid, gid = sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5]
+request = json.loads(Path("security/battle/request.template.json").read_text())
+request["arena_protocol_path"] = str(Path("security/battle/dicom.arena.json").resolve())
+request["profile_path"] = str(Path("security/battle/dicom.profile.json").resolve())
+request["generator"] = str(Path("security/battle/dicom_generator.py").resolve())
+request["judge"] = str(Path("security/battle/dicom_judge.py").resolve())
+request["functional_judge"] = str(Path("security/battle/dicom_judge.py").resolve())
+request["target_run_cmd"] = (
+    f"docker run --rm --user {uid}:{gid} "
+    "-v {input}:/trial/input:ro -v {output}:/trial/output "
+    f"{image} redact-document --input /trial/input/source.dcm --policy /trial/input/policy.json "
+    "--output /trial/output/out.dcm --receipt /trial/output/receipt.json"
+)
+runtime_lock = json.loads(Path(request["lock_path"]).read_text())
+runtime_lock["source_repo_path"] = battle
+runtime_lock_path = Path(run_root, "battle.runtime-lock.json")
+runtime_lock_path.write_text(json.dumps(runtime_lock, indent=2) + "\n")
+adapter = json.loads(Path("security/battle/acceptance.adapter.json").read_text())
+sys.path.insert(0, str(Path(battle) / "skills"))
+from common.security_authorization import validate_target_authorization
+request["authorization_receipt"] = validate_target_authorization(
+    Path("security/battle/authorization.json"),
+    expected_target=adapter["target_identity"],
+    expected_execution_target="anonymization-trial",
+    requested_action="battle",
+    requested_runtime_mode="docker",
+)
+request["lock_path"] = str(runtime_lock_path)
+request["work_root"] = str(run_root)
+Path(run_root, "request.json").write_text(json.dumps(request, indent=2) + "\n")
+PYDICOM
+PYTHONPATH="$BATTLE/skills/battle/src" python3 -m battle_skill.campaign_contract run \
+  --request "$DICOM_RUN_ROOT/request.json"
+PYTHONPATH="$BATTLE/skills/battle/src" python3 -m battle_skill.campaign_contract verify \
+  --receipt "$DICOM_RUN_ROOT/receipt.json"

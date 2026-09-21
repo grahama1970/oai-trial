@@ -1042,6 +1042,35 @@
       "dependencies": [],
       "applicability": "applicable",
       "capability_id": "presidio-native-docx-redaction-35"
+    },
+    {
+      "capability_id": "presidio-dicom-redaction-36",
+      "competitor": "Microsoft Presidio / DICOM de-identification ecosystem",
+      "source": "https://github.com/microsoft/presidio",
+      "source_revision": "f251c513e8aad6820e9b2a44983ebf3a93637b07",
+      "capability": "native DICOM text-metadata de-identification for policy-authorized textual tags",
+      "our_equivalent_executable_check": "redact-document rewrites explicit-VR little-endian DICOM text metadata elements, verifies the DICOM preamble and all parsed text VRs, rejects malformed DICOM and no-match inputs, and emits aggregate-only private receipts",
+      "proof_command": [
+        "uv",
+        "run",
+        "python",
+        "scripts/eval_dicom_redaction.py"
+      ],
+      "expected_exit": 0,
+      "result": "pass",
+      "project_specific_advantage_or_remaining_gap": "Scoped parity for deterministic offline textual DICOM metadata redaction without raw patient values in receipts. Remaining gaps: compressed pixel OCR, private binary tag semantic interpretation, full DICOM de-identification profiles, and complete Presidio/DICOM ecosystem parity.",
+      "runtime_consumers": [
+        "src/anonymization_trial/__main__.py",
+        "src/anonymization_trial/multimodal.py"
+      ],
+      "semantic_assertions": [
+        "DICOM preamble must be present",
+        "explicit-VR text metadata elements are parsed and policy literals are replaced",
+        "output and receipt omit raw policy literals",
+        "malformed DICOM and no-policy-match inputs fail closed"
+      ],
+      "dependencies": [],
+      "applicability": "applicable"
     }
   ],
   "applicability_dispositions": [
@@ -1085,8 +1114,8 @@
       "capabilities": [
         "DICOM"
       ],
-      "disposition": "not_implemented",
-      "reason": "Canonical publication still does not claim DICOM carriers."
+      "disposition": "applicable",
+      "reason": "Scoped native DICOM textual metadata redaction is implemented through redact-document; compressed pixel OCR, private binary tag semantic interpretation, and full DICOM de-identification profiles remain explicit gaps."
     },
     {
       "ecosystem": "Presidio image/document",
