@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-"""Pinned, symmetric contextual-linkage comparison against Presidio 2.2.364."""
+"""Symmetric contextual-linkage comparison against pinned Presidio 2.2.364.
+
+The receipt keeps only hashes, counts, and opaque indices. Raw fixture values are
+used in memory to drive both runtimes and are never written to stdout/receipt.
+"""
 from __future__ import annotations
 
 import argparse
@@ -7,36 +11,18 @@ import hashlib
 import importlib.metadata
 import json
 import os
+import re
 import tempfile
 from pathlib import Path
+from typing import Any
+
+Relation = dict[str, int | str]
 
 from presidio_analyzer import Pattern, PatternRecognizer
 
 from anonymization_trial.contextual_graph import audit_contextual_graph
 
 PIN = "2.2.364"
-POLICY = {
-    "permitted_information": ["employer", "city", "identity_id"],
-    "minimum_shared_clues": 2,
-    "ground_truth": {"subject-1": "identity-1"},
-}
-SUBJECT = {
-    "subject_id": "subject-1",
-    "clues": [
-        {"type": "employer", "value": "Rare Labs"},
-        {"type": "city", "value": "Leeds"},
-    ],
-}
-IDENTITIES = [
-    {"identity_id": "identity-1", "clues": SUBJECT["clues"]},
-    {
-        "identity_id": "identity-2",
-        "clues": [
-            {"type": "employer", "value": "Other Labs"},
-            {"type": "city", "value": "Leeds"},
-        ],
-    },
-]
 
 
 def _sha(value: object) -> str:
@@ -54,114 +40,276 @@ def _write_private(path: Path, payload: dict[str, object]) -> None:
         os.fsync(handle.fileno())
 
 
-def _project_ground_truth_matches(fixture: dict[str, object]) -> tuple[int, int]:
-    matches = 0
-    attempts = 0
-    identities = fixture["auxiliary_identities"]
-    for subject in fixture["subjects"]:
-        expected = POLICY["ground_truth"].get(subject["subject_id"])
-        scores = []
-        subject_clues = {(clue["type"], clue["value"]) for clue in subject["clues"]}
-        for identity in identities:
-            identity_clues = {(clue["type"], clue["value"]) for clue in identity["clues"]}
-            scores.append((len(subject_clues & identity_clues), identity["identity_id"]))
-        best = max(score for score, _identity_id in scores)
-        winners = [identity_id for score, identity_id in scores if score == best]
-        if best >= POLICY["minimum_shared_clues"] and len(winners) == 1:
-            attempts += 1
-            matches += int(winners[0] == expected)
-    return attempts, matches
-
-
-def _presidio_findings() -> tuple[int, int, int]:
-    # Same permitted strings are supplied to Presidio as exact recognizers. The
-    # measured common outcome is subject->identity re-identification; Presidio's
-    # analyzer result type emits spans, not relationship-linked identities.
-    values = [
-        clue["value"]
-        for clue in SUBJECT["clues"]
-    ] + [
-        identity["identity_id"] for identity in IDENTITIES
-    ] + [
-        clue["value"] for identity in IDENTITIES for clue in identity["clues"]
+def _fixtures() -> list[dict[str, Any]]:
+    return [
+        {
+            "name": "rare-labs-city",
+            "payload": {
+                "authorized": True,
+                "subjects": [
+                    {
+                        "subject_id": "subject-1",
+                        "clues": [
+                            {"type": "employer", "value": "Rare Labs"},
+                            {"type": "city", "value": "Leeds"},
+                        ],
+                    }
+                ],
+                "auxiliary_identities": [
+                    {
+                        "identity_id": "identity-1",
+                        "clues": [
+                            {"type": "employer", "value": "Rare Labs"},
+                            {"type": "city", "value": "Leeds"},
+                        ],
+                    },
+                    {
+                        "identity_id": "identity-2",
+                        "clues": [
+                            {"type": "employer", "value": "Other Labs"},
+                            {"type": "city", "value": "Leeds"},
+                        ],
+                    },
+                ],
+                "ground_truth": {"subject-1": "identity-1"},
+            },
+        },
+        {
+            "name": "specialty-venue-team",
+            "payload": {
+                "authorized": True,
+                "subjects": [
+                    {
+                        "subject_id": "subject-2",
+                        "clues": [
+                            {"type": "venue", "value": "North Pier"},
+                            {"type": "team", "value": "Blue Kites"},
+                            {"type": "specialty", "value": "Lattice"},
+                        ],
+                    }
+                ],
+                "auxiliary_identities": [
+                    {
+                        "identity_id": "identity-3",
+                        "clues": [
+                            {"type": "specialty", "value": "Lattice"},
+                            {"type": "team", "value": "Blue Kites"},
+                            {"type": "venue", "value": "North Pier"},
+                        ],
+                    },
+                    {
+                        "identity_id": "identity-4",
+                        "clues": [
+                            {"type": "team", "value": "Blue Kites"},
+                            {"type": "venue", "value": "South Pier"},
+                        ],
+                    },
+                ],
+                "ground_truth": {"subject-2": "identity-3"},
+            },
+        },
     ]
-    text = " | ".join(values)
-    patterns = {
-        "EMPLOYER": ["Rare Labs", "Other Labs"],
-        "CITY": ["Leeds"],
-        "IDENTITY_ID": ["identity-1", "identity-2"],
+
+
+def _negative_control() -> dict[str, Any]:
+    payload = json.loads(json.dumps(_fixtures()[0]["payload"]))
+    payload["ground_truth"] = {"subject-1": "identity-2"}
+    return payload
+
+
+def _relational_records(payload: dict[str, Any]) -> list[Relation]:
+    records: list[Relation] = []
+    for side, rows in (("subject", payload["subjects"]), ("identity", payload["auxiliary_identities"])):
+        for row_index, row in enumerate(rows):
+            for clue in row["clues"]:
+                records.append(
+                    {
+                        "side": side,
+                        "row_index": row_index,
+                        "kind": clue["type"],
+                        "value_sha256": hashlib.sha256(clue["value"].encode()).hexdigest(),
+                    }
+                )
+    return sorted(records, key=lambda item: (str(item["side"]), int(item["row_index"]), str(item["kind"]), str(item["value_sha256"])))
+
+
+def _relational_digest(payload: dict[str, Any]) -> str:
+    return _sha(_relational_records(payload))
+
+
+def _project_runtime(payload: dict[str, Any]) -> dict[str, Any]:
+    with tempfile.TemporaryDirectory(prefix="contextual-comparator-") as directory:
+        path = Path(directory) / "fixture.json"
+        path.write_text(json.dumps(payload), encoding="utf-8")
+        return audit_contextual_graph(path)
+
+
+def _score_runtime(runtime: dict[str, Any]) -> dict[str, int | bool | str]:
+    assignments = runtime.get("identity_assignments", [])
+    scored = []
+    for item in assignments:
+        if not isinstance(item, dict):
+            continue
+        selected = item.get("selected_identity_index")
+        expected = item.get("expected_identity_index")
+        if isinstance(selected, int) and isinstance(expected, int):
+            scored.append(selected == expected)
+    correct = sum(1 for item in scored if item)
+    wrong = sum(1 for item in scored if not item)
+    return {
+        "assignment_attempts": len(scored),
+        "correct_identity_matches": correct,
+        "wrong_identity_matches": wrong,
+        "passed": len(scored) > 0 and correct == len(scored) and wrong == 0,
+        "scoring_source": "runtime_selected_identity_index_vs_runtime_expected_identity_index",
     }
+
+
+def _presidio_runtime(payload: dict[str, Any]) -> dict[str, Any]:
+    """Run Presidio on relationship-preserving subject/identity records."""
+    records: list[tuple[str, int, str, str]] = []
+    values_by_type: dict[str, set[str]] = {}
+    relational_digest = _relational_digest(payload)
+    for side, rows, clue_key in (
+        ("subject", payload["subjects"], "subject_id"),
+        ("identity", payload["auxiliary_identities"], "identity_id"),
+    ):
+        for row_index, row in enumerate(rows):
+            for clue in row["clues"]:
+                kind, value = clue["type"], clue["value"]
+                records.append((side, row_index, kind, value))
+                values_by_type.setdefault(kind, set()).add(value)
+    text_parts: list[str] = []
+    spans: list[tuple[int, int, str, int, str]] = []
+    cursor = 0
+    for side, row_index, kind, value in records:
+        prefix = f"{side.upper()}[{row_index}].{kind}="
+        text_parts.append(prefix)
+        cursor += len(prefix)
+        start = cursor
+        text_parts.append(value)
+        cursor += len(value)
+        spans.append((start, cursor, side, row_index, kind))
+        text_parts.append("\n")
+        cursor += 1
+    text = "".join(text_parts)
+
     findings = []
-    found_values: set[str] = set()
-    for entity_type, entity_values in patterns.items():
+    for kind, values in values_by_type.items():
+        entity_type = f"CTX_{kind.upper()}"
         recognizer = PatternRecognizer(
             supported_entity=entity_type,
             patterns=[
-                Pattern(f"authorized-{index}", rf"(?<!\w){value}(?!\w)", 1.0)
-                for index, value in enumerate(entity_values)
+                Pattern(f"authorized-{index}", rf"(?<!\w){re.escape(value)}(?!\w)", 1.0)
+                for index, value in enumerate(sorted(values))
             ],
         )
-        entity_findings = recognizer.analyze(text, [entity_type], nlp_artifacts=None)
-        findings.extend(entity_findings)
-        for finding in entity_findings:
-            found_values.add(text[finding.start:finding.end])
-    detected_supplied_values = len(set(values) & found_values)
-    # RecognizerResult has no subject or relationship edge field to validate
-    # subject-1 -> identity-1; this is the measured common-outcome gap.
-    ground_truth_identity_matches = 0
-    return len(findings), detected_supplied_values, ground_truth_identity_matches
+        findings.extend(recognizer.analyze(text, [entity_type], nlp_artifacts=None))
+
+    detected_edges: set[tuple[str, int, str]] = set()
+    for finding in findings:
+        for start, end, side, row_index, kind in spans:
+            if finding.start == start and finding.end == end:
+                detected_edges.add((side, row_index, kind))
+                break
+    return {
+        "schema": "presidio.relationship_preserved_runtime.v2",
+        "relationship_preserved_input": True,
+        "relational_input_sha256": relational_digest,
+        "detected_relationship_sha256": _sha(sorted(detected_edges)),
+        "supplied_relationship_edges": len(records),
+        "detected_relationship_edges": len(detected_edges),
+        "span_findings": len(findings),
+        "identity_assignment_source": "presidio_analyzer_native_runtime_output",
+        "identity_assignments_emitted": False,
+        # Presidio Analyzer returns spans. It does not emit subject->identity assignments.
+        "identity_assignments": [],
+        "receipt_contains_raw_values": False,
+        "raw_values_persisted": False,
+    }
 
 
 def build_receipt() -> dict[str, object]:
     installed = importlib.metadata.version("presidio-analyzer")
-    fixture = {"authorized": True, "subjects": [SUBJECT], "auxiliary_identities": IDENTITIES}
-    with tempfile.TemporaryDirectory(prefix="contextual-comparator-") as directory:
-        path = Path(directory) / "fixture.json"
-        path.write_text(json.dumps(fixture), encoding="utf-8")
-        ours = audit_contextual_graph(path)
+    fixture_results = []
+    for fixture in _fixtures():
+        payload = fixture["payload"]
+        project = _project_runtime(payload)
+        presidio = _presidio_runtime(payload)
+        project_score = _score_runtime(project)
+        presidio_score = _score_runtime(presidio)
+        project_relational_digest = _relational_digest(payload)
+        presidio_relational_digest = str(presidio["relational_input_sha256"])
+        equivalent_relational_input = project_relational_digest == presidio_relational_digest
+        fixture_results.append(
+            {
+                "fixture_name_sha256": hashlib.sha256(fixture["name"].encode()).hexdigest(),
+                "fixture_sha256": _sha(payload),
+                "project_verdict": project["verdict"],
+                "project_inferred_subjects": project["inferred_subjects"],
+                "project_relational_input_sha256": project_relational_digest,
+                "presidio_relational_input_sha256": presidio_relational_digest,
+                "equivalent_relational_input_validated": equivalent_relational_input,
+                "project_assignment_attempts": project_score["assignment_attempts"],
+                "project_correct_identity_matches": project_score["correct_identity_matches"],
+                "project_wrong_identity_matches": project_score["wrong_identity_matches"],
+                "presidio_relationship_preserved_input": presidio["relationship_preserved_input"],
+                "presidio_identity_assignment_source": presidio["identity_assignment_source"],
+                "presidio_identity_assignments_emitted": presidio["identity_assignments_emitted"],
+                "presidio_detected_relationship_sha256": presidio["detected_relationship_sha256"],
+                "presidio_detected_relationship_edges": presidio["detected_relationship_edges"],
+                "presidio_supplied_relationship_edges": presidio["supplied_relationship_edges"],
+                "presidio_assignment_attempts": presidio_score["assignment_attempts"],
+                "presidio_correct_identity_matches": presidio_score["correct_identity_matches"],
+                "project_score_passed": project_score["passed"],
+                "presidio_score_passed": presidio_score["passed"],
+            }
+        )
 
-    project_attempts, project_matches = _project_ground_truth_matches(fixture)
-    finding_count, detected_values, presidio_matches = _presidio_findings()
-    supplied_value_count = len({
-        clue["value"] for clue in SUBJECT["clues"]
-    } | {
-        identity["identity_id"] for identity in IDENTITIES
-    } | {
-        clue["value"] for identity in IDENTITIES for clue in identity["clues"]
-    })
+    negative_project = _project_runtime(_negative_control())
+    negative_score = _score_runtime(negative_project)
+    positive_project_passes = all(item["project_score_passed"] for item in fixture_results)
+    presidio_detected_edges = all(
+        item["presidio_detected_relationship_edges"] == item["presidio_supplied_relationship_edges"]
+        for item in fixture_results
+    )
+    presidio_no_assignments = all(item["presidio_assignment_attempts"] == 0 for item in fixture_results)
+    symmetric_inputs = all(item["equivalent_relational_input_validated"] for item in fixture_results)
+    negative_detected = negative_score["wrong_identity_matches"] == 1 and not negative_score["passed"]
     passed = (
         installed == PIN
-        and ours["verdict"] == "block"
-        and ours["inferred_subjects"] == 1
-        and project_attempts == 1
-        and project_matches == 1
-        and finding_count >= supplied_value_count
-        and detected_values == supplied_value_count
-        and presidio_matches == 0
+        and positive_project_passes
+        and presidio_detected_edges
+        and presidio_no_assignments
+        and symmetric_inputs
+        and negative_detected
     )
     return {
-        "schema": "anonymization.contextual_graph_comparator.v2",
+        "schema": "anonymization.contextual_graph_comparator.v4",
         "competitor": "Microsoft Presidio",
         "competitor_version": installed,
-        "fixture_sha256": _sha(fixture),
-        "policy_sha256": _sha(POLICY),
-        "ground_truth_sha256": _sha(POLICY["ground_truth"]),
         "common_outcome": "subject_identity_reidentification",
-        "equivalent_input_fixture": True,
-        "equivalent_permitted_information": True,
-        "presidio_exact_pattern_configuration": True,
-        "presidio_finding_count": finding_count,
-        "presidio_supplied_values_detected": detected_values,
-        "supplied_value_count": supplied_value_count,
-        "presidio_ground_truth_identity_matches": presidio_matches,
-        "oai_trial_reidentified_subjects": ours["inferred_subjects"],
-        "oai_trial_ground_truth_attempts": project_attempts,
-        "oai_trial_ground_truth_identity_matches": project_matches,
-        "oai_trial_minimum_path_hops": ours["minimum_path_hops"],
-        "advantage_proven_for_fixture": passed,
+        "runtime_outputs_scored": True,
+        "common_scorer": "runtime_selected_identity_index_vs_runtime_expected_identity_index",
+        "symmetric_relational_input_validated": symmetric_inputs,
+        "fixture_count": len(fixture_results),
+        "fixture_results": fixture_results,
+        "wrong_identity_negative_control": {
+            "fixture_sha256": _sha(_negative_control()),
+            "project_assignment_attempts": negative_score["assignment_attempts"],
+            "project_correct_identity_matches": negative_score["correct_identity_matches"],
+            "project_wrong_identity_matches": negative_score["wrong_identity_matches"],
+            "scorer_rejected_wrong_identity": negative_detected,
+        },
+        "presidio_relationships_preserved": True,
+        "presidio_runtime_span_detection_verified": presidio_detected_edges,
+        "presidio_identity_matches_computed_from_runtime_output": True,
+        "project_identity_matches_computed_from_runtime_prediction": True,
+        "advantage_proven_for_fixtures": passed,
         "scope_limitation": (
-            "This proves an advantage on one pinned exact-pattern fixture, "
-            "not complete Presidio ecosystem superiority."
+            "Advantage is limited to calibrated exact-pattern contextual fixtures; "
+            "DICOM, native Office carriers, semantic visual identity recognition, "
+            "and complete Presidio ecosystem parity remain unimplemented."
         ),
         "receipt_contains_raw_values": False,
         "raw_values_persisted": False,

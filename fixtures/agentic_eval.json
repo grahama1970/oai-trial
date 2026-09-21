@@ -498,6 +498,28 @@
       "readback": true
     },
     {
+      "name": "presidio-contextual-advantage-receipt-real-path",
+      "type": "adversarial",
+      "real_world": true,
+      "evidence_class": "live_e2e",
+      "supports_claims": [
+        "anonymize.presidio_contextual_advantage_receipt"
+      ],
+      "command": [
+        "bash",
+        "-c",
+        "cd .. && set -euo pipefail; w=$(mktemp -d); .venv/bin/python scripts/verify_competitor_parity.py --capability-id presidio-contextual-graph-comparator-26 --receipt \"$w/receipt.json\"; python3 -c \"import json; r=json.load(open('$w/receipt.json')); j=r['results'][0]['retained_stdout_json']; assert r['focused'] is True and r['executed_rows']==1; assert j['common_scorer']=='runtime_selected_identity_index_vs_runtime_expected_identity_index'; assert j['symmetric_relational_input_validated'] is True; assert j['fixture_count']>=2 and all(x['project_correct_identity_matches']==1 for x in j['fixture_results']); assert all(x['equivalent_relational_input_validated'] is True and x['presidio_assignment_attempts']==0 for x in j['fixture_results']); assert j['wrong_identity_negative_control']['scorer_rejected_wrong_identity'] is True; assert j['receipt_contains_raw_values'] is False and j['raw_values_persisted'] is False; print('PRESIDIO_CONTEXTUAL_ADVANTAGE_RECEIPT_VERIFIED')\""
+      ],
+      "timeout_seconds": 180,
+      "expected": {
+        "exit_code": 0,
+        "stdout_contains": [
+          "PRESIDIO_CONTEXTUAL_ADVANTAGE_RECEIPT_VERIFIED"
+        ]
+      },
+      "readback": true
+    },
+    {
       "name": "differentially-private-count-real-path",
       "type": "adversarial",
       "real_world": true,
@@ -686,6 +708,19 @@
       "derived_from": {
         "source": "security/competitor_parity_matrix.json:arx-dp-synthetic-histogram-33",
         "requirement": "Bind scoped ARX-style multidimensional DP synthesis to retained live product evidence."
+      }
+    },
+    {
+      "id": "anonymize.presidio_contextual_advantage_receipt",
+      "description": "Focused parity receipts retain sanitized paired project-versus-Presidio contextual identity outcomes so independent reviewers can inspect the scoped advantage without raw fixture values.",
+      "criticality": "important",
+      "claim_semantics": "value_bearing",
+      "evidence_required": {
+        "live_e2e": true
+      },
+      "derived_from": {
+        "source": "security/competitor_parity_matrix.json:presidio-contextual-graph-comparator-26",
+        "requirement": "Bind the scoped Presidio contextual-graph advantage to retained readable paired outcomes."
       }
     }
   ]

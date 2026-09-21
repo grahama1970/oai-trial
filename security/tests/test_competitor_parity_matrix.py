@@ -98,6 +98,95 @@ def test_parity_matrix_executor_checks_declared_pass_and_gap(tmp_path: Path) -> 
     assert all(len(row["proof_executable_sha256"]) == 64 for row in result["results"])
 
 
+def test_parity_executor_can_focus_one_row_and_retain_sanitized_stdout_json(
+    tmp_path: Path,
+) -> None:
+    matrix = {
+        "applicability_dispositions": [
+            {
+                "ecosystem": "fixture",
+                "capabilities": ["bounded capability"],
+                "disposition": "not_implemented",
+                "reason": "Keep complete ecosystem parity false in focused mode.",
+            }
+        ],
+        "rows": [
+            {
+                "capability_id": "kept-stdout-01",
+                "competitor": "fixture",
+                "source": "https://example.invalid",
+                "source_revision": "revision",
+                "capability": "sanitized paired outcome",
+                "our_equivalent_executable_check": "retained receipt",
+                "proof_command": [
+                    sys.executable,
+                    "-c",
+                    (
+                        "import json; print(json.dumps({'receipt_contains_raw_values': False, "
+                        "'raw_values_persisted': False, 'left_matches': 0, "
+                        "'right_matches': 1}))"
+                    ),
+                ],
+                "expected_exit": 0,
+                "result": "pass",
+                "project_specific_advantage_or_remaining_gap": "Advantage: visible paired outcome.",
+                "runtime_consumers": ["scripts/verify_competitor_parity.py"],
+                "retain_stdout_json": True,
+                "stdout_retention_policy": "sanitized_json_no_raw_values",
+            },
+            {
+                "capability_id": "skipped-01",
+                "competitor": "fixture",
+                "source": "https://example.invalid",
+                "source_revision": "revision",
+                "capability": "expensive skipped row",
+                "our_equivalent_executable_check": "not run in focused proof",
+                "proof_command": [sys.executable, "-c", "raise SystemExit(99)"],
+                "expected_exit": 99,
+                "result": "gap",
+                "project_specific_advantage_or_remaining_gap": "Gap: intentionally skipped.",
+                "runtime_consumers": ["scripts/verify_competitor_parity.py"],
+            },
+        ],
+    }
+    matrix_path = tmp_path / "matrix.json"
+    receipt_path = tmp_path / "receipt.json"
+    matrix_path.write_text(json.dumps(matrix), encoding="utf-8")
+
+    completed = subprocess.run(
+        [
+            sys.executable,
+            "scripts/verify_competitor_parity.py",
+            "--matrix",
+            str(matrix_path),
+            "--receipt",
+            str(receipt_path),
+            "--capability-id",
+            "kept-stdout-01",
+        ],
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+
+    assert completed.returncode == 0
+    receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
+    assert receipt["focused"] is True
+    assert receipt["focused_capability_ids"] == ["kept-stdout-01"]
+    assert receipt["executed_rows"] == 1
+    assert receipt["matrix_rows_total"] == 2
+    assert receipt["complete_ecosystem_parity_proven"] is False
+    result = receipt["results"][0]
+    assert result["capability_id"] == "kept-stdout-01"
+    assert result["observation"]["stdout_retained_json"] is True
+    assert result["retained_stdout_json"] == {
+        "receipt_contains_raw_values": False,
+        "raw_values_persisted": False,
+        "left_matches": 0,
+        "right_matches": 1,
+    }
+
+
 def test_parity_executor_rejects_fail_open_shell_proofs(tmp_path: Path) -> None:
     matrix = {
         "applicability_dispositions": [
@@ -337,6 +426,13 @@ def test_real_matrix_records_bounded_gradient_attack_parity() -> None:
     assert comparator["source_revision"] == "presidio-analyzer==2.2.364"
     assert comparator["dependencies"] == ["presidio-analyzer==2.2.364"]
     assert "exact type/start/end finding equality" in comparator["semantic_assertions"]
+
+    contextual = next(row for row in matrix["rows"] if row["capability_id"] == "presidio-contextual-graph-comparator-26")
+    assert contextual["retain_stdout_json"] is True
+    assert contextual["stdout_retention_policy"] == "sanitized_json_no_raw_values"
+    assert "contextual_graph_presidio_comparator.v4" in contextual["our_equivalent_executable_check"]
+    assert any("wrong-identity negative control" in item for item in contextual["semantic_assertions"])
+    assert any("paired outcome JSON" in item for item in contextual["semantic_assertions"])
 
 
 def test_matrix_explicitly_disposes_omitted_capabilities() -> None:

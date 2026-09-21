@@ -732,8 +732,8 @@
       "competitor": "Microsoft Presidio",
       "source": "https://github.com/microsoft/presidio",
       "source_revision": "f251c513e8aad6820e9b2a44983ebf3a93637b07",
-      "capability": "contextual identity inference from relationships among separately detected authorized clues",
-      "our_equivalent_executable_check": "contextual_graph_presidio_comparator.v2 uses the same pinned fixture, permitted strings, exact recognizers, and ground-truth subject->identity outcome; Presidio span findings and oai-trial graph inference are measured in one receipt without raw values",
+      "capability": "contextual identity inference from preserved subject/clue and identity/clue relationships among detected authorized clues",
+      "our_equivalent_executable_check": "contextual_graph_presidio_comparator.v4 runs multiple relationship-preserved fixtures through both runtimes, scores runtime-selected subject-to-identity assignments against runtime-expected identity indices, validates equal relational-input digests, and includes a wrong-identity negative control without raw persistence",
       "proof_command": [
         "uv",
         "run",
@@ -744,23 +744,27 @@
       ],
       "expected_exit": 0,
       "result": "pass",
-      "project_specific_advantage_or_remaining_gap": "Advantage proven only on the pinned shared fixture: Presidio detects all supplied permitted values as spans but emits zero ground-truth subject-to-identity matches, while the canonical contextual graph blocks and validates the correct ground-truth identity. This is not complete Presidio ecosystem superiority.",
+      "project_specific_advantage_or_remaining_gap": "Advantage proven only for bounded exact-pattern contextual fixtures, with sanitized paired outcome JSON retained in focused parity receipts: Presidio detects every relationship-preserved supplied clue as spans but emits no runtime subject-to-identity assignments, while the canonical contextual graph blocks and selects the correct ground-truth identity. Wrong-identity controls reject count-only/block-only success. This is not complete Presidio ecosystem superiority; DICOM, native Office carriers, and semantic visual identity recognition remain gaps.",
       "runtime_consumers": [
         "security/contextual_graph_presidio_comparator.py",
         "src/anonymization_trial/contextual_graph.py"
       ],
       "semantic_assertions": [
-        "identical fixture, permitted information, and ground-truth outcome are digest-bound",
-        "pinned presidio-analyzer 2.2.364 detects every supplied permitted value under exact recognizers",
-        "common measured outcome is subject_identity_reidentification, not mere entity-span detection",
-        "canonical contextual graph produces one correct ground-truth identity match and block verdict",
-        "receipt contains only digests and aggregate counts, not fixture values or identifiers"
+        "multiple fixture, permitted-information, and ground-truth outcomes are digest-bound",
+        "pinned presidio-analyzer 2.2.364 detects every supplied relationship-preserved clue under exact recognizers",
+        "common measured outcome is actual subject_identity_reidentification assignment, not mere entity-span detection or inferred-count equality",
+        "canonical contextual graph emits opaque runtime identity assignments and produces correct ground-truth identity matches with block verdicts",
+        "wrong-identity negative control is rejected by the common scorer when a runtime blocks/infer-counts without selecting the correct identity",
+        "receipt contains only digests, opaque indices, and aggregate counts, not fixture values or identifiers",
+        "focused parity receipts retain the sanitized paired outcome JSON so reviewers can inspect both systems without raw fixture values"
       ],
       "dependencies": [
         "presidio-analyzer==2.2.364"
       ],
       "applicability": "applicable",
-      "capability_id": "presidio-contextual-graph-comparator-26"
+      "capability_id": "presidio-contextual-graph-comparator-26",
+      "retain_stdout_json": true,
+      "stdout_retention_policy": "sanitized_json_no_raw_values"
     },
     {
       "competitor": "Anonymeter",
